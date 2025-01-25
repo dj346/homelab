@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: argocd-self-manage
+  name: argocd
   namespace: argocd
 spec:
   sources:

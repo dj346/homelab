@@ -1,7 +1,3 @@
 server:
   service:
     type: LoadBalancer # Use LoadBalancer for external access
-  extraArgs:
-    - --insecure
-dex:
-  enabled: false # Disable Dex if not using OIDC

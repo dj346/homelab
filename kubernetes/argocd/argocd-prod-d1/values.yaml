@@ -1,7 +1,3 @@
-configs:
-  accounts:
-    admin:
-      password: test
 server:
   service:
     type: LoadBalancer # Use LoadBalancer for external access

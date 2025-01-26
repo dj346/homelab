@@ -1,6 +1,3 @@
-global:
-  image:
-    tag: v2.13.3 # Specific ArgoCD version
 server:
   service:
     type: LoadBalancer # Use LoadBalancer for external access

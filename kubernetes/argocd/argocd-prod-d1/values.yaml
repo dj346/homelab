@@ -1,3 +1,2 @@
-server:
-  service:
-    type: LoadBalancer # Use LoadBalancer for external access
+dex:
+  enabled: false # Disable Dex if not using OIDC

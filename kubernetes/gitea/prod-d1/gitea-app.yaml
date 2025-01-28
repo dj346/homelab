@@ -4,6 +4,10 @@ metadata:
   name: gitea
   namespace: gitea
 spec:
+  project: default
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: gitea
   sources:
     - repoURL: 'https://gitea.kube-prod-d1.mclacken.net/dj346/homelab.git'
       targetRevision: HEAD

@@ -1,3 +1,0 @@
-gitea:
-  config:
-    APP_NAME: "My Gitea Instance - Deployed by ArgoCD"

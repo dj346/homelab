@@ -9,4 +9,4 @@ ingressRoute:
   dashboard:
     enabled: true
     entryPoints: [websecure]
-    matchRule: Host(`traefik-dashboard.kube-prod-d1.mclacken.net`)
+    matchRule: Host(`ttraefik-dashboard.kube-prod-d1.mclacken.net`)

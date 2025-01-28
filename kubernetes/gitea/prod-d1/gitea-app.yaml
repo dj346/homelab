@@ -1,16 +1,20 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: gitea-self-maintain
+  name: test2-gitea
   namespace: argocd
 spec:
+  project: default
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: test2-gitea
   sources:
-  - repoURL: 'https://dl.gitea.com/charts/'
-    chart: gitea
-    targetRevision: 10.6.0
-    helm:
-      valueFiles:
-      - $gitea-values/kubernetes/gitea/prod-d1/gitea-values.yaml
-  - repoURL: 'https://gitea.kube-prod-d1.mclacken.net/dj346/homelab.git'
-    targetRevision: HEAD
-    ref: gitea-values
+    - chart: gitea
+      targetRevision: latest
+       helm:
+         valueFiles:
+         - $gitea-values/kubernetes/gitea/prod-d1/gitea-values.yaml
+     - repoURL: 'https://gitea.kube-prod-d1.mclacken.net/dj346/homelab.git'
+       targetRevision: HEAD
+       ref: gitea-values
+    

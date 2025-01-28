@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: certmanager
-  namespace: cert-manager
+  namespace: argocd
 spec:
   project: default
   destination:

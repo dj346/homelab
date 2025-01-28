@@ -4,16 +4,13 @@ metadata:
   name: gitea
   namespace: gitea
 spec:
-  project: default
-  destination:
-    server: https://kubernetes.default.svc
-    namespace: gitea
   sources:
     - repoURL: 'https://gitea.kube-prod-d1.mclacken.net/dj346/homelab.git'
       targetRevision: HEAD
       ref: values
-    - repoURL: https://dl.gitea.com/charts/
+    - repoURL: https://dl.gitea.com/charts
       chart: gitea
+      targetRevision: 7.7.17
       helm:
         valueFiles:
         - $values/kubernetes/gitea/prod-d1/gitea-values.yaml

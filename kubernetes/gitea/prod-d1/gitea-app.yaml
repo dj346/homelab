@@ -13,8 +13,8 @@ spec:
       targetRevision: HEAD
       ref: values
     - repoURL: https://dl.gitea.com/charts
-      chart: gitea
-      targetRevision: 1.22.3
+      chart: gitea-charts/gitea
+      targetRevision: latest
       helm:
         valueFiles:
         - $values/kubernetes/gitea/prod-d1/gitea-values.yaml

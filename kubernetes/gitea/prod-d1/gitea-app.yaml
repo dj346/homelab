@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: gitea
+  name: test2-gitea
   namespace: test2-gitea
 spec:
   project: default

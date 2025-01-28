@@ -11,10 +11,10 @@ spec:
   sources:
     - repoURL: 'https://gitea.kube-prod-d1.mclacken.net/dj346/homelab.git'
       targetRevision: HEAD
-      ref: values
-    - repoURL: https://dl.gitea.com/charts
-      chart: gitea-charts/gitea
-      targetRevision: latest
+      ref: gitea-values
+    - repoURL: https://dl.gitea.com/charts/
+      chart: gitea
+      targetRevision: 10.6.0
       helm:
         valueFiles:
-        - $values/kubernetes/gitea/prod-d1/gitea-values.yaml
+        - $gitea-values/kubernetes/gitea/prod-d1/gitea-values.yaml

@@ -1,0 +1,12 @@
+ports:
+  web:
+    redirections:
+      entryPoint:
+        to: websecure
+        scheme: https
+        permanent: true  # <-- Change this to false if you want a temporary redirect
+ingressRoute:
+  dashboard:
+    enabled: true
+    entryPoints: [websecure]
+    matchRule: Host(`traefik-dashboard.kube-prod-d1.mclacken.net`)

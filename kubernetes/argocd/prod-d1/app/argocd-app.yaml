@@ -1,0 +1,16 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: argocd
+  namespace: argocd
+spec:
+  sources:
+    - repoURL: https://argoproj.github.io/argo-helm
+      chart: argo-cd
+      targetRevision: 7.7.17
+      helm:
+        valueFiles:
+        - $values/kubernetes/argocd/prod-d1/argocd-values.yaml
+    - repoURL: 'https://gitea.kube-prod-d1.mclacken.net/dj346/homelab.git'
+      targetRevision: HEAD
+      ref: values

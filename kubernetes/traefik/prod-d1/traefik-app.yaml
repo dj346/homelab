@@ -4,6 +4,10 @@ metadata:
   name: traefik
   namespace: traefik
 spec:
+  project: default
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: traefik
   sources:
     - repoURL: https://traefik.github.io/charts
       chart: traefik

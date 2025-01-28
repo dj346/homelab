@@ -11,7 +11,6 @@ spec:
   sources:
     - chart: gitea
       repoURL: 'https://dl.gitea.com/charts/'
-      targetRevision: latest
       helm:
         valueFiles:
         - $gitea-values/kubernetes/gitea/prod-d1/gitea-values.yaml

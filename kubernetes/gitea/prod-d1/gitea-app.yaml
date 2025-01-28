@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: gitea-self-maintain
-  namespace: test2-gitea
+  namespace: argocd
 spec:
   sources:
   - repoURL: 'https://dl.gitea.com/charts/'

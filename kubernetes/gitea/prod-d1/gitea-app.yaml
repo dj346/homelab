@@ -9,13 +9,17 @@ spec:
     server: https://kubernetes.default.svc
     namespace: test2-gitea
   sources:
-    - chart: gitea
-      repoURL: 'https://dl.gitea.com/charts/'
-      targetRevision: 10.6.0
+    - repoURL: 'https://dl.gitea.com/charts/'
+      chart: gitea
+      targetRevision: latest # You can specify a version here
       helm:
+        releaseName: gitea-release
         valueFiles:
-        - $gitea-values/kubernetes/gitea/prod-d1/gitea-values.yaml
+          - kubernetes/gitea/prod-d1/gitea-values.yaml
     - repoURL: 'https://gitea.kube-prod-d1.mclacken.net/dj346/homelab.git'
       targetRevision: HEAD
       ref: gitea-values
-    
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

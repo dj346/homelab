@@ -9,7 +9,8 @@ spec:
     server: https://kubernetes.default.svc
     namespace: test2-gitea
   sources:
-    - chart: gitea
+    - repoURL: https://dl.gitea.com/charts/
+      chart: gitea
       targetRevision: latest
       helm:
         valueFiles:

@@ -15,7 +15,7 @@ spec:
       helm:
         releaseName: gitea-release
         valueFiles:
-          - $values/kubernetes/gitea/prod-d1/gitea-values.yaml
+          - $gitea-values/kubernetes/gitea/prod-d1/gitea-values.yaml
     - repoURL: 'https://gitea.kube-prod-d1.mclacken.net/dj346/homelab.git'
       targetRevision: HEAD
       ref: gitea-values

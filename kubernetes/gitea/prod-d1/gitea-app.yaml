@@ -1,13 +1,13 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: test2-gitea
+  name: gitea-self-manage
   namespace: argocd
 spec:
   project: default
   destination:
     server: https://kubernetes.default.svc
-    namespace: test2-gitea
+    namespace: gitea
   sources:
     - repoURL: https://dl.gitea.com/charts/
       chart: gitea

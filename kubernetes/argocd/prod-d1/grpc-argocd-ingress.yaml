@@ -6,6 +6,7 @@ metadata:
   annotations:
     cert-manager.io/cluster-issuer: cloudflare-clusterissuer
     traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/service.serversscheme: h2c  # Ensures HTTP/2 (gRPC) routing
 spec:
   rules:
     - host: grpc.argocd.kube-prod-d1.mclacken.net
@@ -17,7 +18,7 @@ spec:
               service:
                 name: argocd-server
                 port:
-                  number: 443
+                  number: 80
   tls:
   - hosts:
     - grpc.argocd.kube-prod-d1.mclacken.net

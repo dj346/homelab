@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: certmanager
+  namespace: argocd
+spec:
+  project: default
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: cert-manager
+  sources:
+    - repoURL: https://charts.jetstack.io
+      chart: cert-manager
+      targetRevision: 1.16.3
+      helm:
+        valueFiles:
+        - $values/kubernetes/certmanager/prod-d1/certmanager-values.yaml
+    - repoURL: 'https://gitea.kube-prod-d1.domain.com/dj346/homelab.git'
+      targetRevision: HEAD
+      ref: values

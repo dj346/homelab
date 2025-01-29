@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: traefik
+  namespace: argocd
+spec:
+  project: default
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: traefik
+  sources:
+    - repoURL: https://traefik.github.io/charts
+      chart: traefik
+      targetRevision: 34.1.0
+      helm:
+        valueFiles:
+        - $values/kubernetes/traefik/prod-d1/traefik-values.yaml
+    - repoURL: 'https://gitea.kube-prod-d1.domain.com/dj346/homelab.git'
+      targetRevision: HEAD
+      ref: values

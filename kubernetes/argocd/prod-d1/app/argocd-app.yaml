@@ -10,7 +10,7 @@ spec:
       targetRevision: 7.7.17
       helm:
         valueFiles:
-        - $values/kubernetes/argocd/argocd-prod-d1/values.yaml
-    - repoURL: 'https://github.com/dj346/homelab.git'
+        - $values/kubernetes/argocd/prod-d1/argocd-values.yaml
+    - repoURL: 'https://gitea.kube-prod-d1.domain.com/dj346/homelab.git'
       targetRevision: HEAD
       ref: values

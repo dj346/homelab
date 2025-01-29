@@ -240,12 +240,13 @@ Follow the official guide: [Kube-Vip Documentation](https://kube-vip.io/docs/usa
    ```
    > **Note:** Make sure to replace {USER} with your username
 
-2. Add the worker nodes:
+2. Add the worker nodes (I made my second node a master node with the ```--server``` flag because I want two master nodes and 1 worker node in my configuration, if you want two worker nodes remove the above flag):
    ```bash
    k3sup join \
        --ip 10.15.21.12 \
        --server-ip 10.15.21.11 \
        --k3s-channel latest \
+       --server \
        --user {USER}
 
    k3sup join \
@@ -261,6 +262,11 @@ Follow the official guide: [Kube-Vip Documentation](https://kube-vip.io/docs/usa
    sudo sed -i '/$USER ALL=(ALL) NOPASSWD: ALL/d' /etc/sudoers
    ```
    > **Note:** Make sure to replace {USER} with your username
+
+4. Confirm everything was sucessful
+   ```bash
+   kubectl get node -o wide
+   ```
 
 ### Clean up config
 

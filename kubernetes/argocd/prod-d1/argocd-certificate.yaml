@@ -6,7 +6,7 @@ metadata:
 spec:
   secretName: argocd-certificate-secret
   issuerRef:
-    name: ssl-issuer
+    name: cloudflare-clusterissuer
     kind: ClusterIssuer
   dnsNames:
     - argocd.kube-prod-d1.mclacken.net

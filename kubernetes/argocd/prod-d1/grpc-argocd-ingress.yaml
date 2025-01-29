@@ -8,16 +8,16 @@ metadata:
     traefik.ingress.kubernetes.io/router.entrypoints: websecure
 spec:
   rules:
-  - http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: argocd-server
-            port:
-              name: 80
-    host: grpc.argocd.kube-prod-d1.mclacken.net
+    - host: grpc.argocd.kube-prod-d1.mclacken.net
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: argocd-server
+                port:
+                  number: 80
   tls:
   - hosts:
     - grpc.argocd.kube-prod-d1.mclacken.net

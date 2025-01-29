@@ -16,7 +16,7 @@ spec:
           service:
             name: argocd-server
             port:
-              name: 443
+              name: 80
     host: grpc.argocd.kube-prod-d1.mclacken.net
   tls:
   - hosts:

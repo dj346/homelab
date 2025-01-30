@@ -15,11 +15,11 @@ rules:
     resources: ["leases"]
     verbs: ["get", "create", "update", "list", "put"]
   - apiGroups: [""]
-    resources: ["configmaps", "endpoints","events","services/status", "leases"]
+    resources: ["configmaps", "endpoints", "events", "services/status", "leases"]
     verbs: ["*"]
   - apiGroups: [""]
     resources: ["nodes", "services"]
-    verbs: ["list","get","watch","update"]
+    verbs: ["list", "get", "watch", "update"]
 ---
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
@@ -30,9 +30,9 @@ roleRef:
   kind: ClusterRole
   name: system:kube-vip-cloud-controller-role
 subjects:
-- kind: ServiceAccount
-  name: kube-vip-cloud-controller
-  namespace: kube-system
+  - kind: ServiceAccount
+    name: kube-vip-cloud-controller
+    namespace: kube-system
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -58,31 +58,24 @@ spec:
         component: kube-vip-cloud-provider
     spec:
       containers:
-      - command:
-        - /kube-vip-cloud-provider
-        - --leader-elect-resource-name=kube-vip-cloud-controller
-        image: ghcr.io/kube-vip/kube-vip-cloud-provider:v0.0.11
-        name: kube-vip-cloud-provider
-        imagePullPolicy: Always
+        - command:
+            - /kube-vip-cloud-provider
+            - --leader-elect-resource-name=kube-vip-cloud-controller
+          image: ghcr.io/kube-vip/kube-vip-cloud-provider:v0.0.11
+          name: kube-vip-cloud-provider
+          imagePullPolicy: Always
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
       serviceAccountName: kube-vip-cloud-controller
       tolerations:
-      - key: node-role.kubernetes.io/master
-        effect: NoSchedule
-      - key: node-role.kubernetes.io/control-plane
-        effect: NoSchedule
+        - key: node-role.kubernetes.io/control-plane
+          effect: NoSchedule
       affinity:
         nodeAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
-          - weight: 10
-            preference:
-              matchExpressions:
-              - key: node-role.kubernetes.io/control-plane
-                operator: Exists
-          - weight: 10
-            preference:
-              matchExpressions:
-              - key: node-role.kubernetes.io/master
-                operator: Exists
+            - weight: 10
+              preference:
+                matchExpressions:
+                  - key: node-role.kubernetes.io/control-plane
+                    operator: Exists

@@ -194,7 +194,7 @@ Follow the official guide: [Kube-Vip Documentation](https://kube-vip.io/docs/usa
 
 1. Go to the master node and create required directories and files:
    ```bash
-   su
+   sudo su
    mkdir -p /var/lib/rancher/k3s/server/manifests/
    curl https://kube-vip.io/manifests/rbac.yaml > /var/lib/rancher/k3s/server/manifests/kube-vip-rbac.yaml
    ```
@@ -240,13 +240,12 @@ Follow the official guide: [Kube-Vip Documentation](https://kube-vip.io/docs/usa
    ```
    > **Note:** Make sure to replace {USER} with your username
 
-2. Add the worker nodes (I made my second node a master node with the ```--server``` flag because I want two master nodes and 1 worker node in my configuration, if you want two worker nodes remove the above flag):
+2. Add the worker nodes.:
    ```bash
    k3sup join \
        --ip 10.15.21.12 \
        --server-ip 10.15.21.11 \
        --k3s-channel latest \
-       --server \
        --user {USER}
 
    k3sup join \
@@ -257,15 +256,13 @@ Follow the official guide: [Kube-Vip Documentation](https://kube-vip.io/docs/usa
    ```
    > **Note:** Make sure to replace {USER} with your username
 
-3. Re-enable the sudo password on all nodes:
-   ```bash
-   sudo sed -i '/$USER ALL=(ALL) NOPASSWD: ALL/d' /etc/sudoers
-   ```
-   > **Note:** Make sure to replace {USER} with your username
-
-4. Confirm everything was sucessful
+3. Confirm everything was sucessful
    ```bash
    kubectl get node -o wide
+   ```
+4. Re-enable the sudo password on all nodes:
+   ```bash
+   sudo sed -i '/$USER ALL=(ALL) NOPASSWD: ALL/d' /etc/sudoers
    ```
 
 ### Clean up config
@@ -325,17 +322,17 @@ Follow the official guide: [Kube-Vip Documentation](https://kube-vip.io/docs/usa
 
 1. Reference: [guide](https://kube-vip.io/docs/usage/cloud-provider/):
 
-2. Install the kube-vip Cloud Provider
+2. Install the kube-vip Cloud Provider (On your main computer)
    ```bash
    kubectl apply -f https://raw.githubusercontent.com/kube-vip/kube-vip-cloud-provider/main/manifest/kube-vip-cloud-controller.yaml
    ```
 3. Create a global CIDR or IP Range
    ```bash
-   kubectl create configmap -n kube-system kubevip --from-literal range-global=192.168.1.220-192.168.1.230
+   kubectl create configmap -n kube-system kubevip --from-literal range-global=10.15.21.29-10.15.21.128
    ```
    OR
    ```bash
-   kubectl create configmap -n kube-system kubevip --from-literal cidr-global=192.168.0.220/29
+   kubectl create configmap -n kube-system kubevip --from-literal cidr-global=192.168.0.1/29
    ```
 
 ---

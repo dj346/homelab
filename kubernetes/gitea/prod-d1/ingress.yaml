@@ -2,7 +2,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: gitea-ingress
-  namespace: traefik
+  namespace: gitea
   annotations:
     # Cert-manager annotation to automatically request and manage the certificate
     cert-manager.io/cluster-issuer: cloudflare-clusterissuer

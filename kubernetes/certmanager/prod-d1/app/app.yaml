@@ -14,7 +14,19 @@ spec:
       targetRevision: 1.16.3
       helm:
         valueFiles:
-        - $values/kubernetes/certmanager/prod-d1/certmanager-values.yaml
+        - $values/kubernetes/certmanager/prod-d1/values.yaml
     - repoURL: 'https://gitea.kube-prod-d1.mclacken.net/dj346/homelab.git'
       targetRevision: HEAD
+      path: kubernetes/certmanager/prod-d1
       ref: values
+  syncPolicy:
+    automated: 
+      prune: true 
+      selfHeal: true 
+      allowEmpty: false
+    retry:
+      limit: 0 # the number of retries to attempt
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 3m

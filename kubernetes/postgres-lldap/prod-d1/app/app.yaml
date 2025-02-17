@@ -10,8 +10,8 @@ spec:
     namespace: lldap
   sources:
     - repoURL: 'registry-1.docker.io/bitnamicharts'
-      path: 'postgresql'
-      chart: postgresql
+      path: 'postgresql-ha'
+      chart: postgresql-ha
       targetRevision: 16.4.9
       helm:
         valueFiles:

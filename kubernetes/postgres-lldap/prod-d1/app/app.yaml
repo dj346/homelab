@@ -9,7 +9,7 @@ spec:
     server: https://kubernetes.default.svc
     namespace: lldap
   sources:
-    - repoURL: oci://registry-1.docker.io/bitnamicharts
+    - repoURL: oci://registry-1.docker.io/bitnamicharts/postgresql
       chart: postgresql
       targetRevision: 16.4.9
       helm:

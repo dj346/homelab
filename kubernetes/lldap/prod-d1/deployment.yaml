@@ -1,0 +1,74 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    lldap: https://github.com/nitnelave/lldap
+    k8s: https://github.com/Evantage-WS/lldap-kubernetes
+  labels:
+    app: lldap
+  name: lldap
+  namespace: lldap
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: lldap
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+  template:
+    metadata:
+      annotations:
+        lldap: https://github.com/nitnelave/lldap
+        k8s: https://github.com/Evantage-WS/lldap-kubernetes
+      labels:
+        app: lldap
+    spec:
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: DoNotSchedule
+          labelSelector:
+            matchLabels:
+              app: lldap
+      containers:
+        - env:
+            - name: GID
+              value: "1001"
+            - name: LLDAP_JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: lldap-credentials
+                  key: lldap-jwt-secret
+            - name: LLDAP_LDAP_BASE_DN
+              valueFrom:
+                secretKeyRef:
+                  name: lldap-credentials
+                  key: base-dn
+            - name: LLDAP_LDAP_USER_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: lldap-credentials
+                  key: lldap-ldap-user-pass
+            - name: TZ
+              value: CET
+            - name: UID
+              value: "1001"
+            - name: LLDAP_DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: lldap-postgres-credentials
+                  key: database-url
+          image: nitnelave/lldap:latest
+          name: lldap
+          ports:
+            - containerPort: 3890
+            - containerPort: 17170
+          volumeMounts:
+            - mountPath: /data
+              name: lldap-data
+      restartPolicy: Always
+      volumes:
+        - name: lldap-data
+          emptyDir: {}

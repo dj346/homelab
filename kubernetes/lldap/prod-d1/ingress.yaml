@@ -1,0 +1,29 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: lldap-ingress
+  namespace: lldap
+  annotations:
+    # Cert-manager annotation to automatically request and manage the certificate
+    cert-manager.io/cluster-issuer: cloudflare-clusterissuer
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+
+    traefik.ingress.kubernetes.io/router.tls: "true"
+    traefik.ingress.kubernetes.io/forwarded-headers-insecure: "true"
+    traefik.ingress.kubernetes.io/proxy-protocol-insecure: "true"
+spec:
+  rules:
+    - host: lldapadmin.kube-prod-d1.mclacken.net
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: lldap-service
+                port:
+                  number: 17170
+  tls:
+    - hosts:
+        - lldapadmin.kube-prod-d1.mclacken.net
+      secretName: lldap-certificate-secret

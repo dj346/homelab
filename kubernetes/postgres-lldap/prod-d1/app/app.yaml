@@ -1,0 +1,32 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: postgres-lldap
+  namespace: argocd
+spec:
+  project: default
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: lldap
+  sources:
+    - repoURL: https://charts.bitnami.com/bitnami
+      chart: postgresql-ha
+      targetRevision: 15.1.9
+      helm:
+        valueFiles:
+        - $values/kubernetes/postgres-lldap/prod-d1/values.yaml
+    - repoURL: 'https://gitea.kube-prod-d1.mclacken.net/dj346/homelab.git'
+      targetRevision: HEAD
+      path: kubernetes/postgres-lldap/prod-d1
+      ref: values
+  syncPolicy:
+    automated: 
+      prune: true 
+      selfHeal: true 
+      allowEmpty: false
+    retry:
+      limit: 0 # the number of retries to attempt
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 3m

@@ -9,9 +9,9 @@ spec:
     server: https://kubernetes.default.svc
     namespace: lldap
   source:
-    - repoURL: 'https://gitea.kube-prod-d1.mclacken.net/dj346/homelab.git'
-      targetRevision: HEAD
-      path: kubernetes/lldap/prod-d1
+    repoURL: 'https://gitea.kube-prod-d1.mclacken.net/dj346/homelab.git'
+    targetRevision: HEAD
+    path: kubernetes/lldap/prod-d1
   syncPolicy:
     automated: 
       prune: true 

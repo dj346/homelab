@@ -3,13 +3,13 @@ kind: Application
 metadata:
   name: postgres
   namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
 spec:
   project: default
   destination:
     server: https://kubernetes.default.svc
     namespace: postgres
-    annotations:
-      argocd.argoproj.io/sync-wave: "2"
   sources:
     - repoURL: 'https://cloudnative-pg.github.io/charts'
       chart: cloudnative-pg

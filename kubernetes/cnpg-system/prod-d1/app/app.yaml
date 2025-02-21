@@ -20,7 +20,7 @@ spec:
       #       create: true
     - repoURL: 'https://gitea.kube-prod-d1.mclacken.net/dj346/homelab.git'
       targetRevision: HEAD
-      path: kubernetes/postgres/prod-d1
+      path: kubernetes/cnpg-system/prod-d1
   syncPolicy:
     syncOptions:
       - ServerSideApply=true

@@ -3,3 +3,4 @@ lldap-postgres-secret.yaml
 lldap-pgdb-credentials.yaml
 lldap-credentials.yaml
 postgres-admin-secret.yaml
+*secret*

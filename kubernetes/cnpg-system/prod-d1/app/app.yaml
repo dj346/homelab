@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: postgres
+  name: cnpg-operator
   namespace: argocd
   annotations:
     argocd.argoproj.io/sync-wave: "2"
@@ -9,7 +9,7 @@ spec:
   project: default
   destination:
     server: https://kubernetes.default.svc
-    namespace: postgres
+    namespace: cnpg-system
   sources:
     - repoURL: 'https://cloudnative-pg.github.io/charts'
       chart: cloudnative-pg

@@ -38,7 +38,7 @@ spec:
     name: postgres-admin-secret
 
   storage:
-    storageClass: standard
+    #storageClass: local-path
     size: 1Gi
 
   # backup:

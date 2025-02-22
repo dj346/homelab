@@ -65,10 +65,4 @@ spec:
           ports:
             - containerPort: 3890
             - containerPort: 17170
-          volumeMounts:
-            - mountPath: /data
-              name: lldap-data
       restartPolicy: Always
-      volumes:
-        - name: lldap-data
-          emptyDir: {}

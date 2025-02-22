@@ -1,10 +1,10 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: cnpg-operator
+  name: cnpg-cloudnative-pg
   namespace: argocd
-  annotations:
-    argocd.argoproj.io/sync-wave: "2"
+  #annotations:
+    #argocd.argoproj.io/sync-wave: "2"
 spec:
   project: default
   destination:
@@ -24,6 +24,7 @@ spec:
   syncPolicy:
     syncOptions:
       - ServerSideApply=true
+      - CreateNamespace=true 
     automated: 
       prune: true 
       selfHeal: true 

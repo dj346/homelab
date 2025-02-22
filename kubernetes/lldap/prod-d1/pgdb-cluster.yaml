@@ -34,8 +34,8 @@ spec:
     #  backup:
     #    name: backup-example
 
-  superuserSecret:
-    name: postgres-admin-secret
+  # superuserSecret:
+  #   name: postgres-admin-secret
 
   storage:
     #storageClass: local-path

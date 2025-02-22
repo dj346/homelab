@@ -13,7 +13,7 @@ metadata:
     traefik.ingress.kubernetes.io/proxy-protocol-insecure: "true"
 spec:
   rules:
-    - host: lldapadmin.kube-prod-d1.mclacken.net
+    - host: lldap-dashboard.kube-prod-d1.mclacken.net
       http:
         paths:
           - path: /
@@ -25,5 +25,5 @@ spec:
                   number: 17170
   tls:
     - hosts:
-        - lldapadmin.kube-prod-d1.mclacken.net
+        - lldap-dashboard.kube-prod-d1.mclacken.net
       secretName: lldap-certificate-secret

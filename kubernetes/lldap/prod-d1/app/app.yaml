@@ -13,6 +13,8 @@ spec:
     targetRevision: HEAD
     path: kubernetes/lldap/prod-d1
   syncPolicy:
+    syncOptions:
+      - CreateNamespace=true 
     automated: 
       prune: true 
       selfHeal: true 

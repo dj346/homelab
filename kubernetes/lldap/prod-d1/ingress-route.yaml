@@ -14,4 +14,4 @@ spec:
         - name: lldap-service
           port: 3890 
   tls:
-    secretName: ldaps-cert-secret  # Cert from cert-manager
+    secretName: lldap-ingressroute-certificate  # Cert from cert-manager

@@ -1,0 +1,12 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: lldap-ingressroute-certificate
+  namespace: lldap
+spec:
+  secretName: lldap-certificate-secret
+  issuerRef:
+    name: cloudflare-clusterissuer
+    kind: ClusterIssuer
+  dnsNames:
+    - lldap.kube-prod-d1.mclacken.net

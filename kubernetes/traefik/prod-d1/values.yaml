@@ -1,4 +1,13 @@
+additionalArguments:
+      - "--entrypoints.ldaps.address=:636/tcp"
+      
 ports:
+  ldaps:
+    port: 636
+    expose:
+      default: true
+    exposedPort: 636
+    protocol: TCP
   web:
     redirections:
       entryPoint:

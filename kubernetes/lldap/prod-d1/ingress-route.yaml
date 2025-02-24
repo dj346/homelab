@@ -15,4 +15,4 @@ spec:
           port: 3890 
   tls:
     passthrough: false
-    secretName: lldap-ingressroute-certificate  # Cert from cert-manager
+    secretName: lldap-certificate-secret  # Cert from cert-manager

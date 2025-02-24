@@ -1,3 +1,41 @@
+global:
+  # -- Default domain used by all netponents
+  ## Used for ingresses, certificates, SSO, notifications, etc.
+  domain: argocd.kube-prod-d1.mclacken.net
+
 server:
   extraArgs:
     - --insecure
+
+configs:
+  cm:
+    dex.config: |
+      connectors:
+      - type: ldap
+        name: my-ldap
+        id: ldap
+        config:
+          host: "lldap.kube-prod-d1.mclacken.net"
+          insecureNoSSL: true
+          insecureSkipVerify: false
+          bindDN: "$argocd-ldap-secret:ldap.bindDN"
+          bindPW: "$argocd-ldap-secret:ldap.bindPW"
+          usernamePrompt: Username
+          userSearch:
+            baseDN: "ou=users,dc=mclacken,dc=net"
+            filter: "(|(memberOf=cn=argocd_admins,ou=groups,dc=mclacken,dc=net)(memberOf=cn=argocd_users,ou=groups,dc=mclacken,dc=net))"
+            username: uid
+            idAttr: uid
+            emailAttr: mail
+            nameAttr: displayName
+          groupSearch:
+            baseDN: "ou=groups,dc=mclacken,dc=net"
+            filter: "(objectClass=groupOfNames)"
+            userAttr: DN
+            groupAttr: member
+            nameAttr: cn
+  rbac:
+    policy.csv: |
+      g, argocd_admins, role:admin
+      g, argocd_users, role:readonly
+    policy.default: role:readonly

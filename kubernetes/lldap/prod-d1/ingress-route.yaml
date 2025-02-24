@@ -3,8 +3,6 @@ kind: IngressRouteTCP
 metadata:
   name: ldaps-route
   namespace: lldap
-  #annotations:
-  #  kubernetes.io/ingress.class: traefik-external
 spec:
   entryPoints:
     - ldaps

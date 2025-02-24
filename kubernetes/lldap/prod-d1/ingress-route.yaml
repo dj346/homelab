@@ -9,7 +9,7 @@ spec:
   entryPoints:
     - ldaps
   routes:
-    - match: HostSNI(`*`)
+    - match: HostSNI(`lldap.kube-prod-d1.mclacken.net`)
       services:
         - name: lldap-service
           port: 3890 

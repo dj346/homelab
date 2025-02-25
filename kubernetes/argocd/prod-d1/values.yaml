@@ -21,7 +21,7 @@ configs:
           usernamePrompt: Username
           userSearch:
             baseDN: "ou=users,dc=mclacken,dc=net"
-            filter: "(|(memberOf=cn=argocd_admins,ou=groups,dc=mclacken,dc=net)(memberOf=cn=argocd_users,ou=groups,dc=mclacken,dc=net))"
+            filter: "(&(objectClass=person)(|(memberof=cn=argocd_users,ou=groups,dc=mclacken,dc=net)(memberof=cn=argocd_admins,ou=groups,dc=mclacken,dc=net)))"
             username: uid
             idAttr: uid
             emailAttr: mail
@@ -29,7 +29,7 @@ configs:
             preferredUsernameAttr: uid
           groupSearch:
             baseDN: "ou=groups,dc=mclacken,dc=net"
-            filter: "(objectClass=groupOfNames)"
+            filter: "(&(objectClass=groupofuniquenames)(|(cn=argocd_users)(cn=argocd_admins)))"
             nameAttr: cn
             userMatchers:
               - userAttr: DN

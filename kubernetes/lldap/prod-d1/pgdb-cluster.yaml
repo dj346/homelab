@@ -33,13 +33,13 @@ spec:
     #recovery:
     #  backup:
     #    name: backup-example
-
+              
   # superuserSecret:
   #   name: postgres-admin-secret
 
   storage:
     #storageClass: local-path
-    size: 1Gi
+    size: 5Gi
 
   # backup:
   #   barmanObjectStore:

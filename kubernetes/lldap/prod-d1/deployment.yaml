@@ -62,6 +62,13 @@ spec:
                   key: database-url
           image: nitnelave/lldap:latest
           name: lldap
+          resources:
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
           ports:
             - containerPort: 3890
             - containerPort: 17170

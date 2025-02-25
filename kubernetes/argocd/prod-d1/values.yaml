@@ -1,6 +1,4 @@
 global:
-  # -- Default domain used by all netponents
-  ## Used for ingresses, certificates, SSO, notifications, etc.
   domain: argocd.kube-prod-d1.mclacken.net
 
 server:

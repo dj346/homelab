@@ -12,12 +12,12 @@ configs:
     dex.config: |
       connectors:
       - type: ldap
-        name: my-ldap
+        name: lldap
         id: ldap
         config:
           host: "lldap.kube-prod-d1.mclacken.net"
           insecureNoSSL: true
-          insecureSkipVerify: false
+          insecureSkipVerify: true
           bindDN: "$argocd-ldap-secret:ldap.bindDN"
           bindPW: "$argocd-ldap-secret:ldap.bindPW"
           usernamePrompt: Username

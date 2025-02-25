@@ -20,7 +20,7 @@ configs:
           bindPW: "$argocd-ldap-bind-user-secret:lldap.bindPW"
           usernamePrompt: Username
           userSearch:
-            baseDN: "ou=users,dc=mclacken,dc=net"
+            baseDN: "dc=mclacken,dc=net"
             filter: "(&(objectClass=person)(|(memberof=cn=argocd_users,ou=groups,dc=mclacken,dc=net)(memberof=cn=argocd_admins,ou=groups,dc=mclacken,dc=net)))"
             username: uid
             idAttr: uid
@@ -28,7 +28,7 @@ configs:
             nameAttr: displayName
             preferredUsernameAttr: uid
           groupSearch:
-            baseDN: "ou=groups,dc=mclacken,dc=net"
+            baseDN: "dc=mclacken,dc=net"
             filter: "(&(objectClass=groupofuniquenames)(|(cn=argocd_users)(cn=argocd_admins)))"
             nameAttr: cn
             userMatchers:

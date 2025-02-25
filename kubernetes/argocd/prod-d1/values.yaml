@@ -6,6 +6,12 @@ global:
 server:
   extraArgs:
     - --insecure
+  env:
+    - name: ARGOCD_DEX_LDAP_BINDPW
+      valueFrom:
+        secretKeyRef:
+          name: ldap-bind-user-secret
+          key: bindPW
 
 configs:
   cm:
@@ -19,7 +25,7 @@ configs:
           insecureNoSSL: true
           insecureSkipVerify: true
           bindDN: "cn=argocd_service,dc=mclacken,dc=net"
-          bindPW: "$bindPW"
+          bindPW: "$ARGOCD_DEX_LDAP_BINDPW"
           usernamePrompt: Username
           userSearch:
             baseDN: "ou=users,dc=mclacken,dc=net"
@@ -33,11 +39,9 @@ configs:
             filter: "(objectClass=groupOfNames)"
             nameAttr: cn
             userMatchers:
-              - userAttr: DN  # ✅ Equivalent to the old `userAttr`
-                groupAttr: member  # ✅ Equivalent to the old `groupAttr`
-  
-  secret:
-    ldap.bindPWSecretName: argocd-ldap-bind-user-secret
+              - userAttr: DN
+                groupAttr: member
+
 
   rbac:
     policy.csv: |

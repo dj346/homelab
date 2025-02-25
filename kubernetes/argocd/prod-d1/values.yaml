@@ -18,7 +18,7 @@ configs:
           host: "lldap.kube-prod-d1.mclacken.net:636"
           insecureNoSSL: true
           insecureSkipVerify: true
-          bindDN: "$argocd-ldap-secret:ldap.bindDN"
+          bindDN: "cn=argocd_service,dc=mclacken,dc=net"
           bindPW: "$argocd-ldap-secret:ldap.bindPW"
           usernamePrompt: Username
           userSearch:
@@ -31,9 +31,10 @@ configs:
           groupSearch:
             baseDN: "ou=groups,dc=mclacken,dc=net"
             filter: "(objectClass=groupOfNames)"
-            userAttr: DN
-            groupAttr: member
             nameAttr: cn
+            userMatchers:
+              - userAttr: DN  # ✅ Equivalent to the old `userAttr`
+                groupAttr: member  # ✅ Equivalent to the old `groupAttr`
   rbac:
     policy.csv: |
       g, argocd_admins, role:admin

@@ -14,8 +14,8 @@ configs:
         id: ldap
         config:
           host: "lldap.kube-prod-d1.mclacken.net:636"
-          insecureNoSSL: true
-          insecureSkipVerify: true
+          insecureNoSSL: false
+          insecureSkipVerify: false
           bindDN: "cn=argocd_service,dc=mclacken,dc=net"
           bindPW: "$argocd-ldap-bind-user-secret:lldap.bindPW"
           usernamePrompt: Username

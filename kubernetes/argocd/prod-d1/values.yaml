@@ -19,7 +19,7 @@ configs:
           insecureNoSSL: true
           insecureSkipVerify: true
           bindDN: "cn=argocd_service,dc=mclacken,dc=net"
-          bindPW: "$argocd-ldap-secret:ldap.bindPW"
+          bindPW: "$argocd-ldap-bind-user-secret:ldap.bindPW"
           usernamePrompt: Username
           userSearch:
             baseDN: "ou=users,dc=mclacken,dc=net"

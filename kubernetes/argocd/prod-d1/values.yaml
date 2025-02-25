@@ -19,7 +19,7 @@ configs:
           insecureNoSSL: true
           insecureSkipVerify: true
           bindDN: "cn=argocd_service,dc=mclacken,dc=net"
-          bindPW: "$LDAP_BIND_PW"
+          bindPW: "$bindPW"
           usernamePrompt: Username
           userSearch:
             baseDN: "ou=users,dc=mclacken,dc=net"
@@ -37,13 +37,7 @@ configs:
                 groupAttr: member  # ✅ Equivalent to the old `groupAttr`
   
   secret:
-    extra:
-      # LDAP_BIND_DN:
-      #   name: ldap-bind-user-secret
-      #   key: ldap.bindDN
-      LDAP_BIND_PW:
-        name: ldap-bind-user-secret
-        key: bindPW
+    ldap.bindPWSecretName: argocd-ldap-bind-user-secret
 
   rbac:
     policy.csv: |

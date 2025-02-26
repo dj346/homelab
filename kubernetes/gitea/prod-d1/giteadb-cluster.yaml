@@ -1,59 +1,59 @@
-# apiVersion: postgresql.cnpg.io/v1
-# kind: Cluster
-# metadata:
-#   name: gitea-cluster
-#   namespace: gitea
-# spec:
-#   description: "Gitea CloudNativePG Cluster"
-#   instances: 3
-#   primaryUpdateStrategy: unsupervised
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: gitea-cluster
+  namespace: gitea
+spec:
+  description: "Gitea CloudNativePG Cluster"
+  instances: 3
+  primaryUpdateStrategy: unsupervised
 
-#   postgresql:
-#     parameters:
-#       shared_buffers: 256MB
-#       pg_stat_statements.max: '10000'
-#       pg_stat_statements.track: all
-#       auto_explain.log_min_duration: '10s'
+  postgresql:
+    parameters:
+      shared_buffers: 256MB
+      pg_stat_statements.max: '10000'
+      pg_stat_statements.track: all
+      auto_explain.log_min_duration: '10s'
 
-#     ldap:
-#       server: 'lldap-service.lldap.svc.cluster.local'  # Update to your LDAP server
-#       port: 3890 
-#       bindSearchAuth:
-#         baseDN: 'dc=mclacken,dc=net'  # Base DN where users are located
-#         bindDN: 'giteadb_service,ou=people,dc=mclacken,dc=net'  # Service account DN
-#         bindPassword:
-#           name: 'giteadb-service-secret'  # Secret containing bind password
-#           key: 'password'
-#         searchAttribute: 'uid'  # Attribute to look up users by (uid, cn, etc.)
-#         searchFilter: "(&(objectClass=person)(memberof=cn=gitea_users,ou=groups,dc=mclacken,dc=net))"
+    ldap:
+      server: 'lldap-service.lldap.svc.cluster.local'  # Update to your LDAP server
+      port: 3890 
+      bindSearchAuth:
+        baseDN: 'dc=mclacken,dc=net'  # Base DN where users are located
+        bindDN: 'giteadb_service,ou=people,dc=mclacken,dc=net'  # Service account DN
+        bindPassword:
+          name: 'giteadb-service-secret'  # Secret containing bind password
+          key: 'password'
+        searchAttribute: 'uid'  # Attribute to look up users by (uid, cn, etc.)
+        searchFilter: "(&(objectClass=person)(memberof=cn=giteadb_users,ou=groups,dc=mclacken,dc=net))"
 
-#     pg_hba:
-#       - host all all 10.244.0.0/16 md5
+    pg_hba:
+      - host all all 10.244.0.0/16 md5
 
-#   bootstrap:
-#     initdb:
-#       database: giteadb
-#       owner: giteadb-app  # LDAP user as owner
-#       secret:
-#         name: giteadb-app-secret  # The secret used by the db to connect to the db and create the tables.
+  bootstrap:
+    initdb:
+      database: giteadb
+      owner: giteadb-app  # LDAP user as owner
+      secret:
+        name: giteadb-app-secret  # The secret used by the db to connect to the db and create the tables.
 
-#   storage:
-#     size: 10Gi
+  storage:
+    size: 10Gi
 
-#   resources:
-#     requests:
-#       memory: "512Mi"
-#       cpu: "1"
-#     limits:
-#       memory: "1Gi"
-#       cpu: "2"
+  resources:
+    requests:
+      memory: "512Mi"
+      cpu: "1"
+    limits:
+      memory: "1Gi"
+      cpu: "2"
 
-#   affinity:
-#     enablePodAntiAffinity: true
-#     topologyKey: failure-domain.beta.kubernetes.io/zone
+  affinity:
+    enablePodAntiAffinity: true
+    topologyKey: failure-domain.beta.kubernetes.io/zone
 
-#   nodeMaintenanceWindow:
-#     inProgress: false
-#     reusePVC: true
+  nodeMaintenanceWindow:
+    inProgress: false
+    reusePVC: true
 
 

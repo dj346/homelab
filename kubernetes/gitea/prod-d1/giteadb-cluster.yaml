@@ -24,8 +24,8 @@ spec:
 
 
     ldap:
-      server: 'ldap://lldap-service.lldap.svc.cluster.local:3890'  # Update to your LDAP server
-      #port: 3890 
+      server: 'lldap-service.lldap.svc.cluster.local'  # Update to your LDAP server
+      port: 3890 
       bindSearchAuth:
         baseDN: 'dc=mclacken,dc=net'  # Base DN where users are located
         bindDN: 'uid=giteadb_service,ou=people,dc=mclacken,dc=net'  # Service account DN

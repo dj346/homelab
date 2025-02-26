@@ -15,9 +15,23 @@ spec:
       pg_stat_statements.track: all
       auto_explain.log_min_duration: '10s'
 
+      log_min_messages: debug5
+      log_min_error_statement: debug5
+      log_statement: 'all'
+      log_connections: 'on'
+      log_disconnections: 'on'
+      log_lock_waits: 'on'
+      log_temp_files: '0'
+      log_autovacuum_min_duration: '0'
+      logging_collector: 'on'
+      log_directory: '/var/log/postgresql'
+      log_filename: 'postgresql.log'
+      log_rotation_age: '1d'
+      log_rotation_size: '10MB'
+
     ldap:
-      server: 'lldap.kube-prod-d1.mclacken.net' # 'lldap-service.lldap.svc.cluster.local'  # Update to your LDAP server
-      port: 636 
+      server: 'lldap-service.lldap.svc.cluster.local'  # Update to your LDAP server
+      port: 3890 
       bindSearchAuth:
         baseDN: 'dc=mclacken,dc=net'  # Base DN where users are located
         bindDN: 'cn=giteadb_service,ou=people,dc=mclacken,dc=net'  # Service account DN

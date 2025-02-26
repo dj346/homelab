@@ -24,16 +24,16 @@ spec:
 
 
     ldap:
-      server: 'lldap-service.lldap.svc.cluster.local'  # Update to your LDAP server
-      port: 3890 
+      server: 'ldap://lldap-service.lldap.svc.cluster.local:3890'  # Update to your LDAP server
+      #port: 3890 
       bindSearchAuth:
         baseDN: 'dc=mclacken,dc=net'  # Base DN where users are located
-        bindDN: 'cn=giteadb_service,ou=people,dc=mclacken,dc=net'  # Service account DN
+        bindDN: 'uid=giteadb_service,ou=people,dc=mclacken,dc=net'  # Service account DN
         bindPassword:
           name: 'giteadb-service-secret'  # Secret containing bind password
           key: 'password'
         searchAttribute: 'uid'  # Attribute to look up users by (uid, cn, etc.)
-        searchFilter: "(&(objectClass=person)(memberof=cn=giteadb_users,ou=groups,dc=mclacken,dc=net))"
+        searchFilter: "(memberof=cn=giteadb_users,ou=groups,dc=example,dc=com)"
 
     #pg_hba:
     #  - host all all 10.244.0.0/16 md5

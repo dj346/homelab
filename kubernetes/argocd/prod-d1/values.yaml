@@ -13,9 +13,9 @@ configs:
         name: LLDAP
         id: ldap
         config:
-          host: "lldap.kube-prod-d1.mclacken.net:636"
-          insecureNoSSL: false
-          insecureSkipVerify: false
+          host: "lldap-service.lldap.svc.cluster.local:3890"
+          insecureNoSSL: true
+          insecureSkipVerify: true
           bindDN: "$argocd-ldap-bind-user-secret:lldap.bindDN"
           bindPW: "$argocd-ldap-bind-user-secret:lldap.bindPW"
           usernamePrompt: Username

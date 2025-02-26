@@ -20,7 +20,7 @@ spec:
       port: 3890 
       bindSearchAuth:
         baseDN: 'dc=mclacken,dc=net'  # Base DN where users are located
-        bindDN: 'uid=giteadb_service,ou=people,dc=mclacken,dc=net'  # Service account DN
+        bindDN: 'cn=giteadb_service,ou=people,dc=mclacken,dc=net'  # Service account DN
         bindPassword:
           name: 'giteadb-service-secret'  # Secret containing bind password
           key: 'password'

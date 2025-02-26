@@ -33,7 +33,7 @@ spec:
           name: 'giteadb-service-secret'  # Secret containing bind password
           key: 'password'
         searchAttribute: 'uid'  # Attribute to look up users by (uid, cn, etc.)
-        searchFilter: "(memberof=cn=giteadb_users,ou=groups,dc=example,dc=com)"
+        searchFilter: "(memberof=cn=giteadb_users,ou=groups,dc=mclacken,dc=net)"
 
     #pg_hba:
     #  - host all all 10.244.0.0/16 md5
@@ -41,9 +41,9 @@ spec:
   bootstrap:
     initdb:
       database: giteadb
-      #owner: giteadb_app  # LDAP user as owner
-      #secret:
-      #  name: giteadb-app-secret  # The secret used by the db to connect to the db and create the tables.
+      owner: giteadb_app  # LDAP user as owner
+      secret:
+        name: giteadb-app-secret  # The secret used by the db to connect to the db and create the tables.
 
   storage:
     size: 10Gi

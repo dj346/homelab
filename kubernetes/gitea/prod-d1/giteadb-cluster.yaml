@@ -23,8 +23,8 @@ spec:
       log_lock_waits: 'on'
 
     ldap:
-      server: 'lldap-service.lldap.svc.cluster.local'  # Update to your LDAP server
-      port: 3890 
+      server: 'ldap://lldap-service.lldap.svc.cluster.local:3890'  # Update to your LDAP server
+      #port: 3890 
       scheme: 'ldap'
       tls: false
       bindSearchAuth:

@@ -21,11 +21,7 @@ spec:
       log_connections: 'on'
       log_disconnections: 'on'
       log_lock_waits: 'on'
-      log_temp_files: '0'
-      log_autovacuum_min_duration: '0'
-      logging_collector: 'on'
-      log_rotation_age: '1d'
-      log_rotation_size: '10MB'
+
 
     ldap:
       server: 'lldap-service.lldap.svc.cluster.local'  # Update to your LDAP server

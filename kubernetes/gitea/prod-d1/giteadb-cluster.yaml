@@ -16,8 +16,8 @@ spec:
       auto_explain.log_min_duration: '10s'
 
     ldap:
-      server: 'ldap://lldap-service.lldap.svc.cluster.local'  # Update to your LDAP server
-      port: 3890 
+      server: 'lldap.kube-prod-d1.mclacken.net' # 'lldap-service.lldap.svc.cluster.local'  # Update to your LDAP server
+      port: 636 
       bindSearchAuth:
         baseDN: 'dc=mclacken,dc=net'  # Base DN where users are located
         bindDN: 'cn=giteadb_service,ou=people,dc=mclacken,dc=net'  # Service account DN

@@ -60,6 +60,8 @@ spec:
                 secretKeyRef:
                   name: pgdb-connection-secret
                   key: database-url
+            - name: LLDAP_VERBOSE
+              value: "true"
           image: nitnelave/lldap:latest
           name: lldap
           resources:

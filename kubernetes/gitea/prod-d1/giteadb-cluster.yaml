@@ -27,8 +27,8 @@ spec:
         searchAttribute: 'uid'  # Attribute to look up users by (uid, cn, etc.)
         searchFilter: "(&(objectClass=person)(memberof=cn=giteadb_users,ou=groups,dc=mclacken,dc=net))"
 
-    pg_hba:
-      - host all all 10.244.0.0/16 md5
+    #pg_hba:
+    #  - host all all 10.244.0.0/16 md5
 
   bootstrap:
     initdb:

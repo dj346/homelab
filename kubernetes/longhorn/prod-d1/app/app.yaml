@@ -11,7 +11,7 @@ spec:
   sources:
     - repoURL: https://charts.longhorn.io
       chart: longhorn
-      targetRevision: 1.8.0
+      targetRevision: v1.8.0
       helm:
         valueFiles:
         - $values/kubernetes/longhorn/prod-d1/values.yaml
@@ -20,6 +20,8 @@ spec:
       path: kubernetes/longhorn/prod-d1
       ref: values
   syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
     automated: 
       prune: true 
       selfHeal: true 

@@ -21,7 +21,7 @@ hostssl all cnpg_pooler_pgbouncer all cert
 #
 # LDAP CONFIGURATION (optional)
 #
-host all all 0.0.0.0/0 ldap ldapserver="ldap://lldap-service.lldap.svc.cluster.local:3890" ldapscheme="ldap" ldapbasedn="dc=mclacken,dc=net" ldapbinddn="uid=giteadb_service,ou=people,dc=mclacken,dc=net" ldapbindpasswd="Password123" ldapsearchfilter="(memberof=cn=giteadb_users,ou=groups,dc=mclacken,dc=net)" ldapsearchattribute="uid"
+host all all 0.0.0.0/0 ldap ldapserver="lldap-service.lldap.svc.cluster.local" ldapport=3890 ldapbasedn="dc=mclacken,dc=net" ldapbinddn="uid=giteadb_service,ou=people,dc=mclacken,dc=net" ldapbindpasswd="Password123" ldapsearchfilter="(memberof=cn=giteadb_users,ou=groups,dc=mclacken,dc=net)" ldapsearchattribute="uid"
 
 
 #

@@ -14,28 +14,9 @@ spec:
       pg_stat_statements.max: '10000'
       pg_stat_statements.track: all
       auto_explain.log_min_duration: '10s'
-
-      log_min_messages: debug5
-      log_min_error_statement: debug5
-      log_statement: 'all'
-      log_connections: 'on'
-      log_disconnections: 'on'
-      log_lock_waits: 'on'
-
-    ldap:
-      server: 'lldap-service.lldap.svc.cluster.local'  # Update to your LDAP server
-      port: 3890
-      bindSearchAuth:
-        baseDN: 'dc=mclacken,dc=net'  # Base DN where users are located
-        bindDN: 'uid=giteadb_service,ou=people,dc=mclacken,dc=net'  # Service account DN
-        bindPassword:
-          name: 'giteadb-service-secret'  # Secret containing bind password
-          key: 'password'
-        searchAttribute: 'uid'  # Attribute to look up users by (uid, cn, etc.)
-        searchFilter: "(memberof=cn=giteadb_users,ou=groups,dc=mclacken,dc=net)"
-
-    #pg_hba:
-    #  - host all all 10.244.0.0/16 md5
+      
+    pg_hba:
+      - host all all 10.244.0.0/16 md5
 
   bootstrap:
     initdb:

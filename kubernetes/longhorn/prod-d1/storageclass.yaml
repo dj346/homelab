@@ -1,0 +1,12 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: longhorn-strict-local
+provisioner: driver.longhorn.io
+allowVolumeExpansion: true
+parameters:
+  numberOfReplicas: "1"  # Avoid unnecessary write amplification
+  dataLocality: "strict-local"  # Ensures the volume stays on the same node as the pod
+  replicaAutoBalance: "disabled"  # Prevents unintended migration of volumes
+reclaimPolicy: Retain
+volumeBindingMode: WaitForFirstConsumer

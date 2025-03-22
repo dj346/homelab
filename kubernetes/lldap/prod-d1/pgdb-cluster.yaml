@@ -38,7 +38,7 @@ spec:
   #   name: postgres-admin-secret
 
   storage:
-    #storageClass: local-path
+    storageClass: longhorn-strict-local
     size: 5Gi
 
   # backup:

@@ -3,3 +3,9 @@ longhornUI:
 
 preUpgradeChecker:
   jobEnabled: false
+
+defaultSettings:
+  orphanAutoDeletion: false
+  autoDeletePodWhenVolumeDetachedUnexpectedly: true
+  nodeDownPodDeletionPolicy: delete-both-statefulset-and-deployment-pod
+  nodeDrainPolicy: always-allow

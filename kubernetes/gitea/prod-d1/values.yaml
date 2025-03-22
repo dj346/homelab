@@ -1,0 +1,65 @@
+global:
+  storageClass: "longhorn"
+
+persistence:
+  storageClass: "longhorn"
+  enabled: true
+
+postgresql:
+  enabled: false
+
+postgresql-ha:
+  enabled: false
+
+gitea:
+   ## @param gitea.ldap LDAP configuration
+  ldap:
+    - name: "LLDAP"
+      existingSecret: gitea-ldap-bind-user-secret
+      securityProtocol: unencrypted
+      host: lldap-service.lldap.svc.cluster.local
+      port: 3890
+      userSearchBase: "dc=mclacken,dc=net"
+      userFilter: "(&(objectClass=person)(|(memberof=cn=gitea-users,ou=groups,dc=mclacken,dc=net)(memberof=cn=gitea-admins,ou=groups,dc=mclacken,dc=net))(uid=%s))"
+      adminFilter: "(&(objectClass=person)(memberof=cn=gitea-admins,ou=groups,dc=mclacken,dc=net))"
+      emailAttribute: "mail"
+      usernameAttribute: "uid"
+      publicSSHKeyAttribute: "sshPublicKey"
+      firstnameAttribute: "givenName"
+      avatarAttribute: "jpegPhoto"
+      surnameAttribute: "sn"
+      synchronizeUsers: true
+
+  # Either specify inline `key` and `secret` or refer to them via `existingSecret`
+  ## @param gitea.oauth OAuth configuration
+  oauth:
+    []
+    # - name: 'OAuth 1'
+    #   provider:
+    #   key:
+    #   secret:
+    #   existingSecret:
+    #   autoDiscoverUrl:
+    #   useCustomUrls:
+    #   customAuthUrl:
+    #   customTokenUrl:
+    #   customProfileUrl:
+    #   customEmailUrl:
+
+  config:
+    database:
+      DB_TYPE: postgres
+      HOST: gitea-cluster-rw:5432
+      NAME: giteadb
+      USER: gitea-service-user
+      SCHEMA: public
+    
+    # log:
+    #   LEVEL: Trace
+  
+  additionalConfigFromEnvs:
+    - name: GITEA__DATABASE__PASSWD
+      valueFrom:
+        secretKeyRef:
+          name: pgdb-service-user-secret
+          key: password

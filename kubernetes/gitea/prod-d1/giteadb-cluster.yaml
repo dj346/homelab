@@ -21,11 +21,12 @@ spec:
   bootstrap:
     initdb:
       database: giteadb
-      owner: giteadb_app  # LDAP user as owner
+      owner: gitea-service-user
       secret:
-        name: giteadb-app-secret  # The secret used by the db to connect to the db and create the tables.
+        name: pgdb-service-user-secret  # The secret used by the db to connect to the db and create the tables.
 
   storage:
+    storageClass: longhorn-strict-local
     size: 10Gi
 
   resources:

@@ -1,6 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
+  namespace: lldap
   annotations:
     lldap: https://github.com/nitnelave/lldap
     k8s: https://github.com/Evantage-WS/lldap-kubernetes

@@ -32,13 +32,14 @@ spec:
       labels:
         app: archivebox
     spec:
+      restartPolicy: Always
       initContainers:
       - name: init-archivebox
         image: archivebox/archivebox
         args: ['init']
         volumeMounts:
           - mountPath: /data
-            name: archivebox
+            name: archivebox-storage
       containers:
       - name: archivebox
         args: ["server", "--quick-init", "0.0.0.0:8000"]
@@ -107,4 +108,4 @@ spec:
       - name: archivebox-storage
         persistentVolumeClaim:
           claimName: archivebox-pvc
-      restartPolicy: Always
+      

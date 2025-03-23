@@ -26,6 +26,19 @@
 - [Deploying LLDAP](#deploying-lldap)
   - [Create Namespace and Configure Secrets](#create-namespace-and-configure-secrets)
   - [Apply LLDAP Configuration](#apply-lldap-configuration)
+- [Deploying Gitea](#deploying-gitea)
+  - [Configure Gitea Secrets](#configure-gitea-secrets)
+  - [Deploy Gitea](#deploy-gitea)
+  - [Configure LLDAP Integration](#configure-lldap-integration)
+  - [Push Repository to Gitea](#push-repository-to-gitea)
+- [Deploying ArgoCD](#deploying-argocd)
+  - [Configure LLDAP Integration](#configure-lldap-integration-argocd)
+  - [Add Helm Repository & Install ArgoCD](#add-helm-repository--install-argocd)
+  - [Configure ArgoCD](#configure-argocd)
+  - [Install ArgoCD](#install-argocd)
+  - [Deploy Argocd Ingress](#deploy-argocd-ingress)
+  - [Retrieve Initial Password](#retrieve-initial-password)
+  - [Access ArgoCD GUI](#access-argocd-gui)
 - [Next Steps](#next-steps)
 
 ## Prerequisites
@@ -263,3 +276,101 @@ kubectl apply -f service.yaml
 
 ---
 
+## Deploying Gitea
+
+### Configure Gitea Secrets
+
+Edit and deploy the following secret files with your credentials:
+```sh
+kubectl apply -f gitea-bind-user-secret.yaml
+kubectl apply -f pgdb-service-user-secret.yaml
+```
+
+### Deploy Gitea Ingress
+
+Deploy the ingress configuration:
+```sh
+kubectl apply -f ingress.yaml
+kubectl apply -f giteadb-cluster.yaml
+```
+
+### Deploy Gitea
+
+Add the Gitea Helm repository:
+```sh
+helm repo add gitea-charts https://dl.gitea.com/charts/
+helm repo update
+```
+
+Install Gitea:
+```sh
+helm install gitea gitea-charts/gitea --create-namespace --namespace gitea --version 10.6.0 -f values.yaml
+```
+
+### Configure LLDAP Integration
+
+1. Log in to the LLDAP dashboard.
+2. Create a new account called `gitea-service`.
+3. Assign the role `lldap_strict_readonly` to `gitea-service`.
+4. Create two new groups: `gitea-users` and `gitea-admins`.
+5. Create your primary user (e.g., `dj346`).
+6. Assign your primary user to the `gitea-admins` group.
+
+### Push Repository to Gitea
+
+Log in to Gitea and create a new repository named `homelab`.
+
+On your local machine, navigate to your `homelab` repository and run:
+```sh
+cd homelab
+
+git remote add origin https://gitea.kube-prod-d1.mclacken.net/dj346/homelab.git
+git push -u origin main
+```
+
+---
+
+## Deploying ArgoCD
+
+### Configure LLDAP Integration
+
+1. Update `ldap-bind-user-secret.yaml` with your credentials and apply it.
+```sh
+kubectl create namespace argocd
+kubectl apply -f ldap-bind-user-secret.yaml
+```
+2. Create an LLDAP service account named `argocd-service`.
+3. Assign the role `lldap_strict_readonly` to `argocd-service`.
+4. Create two new groups: `argocd-admins` and `argocd-users`.
+5. Assign your primary user (e.g., `dj346`) to the `argocd-admins` group.
+
+### Add Helm Repository & Install ArgoCD
+```sh
+helm repo add argo https://argoproj.github.io/argo-helm
+helm repo update
+```
+
+### Install ArgoCD
+```sh
+helm install argocd argo-cd/argo-cd --create-namespace --namespace argocd -f values.yaml
+```
+> **Note:** This might take a second or two.
+
+### Deploy Argocd Ingress
+Deploy the config with:
+```sh
+kubectl apply -f ingressroute.yaml
+```
+
+### Retrieve Initial Password
+```sh
+kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
+```
+
+### Access ArgoCD GUI
+Login at `https://argocd.kube-prod-d1.domain.com` with username `admin` and the retrieved password. Change the password immediately.
+
+To enhance security, delete the initial admin secret **after** changing the password:
+```sh
+kubectl delete secret argocd-initial-admin-secret -n argocd
+```

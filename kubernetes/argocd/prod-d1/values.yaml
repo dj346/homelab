@@ -21,7 +21,7 @@ configs:
           usernamePrompt: Username
           userSearch:
             baseDN: "dc=mclacken,dc=net"
-            filter: "(&(objectClass=person)(|(memberof=cn=argocd_users,ou=groups,dc=mclacken,dc=net)(memberof=cn=argocd_admins,ou=groups,dc=mclacken,dc=net)))"
+            filter: "(&(objectClass=person)(|(memberof=cn=argocd-users,ou=groups,dc=mclacken,dc=net)(memberof=cn=argocd-admins,ou=groups,dc=mclacken,dc=net)))"
             username: uid
             idAttr: uid
             emailAttr: mail
@@ -29,7 +29,7 @@ configs:
             preferredUsernameAttr: uid
           groupSearch:
             baseDN: "dc=mclacken,dc=net"
-            filter: "(&(objectClass=groupofuniquenames)(|(cn=argocd_users)(cn=argocd_admins)))"
+            filter: "(&(objectClass=groupofuniquenames)(|(cn=argocd-users)(cn=argocd-admins)))"
             nameAttr: cn
             userMatchers:
               - userAttr: DN
@@ -37,6 +37,6 @@ configs:
 
   rbac:
     policy.csv: |
-      g, argocd_admins, role:admin
-      g, argocd_users, role:readonly
+      g, argocd-admins, role:admin
+      g, argocd-users, role:readonly
     policy.default: role:readonly

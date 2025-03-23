@@ -39,7 +39,7 @@
   - [Deploy Argocd Ingress](#deploy-argocd-ingress)
   - [Retrieve Initial Password](#retrieve-initial-password)
   - [Access ArgoCD GUI](#access-argocd-gui)
-- [Next Steps](#next-steps)
+- [Bootstrapping Applications into ArgoCD](#bootstrapping-applications-into-argocd)
 
 ## Prerequisites
 
@@ -374,4 +374,19 @@ Login at `https://argocd.kube-prod-d1.domain.com` with username `admin` and the 
 To enhance security, delete the initial admin secret **after** changing the password:
 ```sh
 kubectl delete secret argocd-initial-admin-secret -n argocd
+```
+
+---
+
+## Bootstrapping Applications into ArgoCD
+
+Apply the following manifests to bootstrap each application into ArgoCD:
+```sh
+kubectl apply -f kubernetes/argocd/prod-d1/app/app.yaml
+kubectl apply -f kubernetes/certmanager/prod-d1/app/app.yaml
+kubectl apply -f kubernetes/cnpg-system/prod-d1/app/app.yaml
+kubectl apply -f kubernetes/gitea/prod-d1/app/app.yaml
+kubectl apply -f kubernetes/lldap/prod-d1/app/app.yaml
+kubectl apply -f kubernetes/traefik/prod-d1/app/app.yaml
+kubectl apply -f kubernetes/longhorn/prod-d1/app/app.yaml
 ```

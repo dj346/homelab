@@ -1,0 +1,16 @@
+# NoVNC Service
+# To view/control ArchiveBox's browser, visit: http://127.0.0.1:8080/vnc.html
+apiVersion: v1
+kind: Service
+metadata:
+  name: novnc
+  namespace: archivebox
+spec:
+  selector:
+    app: novnc
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+      nodePort: 30081
+  type: NodePort

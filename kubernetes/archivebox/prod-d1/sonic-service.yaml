@@ -1,0 +1,15 @@
+# Sonic Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: sonic
+  namespace: archivebox
+spec:
+  selector:
+    app: sonic
+  ports:
+    - protocol: TCP
+      port: 1491
+      targetPort: 1491
+      nodePort: 30149
+  type: NodePort

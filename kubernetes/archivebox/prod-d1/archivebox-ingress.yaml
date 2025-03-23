@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: archivebox-ingress
+  namespace: archivebox
+  annotations:
+    cert-manager.io/cluster-issuer: cloudflare-clusterissuer
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+spec:
+  rules:
+    - host: archivebox.kube-prod-d1.mclacken.net
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: archivebox
+                port:
+                  number: 8000
+  tls:
+    - hosts:
+        - archivebox.kube-prod-d1.mclacken.net
+      secretName: archivebox-certificate-secret

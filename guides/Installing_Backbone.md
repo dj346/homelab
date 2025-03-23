@@ -360,6 +360,7 @@ helm install argocd argo-cd/argo-cd --create-namespace --namespace argocd -f val
 Deploy the config with:
 ```sh
 kubectl apply -f ingressroute.yaml
+kubectl apply -f certificate.yaml
 ```
 
 ### Retrieve Initial Password

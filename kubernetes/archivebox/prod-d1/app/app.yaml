@@ -1,17 +1,17 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: lldap
-  namespace: argocd
+  name: archivebox
+  namespace: archivebox
 spec:
   project: default
   destination:
     server: https://kubernetes.default.svc
-    namespace: lldap
+    namespace: archivebox
   source:
     repoURL: 'https://gitea.kube-prod-d1.mclacken.net/dj346/homelab.git'
     targetRevision: HEAD
-    path: kubernetes/lldap/prod-d1
+    path: kubernetes/archivebox/prod-d1
   syncPolicy:
     syncOptions:
       - CreateNamespace=true 

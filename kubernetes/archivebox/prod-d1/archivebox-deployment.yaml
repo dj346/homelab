@@ -91,7 +91,7 @@ spec:
         - name: LDAP_USER_BASE
           value: "dc=mclacken,dc=net"
         - name: LDAP_USER_FILTER
-          value: "(memberof=cn=archivebox-users,ou=groups,dc=mclacken,dc=net)"
+          value: "(&(objectClass=person)(memberOf=uid=archivebox-users,ou=groups,dc=mclacken,dc=net))"
         - name: LDAP_USERNAME_ATTR
           value: "uid"
         - name: LDAP_FIRSTNAME_ATTR

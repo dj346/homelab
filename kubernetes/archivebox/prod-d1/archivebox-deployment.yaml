@@ -36,7 +36,7 @@ spec:
       initContainers:
       - name: cleanup-lost-found
         image: busybox
-        command: ["sh", "-c", "ls -l /data"]
+        command: ["sh", "-c", "rm -rf /data/lost+found/; ls -la /data"]
         volumeMounts:
           - mountPath: /data
             name: archivebox-storage

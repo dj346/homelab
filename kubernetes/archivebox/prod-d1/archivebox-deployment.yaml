@@ -55,10 +55,17 @@ spec:
           protocol: TCP
           name: http
         env:
+        - name: ADMIN_USERNAME
+          value: "admin"
+        - name: ADMIN_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: archivebox-admin-secret
+              key: password
         - name: ALLOWED_HOSTS
           value: "*"
         - name: CSRF_TRUSTED_ORIGINS
-          value: "https://archivebox.kube-prod-d1.mclacken.net"
+          value: "http://archivebox.kube-prod-d1.mclacken.net"
         - name: PUBLIC_INDEX
           value: "true"
         - name: PUBLIC_SNAPSHOTS
@@ -115,3 +122,12 @@ spec:
         persistentVolumeClaim:
           claimName: archivebox-pvc
       
+
+# https://github.com/ArchiveBox/ArchiveBox/pull/1214
+# > There is a bit of an annoyance with how this currently works, which is that when a user logins in for the first time, 
+# > they are denied because they are not "staff". Once they get denied login for the first time, an existing superuser can 
+# > mark them as "superuser" and then they will be able to login properly. I tried to figure out a way to set all LDAP users 
+# > to superuser by default as a workaround, but I couldn't figure it out so that is not included in this PR. For now though, 
+# > this behavior is okay for me personally because user authentication is still handled centrally, even if I have to specifically 
+# > set all the users I want to have superuser permissions to actually be able to login. If in the future ArchiveBox does not require 
+# > any special user permissions to login, then first-time logins will succeed.

@@ -36,15 +36,13 @@ spec:
       initContainers:
       - name: cleanup-lost-found
         image: busybox
-        command: ["sh", "-c", "rm -rf /data/lost+found/; ls -la /data"]
+        command: ["sh", "-c", "rm -rf /data/lost+found"]
         volumeMounts:
           - mountPath: /data
             name: archivebox-storage
       - name: install-ldap
         image: archivebox/archivebox
-        command: ["/bin/sh", "-c"]
-        args:
-          - pip install archivebox[ldap]
+        command: ["/bin/sh", "-c", "pip install archivebox[ldap]"]
         volumeMounts:
           - mountPath: /data
             name: archivebox-storage

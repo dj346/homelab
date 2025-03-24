@@ -34,6 +34,12 @@ spec:
     spec:
       restartPolicy: Always
       initContainers:
+      - name: cleanup-lost-found
+        image: busybox
+        command: ["sh", "-c", "rm -rf /data/lost+found"]
+        volumeMounts:
+          - mountPath: /data
+            name: archivebox-storage
       - name: init-archivebox
         image: archivebox/archivebox
         args: ['init']
@@ -42,7 +48,7 @@ spec:
             name: archivebox-storage
       containers:
       - name: archivebox
-        args: ["server", "--quick-init", "0.0.0.0:8000"]
+        args: ["server", "--quick-init", "0.0.0.0:8000"] # 
         image: archivebox/archivebox:latest
         ports:
         - containerPort: 8000

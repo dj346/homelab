@@ -40,6 +40,14 @@ spec:
         volumeMounts:
           - mountPath: /data
             name: archivebox-storage
+      - name: install-ldap
+        image: archivebox/archivebox
+        command: ["/bin/sh", "-c"]
+        args:
+          - pip install archivebox[ldap]
+        volumeMounts:
+          - mountPath: /data
+            name: archivebox-storage
       - name: init-archivebox
         image: archivebox/archivebox
         args: ['init']

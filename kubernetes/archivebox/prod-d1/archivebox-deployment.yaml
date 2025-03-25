@@ -40,18 +40,88 @@ spec:
         volumeMounts:
           - mountPath: /data
             name: archivebox-storage
-      - name: install-ldap
-        image: archivebox/archivebox
-        command: ["/bin/sh", "-c", "pip install archivebox[ldap]"]
-        volumeMounts:
-          - mountPath: /data
-            name: archivebox-storage
       - name: init-archivebox
         image: archivebox/archivebox
         args: ['init']
         volumeMounts:
           - mountPath: /data
             name: archivebox-storage
+      - name: init-sonic-config
+        image: busybox
+        command: ["/bin/sh", "-c"]
+        args:
+          - |
+            mkdir -p /data/sonic/sonic.cfg
+            cat <<EOF > /data/sonic/sonic.cfg
+            [server]
+
+            # log_level = "debug"
+            log_level = "warn"
+
+            [channel]
+
+            inet = "0.0.0.0:1491"
+            tcp_timeout = 300
+
+            auth_password = "\${env.SEARCH_BACKEND_PASSWORD}"
+
+            [channel.search]
+
+            query_limit_default = 65535
+            query_limit_maximum = 65535
+            query_alternates_try = 10
+
+            suggest_limit_default = 5
+            suggest_limit_maximum = 20
+
+            [store]
+
+            [store.kv]
+
+            path = "/var/lib/sonic/store/kv/"
+
+            retain_word_objects = 100000
+
+            [store.kv.pool]
+
+            inactive_after = 1800
+
+            [store.kv.database]
+
+            flush_after = 900
+
+            compress = true
+            parallelism = 2
+            max_files = 100
+            max_compactions = 1
+            max_flushes = 1
+            write_buffer = 16384
+            write_ahead_log = true
+
+            [store.fst]
+
+            path = "/var/lib/sonic/store/fst/"
+
+            [store.fst.pool]
+
+            inactive_after = 300
+
+            [store.fst.graph]
+
+            consolidate_after = 180
+
+            max_size = 2048
+            max_words = 250000
+            EOF
+      - name: checkfile
+        image: busybox
+        command: ["sh", "-c", "ls -la /data; ls -la /data/sonic"]
+        volumeMounts:
+          - mountPath: /data
+            name: archivebox-storage
+      volumeMounts:
+        - mountPath: /data
+          name: archivebox-storage
       containers:
       - name: archivebox
         args: ["server", "--quick-init", "0.0.0.0:8000"] # 
@@ -87,32 +157,32 @@ spec:
             secretKeyRef:
               name: archivebox-backend-secret
               key: search-backend-password
-        - name: LDAP
-          value: "True"
-        - name: LDAP_SERVER_URI
-          value: "ldap://lldap-service.lldap.svc.cluster.local:3890"
-        - name: LDAP_BIND_DN
-          valueFrom:
-            secretKeyRef:
-              name: archivebox-bind-user-secret
-              key: bindDN
-        - name: LDAP_BIND_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: archivebox-bind-user-secret
-              key: bindPW
-        - name: LDAP_USER_BASE
-          value: "dc=mclacken,dc=net"
-        - name: LDAP_USER_FILTER
-          value: (objectClass=person) # "(&(objectClass=person)(memberOf=uid=archivebox-users,ou=groups,dc=mclacken,dc=net))"
-        - name: LDAP_USERNAME_ATTR
-          value: "uid"
-        - name: LDAP_FIRSTNAME_ATTR
-          value: "givenName"
-        - name: LDAP_LASTNAME_ATTR
-          value: "sn"
-        - name: LDAP_EMAIL_ATTR
-          value: "mail"
+        # - name: LDAP
+        #   value: "True"
+        # - name: LDAP_SERVER_URI
+        #   value: "ldap://lldap-service.lldap.svc.cluster.local:3890"
+        # - name: LDAP_BIND_DN
+        #   valueFrom:
+        #     secretKeyRef:
+        #       name: archivebox-bind-user-secret
+        #       key: bindDN
+        # - name: LDAP_BIND_PASSWORD
+        #   valueFrom:
+        #     secretKeyRef:
+        #       name: archivebox-bind-user-secret
+        #       key: bindPW
+        # - name: LDAP_USER_BASE
+        #   value: "dc=mclacken,dc=net"
+        # - name: LDAP_USER_FILTER
+        #   value: (objectClass=person) # "(&(objectClass=person)(memberOf=uid=archivebox-users,ou=groups,dc=mclacken,dc=net))"
+        # - name: LDAP_USERNAME_ATTR
+        #   value: "uid"
+        # - name: LDAP_FIRSTNAME_ATTR
+        #   value: "givenName"
+        # - name: LDAP_LASTNAME_ATTR
+        #   value: "sn"
+        # - name: LDAP_EMAIL_ATTR
+        #   value: "mail"
         resources:
           limits:
             cpu: "500m"

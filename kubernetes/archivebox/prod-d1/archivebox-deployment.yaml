@@ -51,7 +51,7 @@ spec:
         command: ["/bin/sh", "-c"]
         args:
           - |
-            mkdir -p /data/sonic/sonic.cfg
+            mkdir -p /data/sonic/
             cat <<EOF > /data/sonic/sonic.cfg
             [server]
 

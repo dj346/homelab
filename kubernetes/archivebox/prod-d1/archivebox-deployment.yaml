@@ -72,15 +72,6 @@ spec:
           value: "true"
         - name: PUBLIC_ADD_VIEW
           value: "false"
-        - name: SEARCH_BACKEND_ENGINE
-          value: "sonic"
-        - name: SEARCH_BACKEND_HOST_NAME
-          value: "sonic"
-        - name: SEARCH_BACKEND_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: archivebox-backend-secret
-              key: search-backend-password
         resources:
           limits:
             cpu: "500m"

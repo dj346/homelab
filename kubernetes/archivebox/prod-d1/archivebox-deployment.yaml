@@ -113,15 +113,15 @@ spec:
             max_size = 2048
             max_words = 250000
             EOF
+        volumeMounts:
+        - mountPath: /data
+          name: archivebox-storage
       - name: checkfile
         image: busybox
         command: ["sh", "-c", "ls -la /data; ls -la /data/sonic"]
         volumeMounts:
           - mountPath: /data
             name: archivebox-storage
-      volumeMounts:
-        - mountPath: /data
-          name: archivebox-storage
       containers:
       - name: archivebox
         args: ["server", "--quick-init", "0.0.0.0:8000"] # 

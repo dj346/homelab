@@ -5,7 +5,7 @@ metadata:
   name: sonic
   namespace: archivebox
 spec:
-  replicas: 0
+  replicas: 1
   selector:
     matchLabels:
       app: sonic
@@ -32,3 +32,10 @@ spec:
           requests:
             cpu: "100m"
             memory: "128Mi"
+        volumeMounts:
+            - name: sonic-storage
+              mountPath: /var/lib/sonic/store
+      volumes:
+        - name: sonic-storage
+          persistentVolumeClaim:
+            claimName: sonic-pvc

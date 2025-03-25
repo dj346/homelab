@@ -60,7 +60,7 @@ spec:
 
             [channel]
 
-            inet = "0.0.0.0:1491"
+            inet = "sonic.archivebox.svc.cluster.local:1491"
             tcp_timeout = 300
 
             auth_password = "\${env.SEARCH_BACKEND_PASSWORD}"

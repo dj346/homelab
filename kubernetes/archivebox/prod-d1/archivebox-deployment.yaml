@@ -118,7 +118,7 @@ spec:
           name: archivebox-storage
       - name: checkfile
         image: busybox
-        command: ["sh", "-c", "ls -la /data; ls -la /data/sonic"]
+        command: ["sh", "-c", "ls -la /data; cat /data/sonic/sonic.cfg"]
         volumeMounts:
           - mountPath: /data
             name: archivebox-storage

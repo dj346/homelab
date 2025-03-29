@@ -58,7 +58,7 @@ spec:
         - name: PUBLIC_ADD_VIEW
           value: "false"
         - name: YOUTUBEDL_ARGS
-          value: '["--write-description", "--write-info-json", "--write-annotations", "--write-thumbnail", "--no-call-home", "--write-sub", "--all-subs", "--write-auto-sub", "--convert-subs=srt", "--yes-playlist", "--continue", "--ignore-errors", "--geo-bypass", "--add-metadata", "--write-comments", "--max-filesize=$(MEDIA_MAX_SIZE)"]'
+          value: '["--write-description", "--write-info-json", "--write-annotations", "--write-thumbnail", "--no-call-home", "--write-sub", "--all-subs", "--write-auto-sub", "--convert-subs=srt", "--yes-playlist", "--continue", "--ignore-errors", "--geo-bypass", "--add-metadata", "--write-comments"]'
         resources:
           limits:
             cpu: "1"

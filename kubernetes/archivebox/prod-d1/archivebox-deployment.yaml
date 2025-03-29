@@ -27,10 +27,10 @@ spec:
         image: archivebox/archivebox
         args: ['init']
         volumeMounts:
-        - name: archivebox-storage
-          mountPath: /data
-        - name: archivebox-nfs
-          mountPath: /data/archive
+          - name: archivebox-storage
+            mountPath: /data
+          - name: archivebox-nfs
+            mountPath: /data/archive
       containers:
       - name: archivebox
         args: ["server", "--quick-init"] # 

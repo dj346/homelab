@@ -1,20 +1,3 @@
-# Usage:
-#     mkdir -p ~/archivebox/data && cd ~/archivebox
-#     curl -fsSL 'https://docker-compose.archivebox.io' > docker-compose.yml
-#     docker compose run archivebox version
-#     docker compose run archivebox config --set SAVE_ARCHIVE_DOT_ORG=False
-#     docker compose run archivebox add --depth=1 'https://news.ycombinator.com'
-#     docker compose run -T archivebox add < bookmarks.txt
-#     docker compose up -d && open 'https://localhost:8000'
-#     docker compose run archivebox help
-# Documentation:
-#     https://github.com/ArchiveBox/ArchiveBox/wiki/Docker#docker-compose
-
-# ArchiveBox Deployment with Longhorn for storage
-# This setup includes ArchiveBox, Sonic for search, and NoVNC for browser interaction
-# Persistent storage is managed via Longhorn
-
-# ArchiveBox Deployment
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -44,8 +27,10 @@ spec:
         image: archivebox/archivebox
         args: ['init']
         volumeMounts:
-          - mountPath: /data
-            name: archivebox-storage
+        - name: archivebox-storage
+          mountPath: /data
+        - name: archivebox-nfs
+          mountPath: /data/archive
       containers:
       - name: archivebox
         args: ["server", "--quick-init"] # 
@@ -79,9 +64,14 @@ spec:
           requests:
             cpu: "1"
             memory: "1Gi"
-        volumeMounts:
+        volumes:
         - name: archivebox-storage
-          mountPath: /data
+          persistentVolumeClaim:
+            claimName: archivebox-pvc
+        - name: archivebox-nfs
+          nfs:
+            server: 10.15.21.129
+            path: /mnt/user/archives/websites/archivebox
       volumes:
       - name: archivebox-storage
         persistentVolumeClaim:

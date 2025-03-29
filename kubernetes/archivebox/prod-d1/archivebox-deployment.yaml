@@ -64,7 +64,12 @@ spec:
           requests:
             cpu: "1"
             memory: "1Gi"
-        volumes:
+        volumeMounts:
+          - name: archivebox-storage
+            mountPath: /data
+          - name: archivebox-nfs
+            mountPath: /data/archive
+      volumes:
         - name: archivebox-storage
           persistentVolumeClaim:
             claimName: archivebox-pvc
@@ -72,8 +77,4 @@ spec:
           nfs:
             server: 10.15.21.129
             path: /mnt/user/archives/websites/archivebox
-      volumes:
-      - name: archivebox-storage
-        persistentVolumeClaim:
-          claimName: archivebox-pvc
     

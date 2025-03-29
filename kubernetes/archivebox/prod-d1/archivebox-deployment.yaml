@@ -76,5 +76,5 @@ spec:
         - name: archivebox-nfs
           nfs:
             server: 10.15.21.129
-            path: /mnt/user/archives/
+            path: /mnt/user/archives/websites/archivebox
     

@@ -63,9 +63,7 @@ spec:
   #   retentionPolicy: "30d"
 
   resources:
-    requests:
-      memory: "512Mi"
-      cpu: "1"
+    # requests: {}
     limits:
       memory: "1Gi"
       cpu: "2"

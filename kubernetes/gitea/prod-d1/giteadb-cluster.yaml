@@ -1,10 +1,10 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
-  name: gitea-cluster
-  namespace: gitea
+  name: immich-cluster
+  namespace: immich
 spec:
-  description: "Gitea CloudNativePG Cluster"
+  description: "Immich CloudNativePG Cluster"
   instances: 3
   primaryUpdateStrategy: unsupervised
 
@@ -20,8 +20,8 @@ spec:
 
   bootstrap:
     initdb:
-      database: giteadb
-      owner: gitea-service-user
+      database: immichdb
+      owner: immich-service-user
       secret:
         name: pgdb-service-user-secret  # The secret used by the db to connect to the db and create the tables.
 

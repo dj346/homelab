@@ -19,4 +19,4 @@ data:
   PUBLIC_LOGIN_PAGE_MESSAGE: ""
   PUID: "0"
   PGID: "0"
-  DB_PASSWORD: "password1223"
+  DB_PASSWORD: "password123"

@@ -9,9 +9,9 @@ spec:
     server: https://kubernetes.default.svc
     namespace: redis-operator
   source:
-    repoURL: 'https://cloudnative-pg.github.io/charts'
+    repoURL: 'https://spotahome.github.io/redis-operator'
     chart: redis-operator
-    targetRevision: 3.3.0
+    targetRevision: 3.2.9
     # helm:
     #   values: |
     #     crds:

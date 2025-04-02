@@ -8,18 +8,17 @@ spec:
   destination:
     server: https://kubernetes.default.svc
     namespace: redis-operator
-  sources:
-    - repoURL: https://spotahome.github.io/redis-operator
-      chart: redis-operator
-      targetRevision: 3.3.0
-      helm:
-        valueFiles:
-        - $values/kubernetes/redis-operator/prod-d1/values.yaml
-    - repoURL: 'https://gitea.kube-prod-d1.mclacken.net/dj346/homelab.git'
-      targetRevision: HEAD
-      path: kubernetes/redis-operator/prod-d1
-      ref: values
+  source:
+    repoURL: 'https://cloudnative-pg.github.io/charts'
+    chart: redis-operator
+    targetRevision: 3.3.0
+    # helm:
+    #   values: |
+    #     crds:
+    #       create: true
   syncPolicy:
+    syncOptions:
+      - CreateNamespace=true 
     automated: 
       prune: true 
       selfHeal: true 

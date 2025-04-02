@@ -10,17 +10,14 @@ spec:
   destination:
     server: https://kubernetes.default.svc
     namespace: cnpg-system
-  sources:
-    - repoURL: 'https://cloudnative-pg.github.io/charts'
-      chart: cloudnative-pg
-      targetRevision: 0.23.0
-      # helm:
-      #   values: |
-      #     crds:
-      #       create: true
-    - repoURL: 'https://gitea.kube-prod-d1.mclacken.net/dj346/homelab.git'
-      targetRevision: HEAD
-      path: kubernetes/cnpg-system/prod-d1
+  source:
+    repoURL: 'https://cloudnative-pg.github.io/charts'
+    chart: cloudnative-pg
+    targetRevision: 0.23.0
+    # helm:
+    #   values: |
+    #     crds:
+    #       create: true
   syncPolicy:
     syncOptions:
       - ServerSideApply=true

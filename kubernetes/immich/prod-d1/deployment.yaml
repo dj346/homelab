@@ -35,11 +35,16 @@ spec:
                 configMapKeyRef:
                   name: immich-env
                   key: DB_DATABASE_NAME
+            - name: POSTGRES_HOSTNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: immich-env
+                  key: DB_HOSTNAME
           command:
             - /bin/sh
             - -c
             - |
-              timeout 60 sh -c 'until pg_isready -U "${POSTGRES_USER}" -h immich-database -p 5432; do sleep 2; done'
+              timeout 60 sh -c 'until pg_isready -U "${POSTGRES_USER}" -h "${POSTGRES_HOSTNAME}" -p 5432; do sleep 2; done'
       containers:
         - name: immich-server
           image: "ghcr.io/immich-app/immich-server:release"

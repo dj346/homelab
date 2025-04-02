@@ -7,7 +7,7 @@ metadata:
     app: immich
 data:
   DB_DATABASE_NAME: "immichdb"
-  DB_HOSTNAME: "lldap-cluster-rw:5432"
+  DB_HOSTNAME: "lldap-cluster-rw"
   DB_USERNAME: "immich-service-user"
   IMMICH_MACHINE_LEARNING_URL: "http://immich-machine-learning:3003"
   REDIS_HOSTNAME: "redis-server.redis-server.svc.cluster.local"

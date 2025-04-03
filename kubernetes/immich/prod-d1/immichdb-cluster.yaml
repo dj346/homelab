@@ -5,7 +5,7 @@ metadata:
   namespace: immich
 spec:
   description: "Immich CloudNativePG Cluster"
-  instances: 1
+  instances: 3
   primaryUpdateStrategy: unsupervised
 
   postgresql:
@@ -31,7 +31,7 @@ spec:
 
   resources:
     requests: 
-      cpu: "0"
+      cpu: "10m"
     limits:
       memory: "1536Mi"
       cpu: "768m"

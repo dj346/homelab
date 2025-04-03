@@ -9,7 +9,7 @@ spec:
   primaryUpdateStrategy: unsupervised
 
   extensions:
-    - name: pgvector
+    - name: vector
       ensure: present
 
   postgresql:
@@ -28,6 +28,8 @@ spec:
       owner: immich-service-user
       secret:
         name: pgdb-service-user-secret  # The secret used by the db to connect to the db and create the tables.
+      postInitSQL:
+      - CREATE EXTENSION IF NOT EXISTS vector;
 
   storage:
     storageClass: longhorn-strict-local

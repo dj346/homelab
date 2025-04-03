@@ -60,7 +60,8 @@ spec:
         - name: YOUTUBEDL_ARGS
           value: '["--write-description", "--write-info-json", "--write-annotations", "--write-thumbnail", "--no-call-home", "--write-sub", "--all-subs", "--write-auto-sub", "--convert-subs=srt", "--yes-playlist", "--continue", "--ignore-errors", "--geo-bypass", "--add-metadata", "--write-comments"]'
         resources:
-            # requests: {}
+            requests: 
+              cpu: "0"
             limits:
               memory: "1536Mi"
               cpu: "1"

@@ -65,9 +65,8 @@ spec:
           image: nitnelave/lldap:latest
           name: lldap
           resources:
-            # requests:
-            #   memory: "512Mi"
-            #   cpu: "10m"
+            requests: 
+              cpu: "0"
             limits:
               memory: "1536Mi"
               cpu: "768m"

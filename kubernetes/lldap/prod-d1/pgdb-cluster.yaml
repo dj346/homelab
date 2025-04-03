@@ -63,11 +63,11 @@ spec:
   #   retentionPolicy: "30d"
 
   resources:
-    # requests: {}
+    requests: {}
     limits:
-      memory: "1Gi"
-      cpu: "2"
-
+      memory: "1536Mi"
+      cpu: "1"
+      
   affinity:
     enablePodAntiAffinity: true
     topologyKey: failure-domain.beta.kubernetes.io/zone

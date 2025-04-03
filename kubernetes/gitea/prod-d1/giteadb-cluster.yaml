@@ -30,9 +30,9 @@ spec:
     size: 10Gi
 
   resources:
-    requests:
-      memory: "512Mi"
-      cpu: "10m"
+    # requests:
+    #   memory: "512Mi"
+    #   cpu: "10m"
     limits:
       memory: "1536Mi"
       cpu: "768m"

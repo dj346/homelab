@@ -60,10 +60,12 @@ spec:
         - name: YOUTUBEDL_ARGS
           value: '["--write-description", "--write-info-json", "--write-annotations", "--write-thumbnail", "--no-call-home", "--write-sub", "--all-subs", "--write-auto-sub", "--convert-subs=srt", "--yes-playlist", "--continue", "--ignore-errors", "--geo-bypass", "--add-metadata", "--write-comments"]'
         resources:
+          requests:
+            memory: "512Mi"
+            cpu: "100m"
           limits:
-            cpu: "1"
-            memory: "2Gi"
-          requests: {}
+            memory: "1536Mi"
+            cpu: "500m"
         volumeMounts:
           - name: archivebox-storage
             mountPath: /data

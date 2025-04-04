@@ -5,6 +5,7 @@ metadata:
   namespace: immich
 spec:
   description: "Immich CloudNativePG Cluster"
+  imageName: dj346/cloudnative-pgvectors:latest
   instances: 1
   primaryUpdateStrategy: unsupervised
 

@@ -5,11 +5,20 @@ metadata:
   namespace: immich
 spec:
   description: "Immich CloudNativePG Cluster"
-  imageName: dj346/cloudnative-pgvectors:1.0.0
+  imageName: ghcr.io/tensorchord/cloudnative-pgvecto.rs:16.3-v0.2.1
   instances: 1
+  # superuserSecret:
+  #   name: immich-pg-superuser
   primaryUpdateStrategy: unsupervised
+  enableSuperuserAccess: true
+  startDelay: 30
+  stopDelay: 100
 
   postgresql:
+    shared_preload_libraries:
+      - "vectors.so"
+    enableAlterSystem: true
+
     parameters:
       shared_buffers: 256MB
       pg_stat_statements.max: '10000'
@@ -25,9 +34,18 @@ spec:
       owner: immich-service-user
       secret:
         name: pgdb-service-user-secret  # The secret used by the db to connect to the db and create the tables.
-      postInitSQL:
+      dataChecksums: true
+      postInitApplicationSQL:
         - ALTER SYSTEM SET search_path TO "$user", public, vectors;
+        - SET search_path TO "$user", public, vectors;
         - CREATE EXTENSION IF NOT EXISTS "vectors";
+        - CREATE EXTENSION IF NOT EXISTS "cube";
+        - CREATE EXTENSION IF NOT EXISTS "earthdistance";
+        - ALTER SCHEMA vectors OWNER TO "immich";
+        - GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA vectors TO "immich";
+        - GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO "immich";
+        # - CREATE EXTENSION IF NOT EXISTS "vector";
+        # - ALTER ROLE "immich" WITH "superuser";
 
   storage:
     storageClass: longhorn-strict-local

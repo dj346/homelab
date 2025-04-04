@@ -8,10 +8,6 @@ spec:
   instances: 1
   primaryUpdateStrategy: unsupervised
 
-  extensions:
-    - name: vector
-      ensure: present
-
   postgresql:
     parameters:
       shared_buffers: 256MB
@@ -29,7 +25,8 @@ spec:
       secret:
         name: pgdb-service-user-secret  # The secret used by the db to connect to the db and create the tables.
       postInitSQL:
-      - CREATE EXTENSION IF NOT EXISTS vector;
+        - ALTER SYSTEM SET search_path TO "$user", public, vectors;
+        - CREATE EXTENSION IF NOT EXISTS "vectors";
 
   storage:
     storageClass: longhorn-strict-local

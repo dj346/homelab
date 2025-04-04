@@ -1,0 +1,2 @@
+docker build . --build-arg="CNPG_TAG=16.8-8-bookworm" --build-arg="PGVECTORS_TAG=v0.4.0" -t dj346/cloudnative-pgvectors:latest
+docker push dj346/cloudnative-pgvectors:latest

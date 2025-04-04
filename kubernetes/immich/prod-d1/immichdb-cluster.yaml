@@ -41,9 +41,9 @@ spec:
         - CREATE EXTENSION IF NOT EXISTS "vectors";
         - CREATE EXTENSION IF NOT EXISTS "cube";
         - CREATE EXTENSION IF NOT EXISTS "earthdistance";
-        - ALTER SCHEMA vectors OWNER TO "immich";
-        - GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA vectors TO "immich";
-        - GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO "immich";
+        - ALTER SCHEMA vectors OWNER TO "immich-service-user";
+        - GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA vectors TO "immich-service-user";
+        - GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO "immich-service-user";
         # - CREATE EXTENSION IF NOT EXISTS "vector";
         # - ALTER ROLE "immich" WITH "superuser";
 

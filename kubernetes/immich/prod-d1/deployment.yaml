@@ -88,7 +88,6 @@ spec:
           volumeMounts:
             - name: library-nfs
               mountPath: /usr/src/app/upload
-              subPath: library
       volumes:
         - name: library-nfs
           nfs:

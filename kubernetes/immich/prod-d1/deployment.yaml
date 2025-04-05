@@ -58,7 +58,7 @@ spec:
               cpu: "10m"
             limits:
               memory: "1536Mi"
-              cpu: "1"
+              cpu: "4"
           env:
             - name: DB_PASSWORD
               valueFrom:

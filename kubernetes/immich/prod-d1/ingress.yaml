@@ -11,6 +11,8 @@ metadata:
     traefik.ingress.kubernetes.io/router.tls: "true"
     traefik.ingress.kubernetes.io/forwarded-headers-insecure: "true"
     traefik.ingress.kubernetes.io/proxy-protocol-insecure: "true"
+
+    traefik.ingress.kubernetes.io/router.middlewares: traefik-buffering-middleware@kubernetescrd
   labels:
     app: immich
 spec:

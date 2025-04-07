@@ -55,10 +55,10 @@ spec:
             - containerPort: 3001
           resources:
             requests: 
+              memory: "1Gi"
               cpu: "10m"
             limits:
-              memory: "8192Mi"
-              cpu: "4"
+              memory: "8Gi"
           env:
             - name: DB_PASSWORD
               valueFrom:

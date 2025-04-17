@@ -76,6 +76,6 @@ spec:
             claimName: archivebox-pvc
         - name: archivebox-nfs
           nfs:
-            server: 10.15.21.129
+            server: nas-unraid.mclacken.net
             path: /mnt/user/archives/websites/archivebox
     

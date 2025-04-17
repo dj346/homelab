@@ -91,5 +91,5 @@ spec:
       volumes:
         - name: library-nfs
           nfs:
-            server: 10.15.21.129
+            server: nas-unraid.mclacken.net
             path: /mnt/user/images/immich/

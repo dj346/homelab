@@ -5,9 +5,8 @@ metadata:
   namespace: traefik
 spec:
   buffering:
-    maxRequestBodyBytes: 107374182400       # 100 GB
+    maxRequestBodyBytes: 0
     memRequestBodyBytes: 20971520           # 20 MB
-    maxResponseBodyBytes: 107374182400
+    maxResponseBodyBytes: 0
     memResponseBodyBytes: 20971520
     retryExpression: "IsNetworkError()"
-    timeout: 120s

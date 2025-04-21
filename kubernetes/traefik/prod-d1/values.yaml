@@ -16,6 +16,17 @@ ports:
         to: websecure
         scheme: https
         permanent: true  # <-- Change this to false if you want a temporary redirect
+    transport:
+      respondingTimeouts:
+        readTimeout: 600s
+        writeTimeout: 600s
+        idleTimeout: 600s
+  websecure:
+    transport:
+      respondingTimeouts:
+        readTimeout: 600s
+        writeTimeout: 600s
+        idleTimeout: 600s
 ingressRoute:
   dashboard:
     enabled: true

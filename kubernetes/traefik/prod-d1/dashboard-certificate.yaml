@@ -1,0 +1,13 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: traefik-dashboard-certificate
+  namespace: traefik
+spec:
+  secretName: traefik-dashboard-certificate-secret
+  issuerRef:
+    name: cloudflare-clusterissuer
+    kind: ClusterIssuer
+  commonName: traefik-dashboard.kube-prod-d1.mclacken.net
+  dnsNames:
+    - traefik-dashboard.kube-prod-d1.mclacken.net

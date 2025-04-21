@@ -21,3 +21,5 @@ ingressRoute:
     enabled: true
     entryPoints: [websecure]
     matchRule: Host(`traefik-dashboard.kube-prod-d1.mclacken.net`)
+    tls:
+      secretName: traefik-dashboard-certificate-secret

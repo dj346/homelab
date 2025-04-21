@@ -10,3 +10,4 @@ spec:
     maxResponseBodyBytes: 107374182400
     memResponseBodyBytes: 20971520
     retryExpression: "IsNetworkError()"
+    timeout: 120s

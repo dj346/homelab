@@ -13,6 +13,16 @@ spec:
       labels:
         app: archivist-es
     spec:
+      initContainers:
+        - name: fix-permissions
+          image: busybox
+          command: ["sh", "-c", "chown -R 1000:0 /usr/share/elasticsearch/data"]
+          volumeMounts:
+            - name: cache
+              mountPath: /usr/share/elasticsearch/data
+          securityContext:
+            runAsUser: 0
+            runAsGroup: 0
       containers:
         - name: archivist-es
           image: bbilly1/tubearchivist-es

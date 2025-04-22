@@ -6,6 +6,8 @@ metadata:
   annotations:
     cert-manager.io/cluster-issuer: cloudflare-clusterissuer
     traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.middlewares: traefik-pywb-forwarded-headers@kubernetescrd
+
 spec:
   rules:
     - host: pywb.kube-prod-d1.mclacken.net

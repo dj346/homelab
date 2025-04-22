@@ -20,12 +20,6 @@ spec:
           name: redis-server
           ports:
             - containerPort: 6379
-          resources:
-            requests: 
-              cpu: "0"
-            limits:
-              memory: "512Mi"
-              cpu: "500m"
       restartPolicy: Always
 
 ---

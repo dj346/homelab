@@ -51,12 +51,12 @@ spec:
     storageClass: longhorn-strict-local
     size: 10Gi
 
-  resources:
-    requests: 
-      memory: "512Mi"
-      cpu: "10m"
-    limits:
-      memory: "2Gi"
+  # resources:
+  #   requests: 
+  #     memory: "512Mi"
+  #     cpu: "10m"
+  #   limits:
+  #     memory: "2Gi"
 
   affinity:
     enablePodAntiAffinity: true

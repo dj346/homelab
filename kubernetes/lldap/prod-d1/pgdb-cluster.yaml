@@ -62,12 +62,12 @@ spec:
   #       jobs: 2
   #   retentionPolicy: "30d"
 
-  resources:
-    requests: 
-      cpu: "0"
-    limits:
-      memory: "1536Mi"
-      cpu: "1"
+  # resources:
+  #   requests: 
+  #     cpu: "0"
+  #   limits:
+  #     memory: "1536Mi"
+  #     cpu: "1"
       
   affinity:
     enablePodAntiAffinity: true

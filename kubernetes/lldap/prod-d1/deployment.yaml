@@ -64,12 +64,6 @@ spec:
               value: "true"
           image: nitnelave/lldap:latest
           name: lldap
-          resources:
-            requests: 
-              cpu: "0"
-            limits:
-              memory: "1536Mi"
-              cpu: "768m"
           ports:
             - containerPort: 3890
             - containerPort: 17170

@@ -122,12 +122,12 @@ spec:
       - name: coredns
         image: "rancher/mirrored-coredns-coredns:1.12.0"
         imagePullPolicy: IfNotPresent
-        resources:
-          limits:
-            memory: 170Mi
-          requests:
-            cpu: 100m
-            memory: 70Mi
+        # resources:
+        #   limits:
+        #     memory: 170Mi
+        #   requests:
+        #     cpu: 100m
+        #     memory: 70Mi
         args: [ "-conf", "/etc/coredns/Corefile" ]
         volumeMounts:
         - name: config-volume

@@ -71,12 +71,12 @@ spec:
         image: ghcr.io/kube-vip/kube-vip:v0.8.9
         imagePullPolicy: IfNotPresent
         name: kube-vip
-        resources: 
-          requests:
-            cpu: 10m
-            memory: 64Mi
-          limits:
-            memory: 128Mi
+        # resources: 
+        #   requests:
+        #     cpu: 10m
+        #     memory: 64Mi
+        #   limits:
+        #     memory: 128Mi
         securityContext:
           capabilities:
             add:

@@ -37,12 +37,14 @@ spec:
               value: verysecret
             - name: TZ
               value: America/Los_Angeles
-          # readinessProbe:
-          #   httpGet:
-          #     path: /api/health
-          #     port: 8000
-          #   initialDelaySeconds: 30
-          #   periodSeconds: 120
+          readinessProbe:
+            exec:
+              command:
+                - curl
+                - -f
+                - https://localhost:8000/api/health/
+            initialDelaySeconds: 60
+            periodSeconds: 30
           volumeMounts:
             - name: media
               mountPath: /youtube

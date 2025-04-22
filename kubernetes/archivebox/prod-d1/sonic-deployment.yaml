@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sonic
+  namespace: archivebox
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sonic
+  template:
+    metadata:
+      labels:
+        app: sonic
+    spec:
+      containers:
+        - name: sonic
+          image: archivebox/sonic:latest
+          ports:
+            - containerPort: 1491
+          env:
+            - name: SEARCH_BACKEND_PASSWORD
+              value: SomeSecretPassword
+          volumeMounts:
+            - name: sonic-data
+              mountPath: /var/lib/sonic/store
+      volumes:
+        - name: sonic-data
+          persistentVolumeClaim:
+            claimName: sonic-pvc

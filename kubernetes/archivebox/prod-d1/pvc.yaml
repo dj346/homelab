@@ -5,7 +5,7 @@ metadata:
   namespace: archivebox
 spec:
   accessModes:
-    - ReadWriteMany
+    - ReadWriteMany # This should be ReadWriteOnce.
   resources:
     requests:
       storage: 5Gi

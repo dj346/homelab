@@ -7,4 +7,6 @@ spec:
   selector:
     app: pywb
   ports:
-    - port: 8080
+    - protocol: TCP
+      port: 8080
+  type: ClusterIP

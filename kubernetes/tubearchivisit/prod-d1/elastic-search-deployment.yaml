@@ -32,13 +32,6 @@ spec:
           volumeMounts:
             - name: cache
               mountPath: /usr/share/elasticsearch/data
-          resources:
-            requests:
-              memory: "2Gi"
-              cpu: "1"
-            limits:
-              memory: "4Gi"
-              cpu: "2"
           securityContext:
             runAsUser: 1000
             runAsGroup: 1000

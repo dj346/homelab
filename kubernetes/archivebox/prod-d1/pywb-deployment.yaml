@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pywb
+  namespace: archivebox
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pywb
+  template:
+    metadata:
+      labels:
+        app: pywb
+    spec:
+      containers:
+        - name: pywb
+          image: webrecorder/pywb:latest
+          command: ["/bin/sh", "-c"]
+          args:
+            - >
+              (wb-manager init default || test $$? -eq 2) &&
+              wb-manager add default /archivebox/archive/*/warc/*.warc.gz;
+              wayback;
+          env:
+            - name: INIT_COLLECTION
+              value: "archivebox"
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - name: archivebox-data
+              mountPath: /archivebox
+            - name: pywb-data
+              mountPath: /webarchive
+      volumes:
+        - name: archivebox-data
+          persistentVolumeClaim:
+            claimName: archivebox-pvc
+        - name: pywb-data
+          persistentVolumeClaim:
+            claimName: wayback-pvc

@@ -20,7 +20,7 @@ spec:
           args:
             - >
               (wb-manager init default || test $$? -eq 2) &&
-              wb-manager add default /archivebox/archive/*/warc/*.warc.gz;
+              wb-manager add default /archivebox/*/warc/*.warc.gz;
               wayback;
           env:
             - name: INIT_COLLECTION
@@ -28,14 +28,15 @@ spec:
           ports:
             - containerPort: 8080
           volumeMounts:
-            - name: archivebox-data
+            - name: archivebox-nfs
               mountPath: /archivebox
             - name: pywb-data
               mountPath: /webarchive
       volumes:
-        - name: archivebox-data
-          persistentVolumeClaim:
-            claimName: archivebox-pvc
+        - name: archivebox-nfs
+          nfs:
+            server: 10.15.21.132
+            path: /mnt/user/archives/websites/archivebox
         - name: pywb-data
           persistentVolumeClaim:
             claimName: pywb-pvc

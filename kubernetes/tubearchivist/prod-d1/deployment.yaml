@@ -38,11 +38,9 @@ spec:
             - name: TZ
               value: America/Los_Angeles
           readinessProbe:
-            exec:
-              command:
-                - curl
-                - -f
-                - http://localhost:8000/api/health/
+            httpGet:
+              path: /api/health
+              port: 8000
             initialDelaySeconds: 60
             periodSeconds: 30
           volumeMounts:

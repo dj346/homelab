@@ -11,6 +11,5 @@ spec:
     - protocol: TCP
       port: 8000
       targetPort: 8000
-      nodePort: 30080
       name: http
   type: NodePort

@@ -7,4 +7,4 @@ spec:
   selector:
     app: sonic-service
   ports:
-    - port: 9200
+    - port: 1491

@@ -68,7 +68,7 @@ spec:
         - name: SEARCH_BACKEND_ENGINE
           value: "sonic"
         - name: SEARCH_BACKEND_HOST_NAME
-          value: "http://sonic-service:1491"
+          value: "sonic-service"
         - name: SEARCH_BACKEND_PASSWORD
           value: "SomeSecretPassword"
         - name: YOUTUBEDL_ARGS

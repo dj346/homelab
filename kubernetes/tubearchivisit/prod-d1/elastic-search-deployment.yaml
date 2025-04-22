@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: archivist-es
+  namespace: tubearchivist
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: archivist-es
+  template:
+    metadata:
+      labels:
+        app: archivist-es
+    spec:
+      containers:
+        - name: archivist-es
+          image: bbilly1/tubearchivist-es
+          ports:
+            - containerPort: 9200
+          env:
+            - name: ELASTIC_PASSWORD
+              value: verysecret
+            - name: ES_JAVA_OPTS
+              value: -Xms1g -Xmx1g
+            - name: xpack.security.enabled
+              value: "true"
+            - name: discovery.type
+              value: single-node
+            - name: path.repo
+              value: /usr/share/elasticsearch/data/snapshot
+          volumeMounts:
+            - name: cache
+              mountPath: /usr/share/elasticsearch/data
+          resources:
+            requests:
+              memory: "2Gi"
+              cpu: "1"
+            limits:
+              memory: "4Gi"
+              cpu: "2"
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+            allowPrivilegeEscalation: false
+      volumes:
+        - name: cache
+          persistentVolumeClaim:
+            claimName: es-pvc

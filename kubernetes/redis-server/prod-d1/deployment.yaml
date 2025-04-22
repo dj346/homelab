@@ -42,3 +42,7 @@ spec:
     - port: 6379
   selector:
     app: redis-server
+
+# Currently used DB's 
+# 0 - immich
+# 1 - archivebox

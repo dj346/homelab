@@ -6,7 +6,7 @@ metadata:
 spec:
   buffering:
     maxRequestBodyBytes: 0
-    memRequestBodyBytes: 104857600           # 20 MB
+    memRequestBodyBytes: 104857600
     maxResponseBodyBytes: 0
     memResponseBodyBytes: 104857600
     retryExpression: "IsNetworkError()"

@@ -5,5 +5,8 @@ metadata:
   namespace: traefik
 spec:
   headers:
-    customRequestHeaders:
-      X-Forwarded-Proto: https
+    contentSecurityPolicy: "default-src https: 'self'; img-src https: data:; script-src https: 'unsafe-inline'; style-src https: 'unsafe-inline';"
+    sslRedirect: true
+    stsSeconds: 31536000
+    forceSTSHeader: true
+    stsIncludeSubdomains: true

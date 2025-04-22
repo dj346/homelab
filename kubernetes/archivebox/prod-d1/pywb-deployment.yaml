@@ -38,4 +38,4 @@ spec:
             claimName: archivebox-pvc
         - name: pywb-data
           persistentVolumeClaim:
-            claimName: wayback-pvc
+            claimName: pywb-pvc

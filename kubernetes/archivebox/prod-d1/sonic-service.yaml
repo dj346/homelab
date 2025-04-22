@@ -7,7 +7,4 @@ spec:
   selector:
     app: sonic-service
   ports:
-    - protocol: TCP
-      port: 1491
-      targetPort: 1491
-  clusterIP: None # headless service for direct DNS resolution if needed
+    - port: 9200

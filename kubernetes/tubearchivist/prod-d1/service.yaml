@@ -4,9 +4,10 @@ metadata:
   name: tubearchivist
   namespace: tubearchivist
 spec:
-  type: NodePort
+  type: ClusterIP
   ports:
     - port: 8000
       targetPort: 8000
+      protocol: TCP
   selector:
     app: tubearchivist

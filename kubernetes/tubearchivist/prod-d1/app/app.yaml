@@ -1,17 +1,17 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: archivebox
-  namespace: tubearchivsit
+  name: tubearchivist
+  namespace: argocd
 spec:
   project: default
   destination:
     server: https://kubernetes.default.svc
-    namespace: archivebox
+    namespace: tubearchivist
   source:
     repoURL: 'https://gitea.kube-prod-d1.mclacken.net/dj346/homelab.git'
     targetRevision: HEAD
-    path: kubernetes/tubearchivsit/prod-d1
+    path: kubernetes/tubearchivist/prod-d1
   syncPolicy:
     syncOptions:
       - CreateNamespace=true 

@@ -17,17 +17,18 @@ spec:
     spec:
       restartPolicy: Always
       initContainers:
-      - name: wait-for-sonic
-        image: curlimages/curl:latest
-        command: ["sh", "-c"]
-        args:
-          - |
-            echo "Waiting for sonic-service to be available..."
-            until curl -s --fail sonic-service:1491; do
-              echo "Still waiting..."
-              sleep 2
-            done
-            echo "Sonic is up!"
+      # - name: wait-for-sonic
+      #   image: curlimages/curl:latest
+      #   command: ["sh", "-c"]
+      #   args:
+      #     - |
+      #       echo "Waiting for sonic-service to be available..."
+      #       until curl -s --fail sonic-service:1491; do
+      #         echo "Still waiting..."
+      #         sleep 2
+      #       done
+      #       echo "Sonic is up!"
+
       - name: cleanup-lost-found
         image: busybox
         command: ["sh", "-c", "rm -rf /data/lost+found"]

@@ -28,7 +28,7 @@ spec:
             - name: HOST_GID
               value: "1000"
             - name: TA_HOST
-              value: https://tubearchivist.kube-prod-d1.mclacken.net
+              value: http://tubearchivist.tubearchivist.svc.cluster.local
             - name: TA_USERNAME
               value: tubearchivist
             - name: TA_PASSWORD

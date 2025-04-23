@@ -62,7 +62,6 @@ spec:
         - mountPath: /cache
           name: jellyfin-media
           subPath: jellyfin-cache
-          readOnly: True
 
         - mountPath: /data/music
           name: jellyfin-music

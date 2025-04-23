@@ -20,7 +20,10 @@ spec:
             - containerPort: 1491
           env:
             - name: SEARCH_BACKEND_PASSWORD
-              value: SomeSecretPassword
+              valueFrom:
+                secretKeyRef:
+                  name: sonic-secret
+                  key: SEARCH_BACKEND_PASSWORD
           volumeMounts:
             - name: sonic-data
               mountPath: /var/lib/sonic/store

@@ -81,11 +81,15 @@ spec:
         - name: SEARCH_BACKEND_HOST_NAME
           value: "sonic-service"
         - name: SEARCH_BACKEND_PASSWORD
-          value: "SomeSecretPassword"
+          valueFrom:
+            secretKeyRef:
+              name: sonic-secret
+              key: SEARCH_BACKEND_PASSWORD
         - name: YOUTUBEDL_ARGS
           value: >
             ["--write-description",
             "--write-info-json",
+            "--skip-download",
             "--write-annotations",
             "--write-thumbnail",
             "--no-call-home",

@@ -80,7 +80,7 @@ spec:
       - name: jellyfin-music
         nfs:
           server: 10.15.21.132
-          path: /mnt/user/audio/music
+          path: /mnt/user/audio/
       - name: jellyfin-media
         nfs:
           server: 10.15.21.132

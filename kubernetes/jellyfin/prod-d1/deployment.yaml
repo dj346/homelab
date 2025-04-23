@@ -59,6 +59,10 @@ spec:
           name: jellyfin-media
           subPath: youtube
           readOnly: True
+        - mountPath: /cache
+          name: jellyfin-media
+          subPath: jellyfin-cache
+          readOnly: True
 
         - mountPath: /data/music
           name: jellyfin-music

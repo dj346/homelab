@@ -83,23 +83,23 @@ spec:
         - name: SEARCH_BACKEND_PASSWORD
           value: "SomeSecretPassword"
         - name: YOUTUBEDL_ARGS
-        value: >
-          ["--write-description",
-          "--write-info-json",
-          "--write-annotations",
-          "--write-thumbnail",
-          "--no-call-home",
-          "--write-sub",
-          "--all-subs",
-          "--write-auto-sub",
-          "--convert-subs=srt",
-          "--yes-playlist",
-          "--continue",
-          "--ignore-errors",
-          "--geo-bypass",
-          "--add-metadata",
-          "--write-comments",
-          "--exec=if [[ '%(extractor)s' == 'youtube' ]]; then curl -s -X POST https://tubearchivist.kube-prod-d1.mclacken.net/api/download/ -H 'Authorization: Token 6cc29be399da3dd84e419d9761bf51557632b138' -H 'Content-Type: application/json' -d '{\"data\":[{\"youtube_id\":\"%(id)s\",\"status\":\"pending\"}],\"autostart\":true}'; fi"]
+          value: >
+            ["--write-description",
+            "--write-info-json",
+            "--write-annotations",
+            "--write-thumbnail",
+            "--no-call-home",
+            "--write-sub",
+            "--all-subs",
+            "--write-auto-sub",
+            "--convert-subs=srt",
+            "--yes-playlist",
+            "--continue",
+            "--ignore-errors",
+            "--geo-bypass",
+            "--add-metadata",
+            "--write-comments",
+            "--exec=if [[ '%(extractor)s' == 'youtube' ]]; then curl -s -X POST https://tubearchivist.kube-prod-d1.mclacken.net/api/download/ -H 'Authorization: Token 6cc29be399da3dd84e419d9761bf51557632b138' -H 'Content-Type: application/json' -d '{\"data\":[{\"youtube_id\":\"%(id)s\",\"status\":\"pending\"}],\"autostart\":true}'; fi"]
         volumeMounts:
           - name: archivebox-storage
             mountPath: /data

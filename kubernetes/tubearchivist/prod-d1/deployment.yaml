@@ -39,7 +39,6 @@ spec:
                 secretKeyRef:
                   name: tubearchivist-admin-secret
                   key: TA_PASSWORD
-              value: verysecret
             - name: ELASTIC_PASSWORD
               valueFrom:
                 secretKeyRef:

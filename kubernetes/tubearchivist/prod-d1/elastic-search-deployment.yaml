@@ -30,7 +30,10 @@ spec:
             - containerPort: 9200
           env:
             - name: ELASTIC_PASSWORD
-              value: verysecret
+              valueFrom:
+                secretKeyRef:
+                  name: elastic-secret
+                  key: ELASTIC_PASSWORD
             - name: ES_JAVA_OPTS
               value: -Xms1g -Xmx1g
             - name: xpack.security.enabled

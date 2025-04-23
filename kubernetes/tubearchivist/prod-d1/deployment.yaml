@@ -30,11 +30,21 @@ spec:
             - name: TA_HOST
               value: https://tubearchivist.kube-prod-d1.mclacken.net
             - name: TA_USERNAME
-              value: tubearchivist
+              valueFrom:
+                secretKeyRef:
+                  name: tubearchivist-admin-secret
+                  key: TA_USERNAME
             - name: TA_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: tubearchivist-admin-secret
+                  key: TA_PASSWORD
               value: verysecret
             - name: ELASTIC_PASSWORD
-              value: verysecret
+              valueFrom:
+                secretKeyRef:
+                  name: elastic-secret
+                  key: ELASTIC_PASSWORD
             - name: TZ
               value: America/Los_Angeles
           readinessProbe:

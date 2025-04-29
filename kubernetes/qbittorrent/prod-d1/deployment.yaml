@@ -44,14 +44,38 @@ spec:
           value: "on"
         - name: FIREWALL_INPUT_PORTS
           value: "8080" # <- the port for qbittorrent container otherwise blocked by gluetun firewall in same pod
+        livenessProbe:
+          exec:
+            command:
+              - curl
+              - -f
+              - http://localhost/
+          initialDelaySeconds: 120
+          periodSeconds: 90
+          timeoutSeconds: 10
+          failureThreshold: 3
+        readinessProbe:
+          exec:
+            command:
+              - curl
+              - -f
+              - http://localhost/
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
         securityContext:
           capabilities:
             add:
             - NET_ADMIN
         lifecycle:
-            postStart:
-              exec:
-                command: ["/bin/sh", "-c", "(ip rule del table 51820; ip -6 rule del table 51820) || true"]
+          postStart:
+            exec:
+              command: ["/bin/sh", "-c", "(ip rule del table 51820; ip -6 rule del table 51820) || true"]
+        volumeMounts:
+             - name: gluetun-config
+               mountPath: /gluetun
+
       containers:
         - name:  qbittorrent
           image:  lscr.io/linuxserver/qbittorrent:latest
@@ -102,4 +126,8 @@ spec:
           nfs:
             server: 10.15.21.132
             path: /mnt/user/video/temp2/
+        - name: gluetun-config
+          nfs:
+            server: 10.15.21.132
+            path: /mnt/user/video/temp3/
 

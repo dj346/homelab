@@ -1,0 +1,112 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: qbittorrent
+  name: qbittorrent
+  namespace: qbittorrent
+spec:
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: qbittorrent
+  template:
+    metadata:
+      labels:
+        app: qbittorrent
+    spec:
+      dnsPolicy: None
+      dnsConfig:
+        nameservers:
+          - 127.0.0.1
+      containers:
+        - name: gluetun
+          image: ghcr.io/qdm12/gluetun:latest
+          imagePullPolicy: Always
+          securityContext:
+            capabilities:
+              add: ["NET_ADMIN"]
+          lifecycle:
+            postStart:
+              exec:
+                command: ["/bin/sh", "-c", "(ip rule del table 51820; ip -6 rule del table 51820) || true"]
+          ports:
+            - containerPort: 8000
+          env:
+            - name: TZ
+              value: "Europe/Amsterdam"
+            - name: VPN_SERVICE_PROVIDER
+              value: "mullvad"
+            - name: VPN_TYPE
+              value: "wireguard"
+            - name: WIREGUARD_PRIVATE_KEY
+              value: "Z4zev0gW39UMcWGI3yySCs9bqa0lgI0DRnSyynKUpCM="
+            - name: WIREGUARD_ADDRESSES
+              value: "10.71.54.58/32"
+            - name: FIREWALL_INPUT_PORTS
+              value: "9091"
+          # readinessProbe:
+          #   httpGet:
+          #     path: /v1/health
+          #     port: 8000
+          #   initialDelaySeconds: 10
+          #   periodSeconds: 10
+          #   timeoutSeconds: 5
+          #   failureThreshold: 3
+          # livenessProbe:
+          #   httpGet:
+          #     path: /v1/health
+          #     port: 8000
+          #   initialDelaySeconds: 60
+          #   periodSeconds: 30
+          #   timeoutSeconds: 5
+          #   failureThreshold: 3
+        - name:  qbittorrent
+          image:  lscr.io/linuxserver/qbittorrent:4.5.0
+          # resources:
+          #   requests:
+          #     cpu: 500m
+          #     memory: 50Mi
+          #   limits:
+          #     cpu: 4000m
+          #     memory: 2Gi
+          # livenessProbe:
+          #   tcpSocket:
+          #     port: 80
+          #   initialDelaySeconds: 15
+          #   timeoutSeconds: 5
+          #   successThreshold: 1
+          #   failureThreshold: 3
+          #   periodSeconds: 10
+          env:
+          - name: PUID
+            value: "1000"
+          - name: PGID
+            value: "1000"
+          - name: TZ
+            value: "Americas/Los_Angeles"
+          - name: WEBUI_PORT
+            value: "8080"
+          ports:
+          - containerPort:  6881
+            name: torrents
+          - containerPort: 8080
+            name:  qbittorrent-web
+          volumeMounts:
+          - name: config
+            mountPath: /config
+          # - name: downloads
+          #   mountPath: /downloads
+          #   readOnly: true
+          volumes:
+            - name: config
+              nfs:
+                server: 10.15.21.132
+                path: /mnt/user/video/temp/
+            # - name: downloads
+            #   emptyDir:
+            #     sizeLimit: 10Gi
+          restartPolicy: Always
+

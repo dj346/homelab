@@ -59,10 +59,6 @@ spec:
               mountPath: /youtube
             - name: cache
               mountPath: /cache
-            - name: yt-dlp-config
-              mountPath: /etc/yt-dlp.conf
-              subPath: yt-dlp.conf
-
       volumes:
         - name: media
           nfs:
@@ -71,10 +67,3 @@ spec:
         - name: cache
           persistentVolumeClaim:
             claimName: cache-pvc
-        - name: yt-dlp-config
-          configMap:
-            name: yt-dlp-config
-            items:
-              - key: yt-dlp.conf
-                path: yt-dlp.conf
-

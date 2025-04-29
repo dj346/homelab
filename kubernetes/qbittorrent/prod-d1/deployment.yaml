@@ -46,7 +46,7 @@ spec:
             - name: WIREGUARD_ADDRESSES
               value: "10.71.54.58/32"
             - name: FIREWALL_INPUT_PORTS
-              value: "9091"
+              value: ""
           # readinessProbe:
           #   httpGet:
           #     path: /v1/health

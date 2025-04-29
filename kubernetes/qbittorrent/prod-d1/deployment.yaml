@@ -64,7 +64,7 @@ spec:
           #   timeoutSeconds: 5
           #   failureThreshold: 3
         - name:  qbittorrent
-          image:  lscr.io/linuxserver/qbittorrent:4.5.0
+          image:  lscr.io/linuxserver/qbittorrent:latest
           # resources:
           #   requests:
           #     cpu: 500m

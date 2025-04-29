@@ -42,7 +42,7 @@ spec:
             - name: VPN_TYPE
               value: "wireguard"
             - name: WIREGUARD_PRIVATE_KEY
-              value: "Z4zev0gW39UMcWGI3yySCs9bqa0lgI0DRnSyynKUpCM="
+              value: "WNKQa/rMcwK6bf9a3Qztu5JZg1I4b5B5MZ8Jpw73ZGc="
             - name: WIREGUARD_ADDRESSES
               value: "10.71.54.58/32"
             - name: FIREWALL_INPUT_PORTS

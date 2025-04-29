@@ -21,48 +21,58 @@ spec:
       dnsConfig:
         nameservers:
           - 127.0.0.1
-      containers:
-        - name: gluetun
-          image: ghcr.io/qdm12/gluetun:latest
-          imagePullPolicy: Always
-          securityContext:
-            capabilities:
-              add: ["NET_ADMIN"]
-          lifecycle:
+      initContainers:
+      # optional gluetun VPN client sidecar
+      # https://github.com/qdm12/gluetun
+      # https://github.com/qdm12/gluetun-wiki/pull/7
+      - name: gluetun # init sidecar for VPN connection
+        image: "ghcr.io/qdm12/gluetun:latest" # <- you probably want this to be a set version
+        restartPolicy: Always # makes this init into a sidecar container k8s 1.29
+        imagePullPolicy: Always
+        envFrom:
+        - secretRef:
+            name: gluetun
+            optional: false
+        env:
+        - name: TZ
+          value: "Americas/Los_Angeles"
+        - name: VPN_SERVICE_PROVIDER
+          value: "mullvad"
+        - name: VPN_TYPE
+          value: "wireguard"
+        - name: WIREGUARD_PRIVATE_KEY
+          value: "WNKQa/rMcwK6bf9a3Qztu5JZg1I4b5B5MZ8Jpw73ZGc="
+        - name: WIREGUARD_ADDRESSES
+          value: "10.71.54.58/32"
+        - name: FIREWALL_DEBUG
+          value: "on"
+        - name: FIREWALL_INPUT_PORTS
+          value: "8080" # <- the port for qbittorrent container otherwise blocked by gluetun firewall in same pod
+        livenessProbe:
+          exec:
+            command:
+              - curl
+              - -f
+              - http://localhost:9999/
+          initialDelaySeconds: 120
+          periodSeconds: 90
+          timeoutSeconds: 10
+          failureThreshold: 3
+        readinessProbe:
+          exec:
+            command:
+              - curl
+              - -f
+              - http://localhost:9999/
+        securityContext:
+          capabilities:
+            add:
+            - NET_ADMIN
+        lifecycle:
             postStart:
               exec:
                 command: ["/bin/sh", "-c", "(ip rule del table 51820; ip -6 rule del table 51820) || true"]
-          ports:
-            - containerPort: 8000
-          env:
-            - name: TZ
-              value: "Americas/Los_Angeles"
-            - name: VPN_SERVICE_PROVIDER
-              value: "mullvad"
-            - name: VPN_TYPE
-              value: "wireguard"
-            - name: WIREGUARD_PRIVATE_KEY
-              value: "WNKQa/rMcwK6bf9a3Qztu5JZg1I4b5B5MZ8Jpw73ZGc="
-            - name: WIREGUARD_ADDRESSES
-              value: "10.71.54.58/32"
-            - name: FIREWALL_INPUT_PORTS
-              value: ""
-          readinessProbe:
-            httpGet:
-              path: /v1/health
-              port: 8000
-            initialDelaySeconds: 10
-            periodSeconds: 10
-            timeoutSeconds: 5
-            failureThreshold: 3
-          livenessProbe:
-            httpGet:
-              path: /v1/health
-              port: 8000
-            initialDelaySeconds: 60
-            periodSeconds: 30
-            timeoutSeconds: 5
-            failureThreshold: 3
+      containers:
         - name:  qbittorrent
           image:  lscr.io/linuxserver/qbittorrent:latest
           # resources:

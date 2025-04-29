@@ -47,6 +47,8 @@ spec:
               value: "10.71.54.58/32"
             - name: FIREWALL_INPUT_PORTS
               value: "9091"
+            - name: FILE__PASSWORD
+              value: "/run/secrets/qb/password"
           # readinessProbe:
           #   httpGet:
           #     path: /v1/health
@@ -97,6 +99,9 @@ spec:
           volumeMounts:
           - name: config
             mountPath: /config
+          - name: qb-web-secret
+            mountPath: /run/secrets/qb
+            readOnly: true
           # - name: downloads
           #   mountPath: /downloads
           #   readOnly: true
@@ -105,6 +110,12 @@ spec:
           nfs:
             server: 10.15.21.132
             path: /mnt/user/video/temp/
+        - name: qb-web-secret
+          secret:
+            secretName: qbittorrent-web-secret
+            items:
+            - key: password
+              path: password
         # - name: downloads
         #   emptyDir:
         #     sizeLimit: 10Gi

@@ -108,5 +108,4 @@ spec:
             # - name: downloads
             #   emptyDir:
             #     sizeLimit: 10Gi
-          restartPolicy: Always
 

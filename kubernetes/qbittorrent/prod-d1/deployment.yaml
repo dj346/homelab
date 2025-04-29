@@ -47,22 +47,22 @@ spec:
               value: "10.71.54.58/32"
             - name: FIREWALL_INPUT_PORTS
               value: ""
-          # readinessProbe:
-          #   httpGet:
-          #     path: /v1/health
-          #     port: 8000
-          #   initialDelaySeconds: 10
-          #   periodSeconds: 10
-          #   timeoutSeconds: 5
-          #   failureThreshold: 3
-          # livenessProbe:
-          #   httpGet:
-          #     path: /v1/health
-          #     port: 8000
-          #   initialDelaySeconds: 60
-          #   periodSeconds: 30
-          #   timeoutSeconds: 5
-          #   failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /v1/health
+              port: 8000
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+          livenessProbe:
+            httpGet:
+              path: /v1/health
+              port: 8000
+            initialDelaySeconds: 60
+            periodSeconds: 30
+            timeoutSeconds: 5
+            failureThreshold: 3
         - name:  qbittorrent
           image:  lscr.io/linuxserver/qbittorrent:latest
           # resources:
@@ -80,6 +80,16 @@ spec:
           #   successThreshold: 1
           #   failureThreshold: 3
           #   periodSeconds: 10
+          command: ["/bin/bash", "-c", "--"]
+          args:
+            - |
+              echo "Waiting for Gluetun to become healthy...";
+              until curl --silent --fail http://localhost:8000/v1/health; do
+                sleep 2
+              done
+              echo "Gluetun is healthy! Starting qBittorrent...";
+              /init
+
           env:
           - name: PUID
             value: "1000"

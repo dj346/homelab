@@ -29,10 +29,6 @@ spec:
         image: "ghcr.io/qdm12/gluetun:latest" # <- you probably want this to be a set version
         restartPolicy: Always # makes this init into a sidecar container k8s 1.29
         imagePullPolicy: Always
-        envFrom:
-        - secretRef:
-            name: gluetun
-            optional: false
         env:
         - name: TZ
           value: "Americas/Los_Angeles"
@@ -90,15 +86,7 @@ spec:
           #   successThreshold: 1
           #   failureThreshold: 3
           #   periodSeconds: 10
-          command: ["/bin/bash", "-c", "--"]
-          args:
-            - |
-              echo "Waiting for Gluetun to become healthy...";
-              until curl --silent --fail http://localhost:8000/v1/health; do
-                sleep 2
-              done
-              echo "Gluetun is healthy! Starting qBittorrent...";
-              /init
+          
 
           env:
           - name: PUID

@@ -15,9 +15,9 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: qbittorrent
+                name: qbittorrent-web
                 port:
-                  number: 8000
+                  number: 8080
   tls:
     - hosts:
         - qbittorrent.kube-prod-d1.mclacken.net

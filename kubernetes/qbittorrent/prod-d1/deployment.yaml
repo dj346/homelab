@@ -21,63 +21,10 @@ spec:
       dnsConfig:
         nameservers:
           - 127.0.0.1
-      initContainers:
-      # optional gluetun VPN client sidecar
-      # https://github.com/qdm12/gluetun
-      # https://github.com/qdm12/gluetun-wiki/pull/7
-      - name: init-gluetun # init sidecar for VPN connection
-        image: "ghcr.io/qdm12/gluetun:latest" # <- you probably want this to be a set version
-        # restartPolicy: Always # makes this init into a sidecar container k8s 1.29
-        imagePullPolicy: Always
-        env:
-        - name: TZ
-          value: "Americas/Los_Angeles"
-        - name: VPN_SERVICE_PROVIDER
-          value: "mullvad"
-        - name: VPN_TYPE
-          value: "wireguard"
-        - name: WIREGUARD_PRIVATE_KEY
-          value: "WNKQa/rMcwK6bf9a3Qztu5JZg1I4b5B5MZ8Jpw73ZGc="
-        - name: WIREGUARD_ADDRESSES
-          value: "10.71.54.58/32"
-        - name: FIREWALL_DEBUG
-          value: "on"
-        - name: FIREWALL_INPUT_PORTS
-          value: "8080" # <- the port for qbittorrent container otherwise blocked by gluetun firewall in same pod
-        livenessProbe:
-          exec:
-            command:
-              - /gluetun-entrypoint
-              - healthcheck
-          initialDelaySeconds: 10  # corresponds to start-period
-          periodSeconds: 5         # corresponds to interval
-          timeoutSeconds: 5
-          failureThreshold: 1
-        readinessProbe:
-          exec:
-            command:
-              - /gluetun-entrypoint
-              - healthcheck
-          initialDelaySeconds: 10
-          periodSeconds: 5
-          timeoutSeconds: 5
-          failureThreshold: 1
-        securityContext:
-          capabilities:
-            add:
-            - NET_ADMIN
-        lifecycle:
-          postStart:
-            exec:
-              command: ["/bin/sh", "-c", "(ip rule del table 51820; ip -6 rule del table 51820) || true"]
-        volumeMounts:
-             - name: gluetun-config
-               mountPath: /gluetun
-
       containers:
-        - name: gluetun # init sidecar for VPN connection
+        - name: init-gluetun # init sidecar for VPN connection
           image: "ghcr.io/qdm12/gluetun:latest" # <- you probably want this to be a set version
-          # restartPolicy: Always # makes this init into a sidecar container k8s 1.29
+          restartPolicy: Always # makes this init into a sidecar container k8s 1.29
           imagePullPolicy: Always
           env:
           - name: TZ
@@ -123,7 +70,6 @@ spec:
           volumeMounts:
               - name: gluetun-config
                 mountPath: /gluetun
-
         - name:  qbittorrent
           image:  lscr.io/linuxserver/qbittorrent:latest
           # resources:

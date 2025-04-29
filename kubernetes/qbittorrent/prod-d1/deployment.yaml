@@ -44,22 +44,6 @@ spec:
           value: "on"
         - name: FIREWALL_INPUT_PORTS
           value: "8080" # <- the port for qbittorrent container otherwise blocked by gluetun firewall in same pod
-        livenessProbe:
-          exec:
-            command:
-              - curl
-              - -f
-              - http://localhost:9999/
-          initialDelaySeconds: 120
-          periodSeconds: 90
-          timeoutSeconds: 10
-          failureThreshold: 3
-        readinessProbe:
-          exec:
-            command:
-              - curl
-              - -f
-              - http://localhost:9999/
         securityContext:
           capabilities:
             add:

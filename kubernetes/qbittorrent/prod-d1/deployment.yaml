@@ -92,8 +92,15 @@ spec:
           #   successThreshold: 1
           #   failureThreshold: 3
           #   periodSeconds: 10
-          
-
+          command: ["/bin/sh", "-c"]
+          args:
+            - |
+              echo "Waiting for VPN to be ready...";
+              until /gluetun-entrypoint healthcheck; do
+                sleep 5;
+              done;
+              echo "VPN is ready. Starting qBittorrent.";
+              /init
           env:
           - name: PUID
             value: "1000"

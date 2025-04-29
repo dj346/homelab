@@ -99,15 +99,15 @@ spec:
           volumeMounts:
           - name: config
             mountPath: /config
-          # - name: downloads
-          #   mountPath: /downloads
-          #   readOnly: true
+          - name: downloads
+            mountPath: /downloads
       volumes:
         - name: config
           nfs:
             server: 10.15.21.132
             path: /mnt/user/video/temp/
-        # - name: downloads
-        #   emptyDir:
-        #     sizeLimit: 10Gi
+        - name: downloads
+          nfs:
+            server: 10.15.21.132
+            path: /mnt/user/video/temp2/
 

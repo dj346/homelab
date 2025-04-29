@@ -17,10 +17,10 @@ spec:
       labels:
         app: qbittorrent
     spec:
-      # dnsPolicy: None
-      # # dnsConfig:
-      # #   nameservers:
-      # #     - 127.0.0.1
+      dnsPolicy: None
+      dnsConfig:
+        nameservers:
+          - 127.0.0.1
       containers:
         - name: gluetun
           image: ghcr.io/qdm12/gluetun:latest

@@ -86,6 +86,19 @@ spec:
             sleep 5
           done
           echo "VPN is up!"
+      - name: init-config
+        image: busybox
+        command:
+          - sh
+          - -c
+          - cp /defaults/sabnzbd.ini /config/sabnzbd.ini
+        volumeMounts:
+          - name: sabnzbd-config-ini
+            mountPath: /defaults/sabnzbd.ini
+            subPath: sabnzbd.ini
+            readOnly: true
+          - name: sabnzbd-config
+            mountPath: /config
       containers:
         - name: sabnzbd
           image: lscr.io/linuxserver/sabnzbd:latest
@@ -107,10 +120,6 @@ spec:
           - name: downloads
             mountPath: /incomplete-downloads
             subPath: incomplete
-          # - name: sabnzbd-config-ini
-          #   mountPath: /config/sabnzbd.ini
-          #   subPath: sabnzbd.ini
-          #   readOnly: true
       volumes:
         - name: downloads
           nfs:

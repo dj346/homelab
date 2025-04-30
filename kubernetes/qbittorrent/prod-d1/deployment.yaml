@@ -67,9 +67,9 @@ spec:
             exec:
               command: ["/bin/sh", "-c", "(ip rule del table 51820; ip -6 rule del table 51820) || true"]
         volumeMounts:
-             - name: gluetun-config
-               mountPath: /gluetun
-      - name: wait-for-gluetunsa
+            - name: gluetun-config
+              mountPath: /gluetun
+      - name: wait-for-gluetun
         image: busybox
         command:
         - sh
@@ -101,21 +101,19 @@ spec:
           - containerPort: 8080
             name:  qbittorrent-web
           volumeMounts:
-          - name: config
+          - name: qbittorrent-config
             mountPath: /config
           - name: downloads
             mountPath: /downloads
       volumes:
-        - name: config
-          nfs:
-            server: 10.15.21.132
-            path: /mnt/user/video/temp/
         - name: downloads
           nfs:
             server: 10.15.21.132
             path: /mnt/user/video/temp2/
+        - name: qbittorrent-config
+          persistentVolumeClaim:
+            claimName: qbittorrent-pvc
         - name: gluetun-config
-          nfs:
-            server: 10.15.21.132
-            path: /mnt/user/video/temp3/
+          persistentVolumeClaim:
+            claimName: gluetun-pvc
 

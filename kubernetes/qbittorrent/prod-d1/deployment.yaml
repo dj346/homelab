@@ -110,11 +110,17 @@ spec:
             mountPath: /config
           - name: downloads
             mountPath: /downloads
+          - name: media-downloads
+            mountPath: /data
       volumes:
         - name: downloads
           nfs:
             server: 10.15.21.132
             path: /mnt/user/archives/websites/torrent
+        - name: media-downloads
+          nfs:
+            server: 10.15.21.132
+            path: /mnt/user/video/
         - name: qbittorrent-config
           persistentVolumeClaim:
             claimName: qbittorrent-pvc

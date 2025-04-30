@@ -2,22 +2,22 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: prowlarr
-  name: prowlarr
-  namespace: prowlarr
+    app: radarr
+  name: radarr
+  namespace: radarr
 spec:
   strategy:
     type: Recreate
   selector:
     matchLabels:
-      app: prowlarr
+      app: radarr
   template:
     metadata:
       labels:
-        app: prowlarr
+        app: radarr
     spec:
       containers:
-        - name: prowlarr
+        - name: radarr
           image: lscr.io/linuxserver/radarr:latest
           env:
           - name: PUID

@@ -17,7 +17,7 @@ spec:
               service:
                 name: radarr-web
                 port:
-                  number: 9696
+                  number: 7878
   tls:
     - hosts:
         - radarr.kube-prod-d1.mclacken.net

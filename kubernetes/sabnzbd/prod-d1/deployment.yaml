@@ -124,7 +124,7 @@ spec:
         - name: downloads
           nfs:
             server: 10.15.21.132
-            path: /mnt/user/archives/websites/usenet
+            path: /mnt/user/video/downloads/usenet/
             readOnly: false
         - name: sabnzbd-config
           persistentVolumeClaim:

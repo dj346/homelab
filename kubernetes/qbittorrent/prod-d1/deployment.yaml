@@ -74,17 +74,17 @@ spec:
              - name: gluetun-config
                mountPath: /gluetun
       - name: ping
-      image: busybox
-      command:
-      - sh
-      - -c
-      - |
-        sleep 30
-        while ! ping -c 1 8.8.8.8; do
-          echo "Ping failed, retrying in 5"
-          sleep 5
-        done
-        echo "ping succesfull, exiting"
+        image: busybox
+        command:
+        - sh
+        - -c
+        - |
+          sleep 30
+          while ! ping -c 1 8.8.8.8; do
+            echo "Ping failed, retrying in 5"
+            sleep 5
+          done
+          echo "ping succesfull, exiting"
       containers:
         - name:  qbittorrent
           image:  lscr.io/linuxserver/qbittorrent:latest

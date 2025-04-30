@@ -158,7 +158,7 @@ data:
     nomedia_marker = ""
     ipv6_servers = 1
     url_base = ""
-    host_whitelist = sabnzbd-6fb5c9db68-c5gk9,
+    host_whitelist = sabnzbd-6fb5c9db68-c5gk9, https://sabnzbd.kube-prod-d1.mclacken.net,
     local_ranges = ,
     max_url_retries = 10
     downloader_sleep_time = 10

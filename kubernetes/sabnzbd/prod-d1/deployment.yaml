@@ -2,19 +2,19 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: qbittorrent
-  name: qbittorrent
-  namespace: qbittorrent
+    app: sabnzbd
+  name: sabnzbd
+  namespace: sabnzbd
 spec:
   strategy:
     type: Recreate
   selector:
     matchLabels:
-      app: qbittorrent
+      app: sabnzbd
   template:
     metadata:
       labels:
-        app: qbittorrent
+        app: sabnzbd
     spec:
       dnsPolicy: None
       dnsConfig:
@@ -48,7 +48,7 @@ spec:
         - name: FIREWALL_DEBUG
           value: "on"
         - name: FIREWALL_INPUT_PORTS
-          value: "8080,6881" # <- the port for qbittorrent container otherwise blocked by gluetun firewall in same pod
+          value: "8080" # <- the port for qbittorrent container otherwise blocked by gluetun firewall in same pod
         livenessProbe:
           exec:
             command: ["/gluetun-entrypoint", "healthcheck"]
@@ -87,38 +87,38 @@ spec:
           done
           echo "VPN is up!"
       containers:
-        - name:  qbittorrent
-          image:  lscr.io/linuxserver/qbittorrent:latest
+        - name: sabnzbd
+          image: lscr.io/linuxserver/sabnzbd:latest
           env:
           - name: PUID
             value: "1000"
           - name: PGID
             value: "1000"
           - name: TZ
-            value: "America/Los_Angeles"
-          - name: WEBUI_PORT
-            value: "8080"
-          - name: TORRENTING_PORT
-            value: "6881"
+            value: "Etc/UTC"
           ports:
-          - containerPort:  6881
-            name: torrents
-          - containerPort: 8080
-            name:  qbittorrent-web
+          - name: http
+            containerPort: 8080
           volumeMounts:
-          - name: qbittorrent-config
+          - name: sabnzbd-config
             mountPath: /config
           - name: downloads
             mountPath: /downloads
+          - name: downloads
+            mountPath: /incomplete-downloads
+            subPath: incomplete
       volumes:
         - name: downloads
           nfs:
             server: 10.15.21.132
-            path: /mnt/user/archives/websites/torrent
-        - name: qbittorrent-config
+            path: /mnt/user/archives/websites/usenet
+            readOnly: false
+        - name: sabnzbd-config
           persistentVolumeClaim:
-            claimName: qbittorrent-pvc
+            claimName: sabnzbd-pvc
+            readOnly: false
         - name: gluetun-config
           persistentVolumeClaim:
             claimName: gluetun-pvc
+            readOnly: false
 

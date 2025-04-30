@@ -37,9 +37,15 @@ spec:
         - name: VPN_TYPE
           value: "wireguard"
         - name: WIREGUARD_PRIVATE_KEY
-          value: "WNKQa/rMcwK6bf9a3Qztu5JZg1I4b5B5MZ8Jpw73ZGc="
+          valueFrom:
+            secretKeyRef:
+              name: wireguard-config
+              key: WIREGUARD_PRIVATE_KEY
         - name: WIREGUARD_ADDRESSES
-          value: "10.71.54.58/32"
+          valueFrom:
+            secretKeyRef:
+              name: wireguard-config
+              key: WIREGUARD_ADDRESSES
         - name: FIREWALL_DEBUG
           value: "on"
         - name: FIREWALL_INPUT_PORTS

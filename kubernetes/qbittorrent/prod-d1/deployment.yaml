@@ -109,7 +109,7 @@ spec:
         - name: downloads
           nfs:
             server: 10.15.21.132
-            path: /mnt/user/video/temp2/
+            path: /mnt/user/archives/websites/torrent
         - name: qbittorrent-config
           persistentVolumeClaim:
             claimName: qbittorrent-pvc

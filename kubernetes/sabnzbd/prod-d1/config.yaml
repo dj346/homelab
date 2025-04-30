@@ -43,9 +43,9 @@ data:
     nzb_key = e8116756d7a24bcfaba05a88f9f7d073
     socks5_proxy_url = ""
     permissions = ""
-    download_dir = Downloads/incomplete
+    download_dir = /downloads/incomplete
     download_free = ""
-    complete_dir = Downloads/complete
+    complete_dir = /downloads/complete
     complete_free = ""
     fulldisk_autoresume = 0
     script_dir = ""
@@ -388,3 +388,13 @@ data:
     dir = ""
     newzbin = ""
     priority = -100
+    [sorters]
+    [[Series Sorting]]
+    name = Series Sorting
+    order = 0
+    min_size = 50M
+    multipart_label = ""
+    sort_string = %sn/%sn - S%0sE%0e - %en.%ext
+    sort_cats = tv,
+    sort_type = 1,
+    is_active = 0

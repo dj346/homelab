@@ -107,10 +107,10 @@ spec:
           - name: downloads
             mountPath: /incomplete-downloads
             subPath: incomplete
-          - name: sabnzbd-config-ini
-            mountPath: /config/sabnzbd.ini
-            subPath: sabnzbd.ini
-            readOnly: true
+          # - name: sabnzbd-config-ini
+          #   mountPath: /config/sabnzbd.ini
+          #   subPath: sabnzbd.ini
+          #   readOnly: true
       volumes:
         - name: downloads
           nfs:

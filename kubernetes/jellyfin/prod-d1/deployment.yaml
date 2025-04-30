@@ -43,49 +43,15 @@ spec:
         - containerPort: 8096
           protocol: TCP
         volumeMounts:
-        - mountPath: /data/movies
+        - mountPath: /data/
           name: jellyfin-media
-          subPath: movies
           readOnly: True
-        - mountPath: /data/shows
-          name: jellyfin-media
-          subPath: shows
-          readOnly: True
-        - mountPath: /data/home-video
-          name: jellyfin-media
-          subPath: home-video
-          readOnly: True
-        - mountPath: /data/youtube
-          name: jellyfin-media
-          subPath: youtube
-          readOnly: True
-        - mountPath: /cache
-          name: jellyfin-media
-          subPath: jellyfin-cache
-
-        - mountPath: /data/music
-          name: jellyfin-music
-          subPath: music
-          readOnly: True
-
-        - mountPath: /data/books
-          name: jellyfin-books
-          subPath: books
-          readOnly: True
-
         - mountPath: /config
-          name: jellyfin-config
+          name: jellyfin-media
+          subPath: downloads/jellyfin-cache
       restartPolicy: Always
       volumes:
-      - name: jellyfin-music
-        nfs:
-          server: 10.15.21.132
-          path: /mnt/user/audio/
       - name: jellyfin-media
-        nfs:
-          server: 10.15.21.132
-          path: /mnt/user/video/
-      - name: jellyfin-books
         nfs:
           server: 10.15.21.132
           path: /mnt/user/video/

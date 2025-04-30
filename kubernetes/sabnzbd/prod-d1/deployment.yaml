@@ -48,7 +48,7 @@ spec:
         - name: FIREWALL_DEBUG
           value: "on"
         - name: FIREWALL_INPUT_PORTS
-          value: "8080" # <- the port for qbittorrent container otherwise blocked by gluetun firewall in same pod
+          value: "8080" 
         livenessProbe:
           exec:
             command: ["/gluetun-entrypoint", "healthcheck"]

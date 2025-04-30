@@ -107,6 +107,10 @@ spec:
           - name: downloads
             mountPath: /incomplete-downloads
             subPath: incomplete
+          - name: sabnzbd-config-ini
+            mountPath: /config/sabnzbd.ini
+            subPath: sabnzbd.ini
+            readOnly: true
       volumes:
         - name: downloads
           nfs:
@@ -121,4 +125,11 @@ spec:
           persistentVolumeClaim:
             claimName: gluetun-pvc
             readOnly: false
+        - name: sabnzbd-config-ini
+          configMap:
+            name: sabnzbd-config
+            # optional: only if you want to mount that one key
+            items:
+            - key: sabnzbd.ini
+              path: sabnzbd.ini
 

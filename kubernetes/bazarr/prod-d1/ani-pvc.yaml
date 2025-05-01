@@ -2,7 +2,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: anibazarr-pvc
-  namespace: anibazarr
+  namespace: bazarr
 spec:
   accessModes:
     - ReadWriteOnce

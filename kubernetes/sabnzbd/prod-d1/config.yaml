@@ -43,9 +43,9 @@ data:
     nzb_key = e8116756d7a24bcfaba05a88f9f7d073
     socks5_proxy_url = ""
     permissions = ""
-    download_dir = /downloads/incomplete
+    download_dir = /data/downloads/usenet/incomplete
     download_free = ""
-    complete_dir = /downloads/complete
+    complete_dir = /data/downloads/usenet/complete
     complete_free = ""
     fulldisk_autoresume = 0
     script_dir = ""
@@ -356,12 +356,20 @@ data:
     dir = ""
     newzbin = ""
     priority = 0
+    [[software]]
+    name = software
+    order = 4
+    pp = ""
+    script = Default
+    dir = software
+    newzbin = ""
+    priority = -100
     [[movies]]
     name = movies
     order = 1
     pp = ""
     script = Default
-    dir = ""
+    dir = movies
     newzbin = ""
     priority = -100
     [[tv]]
@@ -369,7 +377,7 @@ data:
     order = 2
     pp = ""
     script = Default
-    dir = ""
+    dir = shows
     newzbin = ""
     priority = -100
     [[audio]]
@@ -377,24 +385,23 @@ data:
     order = 3
     pp = ""
     script = Default
-    dir = ""
+    dir = audio
     newzbin = ""
     priority = -100
-    [[software]]
-    name = software
-    order = 4
+    [[animovies]]
+    name = animovies
+    order = 5
     pp = ""
     script = Default
-    dir = ""
+    dir = animovies
+    newzbin = ""
+    priority = -100
+    [[anime]]
+    name = anime
+    order = 6
+    pp = ""
+    script = Default
+    dir = anime
     newzbin = ""
     priority = -100
     [sorters]
-    [[Series Sorting]]
-    name = Series Sorting
-    order = 0
-    min_size = 50M
-    multipart_label = ""
-    sort_string = %sn/%sn - S%0sE%0e - %en.%ext
-    sort_cats = tv,
-    sort_type = 1,
-    is_active = 0

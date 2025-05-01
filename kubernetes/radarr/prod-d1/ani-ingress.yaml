@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: aniradarr-ingress
+  namespace: radarr
+  annotations:
+    cert-manager.io/cluster-issuer: cloudflare-clusterissuer
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+spec:
+  rules:
+    - host: aniradarr.kube-prod-d1.mclacken.net
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: aniradarr-web
+                port:
+                  number: 7878
+  tls:
+    - hosts:
+        - aniradarr.kube-prod-d1.mclacken.net
+      secretName: aniradarr-certificate-secret

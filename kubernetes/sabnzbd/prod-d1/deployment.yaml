@@ -108,7 +108,7 @@ spec:
           - name: PGID
             value: "1000"
           - name: TZ
-            value: "Etc/UTC"
+            value: "America/Los_Angeles"
           ports:
           - name: http
             containerPort: 8080

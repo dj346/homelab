@@ -2,23 +2,23 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: prowlarr
-  name: prowlarr
-  namespace: prowlarr
+    app: aniradarr
+  name: radarr
+  namespace: radarr
 spec:
   strategy:
     type: Recreate
   selector:
     matchLabels:
-      app: prowlarr
+      app: aniradarr
   template:
     metadata:
       labels:
-        app: prowlarr
+        app: aniradarr
     spec:
       containers:
-        - name: prowlarr
-          image: lscr.io/linuxserver/prowlarr:latest
+        - name: aniradarr
+          image: lscr.io/linuxserver/radarr:latest
           env:
           - name: PUID
             value: "1000"
@@ -28,13 +28,19 @@ spec:
             value: "America/Los_Angeles"
           ports:
           - name: http
-            containerPort: 9696
+            containerPort: 7878
           volumeMounts:
-          - name: prowlarr-config
+          - name: aniradarr-config
             mountPath: /config
+          - name: data
+            mountPath: /data
       volumes:
-        - name: prowlarr-config
+        - name: aniradarr-config
           persistentVolumeClaim:
-            claimName: prowlarr-pvc
+            claimName: aniradarr-pvc
             readOnly: false
-
+        - name: data
+          nfs:
+            server: 10.15.21.132
+            path: /mnt/user/video/
+        

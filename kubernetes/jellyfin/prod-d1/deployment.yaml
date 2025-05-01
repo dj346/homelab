@@ -38,10 +38,14 @@ spec:
         volumeMounts:
         - mountPath: /data/
           name: jellyfin-media
-          readOnly: True
+          readOnly: false
         - mountPath: /config
           name: jellyfin-media
           subPath: downloads/jellyfin-cache
+        - mountPath: /data/youtube
+          name: jellyfin-media
+          subPath: youtube
+          readOnly: true
       restartPolicy: Always
       volumes:
       - name: jellyfin-media

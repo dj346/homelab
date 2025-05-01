@@ -2,22 +2,22 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: bazarr
-  name: bazarr
+    app: anibazarr
+  name: anibazarr
   namespace: bazarr
 spec:
   strategy:
     type: Recreate
   selector:
     matchLabels:
-      app: bazarr
+      app: anibazarr
   template:
     metadata:
       labels:
-        app: bazarr
+        app: anibazarr
     spec:
       containers:
-        - name: bazarr
+        - name: anibazarr
           image: lscr.io/linuxserver/bazarr:latest
           env:
           - name: PUID
@@ -30,14 +30,14 @@ spec:
           - name: http
             containerPort: 6767
           volumeMounts:
-          - name: bazarr-config
+          - name: anibazarr-config
             mountPath: /config
           - name: data
             mountPath: /data
       volumes:
-        - name: bazarr-config
+        - name: anibazarr-config
           persistentVolumeClaim:
-            claimName: bazarr-pvc
+            claimName: anibazarr-pvc
             readOnly: false
         - name: data
           nfs:

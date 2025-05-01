@@ -52,3 +52,4 @@ spec:
       - name: jellyfin-config
         persistentVolumeClaim:
           claimName: jellyfin-pvc
+          readOnly: false

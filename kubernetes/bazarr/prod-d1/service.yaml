@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: anibazarr-web
+  name: bazarr-web
   namespace: bazarr
   labels:
-    app: anibazarr
+    app: bazarr
 spec:
   type: ClusterIP
   ports:
@@ -12,4 +12,4 @@ spec:
       targetPort: 6767
       protocol: TCP
   selector:
-    app: anibazarr
+    app: bazarr

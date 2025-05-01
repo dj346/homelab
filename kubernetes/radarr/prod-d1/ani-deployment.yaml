@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   labels:
     app: aniradarr
-  name: radarr
+  name: aniradarr
   namespace: radarr
 spec:
   strategy:

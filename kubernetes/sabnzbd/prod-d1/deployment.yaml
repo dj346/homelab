@@ -116,15 +116,12 @@ spec:
           - name: sabnzbd-config
             mountPath: /config
           - name: downloads
-            mountPath: /downloads
-          - name: downloads
-            mountPath: /incomplete-downloads
-            subPath: incomplete
+            mountPath: /data
       volumes:
         - name: downloads
           nfs:
             server: 10.15.21.132
-            path: /mnt/user/video/downloads/usenet/
+            path: /mnt/user/video/
             readOnly: false
         - name: sabnzbd-config
           persistentVolumeClaim:

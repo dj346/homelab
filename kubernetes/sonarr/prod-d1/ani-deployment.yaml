@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: anisonarr
+  name: anisonarr
+  namespace: sonarr
+spec:
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: anisonarr
+  template:
+    metadata:
+      labels:
+        app: anisonarr
+    spec:
+      containers:
+        - name: anisonarr
+          image: lscr.io/linuxserver/sonarr:latest
+          env:
+          - name: PUID
+            value: "1000"
+          - name: PGID
+            value: "1000"
+          - name: TZ
+            value: "America/Los_Angeles"
+          ports:
+          - name: http
+            containerPort: 8989
+          volumeMounts:
+          - name: anisonarr-config
+            mountPath: /config
+          - name: data
+            mountPath: /data
+      volumes:
+        - name: anisonarr-config
+          persistentVolumeClaim:
+            claimName: anisonarr-pvc
+            readOnly: false
+        - name: data
+          nfs:
+            server: 10.15.21.132
+            path: /mnt/user/video/
+        

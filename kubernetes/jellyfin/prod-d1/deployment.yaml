@@ -42,6 +42,7 @@ spec:
         - mountPath: /config
           name: jellyfin-media
           subPath: downloads/jellyfin-cache
+          readOnly: false
         - mountPath: /data/youtube
           name: jellyfin-media
           subPath: youtube

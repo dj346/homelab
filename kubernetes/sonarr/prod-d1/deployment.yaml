@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: sonarr
+  name: sonarr
+  namespace: sonarr
+spec:
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: sonarr
+  template:
+    metadata:
+      labels:
+        app: sonarr
+    spec:
+      containers:
+        - name: sonarr
+          image: lscr.io/linuxserver/sonarr:latest
+          env:
+          - name: PUID
+            value: "1000"
+          - name: PGID
+            value: "1000"
+          - name: TZ
+            value: "America/Los_Angeles"
+          ports:
+          - name: http
+            containerPort: 8989
+          volumeMounts:
+          - name: sonarr-config
+            mountPath: /config
+          - name: data
+            mountPath: /data
+      volumes:
+        - name: sonarr-config
+          persistentVolumeClaim:
+            claimName: sonarr-pvc
+            readOnly: false
+        - name: data
+          nfs:
+            server: 10.15.21.132
+            path: /mnt/user/video/
+        

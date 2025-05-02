@@ -57,13 +57,17 @@ spec:
           volumeMounts:
             - name: media
               mountPath: /youtube
+              subPath: youtube
             - name: cache
               mountPath: /cache
+            - name: media
+              mountPath: /cache/download
+              subPath: downloads/tubearchivist
       volumes:
         - name: media
           nfs:
             server: 10.15.21.132
-            path: /mnt/user/video/youtube/
+            path: /mnt/user/video/
         - name: cache
           persistentVolumeClaim:
             claimName: cache-pvc

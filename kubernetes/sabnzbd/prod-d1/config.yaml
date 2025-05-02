@@ -19,7 +19,7 @@ data:
     config_lock = 0
     fixed_ports = 1
     notified_new_skin = 0
-    direct_unpack_tested = 0
+    direct_unpack_tested = 1
     sorters_converted = 1
     check_new_rel = 1
     auto_browser = 1
@@ -80,7 +80,7 @@ data:
     ignore_samples = 0
     deobfuscate_final_filenames = 1
     auto_sort = ""
-    direct_unpack = 0
+    direct_unpack = 1
     propagation_delay = 0
     folder_rename = 1
     replace_spaces = 0
@@ -364,22 +364,6 @@ data:
     dir = software
     newzbin = ""
     priority = -100
-    [[movies]]
-    name = movies
-    order = 1
-    pp = ""
-    script = Default
-    dir = movies
-    newzbin = ""
-    priority = -100
-    [[tv]]
-    name = tv
-    order = 2
-    pp = ""
-    script = Default
-    dir = shows
-    newzbin = ""
-    priority = -100
     [[audio]]
     name = audio
     order = 3
@@ -402,6 +386,22 @@ data:
     pp = ""
     script = Default
     dir = anime
+    newzbin = ""
+    priority = -100
+    [[movies]]
+    name = movies
+    order = 1
+    pp = ""
+    script = Default
+    dir = movies
+    newzbin = ""
+    priority = -100
+    [[shows]]
+    name = shows
+    order = 2
+    pp = ""
+    script = Default
+    dir = shows
     newzbin = ""
     priority = -100
     [sorters]

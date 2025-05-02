@@ -115,14 +115,20 @@ spec:
           volumeMounts:
           - name: sabnzbd-config
             mountPath: /config
-          - name: downloads
+          - name: data
             mountPath: /data
+          - name: data2
+            mountPath: /data2
       volumes:
-        - name: downloads
+        - name: data
           nfs:
             server: 10.15.21.132
             path: /mnt/user/video/
             readOnly: false
+        - name: data2
+          nfs:
+            server: 10.15.21.132
+            path: /mnt/user/adult/
         - name: sabnzbd-config
           persistentVolumeClaim:
             claimName: sabnzbd-pvc
@@ -138,4 +144,5 @@ spec:
             items:
             - key: sabnzbd.ini
               path: sabnzbd.ini
+        
 

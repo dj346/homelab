@@ -26,6 +26,8 @@ spec:
             value: "1000"
           - name: TZ
             value: "America/Los_Angeles"
+          - name: UMASK
+            value: "002"
           ports:
           - name: http
             containerPort: 6969

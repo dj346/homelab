@@ -333,7 +333,7 @@ data:
     port = 563
     timeout = 60
     username = mqv394574228
-    password = 44ej7h90
+    password = 7afkabi6
     connections = 100
     ssl = 1
     ssl_verify = 3
@@ -342,7 +342,7 @@ data:
     required = 0
     optional = 0
     retention = 0
-    expire_date = ""
+    expire_date = 2025-05-30
     quota = ""
     usage_at_start = 0
     priority = 0
@@ -402,6 +402,14 @@ data:
     pp = ""
     script = Default
     dir = shows
+    newzbin = ""
+    priority = -100
+    [[adult]]
+    name = adult
+    order = 7
+    pp = ""
+    script = Default
+    dir = /data2/downloads/usenet/complete/adult
     newzbin = ""
     priority = -100
     [sorters]

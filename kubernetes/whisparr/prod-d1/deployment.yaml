@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: whisparr
+  name: whisparr
+  namespace: whisparr
+spec:
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: whisparr
+  template:
+    metadata:
+      labels:
+        app: whisparr
+    spec:
+      containers:
+        - name: whisparr
+          image: ghcr.io/hotio/whisparr:latest
+          env:
+          - name: PUID
+            value: "1000"
+          - name: PGID
+            value: "1000"
+          - name: TZ
+            value: "America/Los_Angeles"
+          ports:
+          - name: http
+            containerPort: 6969
+          volumeMounts:
+          - name: whisparr-config
+            mountPath: /config
+          - name: data
+            mountPath: /data
+          - name: data2
+            mountPath: /data2
+      volumes:
+        - name: whisparr-config
+          persistentVolumeClaim:
+            claimName: whisparr-pvc
+            readOnly: false
+        - name: data
+          nfs:
+            server: 10.15.21.132
+            path: /mnt/user/video/
+        - name: data2
+          nfs:
+            server: 10.15.21.132
+            path: /mnt/user/adult/
+        

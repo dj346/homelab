@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: whisparr-ingress
+  namespace: whisparr
+  annotations:
+    cert-manager.io/cluster-issuer: cloudflare-clusterissuer
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+spec:
+  rules:
+    - host: whisparr.kube-prod-d1.mclacken.net
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: whisparr-web
+                port:
+                  number: 6969
+  tls:
+    - hosts:
+        - whisparr.kube-prod-d1.mclacken.net
+      secretName: whisparr-certificate-secret

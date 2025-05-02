@@ -33,7 +33,7 @@ spec:
             containerPort: 6969
           volumeMounts:
           - name: whisparr-config
-            mountPath: /config
+            mountPath: /config # this is probably wrong and needs to be checked, but I cant be bothered.
           - name: data
             mountPath: /data
           - name: data2

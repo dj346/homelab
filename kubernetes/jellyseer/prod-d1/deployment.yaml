@@ -2,23 +2,23 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: jellyseer
-  name: jellyseer
-  namespace: jellyseer
+    app: jellyseerr
+  name: jellyseerr
+  namespace: jellyseerr
 spec:
   strategy:
     type: Recreate
   selector:
     matchLabels:
-      app: jellyseer
+      app: jellyseerr
   template:
     metadata:
       labels:
-        app: jellyseer
+        app: jellyseerr
     spec:
       containers:
-        - name: jellyseer
-          image: ghcr.io/fallenbagel/jellyseerr:latest
+        - name: jellyseerr
+          image: ghcr.io/fallenbagel/jellyseerrr:latest
           env:
           - name: TZ
             value: "America/Los_Angeles"
@@ -28,11 +28,11 @@ spec:
           - name: http
             containerPort: 5055
           volumeMounts:
-          - name: jellyseer-config
+          - name: jellyseerr-config
             mountPath: /app/config
       volumes:
-        - name: jellyseer-config
+        - name: jellyseerr-config
           persistentVolumeClaim:
-            claimName: jellyseer-pvc
+            claimName: jellyseerr-pvc
             readOnly: false
         

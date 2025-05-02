@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: jellyseerr
-          image: ghcr.io/fallenbagel/jellyseerrr:latest
+          image: ghcr.io/fallenbagel/jellyseerr:latest
           env:
           - name: TZ
             value: "America/Los_Angeles"

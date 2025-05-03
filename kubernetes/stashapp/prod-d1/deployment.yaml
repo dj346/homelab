@@ -18,34 +18,16 @@ spec:
         app: stashapp
     spec:
       containers:
-        - name: stashapp
-          image: stashapp/stash:latest
-          env:
-          - name: TZ
-            value: "America/Los_Angeles"
-          - name: STASH_STASH
-            value: "/data/"
-          - name: STASH_GENERATED
-            value: "/data/downloads/stashapp/generated/"
-          - name: STASH_METADATA
-            value: "/data/downloads/stashapp/metadata/"
-          - name: STASH_CACHE
-            value: "/data/downloads/stashapp/cache/"
-          ports:
-          - name: http
-            containerPort: 9999
-          volumeMounts:
-          - name: stashapp-config
-            mountPath: /root/.stash
-          - name: data
-            mountPath: /data
+      - name: shell
+        image: busybox
+        command: ["/bin/sh"]
+        args: ["-c", "sleep 3600"]
+        volumeMounts:
+        - mountPath: /config
+          name: target-pvc
       volumes:
-        - name: stashapp-config
-          persistentVolumeClaim:
-            claimName: stashapp-pvc
-            readOnly: false
-        - name: data
-          nfs:
-            server: 10.15.21.132
-            path: /mnt/user/adult/
+      - name: target-pvc
+        persistentVolumeClaim:
+          claimName: stashapp-pvc
+          readOnly: false
         

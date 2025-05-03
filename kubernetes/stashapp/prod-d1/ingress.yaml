@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: stashapp-ingress
+  namespace: stashapp
+  annotations:
+    cert-manager.io/cluster-issuer: cloudflare-clusterissuer
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+spec:
+  rules:
+    - host: stashapp.kube-prod-d1.mclacken.net
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: stashapp-web
+                port:
+                  number: 9999
+  tls:
+    - hosts:
+        - stashapp.kube-prod-d1.mclacken.net
+      secretName: stashapp-certificate-secret

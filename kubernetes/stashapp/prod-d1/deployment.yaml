@@ -18,21 +18,33 @@ spec:
     spec:
       containers:
         - name: stashapp
-          image: ghcr.io/fallenbagel/stashapp:latest
+          image: stashapp/stash:latest
           env:
           - name: TZ
             value: "America/Los_Angeles"
-          - name: LOG_LEVEL
-            value: "debug"
+          - name: STASH_STASH
+            value: "/config/"
+          - name: STASH_GENERATED
+            value: "/data/downloads/stashapp/generated/"
+          - name: STASH_METADATA
+            value: "/data/downloads/stashapp/metadata/"
+          - name: STASH_CACHE
+            value: "/data/downloads/stashapp/cache/"
           ports:
           - name: http
-            containerPort: 5055
+            containerPort: 9999
           volumeMounts:
           - name: stashapp-config
-            mountPath: /app/config
+            mountPath: /config
+          - name: data
+            mountPath: /data
       volumes:
         - name: stashapp-config
           persistentVolumeClaim:
             claimName: stashapp-pvc
             readOnly: false
+        - name: data
+          nfs:
+            server: 10.15.21.132
+            path: /mnt/user/adult/
         

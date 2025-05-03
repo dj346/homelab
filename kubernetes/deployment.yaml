@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: stashapp
+  name: stashapp
+  namespace: stashapp
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: stashapp
+  template:
+    metadata:
+      labels:
+        app: stashapp
+    spec:
+      containers:
+      - name: shell
+        image: busybox
+        command: ["/bin/sh"]
+        args: ["-c", "sleep 3600"]
+        volumeMounts:
+        - mountPath: /config
+          name: target-pvc
+      volumes:
+      - name: target-pvc
+        persistentVolumeClaim:
+          claimName: stashapp-pvc
+          readOnly: false
+        

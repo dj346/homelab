@@ -6,7 +6,7 @@ metadata:
   name: stashapp
   namespace: stashapp
 spec:
-  replicas: 1
+  replicas: 0
   strategy:
     type: Recreate
   selector:
@@ -18,16 +18,34 @@ spec:
         app: stashapp
     spec:
       containers:
-      - name: shell
-        image: busybox
-        command: ["/bin/sh"]
-        args: ["-c", "sleep 3600"]
-        volumeMounts:
-        - mountPath: /config
-          name: target-pvc
+        - name: stashapp
+          image: stashapp/stash:latest
+          env:
+          - name: TZ
+            value: "America/Los_Angeles"
+          - name: STASH_STASH
+            value: "/config/"
+          - name: STASH_GENERATED
+            value: "/data/downloads/stashapp/generated/"
+          - name: STASH_METADATA
+            value: "/data/downloads/stashapp/metadata/"
+          - name: STASH_CACHE
+            value: "/data/downloads/stashapp/cache/"
+          ports:
+          - name: http
+            containerPort: 9999
+          volumeMounts:
+          - name: stashapp-config
+            mountPath: /config
+          - name: data
+            mountPath: /data
       volumes:
-      - name: target-pvc
-        persistentVolumeClaim:
-          claimName: stashapp-pvc
-          readOnly: false
+        - name: stashapp-config
+          persistentVolumeClaim:
+            claimName: stashapp-pvc
+            readOnly: false
+        - name: data
+          nfs:
+            server: 10.15.21.132
+            path: /mnt/user/adult/
         

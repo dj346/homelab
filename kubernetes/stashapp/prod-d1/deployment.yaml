@@ -24,7 +24,7 @@ spec:
           - name: TZ
             value: "America/Los_Angeles"
           - name: STASH_STASH
-            value: "/config/"
+            value: "/data/"
           - name: STASH_GENERATED
             value: "/data/downloads/stashapp/generated/"
           - name: STASH_METADATA
@@ -36,7 +36,7 @@ spec:
             containerPort: 9999
           volumeMounts:
           - name: stashapp-config
-            mountPath: /config
+            mountPath: /root/.stash
           - name: data
             mountPath: /data
       volumes:

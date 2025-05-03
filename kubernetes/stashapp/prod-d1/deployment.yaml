@@ -30,5 +30,4 @@ spec:
         persistentVolumeClaim:
           claimName: stashapp-pvc
           readOnly: false
-      restartPolicy: Never
         

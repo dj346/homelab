@@ -2,23 +2,23 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: stashapp
-  name: stashapp
-  namespace: stashapp
+    app: jellyseerr
+  name: jellyseerr
+  namespace: jellyseerr
 spec:
   strategy:
     type: Recreate
   selector:
     matchLabels:
-      app: stashapp
+      app: jellyseerr
   template:
     metadata:
       labels:
-        app: stashapp
+        app: jellyseerr
     spec:
       containers:
-        - name: stashapp
-          image: ghcr.io/fallenbagel/stashapp:latest
+        - name: jellyseerr
+          image: ghcr.io/fallenbagel/jellyseerr:latest
           env:
           - name: TZ
             value: "America/Los_Angeles"
@@ -28,11 +28,11 @@ spec:
           - name: http
             containerPort: 5055
           volumeMounts:
-          - name: stashapp-config
+          - name: jellyseerr-config
             mountPath: /app/config
       volumes:
-        - name: stashapp-config
+        - name: jellyseerr-config
           persistentVolumeClaim:
-            claimName: stashapp-pvc
+            claimName: jellyseerr-pvc
             readOnly: false
         

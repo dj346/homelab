@@ -1,62 +1,62 @@
-apiVersion: apps/v1
-kind: StatefulSet
-metadata:
-  name: pterodactyl-panel
-  namespace: pterodactyl-panel
-spec:
-  serviceName: pterodactyl-panel
-  replicas: 1
-  selector:
-    matchLabels:
-      app: pterodactyl-panel
-  persistentVolumeClaimRetentionPolicy:
-    whenDeleted: Retain
-    whenScaled: Retain
-  template:
-    metadata:
-      labels:
-        app: pterodactyl-panel
-    spec:
-      containers:
-        - image: docker.io/pterodactyl-panel/server:latest
-          imagePullPolicy: IfNotPresent
-          name: pterodactyl-panel
-          envFrom:
-            - configMapRef:
-                name: pterodactyl-panel
-            - secretRef:
-                name: pterodactyl-panel-secrets        
-          ports:
-            - containerPort: 80
-              name: http
-              protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /alive
-              port: http
-            initialDelaySeconds: 5
-            periodSeconds: 10
-            timeoutSeconds: 1
-            successThreshold: 1
-            failureThreshold: 10
-          readinessProbe:
-            httpGet:
-              path: /alive
-              port: http
-            initialDelaySeconds: 5
-            periodSeconds: 10
-            timeoutSeconds: 1
-            successThreshold: 1
-            failureThreshold: 3
-          volumeMounts:
-            - name: pterodactyl-panel-config
-              mountPath: /data/
-  volumeClaimTemplates:
-    - metadata:
-        name: pterodactyl-panel-config
-      spec:
-        accessModes: [ "ReadWriteOnce" ]
-        storageClassName: longhorn
-        resources:
-          requests:
-            storage: 1Gi
+# apiVersion: apps/v1
+# kind: StatefulSet
+# metadata:
+#   name: pterodactyl-panel
+#   namespace: pterodactyl-panel
+# spec:
+#   serviceName: pterodactyl-panel
+#   replicas: 1
+#   selector:
+#     matchLabels:
+#       app: pterodactyl-panel
+#   persistentVolumeClaimRetentionPolicy:
+#     whenDeleted: Retain
+#     whenScaled: Retain
+#   template:
+#     metadata:
+#       labels:
+#         app: pterodactyl-panel
+#     spec:
+#       containers:
+#         - image: docker.io/pterodactyl-panel/server:latest
+#           imagePullPolicy: IfNotPresent
+#           name: pterodactyl-panel
+#           envFrom:
+#             - configMapRef:
+#                 name: pterodactyl-panel
+#             - secretRef:
+#                 name: pterodactyl-panel-secrets        
+#           ports:
+#             - containerPort: 80
+#               name: http
+#               protocol: TCP
+#           livenessProbe:
+#             httpGet:
+#               path: /alive
+#               port: http
+#             initialDelaySeconds: 5
+#             periodSeconds: 10
+#             timeoutSeconds: 1
+#             successThreshold: 1
+#             failureThreshold: 10
+#           readinessProbe:
+#             httpGet:
+#               path: /alive
+#               port: http
+#             initialDelaySeconds: 5
+#             periodSeconds: 10
+#             timeoutSeconds: 1
+#             successThreshold: 1
+#             failureThreshold: 3
+#           volumeMounts:
+#             - name: pterodactyl-panel-config
+#               mountPath: /data/
+#   volumeClaimTemplates:
+#     - metadata:
+#         name: pterodactyl-panel-config
+#       spec:
+#         accessModes: [ "ReadWriteOnce" ]
+#         storageClassName: longhorn
+#         resources:
+#           requests:
+#             storage: 1Gi

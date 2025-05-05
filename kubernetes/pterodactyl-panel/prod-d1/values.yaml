@@ -8,3 +8,6 @@ auth:
 
 primary:
   extraFlags: "--default-authentication-plugin=mysql_native_password"
+
+  persistence:
+    size: 1Gi

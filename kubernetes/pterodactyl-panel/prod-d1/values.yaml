@@ -6,6 +6,6 @@ auth:
   username: pterodactyl
   existingSecret: pterodactyl-panel-secrets 
 
-primary:
-  args:
-    - "--default-authentication-plugin=mysql_native_password"
+# primary:
+#   args:
+#     - "--default-authentication-plugin=mysql_native_password"

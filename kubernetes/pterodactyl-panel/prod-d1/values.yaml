@@ -7,5 +7,4 @@ auth:
   existingSecret: pterodactyl-panel-secrets 
 
 primary:
-  extraFlags:
-    - "--default-authentication-plugin=mysql_native_password"
+  extraFlags: "--default-authentication-plugin=mysql_native_password"

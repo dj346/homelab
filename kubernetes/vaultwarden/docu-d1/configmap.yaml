@@ -4,13 +4,18 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: vaultwarden
-  namespace: vaultwarden
+  namespace: default
   labels:
-    app: vaultwarden
+    app.kubernetes.io/component: vaultwarden
+    helm.sh/chart: vaultwarden-0.31.8
+    app.kubernetes.io/name: vaultwarden
+    app.kubernetes.io/instance: vaultwarden
+    app.kubernetes.io/version: "1.33.2"
+    app.kubernetes.io/managed-by: Helm
 data:
   DOMAIN: ""
   ROCKET_ADDRESS: "0.0.0.0"
-  ROCKET_PORT: "80"
+  ROCKET_PORT: "8080"
   ROCKET_WORKERS: "10"
   SHOW_PASSWORD_HINT: "false"
   SIGNUPS_ALLOWED: "true"

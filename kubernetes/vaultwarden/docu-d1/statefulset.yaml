@@ -1,3 +1,5 @@
+---
+# Source: vaultwarden/templates/statefulset.yaml
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
@@ -8,26 +10,35 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: vaultwarden
-  persistentVolumeClaimRetentionPolicy:
-    whenDeleted: Retain
-    whenScaled: Retain
+      app.kubernetes.io/component: vaultwarden
+      app.kubernetes.io/name: vaultwarden
+      app.kubernetes.io/instance: vaultwarden
   template:
     metadata:
       labels:
-        app: vaultwarden
+        app.kubernetes.io/component: vaultwarden
+        app.kubernetes.io/name: vaultwarden
+        app.kubernetes.io/instance: vaultwarden
+      annotations:
+        checksum/config: 113a09078e63fc3e8b35780a60782649d4d3748c
+        checksum/secret: 3ac32876ae053d5e208fa498c3b0f49218d21a6f
     spec:
+      
       containers:
-        - image: docker.io/vaultwarden/server:latest
+        - image: docker.io/vaultwarden/server:1.33.2-alpine
           imagePullPolicy: IfNotPresent
           name: vaultwarden
           envFrom:
             - configMapRef:
                 name: vaultwarden
-            - secretRef:
-                name: vaultwarden-secrets        
+          env:
+            - name: ADMIN_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: vaultwarden
+                  key: ADMIN_TOKEN
           ports:
-            - containerPort: 80
+            - containerPort: 8080
               name: http
               protocol: TCP
           livenessProbe:
@@ -48,15 +59,7 @@ spec:
             timeoutSeconds: 1
             successThreshold: 1
             failureThreshold: 3
-          volumeMounts:
-            - name: vaultwarden-config
-              mountPath: /data/
-  volumeClaimTemplates:
-    - metadata:
-        name: vaultwarden-config
-      spec:
-        accessModes: [ "ReadWriteOnce" ]
-        storageClassName: longhorn
-        resources:
-          requests:
-            storage: 1Gi
+      serviceAccountName: vaultwarden-svc
+  persistentVolumeClaimRetentionPolicy:
+    whenDeleted: Retain
+    whenScaled: Retain

@@ -1,26 +1,22 @@
----
-# Source: vaultwarden/templates/service.yaml
 apiVersion: v1
 kind: Service
 metadata:
   name: vaultwarden
-  namespace: default
+  namespace: vaultwarden-service
   labels:
-    app.kubernetes.io/component: vaultwarden
-    helm.sh/chart: vaultwarden-0.31.8
-    app.kubernetes.io/name: vaultwarden
-    app.kubernetes.io/instance: vaultwarden
-    app.kubernetes.io/version: "1.33.2"
-    app.kubernetes.io/managed-by: Helm
+    app: vaultwarden
 spec:
-  type: "ClusterIP"
+  type: ClusterIP
   selector:
-    app.kubernetes.io/component: vaultwarden
-    app.kubernetes.io/name: vaultwarden
-    app.kubernetes.io/instance: vaultwarden
+    app: vaultwarden
   ports:
-    - name: "http"
+    - name: http
       port: 80
       protocol: TCP
-      targetPort: 8080
+      targetPort: 80
+    - name: websocket
+      port: 3012
+      protocol: TCP
+      targetPort: 3012
   ipFamilyPolicy: SingleStack
+

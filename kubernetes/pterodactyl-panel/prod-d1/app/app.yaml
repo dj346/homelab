@@ -9,7 +9,7 @@ spec:
     server: https://kubernetes.default.svc
     namespace: pterodactyl-panel
   sources:
-    - repoURL: oci://registry-1.docker.io/bitnamicharts/mariadb
+    - repoURL: registry-1.docker.io/bitnamicharts
       chart: mariadb
       path: mariadb
       targetRevision: 20.5.3

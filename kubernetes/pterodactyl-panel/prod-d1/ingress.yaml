@@ -1,34 +1,26 @@
-# apiVersion: networking.k8s.io/v1
-# kind: Ingress
-# metadata:
-#   name: pterodactyl-panel-ingress
-#   namespace: pterodactyl-panel
-#   annotations:
-#     traefik.ingress.kubernetes.io/router.entrypoints: websecure
-#     traefik.ingress.kubernetes.io/router.tls: "true"
-#     cert-manager.io/cluster-issuer: cloudflare-clusterissuer
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: pterodactyl-panel-ingress
+  namespace: pterodactyl-panel
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.tls: "true"
+    cert-manager.io/cluster-issuer: cloudflare-clusterissuer
 
-#     traefik.ingress.kubernetes.io/router.middlewares: traefik-pterodactyl-panel-strip-prefix@kubernetescrd
-# spec:
-#   rules:
-#     - host: pterodactyl-panel.kube-prod-d1.mclacken.net
-#       http:
-#         paths:
-#           - path: /
-#             pathType: Prefix
-#             backend:
-#               service:
-#                 name: pterodactyl-panel-service
-#                 port:
-#                   number: 80
-#           - path: /notifications/hub/
-#             pathType: Prefix
-#             backend:
-#               service:
-#                 name: pterodactyl-panel-service
-#                 port:
-#                   number: 3012
-#   tls:
-#     - hosts:
-#         - pterodactyl-panel.kube-prod-d1.mclacken.net
-#       secretName: pterodactyl-panel-certificate-secret
+spec:
+  rules:
+    - host: pterodactyl.kube-prod-d1.mclacken.net
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: pterodactyl-panel-service
+                port:
+                  number: 80
+  tls:
+    - hosts:
+        - pterodactyl.kube-prod-d1.mclacken.net
+      secretName: pterodactyl-panel-certificate-secret

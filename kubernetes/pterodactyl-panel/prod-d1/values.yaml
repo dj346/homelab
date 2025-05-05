@@ -1,0 +1,11 @@
+global:
+  defaultStorageClass: longhorn
+
+auth:
+  database: panel
+  username: pterodactyl
+  existingSecret: pterodactyl-panel-secrets 
+
+primary:
+  args:
+    - "--default-authentication-plugin=mysql_native_password"

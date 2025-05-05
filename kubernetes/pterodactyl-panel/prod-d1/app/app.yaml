@@ -21,6 +21,8 @@ spec:
       path: kubernetes/pterodactyl-panel/prod-d1
       ref: values
   syncPolicy:
+    syncOptions:
+      - CreateNamespace=true 
     automated: 
       prune: true 
       selfHeal: true 

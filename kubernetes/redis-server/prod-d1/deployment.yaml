@@ -40,3 +40,4 @@ spec:
 # Currently used DB's 
 # 0 - immich
 # 1 - archivebox
+# 2 - pterodactyl-panel

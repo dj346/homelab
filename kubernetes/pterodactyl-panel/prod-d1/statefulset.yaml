@@ -57,12 +57,16 @@ spec:
           volumeMounts:
             - name: pterodactyl-panel-config
               mountPath: /app/var/
+              subPath: var
             - name: pterodactyl-panel-config
               mountPath: /etc/nginx/http.d/
+              subPath: http.d
             - name: pterodactyl-panel-config
               mountPath: /etc/letsencrypt/
+              subPath: letsencrypt
             - name: pterodactyl-panel-config
               mountPath: /app/storage/logs
+              subPath: logs
   volumeClaimTemplates:
     - metadata:
         name: pterodactyl-panel-config

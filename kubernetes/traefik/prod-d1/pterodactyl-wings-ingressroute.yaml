@@ -1,0 +1,16 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: pterodactyl-wings-ingressroute
+  namespace: traefik
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`wings.pwings-prod-d1.mclacken.net`)
+      services:
+        - name: wings-pwings-prod-d1@file           
+          kind: TraefikService
+  tls:
+    secretName: pterodactyl-wings-certificate

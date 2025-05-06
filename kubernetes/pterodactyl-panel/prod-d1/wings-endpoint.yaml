@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: wings-service
+subsets:
+  - addresses:
+      - ip: 10.15.21.150
+    ports:
+      - port: 443

@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: pterodactyl-wings-ingress
+  namespace: pterodactyl-panel
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.tls: "true"
+    cert-manager.io/cluster-issuer: cloudflare-clusterissuer
+
+spec:
+  rules:
+    - host: wings.pwings-prod-d1.mclacken.net
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: wings-service
+                port:
+                  number: 443
+  tls:
+    - hosts:
+        - wings.pwings-prod-d1.mclacken.net
+      secretName: pterodactyl-wings-certificate-secret

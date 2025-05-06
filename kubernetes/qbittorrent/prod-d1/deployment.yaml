@@ -36,7 +36,7 @@ spec:
         - name: VPN_TYPE
           value: "wireguard"
         - name: SERVER_CITIES
-          value: "San Jose"
+          value: "San Jose CA"
         - name: WIREGUARD_PRIVATE_KEY
           valueFrom:
             secretKeyRef:

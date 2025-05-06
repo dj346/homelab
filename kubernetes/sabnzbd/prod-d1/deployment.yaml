@@ -40,6 +40,8 @@ spec:
             secretKeyRef:
               name: wireguard-config
               key: WIREGUARD_PRIVATE_KEY
+        - name: SERVER_CITIES
+          value: "San Jose CA"
         - name: WIREGUARD_ADDRESSES
           valueFrom:
             secretKeyRef:

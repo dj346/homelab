@@ -9,7 +9,7 @@ data:
       routers:
         wings-pwings-prod-d1:
           entryPoints:
-            - "https"
+            - "websecure"
           rule: "Host(`wings.pwings-prod-d1.mclacken.net`)"
           tls: {}
           service: wings-pwings-prod-d1

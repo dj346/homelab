@@ -58,11 +58,30 @@ spec:
             - name: media
               mountPath: /youtube
               subPath: youtube
-            - name: cache
-              mountPath: /cache
             - name: media
               mountPath: /cache/download
               subPath: downloads/tubearchivist
+            - name: cache
+              mountPath: /cache/backup
+              subPath: backup
+            - name: cache
+              mountPath: /cache/channels
+              subPath: channels
+            - name: cache
+              mountPath: /cache/db.sqlite3
+              subPath: db.sqlite3
+            - name: cache
+              mountPath: /cache/import
+              subPath: import
+            - name: cache
+              mountPath: /cache/lost+found
+              subPath: lost+found
+            - name: cache
+              mountPath: /cache/playlists
+              subPath: playlists
+            - name: cache
+              mountPath: /cache/videos
+              subPath: videos
       volumes:
         - name: media
           nfs:

@@ -35,6 +35,8 @@ spec:
           value: "mullvad"
         - name: VPN_TYPE
           value: "wireguard"
+        - name: SERVER_CITIES
+          value: "San Jose"
         - name: WIREGUARD_PRIVATE_KEY
           valueFrom:
             secretKeyRef:

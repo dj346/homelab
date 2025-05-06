@@ -2,6 +2,9 @@ apiVersion: v1
 kind: Endpoints
 metadata:
   name: wings-service
+  namespace: pterodactyl-panel
+  labels:
+    app: pterodactyl-panel
 subsets:
   - addresses:
       - ip: 10.15.21.150

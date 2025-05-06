@@ -1,5 +1,7 @@
 additionalArguments:
       - "--entrypoints.ldaps.address=:636/tcp"
+      - "--providers.file.filename=/config/config.yaml"
+      - "--providers.file.watch=true"
       
 ports:
   ldaps:
@@ -34,3 +36,8 @@ ingressRoute:
     matchRule: Host(`traefik-dashboard.kube-prod-d1.mclacken.net`)
     tls:
       secretName: traefik-dashboard-certificate-secret
+
+volumes:
+  - name: traefik-configmap
+    mountPath: "/config"
+    type: configMap

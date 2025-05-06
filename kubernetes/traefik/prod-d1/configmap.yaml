@@ -5,15 +5,6 @@ metadata:
   namespace: traefik
 data:
   config.yaml: |
-    http:
-      routers:
-        wings-pwings-prod-d1:
-          entryPoints:
-            - "websecure"
-          rule: "Host(`wings.pwings-prod-d1.mclacken.net`)"
-          tls: {}
-          service: wings-pwings-prod-d1
-
       services:
         wings-pwings-prod-d1:
           loadBalancer:

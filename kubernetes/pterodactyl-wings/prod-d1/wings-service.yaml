@@ -2,12 +2,12 @@ apiVersion: v1
 kind: Service
 metadata:
   name: wings-service
-  namespace: pterodactyl-panel
+  namespace: pterodactyl-wings
   labels:
-    app: pterodactyl-panel
+    app: pterodactyl-wings
 spec:
   selector:
-    app: pterodactyl-panel
+    app: pterodactyl-wings
   ports:
     - name: tls
       port: 443

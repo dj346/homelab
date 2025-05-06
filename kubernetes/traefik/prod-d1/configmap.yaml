@@ -5,6 +5,7 @@ metadata:
   namespace: traefik
 data:
   config.yaml: |
+    http:
       services:
         wings-pwings-prod-d1:
           loadBalancer:

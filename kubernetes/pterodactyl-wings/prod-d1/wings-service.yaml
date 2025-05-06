@@ -11,3 +11,5 @@ spec:
       port: 443
       protocol: TCP
   clusterIP: None
+
+  #nslookup pterodactyl-wings-service.pterodactyl-wings.svc.cluster.local

@@ -9,7 +9,7 @@ metadata:
   namespace: pterodactyl-wings
 addressType: IPv4
 ports:
-  - name: https
+  - name: tls
     port: 443
     protocol: TCP
 endpoints:

@@ -1,12 +1,16 @@
-apiVersion: v1
-kind: Endpoints
+apiVersion: discovery.k8s.io/v1
+kind: EndpointSlice
 metadata:
-  name: wings-service
+  name: pterodactyl-wings-endpointslice
   namespace: pterodactyl-wings
   labels:
+    kubernetes.io/service-name: pterodactyl-wings-service
     app: pterodactyl-wings
-subsets:
+addressType: IPv4
+ports:
+  - name: https
+    port: 443
+    protocol: TCP
+endpoints:
   - addresses:
-      - ip: 10.15.21.150
-    ports:
-      - port: 443
+      - 10.15.21.150

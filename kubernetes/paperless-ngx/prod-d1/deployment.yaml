@@ -27,7 +27,7 @@ spec:
           - secretRef:
               name: paperless-secrets 
           image: ghcr.io/paperless-ngx/paperless-ngx:2.15.3
-          environment:
+          env:
             - name: PAPERLESS_DBUSER
               valueFrom:
                 secretKeyRef:

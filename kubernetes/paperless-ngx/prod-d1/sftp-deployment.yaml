@@ -51,4 +51,4 @@ spec:
             name: sftp-pub-key
         - name: sftp-priv-key
           secret:
-            name: sftp-priv-key
+            secretName: sftp-priv-key

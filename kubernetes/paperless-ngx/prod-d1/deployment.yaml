@@ -17,7 +17,7 @@ spec:
     metadata:
       labels:
         app.kubernetes.io/name: paperless
-      app.kubernetes.io/component: app
+        app.kubernetes.io/component: app
     spec:
       containers:
         - name: paperless-app

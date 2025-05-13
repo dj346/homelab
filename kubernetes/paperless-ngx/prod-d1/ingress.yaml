@@ -21,7 +21,7 @@ spec:
               service:
                 name: paperless-http
                 port:
-                  name: paperless-http
+                  number: 8000
   tls:
     - hosts:
         - paperless.kube-prod-d1.mclacken.net

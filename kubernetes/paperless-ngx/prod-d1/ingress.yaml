@@ -19,9 +19,9 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: paperless-http
+                name: paperless-service
                 port:
-                  number: 8000
+                  name: paperless-http
   tls:
     - hosts:
         - paperless.kube-prod-d1.mclacken.net

@@ -26,7 +26,7 @@ data:
   
   USERMAP_UID: "1000"
   USERMAP_GID: "1000"
-  PAPERLESS_ALLOWED_HOSTS: paperless.kube-prod-d1.mclacken.net
+  PAPERLESS_ALLOWED_HOSTS: paperless.kube-prod-d1.mclacken.net,paperless.default.svc
   PAPERLESS_CSRF_TRUSTED_ORIGINS: https://paperless.kube-prod-d1.mclacken.net
   PAPERLESS_CORS_ALLOWED_HOSTS: https://paperless.kube-prod-d1.mclacken.net
   PAPERLESS_TRUSTED_PROXIES: 10.15.21.29

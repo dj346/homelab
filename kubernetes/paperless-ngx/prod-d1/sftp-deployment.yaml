@@ -33,9 +33,9 @@ spec:
           mountPath: /data/
         - name: authorizedkeys
           mountPath: /home/user/.ssh/authorized_keys
-        - name: sftp-scanner-pub-key
+        - name: sftp-pub-key
           mountPath: /etc/ssh/ssh_host1_ed25519_key.pub
-        - name: sftp-scanner-pub-key2
+        - name: sftp-pub-key2
           mountPath: /etc/ssh/ssh_host1_rsa_key.pub
         - name: sftp-priv-key
           mountPath: /etc/ssh/ssh_host1_ed25519_key
@@ -67,13 +67,13 @@ spec:
                 path: ssh_host1_rsa_key.pub
         - name: sftp-priv-key
           secret:
-            name: sftp-priv-key
+            secretName: sftp-priv-key
             items:
               - key: ssh_host1_ed25519_key
                 path: ssh_host1_ed25519_key
         - name: sftp-priv-key2
           secret:
-            name: sftp-priv-key
+            secretName: sftp-priv-key
             items:
               - key: ssh_host1_rsa_key
                 path: ssh_host1_rsa_key

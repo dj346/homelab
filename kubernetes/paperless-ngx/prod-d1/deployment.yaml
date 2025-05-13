@@ -38,22 +38,22 @@ spec:
                 secretKeyRef:
                   name: pgdb-service-user-secret
                   key: password
-          livenessProbe:
-            httpGet:
-              path: /
-              port: 8000
-              scheme: HTTP
-            failureThreshold: 5
-            periodSeconds: 30
-            timeoutSeconds: 10
-          readinessProbe:
-            httpGet:
-              path: /
-              port: 8000
-              scheme: HTTP
-            failureThreshold: 5
-            periodSeconds: 30
-            timeoutSeconds: 10
+          # livenessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: 8000
+          #     scheme: HTTP
+          #   failureThreshold: 5
+          #   periodSeconds: 30
+          #   timeoutSeconds: 10
+          # readinessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: 8000
+          #     scheme: HTTP
+          #   failureThreshold: 5
+          #   periodSeconds: 30
+          #   timeoutSeconds: 10
           ports:
             - name: paperless-http
               protocol: TCP

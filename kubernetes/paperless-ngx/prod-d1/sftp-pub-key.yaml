@@ -1,0 +1,12 @@
+# configmap-sftp-user-keys.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: sftp-pub-key
+  namespace: paperless
+  labels:
+    app.kubernetes.io/name: paperless
+    app.kubernetes.io/component: sftp
+data:
+  ssh_host_ed25519_key.pub: |
+    ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG50+8yj/had8z/GPG8n8sAsqMGnbxAu4ob5eUsuHijH root@sftp-55bc9b7f4b-7s8gp

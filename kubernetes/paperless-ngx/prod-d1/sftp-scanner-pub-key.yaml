@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: sftp-user-keys
+  name: sftp-scanner-pub-key
   namespace: paperless
   labels:
     app.kubernetes.io/name: paperless

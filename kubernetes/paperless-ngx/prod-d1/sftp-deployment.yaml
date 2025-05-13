@@ -31,11 +31,11 @@ spec:
         volumeMounts:
         - name: data
           mountPath: /data/
+        - name: authorized_keys
+          mountPath: /home/user/.ssh/authorized_keys
         - name: sftp-scanner-pub-key
-          mountPath: /home/user/.ssh/keys
-        - name: sftp-pub-key
           mountPath: /etc/ssh/ssh_host1_ed25519_key.pub
-        - name: sftp-pub-key2
+        - name: sftp-scanner-pub-key2
           mountPath: /etc/ssh/ssh_host1_rsa_key.pub
         - name: sftp-priv-key
           mountPath: /etc/ssh/ssh_host1_ed25519_key
@@ -47,18 +47,33 @@ spec:
             server: 10.15.21.132
             path: /mnt/user/documents/downloads/paperless-ngx/consume/
             readOnly: false
-        - name: sftp-scanner-pub-key
+        - name: authorized_keys
           configMap:
-            name: sftp-scanner-pub-key
+            name: sftp-pub-key
+            items:
+              - key: authorized_keys
+                path: authorized_keys
         - name: sftp-pub-key
           configMap:
             name: sftp-pub-key
-        - name: sftp-priv-key
-          secret:
-            secretName: sftp-priv-key
+            items:
+              - key: ssh_host1_ed25519_key.pub
+                path: ssh_host_ed25519_key.pub
         - name: sftp-pub-key2
           configMap:
             name: sftp-pub-key
+            items:
+              - key: ssh_host1_rsa_key.pub
+                path: ssh_host1_rsa_key.pub
+        - name: sftp-priv-key
+          secret:
+            name: sftp-priv-key
+            items:
+              - key: ssh_host1_ed25519_key
+                path: ssh_host1_ed25519_key
         - name: sftp-priv-key2
           secret:
-            secretName: sftp-priv-key
+            name: sftp-priv-key
+            items:
+              - key: ssh_host1_rsa_key
+                path: ssh_host1_rsa_key

@@ -31,7 +31,7 @@ spec:
         volumeMounts:
         - name: data
           mountPath: /data/
-        - name: authorized_keys
+        - name: authorizedkeys
           mountPath: /home/user/.ssh/authorized_keys
         - name: sftp-scanner-pub-key
           mountPath: /etc/ssh/ssh_host1_ed25519_key.pub
@@ -47,7 +47,7 @@ spec:
             server: 10.15.21.132
             path: /mnt/user/documents/downloads/paperless-ngx/consume/
             readOnly: false
-        - name: authorized_keys
+        - name: authorizedkeys
           configMap:
             name: sftp-pub-key
             items:

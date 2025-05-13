@@ -1,0 +1,23 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRouteTCP
+metadata:
+  name: paperless-sftp
+  namespace: paperless
+  labels:
+    app.kubernetes.io/name: paperless
+    app.kubernetes.io/component: sftp
+spec:
+  entryPoints:
+    - sftp
+    # If you had a TLS-terminating protocol that supported SNI, you could do:
+    # routes:
+    #   - match: HostSNI(`paperless-sftp.mclacken.net`)
+    #     services:
+    #       - name: paperless-sftp
+    #         port: 22
+    #
+    # But for SSH/SFTP (no SNI), just route everything on port 22:
+  routes:
+    - services:
+        - name: paperless-sftp-service        # your Kubernetes Service for the SFTP backend
+          port: 22

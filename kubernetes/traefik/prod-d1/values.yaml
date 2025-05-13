@@ -1,5 +1,6 @@
 additionalArguments:
       - "--entrypoints.ldaps.address=:636/tcp"
+      - "--entrypoints.sftp.address=:22/tcp"
       - "--providers.file.filename=/config/config.yaml"
       - "--providers.file.watch=true"
       
@@ -12,6 +13,14 @@ ports:
     protocol: TCP
     tls:
       enabled: true
+  sftp:
+    port: 22
+    expose:
+      default: true
+    exposedPort: 22
+    protocol: TCP
+    # tls:
+    #   enabled: true
   web:
     redirections:
       entryPoint:

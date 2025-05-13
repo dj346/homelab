@@ -23,8 +23,16 @@ spec:
         - name: paperless-app
           envFrom:
           - configMapRef:
-              name: paperless-config   
+              name: paperless-config
+          - secretRef:
+              name: paperless-secrets 
           image: ghcr.io/paperless-ngx/paperless-ngx:2.15.3
+          environment:
+            - name: PAPERLESS_DBPASS
+              valueFrom:
+                secretKeyRef:
+                  name: pgdb-service-user-secret
+                  key: password
           livenessProbe:
             httpGet:
               path: /
@@ -62,4 +70,3 @@ spec:
           persistentVolumeClaim:
             claimName: paperless-pvc
             readOnly: false
-status: {}

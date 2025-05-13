@@ -7,18 +7,26 @@ metadata:
     app.kubernetes.io/name: paperless
     app.kubernetes.io/component: app
 data:
-  PAPERLESS_SECRET_KEY: "generate a long secret or make one up"
-  PAPERLESS_DBHOST: paperless-db
-  PAPERLESS_REDIS: "redis://paperless-broker:6379"
-  PAPERLESS_TIKA_ENABLED: "1"
-  PAPERLESS_TIKA_ENDPOINT: http://paperless-ocr:9998
-  PAPERLESS_TIKA_GOTENBERG_ENDPOINT: http://paperless-ocr:3000
-  PAPERLESS_TIME_ZONE: America/New_York
-  PAPERLESS_OCR_LANGUAGE: "eng"
+  PAPERLESS_TIME_ZONE: "America/Los_Angeles"
   PAPERLESS_CONSUMER_RECURSIVE: "true"
   PAPERLESS_CONSUMER_SUBDIRS_AS_TAGS: "true"
-  USERMAP_UID: "1000"
-  USERMAP_GID: "100"
+  
+  PAPERLESS_REDIS: "redis://redis-server.redis-server.svc.cluster.local:6379/3"
+  
+  PAPERLESS_TIKA_ENABLED: "1"
+  PAPERLESS_TIKA_ENDPOINT: http://tika-http:9998
+  PAPERLESS_TIKA_GOTENBERG_ENDPOINT: http://gotenberg-http:3000
+  PAPERLESS_OCR_LANGUAGE: "eng"
+
+  PAPERLESS_DBUSER: paperless-service-user
+  PAPERLESS_DBHOST: vaultwarden-cluster-rw
 
   PAPERLESS_MEDIA_ROOT: /data/paperless-ngx/
   PAPERLESS_CONSUMPTION_DIR: /data/downloads/paperless-ngx/consume/
+  
+  USERMAP_UID: "1000"
+  USERMAP_GID: "1000"
+  PAPERLESS_CSRF_TRUSTED_ORIGINS: https://paperless.kube-prod-d1.mclacken.net
+  PAPERLESS_ALLOWED_HOSTS: paperless.kube-prod-d1.mclacken.net
+  PAPERLESS_CORS_ALLOWED_HOSTS: paperless.kube-prod-d1.mclacken.net
+  PAPERLESS_TRUSTED_PROXIES: 10.15.21.29

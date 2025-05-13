@@ -35,7 +35,7 @@ spec:
           mountPath: /home/user/.ssh/keys/id_rsa.pub
           subPath: id_rsa.pub
         - name: key-pvc
-          mountPath: /etc/ssh2/
+          mountPath: /etc/ssh/
         # - name: sftp-pub-key
         #   mountPath: /etc/ssh/ssh_host_ed25519_key.pub
         #   subPath: ssh_host_ed25519_key.pub

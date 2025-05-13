@@ -30,7 +30,7 @@ spec:
           value: "user::1000:1000:/data"
         volumeMounts:
         - name: data
-          mountPath: /data/
+          mountPath: /home/user/data
         - name: authorizedkeys
           mountPath: /home/user/.ssh/keys/id_rsa.pub
           subPath: id_rsa.pub

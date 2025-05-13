@@ -18,6 +18,7 @@ data:
   PAPERLESS_TIKA_GOTENBERG_ENDPOINT: http://gotenberg-http:3000
   PAPERLESS_OCR_LANGUAGE: "eng"
 
+  PAPERLESS_DBNAME: paperlessdb
   PAPERLESS_DBHOST: paperless-cluster-rw
 
   PAPERLESS_MEDIA_ROOT: /data/paperless-ngx/

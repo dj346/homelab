@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: paperless-ocr
+  namespace: paperless
+  labels:
+    app.kubernetes.io/name: paperless
+    app.kubernetes.io/component: ocr
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: paperless
+      app.kubernetes.io/component: ocr
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: paperless
+        app.kubernetes.io/component: ocr
+    spec:
+      containers:
+        - name: gotenberg
+          env:
+            - name: CHROMIUM-DISABLE-JAVASCRIPT
+              value: "true"
+            - name: CHROMIUM_ALLOW_LIST
+              value: "file:///tmp/.*"
+          image: gotenberg/gotenberg:8
+          ports:
+            - name: gotenberg-http
+              containerPort: 3000
+              protocol: TCP
+        - name: tika
+          image: apache/tika:3.1.0.0-full
+          ports:
+            - name: tika-http
+              containerPort: 9998
+              protocol: TCP
+      restartPolicy: Always

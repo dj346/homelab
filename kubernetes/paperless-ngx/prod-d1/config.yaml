@@ -1,0 +1,24 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: paperless-config
+  namespace: paperless
+  labels:
+    app.kubernetes.io/name: paperless
+    app.kubernetes.io/component: app
+data:
+  PAPERLESS_SECRET_KEY: "generate a long secret or make one up"
+  PAPERLESS_DBHOST: paperless-db
+  PAPERLESS_REDIS: "redis://paperless-broker:6379"
+  PAPERLESS_TIKA_ENABLED: "1"
+  PAPERLESS_TIKA_ENDPOINT: http://paperless-ocr:9998
+  PAPERLESS_TIKA_GOTENBERG_ENDPOINT: http://paperless-ocr:3000
+  PAPERLESS_TIME_ZONE: America/New_York
+  PAPERLESS_OCR_LANGUAGE: "eng"
+  PAPERLESS_CONSUMER_RECURSIVE: "true"
+  PAPERLESS_CONSUMER_SUBDIRS_AS_TAGS: "true"
+  USERMAP_UID: "1000"
+  USERMAP_GID: "100"
+
+  PAPERLESS_MEDIA_ROOT: /data/paperless-ngx/
+  PAPERLESS_CONSUMPTION_DIR: /data/downloads/paperless-ngx/consume/

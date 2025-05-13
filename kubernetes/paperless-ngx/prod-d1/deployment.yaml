@@ -28,6 +28,11 @@ spec:
               name: paperless-secrets 
           image: ghcr.io/paperless-ngx/paperless-ngx:2.15.3
           environment:
+            - name: PAPERLESS_DBUSER
+              valueFrom:
+                secretKeyRef:
+                  name: pgdb-service-user-secret
+                  key: username
             - name: PAPERLESS_DBPASS
               valueFrom:
                 secretKeyRef:

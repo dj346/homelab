@@ -18,8 +18,7 @@ data:
   PAPERLESS_TIKA_GOTENBERG_ENDPOINT: http://gotenberg-http:3000
   PAPERLESS_OCR_LANGUAGE: "eng"
 
-  PAPERLESS_DBUSER: paperless-service-user
-  PAPERLESS_DBHOST: vaultwarden-cluster-rw
+  PAPERLESS_DBHOST: paperless-cluster-rw
 
   PAPERLESS_MEDIA_ROOT: /data/paperless-ngx/
   PAPERLESS_CONSUMPTION_DIR: /data/downloads/paperless-ngx/consume/

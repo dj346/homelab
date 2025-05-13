@@ -32,7 +32,7 @@ spec:
         - name: data
           mountPath: /data/
         - name: authorizedkeys
-          mountPath: /home/user/.ssh/authorized_keys
+          mountPath: /home/user/.ssh/keys/id_rsa.pub
         - name: sftp-pub-key
           mountPath: /etc/ssh/ssh_host_ed25519_key.pub
         - name: sftp-pub-key2
@@ -51,8 +51,8 @@ spec:
           configMap:
             name: sftp-pub-key
             items:
-              - key: authorized_keys
-                path: authorized_keys
+              - key: id_rsa.pub
+                path: id_rsa.pub
         - name: sftp-pub-key
           configMap:
             name: sftp-pub-key

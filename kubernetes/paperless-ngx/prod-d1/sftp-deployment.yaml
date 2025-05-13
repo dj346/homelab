@@ -29,7 +29,7 @@ spec:
         - name: SFTP_USERS
           value: "user::1000:1000:/data"
         volumeMounts:
-        - name: sftp-data
+        - name: data
           mountPath: /data/
         - name: ssh-keys
           mountPath: /home/user/.ssh/keys

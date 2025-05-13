@@ -52,7 +52,7 @@ spec:
         - name: data
           nfs:
             server: 10.15.21.132
-            path: /mnt/user/documents/downloads/paperless-ngx/consume2/
+            path: /mnt/user/documents/downloads/paperless-ngx/consume/
             readOnly: false
         - name: authorizedkeys
           configMap:

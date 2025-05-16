@@ -22,7 +22,7 @@ data:
   PAPERLESS_DBHOST: paperless-cluster-rw
 
   PAPERLESS_MEDIA_ROOT: /data/paperless-ngx/
-  PAPERLESS_CONSUMPTION_DIR: /data/downloads/paperless-ngx/consume/
+  #PAPERLESS_CONSUMPTION_DIR: /data/downloads/paperless-ngx/consume/
   
   USERMAP_UID: "1000"
   USERMAP_GID: "1000"

@@ -66,12 +66,13 @@ spec:
               name: media
       restartPolicy: Always
       volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: paperless-pvc
+            readOnly: false
         - name: media
           nfs:
             server: 10.15.21.132
             path: /mnt/user/documents/
             readOnly: false
-        - name: data
-          persistentVolumeClaim:
-            claimName: paperless-pvc
-            readOnly: false
+        

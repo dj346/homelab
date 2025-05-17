@@ -3,6 +3,9 @@ kind: Ingress
 metadata:
   name: grafana-ingress
   namespace: prometheus
+  labels:
+    app.kubernetes.io/name: prometheus
+    app.kubernetes.io/component: app
   annotations:
     cert-manager.io/cluster-issuer: cloudflare-clusterissuer
     traefik.ingress.kubernetes.io/router.entrypoints: websecure

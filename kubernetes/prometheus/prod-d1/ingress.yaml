@@ -18,9 +18,9 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: prometheus-stack-grafana
+                name: kube-prometheus-stack-grafana
                 port:
-                  number: 3000
+                  number: 80
   tls:
     - hosts:
         - grafana.kube-prod-d1.mclacken.net

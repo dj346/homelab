@@ -1,16 +1,16 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: prometheus
+  name: kube-prometheus-stack
   namespace: argocd
   labels: 
-    app.kubernetes.io/name: prometheus
+    app.kubernetes.io/name: kube-prometheus-stack
     app.kubernetes.io/component: app
 spec:
   project: default
   destination:
     server: https://kubernetes.default.svc
-    namespace: prometheus
+    namespace: kube-prometheus-stack
   sources:
     - repoURL: https://prometheus-community.github.io/helm-charts
       chart: kube-prometheus-stack

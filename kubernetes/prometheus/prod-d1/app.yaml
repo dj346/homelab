@@ -23,6 +23,9 @@ spec:
       path: kubernetes/prometheus/prod-d1
       ref: values
   syncPolicy:
+    syncOptions:
+      - ServerSideApply=true
+      - CreateNamespace=true 
     automated: 
       prune: true 
       selfHeal: true 

@@ -77,12 +77,12 @@
 # adminUser: admin
 # # adminPassword: strongpassword
 
-# # Use an existing secret for the admin user.
-# admin:
-#   ## Name of the secret. Can be templated.
-#   existingSecret: ""
-#   userKey: admin-user
-#   passwordKey: admin-password
+# Use an existing secret for the admin user.
+admin:
+  ## Name of the secret. Can be templated.
+  existingSecret: "admin-secret"
+  userKey: username
+  passwordKey: password
 
 # ## Grafana's LDAP configuration
 # ## Templated by the template in _helpers.tpl

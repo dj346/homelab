@@ -1,0 +1,35 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: prometheus
+  namespace: argocd
+  labels: 
+    app.kubernetes.io/name: prometheus
+    app.kubernetes.io/component: app
+spec:
+  project: default
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: prometheus
+  sources:
+    - repoURL: https://prometheus-community.github.io/helm-charts
+      chart: prometheus-stack
+      targetRevision: 72.4.0
+      helm:
+        valueFiles:
+        - $values/kubernetes/prometheus/prod-d1/values.yaml
+    - repoURL: 'https://gitea.kube-prod-d1.mclacken.net/dj346/homelab.git'
+      targetRevision: HEAD
+      path: kubernetes/prometheus/prod-d1
+      ref: values
+  syncPolicy:
+    automated: 
+      prune: true 
+      selfHeal: true 
+      allowEmpty: false
+    retry:
+      limit: 0 # the number of retries to attempt
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 3m

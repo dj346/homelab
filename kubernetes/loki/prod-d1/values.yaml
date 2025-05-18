@@ -4,3 +4,4 @@ loki:
       chunks: dummy-chunks
       ruler: dummy-ruler
       admin: dummy-admin
+  useTestSchema: true

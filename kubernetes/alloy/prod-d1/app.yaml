@@ -1,112 +1,27 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: loki
+  name: alloy
   namespace: argocd
   labels: 
-    app.kubernetes.io/name: loki
+    app.kubernetes.io/name: alloy
     app.kubernetes.io/component: app
 spec:
   project: default
   destination:
     server: https://kubernetes.default.svc
-    namespace: loki
+    namespace: alloy
   sources:
     - repoURL: https://grafana.github.io/helm-charts
-      chart: loki
-      targetRevision: 6.29.0
+      chart: alloy
+      targetRevision: 1.0.3
       helm:
-        values: |
-          deploymentMode: SingleBinary
-
-          singleBinary:
-            replicas: 3
-            extraEnvFrom:
-              - secretRef:
-                  name: loki-minio-secret
-            extraArgs:
-              - "-config.expand-env=true"
-
-          # Make sure other deployment modes are zeroed out
-          write:
-            replicas: 0
-          read:
-            replicas: 0
-          backend:
-            replicas: 0
-
-          backend:
-            replicas: 0
-          read:
-            replicas: 0
-          write:
-            replicas: 0
-
-          ingester:
-            replicas: 0
-          querier:
-            replicas: 0
-          queryFrontend:
-            replicas: 0
-          queryScheduler:
-            replicas: 0
-          distributor:
-            replicas: 0
-          compactor:
-            replicas: 0
-          indexGateway:
-            replicas: 0
-          bloomCompactor:
-            replicas: 0
-          bloomGateway:
-            replicas: 0
-
-          # Configure Loki settings
-          loki:
-            commonConfig:
-              replication_factor: 3
-            schemaConfig:
-              configs:
-                - from: "2024-04-01"
-                  store: tsdb
-                  object_store: s3
-                  schema: v13
-                  index:
-                    prefix: loki_index_
-                    period: 24h
-            pattern_ingester:
-              enabled: true
-            limits_config:
-              allow_structured_metadata: true
-              volume_enabled: true
-            ruler:
-              enable_api: true
-            
-            # storage:
-            #   bucketNames:
-            #     chunks: loki-chunks
-            #     ruler: loki-ruler
-            #     admin: loki-admin
-            #   type: s3
-            #   s3:
-            #     endpoint: minio.crowleybrynn.com
-            #     region: us-east-1
-            #     s3ForcePathStyle: true
-            #     insecure: false
-            #     access_key_id: "${AWS_ACCESS_KEY_ID}"
-            #     secret_access_key: "${AWS_SECRET_ACCESS_KEY}"
-            
-            storage_config:
-              boltdb_shipper:
-                active_index_directory: /var/loki/index
-                cache_location: /var/loki/cache
-
-          # Disable built-in MinIO
-          # minio:
-          #   enabled: false
+        valueFiles:
+        - $values/kubernetes/alloy/prod-d1/values.yaml
     - repoURL: 'https://gitea.kube-prod-d1.mclacken.net/dj346/homelab.git'
       targetRevision: HEAD
-      path: kubernetes/loki/prod-d1
+      path: kubernetes/alloy/prod-d1
+      ref: values
   syncPolicy:
     syncOptions:
       - CreateNamespace=true 

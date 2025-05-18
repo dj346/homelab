@@ -21,6 +21,7 @@ spec:
     - repoURL: 'https://gitea.kube-prod-d1.mclacken.net/dj346/homelab.git'
       targetRevision: HEAD
       path: kubernetes/loki/prod-d1
+      ref: values
   syncPolicy:
     syncOptions:
       - CreateNamespace=true 

@@ -1,26 +1,26 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: loki
+  name: tempo
   namespace: argocd
   labels: 
-    app.kubernetes.io/name: loki
+    app.kubernetes.io/name: tempo
     app.kubernetes.io/component: app
 spec:
   project: default
   destination:
     server: https://kubernetes.default.svc
-    namespace: loki
+    namespace: tempo
   sources:
     - repoURL: https://grafana.github.io/helm-charts
-      chart: loki
-      targetRevision: 6.29.0
+      chart: tempo-distributed
+      targetRevision: 1.39.4
       helm:
         valueFiles:
-        - $values/kubernetes/loki/prod-d1/values.yaml
+        - $values/kubernetes/tempo/prod-d1/values.yaml
     - repoURL: 'https://gitea.kube-prod-d1.mclacken.net/dj346/homelab.git'
       targetRevision: HEAD
-      path: kubernetes/loki/prod-d1
+      path: kubernetes/tempo/prod-d1
       ref: values
   syncPolicy:
     syncOptions:

@@ -34,7 +34,7 @@ spec:
       #     name: minio-creds
       #     key: root-user
       #     optional: false
-    - name: MINIO_ROOT_PASSWORD'
+    - name: MINIO_ROOT_PASSWORD
       value: root-password
       # valueFrom:
       #   secretKeyRef:

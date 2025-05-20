@@ -13,8 +13,8 @@ spec:
     namespace: minio-operator
   sources:
     - repoURL: https://operator.min.io
-      chart: minio-operator-operator 
-      targetRevision: 4.3.7
+      chart: operator
+      targetRevision: 7.1.1
       helm:
         valueFiles:
         - $values/kubernetes/minio-operator/prod-d1/values.yaml

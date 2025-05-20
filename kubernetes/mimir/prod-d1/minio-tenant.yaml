@@ -10,7 +10,7 @@ metadata:
 spec:    
   requestAutoCert: false
   externalCertSecret:
-    - name: myminio-tls
+    - name: mimir-bucket-tls
       type: cert-manager.io/v1
 
   exposeServices: 

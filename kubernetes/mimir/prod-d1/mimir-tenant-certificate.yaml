@@ -6,12 +6,13 @@ metadata:
   namespace: mimir
 spec:
   dnsNames:
-    - "minio.mimir"
-    - "minio.mimir.svc"
+    - 'minio.mimir'
+    - 'minio.mimir.svc'
     - 'minio.mimir.svc.cluster.local'
+    - 'mimir-bucket-hl.mimir.svc.cluster.local'
     - '*.minio.mimir.svc.cluster.local'
-    - '*.myminio-hl.mimir.svc.cluster.local'
-    - '*.myminio.minio.mimir.svc.cluster.local'
-  secretName: myminio-tls
+    - '*.mimir-bucket-hl.mimir.svc.cluster.local'
+    - '*.mimir-bucket-hl.minio.mimir.svc.cluster.local'
+  secretName: mimir-bucket-tls
   issuerRef:
     name: mimir-tenant-ca-issuer

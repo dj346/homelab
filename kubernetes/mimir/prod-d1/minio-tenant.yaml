@@ -26,8 +26,6 @@ spec:
   configuration:
     name: minio-secret
 
-  credsSecret: 43
-
   # env:
   #   - name: MINIO_ROOT_USER
   #     value: root-user
@@ -117,10 +115,10 @@ spec:
         seccompProfile:
           type: RuntimeDefault
   
-  metrics:
-    enabled: false
-    port: 9000
-    protocol: http
+  # metrics:
+  #   enabled: false
+  #   port: 9000
+  #   protocol: http
 
   # Directs the Operator to add the Tenant's metric scrape configuration to an existing Kubernetes Prometheus deployment managed by the Prometheus Operator.
   prometheusOperator: false

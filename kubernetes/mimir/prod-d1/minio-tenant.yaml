@@ -23,24 +23,26 @@ spec:
         - mimir-minio.kube-prod-d1.mclacken.net
       console: mimir-minio-console.kube-prod-d1.mclacken.net
   
-  # configuration:
-  #   name: minio-configmap
+  configuration:
+    name: minio-secret
 
-  env:
-    - name: MINIO_ROOT_USER
-      value: root-user
-      # valueFrom:
-      #   secretKeyRef:
-      #     name: minio-creds
-      #     key: root-user
-      #     optional: false
-    - name: MINIO_ROOT_PASSWORD
-      value: root-password
-      # valueFrom:
-      #   secretKeyRef:
-      #     name: minio-creds
-      #     key: root-password
-      #     optional: false
+  credsSecret: 43
+
+  # env:
+  #   - name: MINIO_ROOT_USER
+  #     value: root-user
+  #     # valueFrom:
+  #     #   secretKeyRef:
+  #     #     name: minio-creds
+  #     #     key: root-user
+  #     #     optional: false
+  #   - name: MINIO_ROOT_PASSWORD
+  #     value: root-password
+  #     # valueFrom:
+  #     #   secretKeyRef:
+  #     #     name: minio-creds
+  #     #     key: root-password
+  #     #     optional: false
 
   buckets: 
     - name: somebucket1

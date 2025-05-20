@@ -11,14 +11,14 @@ spec:
   destination:
     server: https://kubernetes.default.svc
     namespace: mimir
-  sources:
-    - repoURL: https://grafana.github.io/helm-charts
-      chart: mimir-distributed
-      targetRevision: 5.7.0
-      helm:
-        valueFiles:
-        - $values/kubernetes/mimir/prod-d1/values.yaml
-    - repoURL: 'https://gitea.kube-prod-d1.mclacken.net/dj346/homelab.git'
+  source:
+    # - repoURL: https://grafana.github.io/helm-charts
+    #   chart: mimir-distributed
+    #   targetRevision: 5.7.0
+    #   helm:
+    #     valueFiles:
+    #     - $values/kubernetes/mimir/prod-d1/values.yaml
+      repoURL: 'https://gitea.kube-prod-d1.mclacken.net/dj346/homelab.git'
       targetRevision: HEAD
       path: kubernetes/mimir/prod-d1
       ref: values

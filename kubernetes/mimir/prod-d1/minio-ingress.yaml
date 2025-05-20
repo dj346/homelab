@@ -30,6 +30,6 @@ spec:
                   number: 9090
   tls:
     - hosts:
-        - minio.example.com
-        - console.example.com
-      secretName: tenant-tls
+        - mimir-minio.kube-prod-d1.mclacken.net
+        - mimir-minio-console.kube-prod-d1.mclacken.net
+      secretName: tenant-certificate-secret

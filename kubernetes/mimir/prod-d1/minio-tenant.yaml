@@ -42,20 +42,6 @@ spec:
       #     key: root-password
       #     optional: false
 
-    - name: MINIO_IDENTITY_LDAP_SERVER_ADDR
-      value: "ldaps.example.net:636"
-    - name: MINIO_IDENTITY_LDAP_LOOKUP_BIND_DN
-      value: "CN=xxxxx,OU=xxxxx,OU=xxxxx,DC=example,DC=net"
-    - name: MINIO_IDENTITY_LDAP_LOOKUP_BIND_PASSWORD
-      valueFrom:
-        secretKeyRef:
-          name: minio-ldap-secret
-          key: bind-password
-    - name: MINIO_IDENTITY_LDAP_USER_DN_SEARCH_BASE_DN
-      value: "dc=example,dc=net"
-    - name: MINIO_IDENTITY_LDAP_USER_DN_SEARCH_FILTER
-      value: "(&(objectCategory=user)(sAMAccountName=%s))"
-
   buckets: 
     - name: somebucket1
       region: us-west-1

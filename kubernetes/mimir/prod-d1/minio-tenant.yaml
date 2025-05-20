@@ -14,8 +14,8 @@ spec:
       type: cert-manager.io/v1
 
   exposeServices: 
-    minio: true
-    console: true
+    minio: false
+    console: false
 
   features:
     domains: 

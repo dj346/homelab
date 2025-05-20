@@ -1,0 +1,81 @@
+apiVersion: minio.min.io/v2
+kind: Tenant
+metadata:
+  name: mimir-bucket
+  namespace: mimir
+spec:
+  requestAutoCert: false
+  externalCertSecret:
+    - name: myminio-tls
+      type: cert-manager.io/v1
+  env:
+    - name: MINIO_DOMAIN
+      value: "minio.example.com"
+    - name: MINIO_BROWSER_REDIRECT_URL
+      value: "https://console.example.com"
+    - name: MINIO_SERVER_URL
+      value: "https://minio.example.com"
+
+  poolsMetadata:
+    annotations: {}
+    labels:
+      app.kubernetes.io/name: mimir
+      app.kubernetes.io/component: tsdb
+
+  pools:
+    - servers: 4
+      name: pool-0
+      volumesPerServer: 1
+      
+      labels: 
+        app.kubernetes.io/name: mimir
+        app.kubernetes.io/component: tsdb
+      annotations: { }
+
+      volumeClaimTemplate:
+        apiVersion: v1
+        kind: PersistentVolumeClaim
+        metadata: 
+          name: pool-0
+          namespace: mimir
+          labels:
+            app.kubernetes.io/name: mimir
+            app.kubernetes.io/component: tsdb
+        spec:
+          accessModes:
+            - ReadWriteOnce
+          resources:
+            requests:
+              storage: 5Gi
+          storageClassName: longhorn-strict-local
+        status: { }
+      
+      resources: { }
+
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: "OnRootMismatch"
+        runAsNonRoot: true
+
+      containerSecurityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        runAsNonRoot: true
+        allowPrivilegeEscalation: false
+        capabilities:
+          drop:
+            - ALL
+        seccompProfile:
+          type: RuntimeDefault
+  
+  metrics:
+    enabled: false
+    port: 9000
+    protocol: http
+
+  # Directs the Operator to add the Tenant's metric scrape configuration to an existing Kubernetes Prometheus deployment managed by the Prometheus Operator.
+  prometheusOperator: false
+
+  logging: { }

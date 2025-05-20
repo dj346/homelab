@@ -1,0 +1,35 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: tenant-ingress
+  namespace: mimir
+  annotations:
+    cert-manager.io/cluster-issuer: cloudflare-clusterissuer
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+spec:
+  rules:
+    - host: mimir-minio.kube-prod-d1.mclacken.net
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: minio
+                port:
+                  number: 80
+    - host: mimir-minio-console.kube-prod-d1.mclacken.net
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: myminio-console
+                port:
+                  number: 9090
+  tls:
+    - hosts:
+        - minio.example.com
+        - console.example.com
+      secretName: tenant-tls

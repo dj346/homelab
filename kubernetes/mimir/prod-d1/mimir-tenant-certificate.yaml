@@ -1,0 +1,17 @@
+# mimir-tenant-minio-certificate.yaml
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: tenant-certmanager-cert
+  namespace: mimir
+spec:
+  dnsNames:
+    - "minio.mimir"
+    - "minio.mimir.svc"
+    - 'minio.mimir.svc.cluster.local'
+    - '*.minio.mimir.svc.cluster.local'
+    - '*.myminio-hl.mimir.svc.cluster.local'
+    - '*.myminio.minio.mimir.svc.cluster.local'
+  secretName: myminio-tls
+  issuerRef:
+    name: mimir-tenant-ca-issuer

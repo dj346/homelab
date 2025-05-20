@@ -1,0 +1,9 @@
+# mimir-tenant-ca-issuer.yaml
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: mimir-tenant-ca-issuer
+  namespace: mimir
+spec:
+  ca:
+    secretName: mimir-tenant-ca-tls

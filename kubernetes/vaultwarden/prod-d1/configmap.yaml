@@ -45,5 +45,5 @@ data:
   SMTP_SECURITY: "starttls"
   SMTP_FROM_NAME: "Vaultwarden"
   ENABLE_SMTP: "true"
-  _ENABLE_SMTP: "true"
+  #_ENABLE_SMTP: "true"
 

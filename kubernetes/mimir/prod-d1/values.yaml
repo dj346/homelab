@@ -24,6 +24,50 @@ vaultAgent:
 
 kedaAutoscaling:
   prometheusAddress: ""
+
+mimir:
+  structuredConfig:
+    common:
+      storage:
+        backend: s3
+        s3:
+          endpoint: http://minio
+          region: us-west-1
+          access_key_id: "q1fD1fkYbIL7jCSQX1Dk" # This is a secret injected via an environment variable
+          secret_access_key: "GHd6cNRXJp9Rp1PKtCByFkknuNPWqTGwPglTnBjk" # This is a secret injected via an environment variable
+          insecure: true
+
+        blocks_storage:
+          backend: s3
+          s3:
+            endpoint: http://minio
+            region: us-west-1
+            bucket_name: mimir-blocks
+            access_key_id: "q1fD1fkYbIL7jCSQX1Dk" # This is a secret injected via an environment variable
+            secret_access_key: "GHd6cNRXJp9Rp1PKtCByFkknuNPWqTGwPglTnBjk" # This is a secret injected via an environment variable
+            insecure: true
+
+
+        alertmanager_storage:
+          backend: s3
+          s3:
+            endpoint: http://minio
+            region: us-west-1
+            bucket_name: mimir-alertmanager
+            access_key_id: "q1fD1fkYbIL7jCSQX1Dk" # This is a secret injected via an environment variable
+            secret_access_key: "GHd6cNRXJp9Rp1PKtCByFkknuNPWqTGwPglTnBjk" # This is a secret injected via an environment variable
+            insecure: true
+
+        ruler_storage:
+          backend: s3
+          s3:
+            endpoint: http://minio
+            region: us-west-1
+            bucket_name: mimir-ruler
+            access_key_id: "q1fD1fkYbIL7jCSQX1Dk" # This is a secret injected via an environment variable
+            secret_access_key: "GHd6cNRXJp9Rp1PKtCByFkknuNPWqTGwPglTnBjk" # This is a secret injected via an environment variable
+            insecure: true
+
   
 alertmanager:
   replicas: 1
@@ -378,28 +422,6 @@ minio:
       cpu: 100m
       memory: 128Mi
   
-  structuredConfig:
-    common:
-      storage:
-        backend: s3
-        s3:
-          endpoint: http://minio
-          region: us-west-1
-          access_key_id: "q1fD1fkYbIL7jCSQX1Dk" # This is a secret injected via an environment variable
-          secret_access_key: "GHd6cNRXJp9Rp1PKtCByFkknuNPWqTGwPglTnBjk" # This is a secret injected via an environment variable
-
-        blocks_storage:
-          s3:
-            bucket_name: mimir-blocks
-
-        alertmanager_storage:
-          s3:
-            bucket_name: mimir-alertmanager
-
-        ruler_storage:
-          s3:
-            bucket_name: mimir-ruler
-
 gateway:
   enabled: true
   enabledNonEnterprise: true

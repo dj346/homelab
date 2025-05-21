@@ -42,8 +42,7 @@ data:
   SMTP_HOST: smtp.fastmail.com
   SMTP_FROM: vaultwarden@mclacken.net
   SMTP_PORT: "587"
-  SMTP_SECURITY: "starttls"
-  SMTP_FROM_NAME: "Vaultwarden"
+  SMTP_SECURITY: starttls
+  SMTP_FROM_NAME: Vaultwarden
   _ENABLE_SMTP: "true"
-  #_ENABLE_SMTP: "true"
 

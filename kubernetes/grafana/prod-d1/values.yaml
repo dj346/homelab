@@ -11,6 +11,16 @@ service:
     app.kubernetes.io/component: app
   portName: service
 
+envValueFrom:
+  GF_SMTP_USER:
+    secretKeyRef:
+      name: grafana-smtp-creds
+      key: user
+  GF_SMTP_PASSWORD:
+    secretKeyRef:
+      name: grafana-smtp-creds
+      key: password
+
 resources: {}
 #  limits:
 #    cpu: 100m
@@ -19,6 +29,7 @@ resources: {}
 #    cpu: 100m
 #    memory: 128Mi
 
+# https://grafana.com/docs/grafana/next/setup-grafana/configure-grafana/#smtp
 grafana.ini:
   server:
     domain: grafana.kube-prod-d1.mclacken.net
@@ -26,6 +37,12 @@ grafana.ini:
     enabled: true
     allow_sign_up: true
     config_file: /etc/grafana/ldap.toml
+  smtp:
+    enabled: true
+    host: smtp.fastmail.com:587
+    from_address: grafana@mclacken.net
+    from_name: Grafana
+    startTLS_policy: RequireStartTLS
 
 persistence:
   enabled: false
@@ -61,10 +78,10 @@ ldap:
   enabled: true
   existingSecret: "ldap-config"
 
-smtp:
-  existingSecret: ""
-  userKey: "user"
-  passwordKey: "password"
+  smtp:
+    existingSecret: ""
+    userKey: "user"
+    passwordKey: "password"
 
 imageRenderer:
   replicas: 1

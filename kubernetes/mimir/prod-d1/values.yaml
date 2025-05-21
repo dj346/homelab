@@ -393,28 +393,28 @@ memcachedExporter:
 
 minio:
   enabled: false
-  # mode: standalone
-  # rootUser: grafana-mimir
-  # rootPassword: supersecret
-  # buckets:
-  #   - name: mimir-tsdb
-  #     policy: none
-  #     purge: false
-  #   - name: mimir-ruler
-  #     policy: none
-  #     purge: false
-  #   - name: enterprise-metrics-tsdb
-  #     policy: none
-  #     purge: false
-  #   - name: enterprise-metrics-admin
-  #     policy: none
-  #     purge: false
-  #   - name: enterprise-metrics-ruler
-  #     policy: none
-  #     purge: false
+  mode: standalone
+  rootUser: grafana-mimir
+  rootPassword: supersecret
+  buckets:
+    - name: mimir-tsdb
+      policy: none
+      purge: false
+    - name: mimir-ruler
+      policy: none
+      purge: false
+    - name: enterprise-metrics-tsdb
+      policy: none
+      purge: false
+    - name: enterprise-metrics-admin
+      policy: none
+      purge: false
+    - name: enterprise-metrics-ruler
+      policy: none
+      purge: false
   
-  # persistence:
-  #   size: 5Gi
+  persistence:
+    size: 5Gi
   
   resources:
     requests:
@@ -446,16 +446,16 @@ gateway:
 
 metaMonitoring:
   dashboards:
-    enabled: false
-    namespace: null
+    enabled: true
+    namespace: grafana
     annotations:
-      k8s-sidecar-target-directory: /tmp/dashboards/Mimir Dashboards
+      k8s-sidecar-target-directory: /tmp/dashboards/Mimir
     labels:
       grafana_dashboard: "1"
 
   # ServiceMonitor configuration for monitoring Kubernetes Services with Prometheus Operator and/or Grafana Agent
   serviceMonitor:
-    enabled: false
+    enabled: true
     clusterLabel: ""
     namespace: null
     namespaceSelector: null
@@ -463,7 +463,7 @@ metaMonitoring:
     labels: {}
 
   prometheusRule:
-    enabled: false
+    enabled: true
     mimirAlerts: false
     mimirRules: false
     annotations: {}

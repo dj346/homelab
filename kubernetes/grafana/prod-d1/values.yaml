@@ -55,7 +55,9 @@ persistence:
   # annotations: {}
   finalizers:
     - kubernetes.io/pvc-protection
-  extraPvcLabels: {}
+  extraPvcLabels:
+    app.kubernetes.io/name: grafana
+    app.kubernetes.io/component: app
   disableWarning: false
 
   inMemory:

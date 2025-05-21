@@ -17,7 +17,7 @@ spec:
               service:
                 name: minio
                 port:
-                  name: https-minio
+                  name: http-minio
     - host: mimir-minio-console.kube-prod-d1.mclacken.net
       http:
         paths:
@@ -27,7 +27,7 @@ spec:
               service:
                 name: mimir-bucket-console
                 port:
-                  name: https-console
+                  name: http-console
   tls:
     - hosts:
         - mimir-minio.kube-prod-d1.mclacken.net

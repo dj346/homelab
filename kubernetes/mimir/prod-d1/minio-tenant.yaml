@@ -14,11 +14,11 @@ spec:
     minio: false
     console: false
 
-  # features:
-  #   domains: 
-  #     minio:
-  #       - mimir-minio.kube-prod-d1.mclacken.net
-  #     console: mimir-minio-console.kube-prod-d1.mclacken.net
+  features:
+    domains: 
+      minio:
+        - mimir-minio.kube-prod-d1.mclacken.net
+      console: mimir-minio-console.kube-prod-d1.mclacken.net
   
   configuration:
     name: minio-secret
@@ -40,10 +40,12 @@ spec:
       #     name: minio-creds
       #     key: root-password
       #     optional: false
+    - name: MINIO_REGION
+      value: us-west-1
 
   buckets: 
     - name: somebucket1
-      region: us-east-1
+      region: us-west-1
       objectLock: false
 
   serviceMetadata: 

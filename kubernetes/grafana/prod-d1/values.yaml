@@ -21,6 +21,13 @@ envValueFrom:
       name: grafana-smtp-creds
       key: password
 
+sidecar:
+  dashboards:
+    enabled: true
+    searchNamespace: ["grafana"]
+    label: grafana_dashboard
+    folder: /tmp/dashboards/Mimir
+
 resources: {}
 #  limits:
 #    cpu: 100m

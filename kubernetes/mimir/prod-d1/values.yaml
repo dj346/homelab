@@ -2,6 +2,10 @@ global:
   podAnnotations: {}
   podLabels: {}
 
+  extraEnvFrom:
+    - secretRef:
+        name: mimir-s3-credentials
+
 serviceAccount:
   annotations: {}
   labels: {}
@@ -26,18 +30,6 @@ kedaAutoscaling:
   prometheusAddress: ""
 
 mimir:
-  extraEnv:
-    - name: AWS_ACCESS_KEY_ID
-      valueFrom:
-        secretKeyRef:
-          name: mimir-s3-credentials
-          key: AWS_ACCESS_KEY_ID
-    - name: AWS_SECRET_ACCESS_KEY
-      valueFrom:
-        secretKeyRef:
-          name: mimir-s3-credentials
-          key: AWS_SECRET_ACCESS_KEY
-
   structuredConfig:
     common:
       storage:

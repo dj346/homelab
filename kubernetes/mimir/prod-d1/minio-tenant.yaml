@@ -9,9 +9,6 @@ metadata:
   annotations: {}
 spec:    
   requestAutoCert: true
-  externalCertSecret:
-    - name: mimir-bucket-tls
-      type: cert-manager.io/v1
 
   exposeServices: 
     minio: false

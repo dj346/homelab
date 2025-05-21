@@ -17,7 +17,7 @@ spec:
   features:
     domains: 
       minio:
-        - http://mimir-minio.kube-prod-d1.mclacken.net
+        - https://mimir-minio.kube-prod-d1.mclacken.net
       console: https://mimir-minio-console.kube-prod-d1.mclacken.net
   
   configuration:

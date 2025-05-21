@@ -14,11 +14,11 @@ spec:
     minio: false
     console: false
 
-  features:
-    domains: 
-      minio:
-        - mimir-minio.kube-prod-d1.mclacken.net
-      console: mimir-minio-console.kube-prod-d1.mclacken.net
+  # features:
+  #   domains: 
+  #     minio:
+  #       - mimir-minio.kube-prod-d1.mclacken.net
+  #     console: mimir-minio-console.kube-prod-d1.mclacken.net
   
   configuration:
     name: minio-secret

@@ -26,6 +26,18 @@ kedaAutoscaling:
   prometheusAddress: ""
 
 mimir:
+  extraEnv:
+    - name: AWS_ACCESS_KEY_ID
+      valueFrom:
+        secretKeyRef:
+          name: mimir-s3-credentials
+          key: AWS_ACCESS_KEY_ID
+    - name: AWS_SECRET_ACCESS_KEY
+      valueFrom:
+        secretKeyRef:
+          name: mimir-s3-credentials
+          key: AWS_SECRET_ACCESS_KEY
+
   structuredConfig:
     common:
       storage:
@@ -33,8 +45,8 @@ mimir:
         s3:
           endpoint: minio:80
           region: us-west-1
-          access_key_id: "q1fD1fkYbIL7jCSQX1Dk" # This is a secret injected via an environment variable
-          secret_access_key: "GHd6cNRXJp9Rp1PKtCByFkknuNPWqTGwPglTnBjk" # This is a secret injected via an environment variable
+          access_key_id: "${AWS_ACCESS_KEY_ID}" # This is a secret injected via an environment variable
+          secret_access_key: "${AWS_SECRET_ACCESS_KEY}" # This is a secret injected via an environment variable
           insecure: true
 
     blocks_storage:
@@ -42,8 +54,8 @@ mimir:
         endpoint: minio:80
         region: us-west-1
         bucket_name: mimir-blocks
-        access_key_id: "q1fD1fkYbIL7jCSQX1Dk" # This is a secret injected via an environment variable
-        secret_access_key: "GHd6cNRXJp9Rp1PKtCByFkknuNPWqTGwPglTnBjk" # This is a secret injected via an environment variable
+        access_key_id: "${AWS_ACCESS_KEY_ID}" # This is a secret injected via an environment variable
+        secret_access_key: "${AWS_SECRET_ACCESS_KEY}" # This is a secret injected via an environment variable
         insecure: true
 
     alertmanager_storage:
@@ -51,8 +63,8 @@ mimir:
         endpoint: minio:80
         region: us-west-1
         bucket_name: mimir-alertmanager
-        access_key_id: "q1fD1fkYbIL7jCSQX1Dk" # This is a secret injected via an environment variable
-        secret_access_key: "GHd6cNRXJp9Rp1PKtCByFkknuNPWqTGwPglTnBjk" # This is a secret injected via an environment variable
+        access_key_id: "${AWS_ACCESS_KEY_ID}" # This is a secret injected via an environment variable
+        secret_access_key: "${AWS_SECRET_ACCESS_KEY}" # This is a secret injected via an environment variable
         insecure: true
 
     ruler_storage:
@@ -60,8 +72,8 @@ mimir:
         endpoint: minio:80
         region: us-west-1
         bucket_name: mimir-ruler
-        access_key_id: "q1fD1fkYbIL7jCSQX1Dk" # This is a secret injected via an environment variable
-        secret_access_key: "GHd6cNRXJp9Rp1PKtCByFkknuNPWqTGwPglTnBjk" # This is a secret injected via an environment variable
+        access_key_id: "${AWS_ACCESS_KEY_ID}" # This is a secret injected via an environment variable
+        secret_access_key: "${AWS_SECRET_ACCESS_KEY}" # This is a secret injected via an environment variable
         insecure: true
 
   

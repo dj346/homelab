@@ -8,7 +8,7 @@ metadata:
     app.kubernetes.io/component: tsdb
   annotations: {}
 spec:    
-  requestAutoCert: false
+  requestAutoCert: true
   externalCertSecret:
     - name: mimir-bucket-tls
       type: cert-manager.io/v1

@@ -6,7 +6,6 @@ metadata:
   labels:
     app.kubernetes.io/name: mimir
     app.kubernetes.io/component: tsdb
-  annotations: {}
 spec:    
   requestAutoCert: false
 

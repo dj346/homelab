@@ -23,27 +23,27 @@ spec:
   configuration:
     name: minio-secret
 
-  env:
-    - name: MINIO_BROWSER_REDIRECT_URL
-      value: https://mimir-minio.kube-prod-d1.mclacken.net
-    - name: MINIO_ROOT_USER
-      value: root-user
-      # valueFrom:
-      #   secretKeyRef:
-      #     name: minio-creds
-      #     key: root-user
-      #     optional: false
-    - name: MINIO_ROOT_PASSWORD
-      value: root-password
-      # valueFrom:
-      #   secretKeyRef:
-      #     name: minio-creds
-      #     key: root-password
-      #     optional: false
-    # - name: MINIO_REGION
-    #   value: us-west-1
-    # - name: MINIO_REGION_NAME
-    #   value: us-west-1
+  # env:
+  #   - name: MINIO_BROWSER_REDIRECT_URL
+  #     value: https://mimir-minio.kube-prod-d1.mclacken.net
+  #   - name: MINIO_ROOT_USER
+  #     value: root-user
+  #     valueFrom:
+  #       secretKeyRef:
+  #         name: minio-creds
+  #         key: root-user
+  #         optional: false
+  #   - name: MINIO_ROOT_PASSWORD
+  #     value: root-password
+  #     valueFrom:
+  #       secretKeyRef:
+  #         name: minio-creds
+  #         key: root-password
+  #         optional: false
+  #   - name: MINIO_REGION
+  #     value: us-west-1
+  #   - name: MINIO_REGION_NAME
+  #     value: us-west-1
 
   buckets: 
     - name: somebucket1

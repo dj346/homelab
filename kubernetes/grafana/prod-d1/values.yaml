@@ -19,6 +19,14 @@ resources: {}
 #    cpu: 100m
 #    memory: 128Mi
 
+grafana.ini:
+  server:
+    domain: grafana.kube-prod-d1.mclacken.net
+  auth.ldap:
+    enabled: true
+    allow_sign_up: true
+    config_file: /etc/grafana/ldap.toml
+
 persistence:
   enabled: false
   type: pvc

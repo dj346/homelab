@@ -8,7 +8,7 @@ metadata:
     app.kubernetes.io/component: tsdb
   annotations: {}
 spec:    
-  requestAutoCert: true
+  requestAutoCert: false
 
   exposeServices: 
     minio: false

@@ -40,7 +40,9 @@ spec:
       #     name: minio-creds
       #     key: root-password
       #     optional: false
-    - name: MINIO_REGION
+    # - name: MINIO_REGION
+    #   value: us-west-1
+    - name: MINIO_REGION_NAME
       value: us-west-1
 
   buckets: 

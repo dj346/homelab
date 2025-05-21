@@ -45,13 +45,13 @@ grafana.ini:
     startTLS_policy: RequireStartTLS
 
 persistence:
-  enabled: false
+  enabled: true
   type: pvc
   storageClassName: longhorn
   volumeName: ""
   accessModes:
     - ReadWriteOnce
-  size: 10Gi
+  size: 1Gi
   # annotations: {}
   finalizers:
     - kubernetes.io/pvc-protection
@@ -59,7 +59,7 @@ persistence:
   disableWarning: false
 
   inMemory:
-    enabled: true
+    enabled: false
     sizeLimit: 300Mi
 
   ## If 'lookupVolumeName' is set to true, Helm will attempt to retrieve
@@ -77,11 +77,6 @@ admin:
 ldap:
   enabled: true
   existingSecret: "ldap-config"
-
-  smtp:
-    existingSecret: ""
-    userKey: "user"
-    passwordKey: "password"
 
 imageRenderer:
   replicas: 1

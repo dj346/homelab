@@ -5,6 +5,27 @@ alloy:
     name: ""
     portName: http
 
+  configMap:
+    create: true
+    content: |-
+      prometheus.remote_write "mimir" {
+        endpoint {
+          url = "http://mimir-distributor.mimir.svc.cluster.local:8080/api/v1/push"
+        }
+      }
+
+      prometheus.exporter.self "self_metrics" {}
+
+      prometheus.scrape "self_scrape" {
+        targets    = prometheus.exporter.self.self_metrics.targets
+        forward_to = [prometheus.remote_write.mimir.receiver]
+      }
+
+      prometheus.scrape "app_scrape" {
+        targets    = ["app:9100"]
+        forward_to = [prometheus.remote_write.mimir.receiver]
+      }
+
   storagePath: /tmp/alloy
 
   listenAddr: 0.0.0.0

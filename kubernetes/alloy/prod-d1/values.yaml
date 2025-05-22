@@ -27,32 +27,24 @@ alloy:
 
       prometheus.scrape "mimir_all_components" {
         targets = [
-          # Alertmanager
           "mimir-alertmanager.mimir.svc.cluster.local:8080",
           "mimir-alertmanager-headless.mimir.svc.cluster.local:8080",
 
-          # Compactor
           "mimir-compactor.mimir.svc.cluster.local:8080",
 
-          # Distributor
           "mimir-distributor.mimir.svc.cluster.local:8080",
           "mimir-distributor-headless.mimir.svc.cluster.local:8080",
 
-          # Overrides Exporter
           "mimir-overrides-exporter.mimir.svc.cluster.local:8080",
 
-          # Querier and Query-frontend
           "mimir-querier.mimir.svc.cluster.local:8080",
           "mimir-query-frontend.mimir.svc.cluster.local:8080",
 
-          # Query Scheduler
           "mimir-query-scheduler.mimir.svc.cluster.local:8080",
           "mimir-query-scheduler-headless.mimir.svc.cluster.local:8080",
 
-          # Ruler
           "mimir-ruler.mimir.svc.cluster.local:8080",
 
-          # Store-Gateway (all zones + headless)
           "mimir-store-gateway-zone-a.mimir.svc.cluster.local:8080",
           "mimir-store-gateway-zone-b.mimir.svc.cluster.local:8080",
           "mimir-store-gateway-zone-c.mimir.svc.cluster.local:8080",

@@ -466,7 +466,7 @@ metaMonitoring:
     labels: {}
 
   prometheusRule:
-    enabled: true
+    enabled: false
     mimirAlerts: false
     mimirRules: false
     annotations: {}

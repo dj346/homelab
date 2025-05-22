@@ -25,46 +25,21 @@ alloy:
         forward_to = [prometheus.remote_write.mimir.receiver]
       }
 
-      prometheus.scrape "mimir_all_components" {
-        targets = [
-          { "__address__" = "mimir-alertmanager.mimir.svc.cluster.local:8080" },
-
-          { "__address__" = "mimir-compactor.mimir.svc.cluster.local:8080" },
-
-          { "__address__" = "mimir-distributor.mimir.svc.cluster.local:8080" },
-
-          { "__address__" = "mimir-overrides-exporter.mimir.svc.cluster.local:8080" },
-
-          {
-            "__address__" = "mimir-query-frontend-1.mimir-query-frontend-headless.mimir.svc.cluster.local:8080",
-            "instance"    = "query-frontend-1",
-          },
-          
-          { 
-            "__address__" = "mimir-query-frontend-0.mimir-query-frontend-headless.mimir.svc.cluster.local:8080",
-            "instance"    = "query-frontend-0",
-          },
-
-          { "__address__" = "mimir-query-scheduler.mimir.svc.cluster.local:8080" },
-
-          { "__address__" = "mimir-ruler.mimir.svc.cluster.local:8080" },
-
-          {
-            "__address__" = "mimir-store-gateway-0.mimir-store-gateway-headless.mimir.svc.cluster.local:8080",
-            "instance"    = "store-gateway-0",
-          },
-          {
-            "__address__" = "mimir-store-gateway-1.mimir-store-gateway-headless.mimir.svc.cluster.local:8080",
-            "instance"    = "store-gateway-1",
-          },
-          {
-            "__address__" = "mimir-store-gateway-2.mimir-store-gateway-headless.mimir.svc.cluster.local:8080",
-            "instance"    = "store-gateway-2",
-          },
-        ]
+      prometheus.operator.servicemonitors "mimir-smon" {
         forward_to = [prometheus.remote_write.mimir.receiver]
+
+        namespaces = ["mimir"]
       }
 
+      mimir.rules.kubernetes "mimir-rules" {
+        address = "http://mimir-ruler.mimir.svc.cluster.local:8080"
+
+        rule_selector {
+          match_labels = {
+            "app.kubernetes.io/instance" = "mimir"
+          }
+        }
+      }
 
   storagePath: /tmp/alloy
 

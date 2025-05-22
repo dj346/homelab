@@ -31,9 +31,9 @@ kedaAutoscaling:
 
 mimir:
   structuredConfig:
-    limits:
-      out_of_order_time_window: 5m
-      
+    # limits:
+    #   out_of_order_time_window: 5m
+
     common:
       storage:
         backend: s3

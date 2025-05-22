@@ -38,8 +38,8 @@ resources: {}
 
 # https://grafana.com/docs/grafana/next/setup-grafana/configure-grafana/#smtp
 grafana.ini:
-  server:
-    domain: https://grafana.kube-prod-d1.mclacken.net
+  # server:
+  #   domain: grafana.kube-prod-d1.mclacken.net
   auth.ldap:
     enabled: true
     allow_sign_up: true

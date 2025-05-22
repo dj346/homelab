@@ -27,28 +27,28 @@ alloy:
 
       prometheus.scrape "mimir_all_components" {
         targets = [
-          "mimir-alertmanager.mimir.svc.cluster.local:8080",
-          "mimir-alertmanager-headless.mimir.svc.cluster.local:8080",
+          { "__address__" = "mimir-alertmanager.mimir.svc.cluster.local:8080" },
+          { "__address__" = "mimir-alertmanager-headless.mimir.svc.cluster.local:8080" },
 
-          "mimir-compactor.mimir.svc.cluster.local:8080",
+          { "__address__" = "mimir-compactor.mimir.svc.cluster.local:8080" },
 
-          "mimir-distributor.mimir.svc.cluster.local:8080",
-          "mimir-distributor-headless.mimir.svc.cluster.local:8080",
+          { "__address__" = "mimir-distributor.mimir.svc.cluster.local:8080" },
+          { "__address__" = "mimir-distributor-headless.mimir.svc.cluster.local:8080" },
 
-          "mimir-overrides-exporter.mimir.svc.cluster.local:8080",
+          { "__address__" = "mimir-overrides-exporter.mimir.svc.cluster.local:8080" },
 
-          "mimir-querier.mimir.svc.cluster.local:8080",
-          "mimir-query-frontend.mimir.svc.cluster.local:8080",
+          { "__address__" = "mimir-querier.mimir.svc.cluster.local:8080" },
+          { "__address__" = "mimir-query-frontend.mimir.svc.cluster.local:8080" },
 
-          "mimir-query-scheduler.mimir.svc.cluster.local:8080",
-          "mimir-query-scheduler-headless.mimir.svc.cluster.local:8080",
+          { "__address__" = "mimir-query-scheduler.mimir.svc.cluster.local:8080" },
+          { "__address__" = "mimir-query-scheduler-headless.mimir.svc.cluster.local:8080" },
 
-          "mimir-ruler.mimir.svc.cluster.local:8080",
+          { "__address__" = "mimir-ruler.mimir.svc.cluster.local:8080" },
 
-          "mimir-store-gateway-zone-a.mimir.svc.cluster.local:8080",
-          "mimir-store-gateway-zone-b.mimir.svc.cluster.local:8080",
-          "mimir-store-gateway-zone-c.mimir.svc.cluster.local:8080",
-          "mimir-store-gateway-headless.mimir.svc.cluster.local:8080",
+          { "__address__" = "mimir-store-gateway-zone-a.mimir.svc.cluster.local:8080" },
+          { "__address__" = "mimir-store-gateway-zone-b.mimir.svc.cluster.local:8080" },
+          { "__address__" = "mimir-store-gateway-zone-c.mimir.svc.cluster.local:8080" },
+          { "__address__" = "mimir-store-gateway-headless.mimir.svc.cluster.local:8080" },
         ]
         forward_to = [prometheus.remote_write.mimir.receiver]
       }

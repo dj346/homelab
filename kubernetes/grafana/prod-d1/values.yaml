@@ -52,7 +52,7 @@ grafana.ini:
     startTLS_policy: RequireStartTLS
 
 persistence:
-  enabled: true
+  enabled: false
   type: pvc
   storageClassName: longhorn
   volumeName: ""

@@ -21,12 +21,22 @@ alloy:
         forward_to = [prometheus.remote_write.mimir.receiver]
       }
 
-      prometheus.scrape "mimir_gateway_metrics" {
-        targets = [
-          {
-            __address__ = "mimir-gateway.mimir.svc.cluster.local:8080",
-          },
-        ]
+      discovery.kubernetes "mimir_pods" {
+        role = "pod"
+
+        namespaces {
+          own_namespace = false
+          names         = ["mimir"]
+        }
+
+        selectors {
+          role  = "pod"
+          label = "app.kubernetes.io/name=mimir"
+        }
+      }
+
+      prometheus.scrape "mimir_pods" {
+        targets    = discovery.kubernetes.mimir_pods.targets
         forward_to = [prometheus.remote_write.mimir.receiver]
       }
 

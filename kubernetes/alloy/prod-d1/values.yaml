@@ -35,16 +35,32 @@ alloy:
 
           { "__address__" = "mimir-overrides-exporter.mimir.svc.cluster.local:8080" },
 
-          { "__address__" = "mimir-querier.mimir.svc.cluster.local:8080" },
-          { "__address__" = "mimir-query-frontend.mimir.svc.cluster.local:8080" },
+          {
+            "__address__" = "mimir-query-frontend-1.mimir-query-frontend-headless.mimir.svc.cluster.local:8080",
+            "instance"    = "query-frontend-1",
+          },
+          
+          { 
+            "__address__" = "mimir-query-frontend-0.mimir-query-frontend-headless.mimir.svc.cluster.local:8080",
+            "instance"    = "query-frontend-0",
+          },
 
           { "__address__" = "mimir-query-scheduler.mimir.svc.cluster.local:8080" },
 
           { "__address__" = "mimir-ruler.mimir.svc.cluster.local:8080" },
 
-          { "__address__" = "mimir-store-gateway-zone-a.mimir.svc.cluster.local:8080" },
-          { "__address__" = "mimir-store-gateway-zone-b.mimir.svc.cluster.local:8080" },
-          { "__address__" = "mimir-store-gateway-zone-c.mimir.svc.cluster.local:8080" },
+          {
+            "__address__" = "mimir-store-gateway-0.mimir-store-gateway-headless.mimir.svc.cluster.local:8080",
+            "instance"    = "store-gateway-0",
+          },
+          {
+            "__address__" = "mimir-store-gateway-1.mimir-store-gateway-headless.mimir.svc.cluster.local:8080",
+            "instance"    = "store-gateway-1",
+          },
+          {
+            "__address__" = "mimir-store-gateway-2.mimir-store-gateway-headless.mimir.svc.cluster.local:8080",
+            "instance"    = "store-gateway-2",
+          },
         ]
         forward_to = [prometheus.remote_write.mimir.receiver]
       }

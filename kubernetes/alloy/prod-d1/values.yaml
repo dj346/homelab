@@ -34,9 +34,7 @@ alloy:
       mimir.rules.kubernetes "mimir_rules" {
         address = "http://mimir-ruler.mimir.svc.cluster.local:8080"
 
-        http_headers = {
-          "X-Scope-OrgID" = ["anonymous"]
-        }
+        tenant_id = "anonymous"
 
         rule_selector {
           match_labels = {

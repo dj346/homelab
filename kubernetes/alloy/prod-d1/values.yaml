@@ -24,8 +24,8 @@ alloy:
       prometheus.scrape "mimir_gateway_metrics" {
         targets = [
           {
-            "__address__" = "mimir-gateway.mimir.svc.cluster.local:80"
-          }
+            __address__ = "mimir-gateway.mimir.svc.cluster.local:80",
+          },
         ]
         forward_to = [prometheus.remote_write.mimir.receiver]
       }

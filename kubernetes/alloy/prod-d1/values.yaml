@@ -25,13 +25,13 @@ alloy:
         forward_to = [prometheus.remote_write.mimir.receiver]
       }
 
-      prometheus.operator.servicemonitors "mimir-smon" {
+      prometheus.operator.servicemonitors "mimir_smon" {
         forward_to = [prometheus.remote_write.mimir.receiver]
 
         namespaces = ["mimir"]
       }
 
-      mimir.rules.kubernetes "mimir-rules" {
+      mimir.rules.kubernetes "mimir_rules" {
         address = "http://mimir-ruler.mimir.svc.cluster.local:8080"
 
         rule_selector {

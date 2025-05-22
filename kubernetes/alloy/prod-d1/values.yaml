@@ -37,7 +37,7 @@ alloy:
         rule_selector = {
           match_labels = {
             "app.kubernetes.io/instance" = "mimir",
-          }
+          },
         }
       }
 

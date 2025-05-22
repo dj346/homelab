@@ -22,9 +22,14 @@ alloy:
       }
 
       prometheus.scrape "mimir_gateway_metrics" {
-        targets    = ["mimir-gateway.mimir.svc.cluster.local:80"]
+        targets = [
+          {
+            "__address__" = "mimir-gateway.mimir.svc.cluster.local:80"
+          }
+        ]
         forward_to = [prometheus.remote_write.mimir.receiver]
       }
+
 
   storagePath: /tmp/alloy
 

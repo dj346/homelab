@@ -21,6 +21,11 @@ alloy:
         forward_to = [prometheus.remote_write.mimir.receiver]
       }
 
+      prometheus.scrape "mimir_gateway_metrics" {
+        targets    = ["mimir-gateway.mimir.svc.cluster.local:80"]
+        forward_to = [prometheus.remote_write.mimir.receiver]
+      }
+
   storagePath: /tmp/alloy
 
   listenAddr: 0.0.0.0

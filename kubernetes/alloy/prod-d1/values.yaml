@@ -21,11 +21,6 @@ alloy:
         forward_to = [prometheus.remote_write.mimir.receiver]
       }
 
-      prometheus.scrape "app_scrape" {
-        targets    = ["app:9100"]
-        forward_to = [prometheus.remote_write.mimir.receiver]
-      }
-
   storagePath: /tmp/alloy
 
   listenAddr: 0.0.0.0

@@ -25,32 +25,39 @@ alloy:
         forward_to = [prometheus.remote_write.mimir.receiver]
       }
 
-      discovery.kubernetes "mimir_pods" {
-        role = "pod"
+      prometheus.scrape "mimir_all_components" {
+        targets = [
+          # Alertmanager
+          "mimir-alertmanager.mimir.svc.cluster.local:8080",
+          "mimir-alertmanager-headless.mimir.svc.cluster.local:8080",
 
-        namespaces {
-          own_namespace = false
-          names         = ["mimir"]
-        }
+          # Compactor
+          "mimir-compactor.mimir.svc.cluster.local:8080",
 
-        selectors {
-          role  = "pod"
-          label = "app.kubernetes.io/name=mimir"
-        }
-      }
+          # Distributor
+          "mimir-distributor.mimir.svc.cluster.local:8080",
+          "mimir-distributor-headless.mimir.svc.cluster.local:8080",
 
-      discovery.relabel "mimir_pods_8080" {
-        targets = discovery.kubernetes.mimir_pods.targets
+          # Overrides Exporter
+          "mimir-overrides-exporter.mimir.svc.cluster.local:8080",
 
-        rule {
-          action        = "keep"
-          source_labels = ["__meta_kubernetes_pod_container_port_number"]
-          regex         = "8080"
-        }
-      }
+          # Querier and Query-frontend
+          "mimir-querier.mimir.svc.cluster.local:8080",
+          "mimir-query-frontend.mimir.svc.cluster.local:8080",
 
-      prometheus.scrape "mimir_pods" {
-        targets    = discovery.relabel.mimir_pods_8080.output
+          # Query Scheduler
+          "mimir-query-scheduler.mimir.svc.cluster.local:8080",
+          "mimir-query-scheduler-headless.mimir.svc.cluster.local:8080",
+
+          # Ruler
+          "mimir-ruler.mimir.svc.cluster.local:8080",
+
+          # Store-Gateway (all zones + headless)
+          "mimir-store-gateway-zone-a.mimir.svc.cluster.local:8080",
+          "mimir-store-gateway-zone-b.mimir.svc.cluster.local:8080",
+          "mimir-store-gateway-zone-c.mimir.svc.cluster.local:8080",
+          "mimir-store-gateway-headless.mimir.svc.cluster.local:8080",
+        ]
         forward_to = [prometheus.remote_write.mimir.receiver]
       }
 

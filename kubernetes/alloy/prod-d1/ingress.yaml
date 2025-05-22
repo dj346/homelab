@@ -1,0 +1,27 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: alloy-ingress
+  namespace: alloy
+  labels:
+    app.kubernetes.io/name: alloy
+    app.kubernetes.io/component: app
+  annotations:
+    cert-manager.io/cluster-issuer: cloudflare-clusterissuer
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+spec:
+  rules:
+    - host: alloy.kube-prod-d1.mclacken.net
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: alloy
+                port:
+                  name: http-metrics
+  tls:
+    - hosts:
+        - alloy.kube-prod-d1.mclacken.net
+      secretName: alloy-certificate-secret

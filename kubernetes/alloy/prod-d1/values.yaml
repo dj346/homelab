@@ -34,7 +34,7 @@ alloy:
       mimir.rules.kubernetes "mimir_rules" {
         address = "http://mimir-ruler.mimir.svc.cluster.local:8080"
 
-        rule_selector = {
+        rule_selector {
           match_labels = {
             "app.kubernetes.io/instance" = "mimir",
           },

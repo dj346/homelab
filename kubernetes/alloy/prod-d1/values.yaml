@@ -35,8 +35,18 @@ alloy:
         }
       }
 
+      discovery.relabel "mimir_pods_8080" {
+        targets = discovery.kubernetes.mimir_pods.targets
+
+        rule {
+          action        = "keep"
+          source_labels = ["__meta_kubernetes_pod_container_port_number"]
+          regex         = "8080"
+        }
+      }
+
       prometheus.scrape "mimir_pods" {
-        targets    = discovery.kubernetes.mimir_pods.targets
+        targets    = discovery.relabel.mimir_pods_8080.output
         forward_to = [prometheus.remote_write.mimir.receiver]
       }
 

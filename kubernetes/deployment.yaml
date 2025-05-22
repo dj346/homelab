@@ -4,7 +4,7 @@ metadata:
   labels:
     app: stashapp
   name: stashapp
-  namespace: stashapp
+  namespace: temp
 spec:
   replicas: 1
   strategy:
@@ -22,12 +22,12 @@ spec:
         image: busybox
         command: ["/bin/sh"]
         args: ["-c", "sleep 3600"]
-        volumeMounts:
-        - mountPath: /config
-          name: target-pvc
-      volumes:
-      - name: target-pvc
-        persistentVolumeClaim:
-          claimName: stashapp-pvc
-          readOnly: false
+        # volumeMounts:
+        # - mountPath: /config
+        #   name: target-pvc
+      # volumes:
+      # - name: target-pvc
+      #   persistentVolumeClaim:
+      #     claimName: stashapp-pvc
+      #     readOnly: false
         

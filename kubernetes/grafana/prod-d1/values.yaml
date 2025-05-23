@@ -20,6 +20,14 @@ envValueFrom:
     secretKeyRef:
       name: grafana-smtp-creds
       key: password
+  GF_DATABASE_USER:
+    secretKeyRef:
+      name: pgdb-service-user-secret
+      key: username
+  GF_DATABASE_PASSWORD:
+    secretKeyRef:
+      name: pgdb-service-user-secret
+      key: password
 
 sidecar:
   dashboards:
@@ -50,6 +58,11 @@ grafana.ini:
     from_address: grafana@mclacken.net
     from_name: Grafana
     startTLS_policy: RequireStartTLS
+  database:
+    type: postgres
+    host: grafana-cluster-rw:5432
+    name:  grafana
+    ssl_mode: disable
 
 persistence:
   enabled: false

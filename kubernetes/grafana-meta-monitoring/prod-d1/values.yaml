@@ -21,7 +21,7 @@ local:
   traces:
     enabled: true
   minio:
-    enabled: false # This should be set to true if any of the previous is enabled
+    enabled: true # This should be set to true if any of the previous is enabled
 grafana:
   admin:
     existingSecret: admin-secret

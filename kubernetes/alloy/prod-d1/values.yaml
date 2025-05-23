@@ -31,6 +31,12 @@ alloy:
         namespaces = ["mimir"]
       }
 
+      prometheus.operator.servicemonitors "grafana_smon" {
+        forward_to = [prometheus.remote_write.mimir.receiver]
+
+        namespaces = ["grafana"]
+      }
+
       mimir.rules.kubernetes "mimir_rules" {
         address = "http://mimir-ruler.mimir.svc.cluster.local:8080"
 

@@ -64,6 +64,11 @@ grafana.ini:
     name:  grafana
     ssl_mode: disable
 
+serviceMonitor:
+  enabled: true
+  labels: {}
+
+
 persistence:
   enabled: false
   type: pvc

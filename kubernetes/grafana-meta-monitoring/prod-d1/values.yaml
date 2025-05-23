@@ -23,6 +23,11 @@ local:
   minio:
     enabled: false # This should be set to true if any of the previous is enabled
 grafana:
+  admin:
+    existingSecret: admin-secret
+    userKey: username
+    passwordKey: password
+
   version: 11.6.1
   # Gateway ingress configuration
   ingress:

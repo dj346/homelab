@@ -132,7 +132,7 @@ distributor:
   annotations: {}
   
 ingester:
-  replicas: 0
+  replicas: 3
 
   service:
     annotations: {}
@@ -155,7 +155,7 @@ ingester:
     annotations: {}
     accessModes:
       - ReadWriteOnce
-    size: 1Gi
+    size: 3Gi
     subPath: ""
     enableRetentionPolicy: false
     whenDeleted: Retain
@@ -357,7 +357,7 @@ store_gateway:
     whenScaled: Retain
 
 compactor:
-  replicas: 0
+  replicas: 1
 
   service:
     annotations: {}
@@ -382,7 +382,7 @@ compactor:
     annotations: {}
     accessModes:
       - ReadWriteOnce
-    size: 1Gi
+    size: 3Gi
     subPath: ""
     storageClass: "longhorn"
     enableRetentionPolicy: false

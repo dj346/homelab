@@ -349,7 +349,7 @@ store_gateway:
     annotations: {}
     accessModes:
       - ReadWriteOnce
-    size: 2.5Gi
+    size: 3Gi
     subPath: ""
     storageClass: "longhorn"
     enableRetentionPolicy: false
@@ -382,7 +382,7 @@ compactor:
     annotations: {}
     accessModes:
       - ReadWriteOnce
-    size: 2.5Gi
+    size: 3Gi
     subPath: ""
     storageClass: "longhorn"
     enableRetentionPolicy: false

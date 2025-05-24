@@ -67,10 +67,10 @@ loki:
     results_cache:
       enabled: false
  
-  ui:
-    enabled: true
-    gateway:
-      enabled: true
+  # ui:
+  #   enabled: true
+  #   gateway:
+  #     enabled: true
 
 adminApi:
   replicas: 1

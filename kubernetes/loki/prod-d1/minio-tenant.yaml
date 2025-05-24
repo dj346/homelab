@@ -45,13 +45,13 @@ spec:
   #     value: us-west-1
 
   buckets: 
-    - name: loki-blocks
-      region: us-west-1
-      objectLock: false
-    - name: loki-alertmanager
+    - name: loki-chunks
       region: us-west-1
       objectLock: false
     - name: loki-ruler
+      region: us-west-1
+      objectLock: false
+    - name: loki-admin
       region: us-west-1
       objectLock: false
 

@@ -8,6 +8,11 @@ global:
     - "-config.expand-env=true"
 
 loki:
+  ui:
+    enabled: true
+    gateway:
+      enabled: true
+
   annotations: {}
   podAnnotations: {}
   podLabels: {}
@@ -66,12 +71,7 @@ loki:
       enabled: false
     results_cache:
       enabled: false
- 
-  # ui:
-  #   enabled: true
-  #   gateway:
-  #     enabled: true
-
+  
 adminApi:
   replicas: 1
   hostAliases: []

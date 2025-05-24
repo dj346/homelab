@@ -8,10 +8,10 @@ global:
     - "-config.expand-env=true"
 
 loki:
-  ui:
-    enabled: true
-    gateway:
-      enabled: true
+  # ui:
+  #   enabled: true
+  #   gateway:
+  #     enabled: true
 
   annotations: {}
   podAnnotations: {}

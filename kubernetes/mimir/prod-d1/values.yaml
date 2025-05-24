@@ -155,7 +155,7 @@ ingester:
     annotations: {}
     accessModes:
       - ReadWriteOnce
-    size: 3Gi
+    size: 1Gi
     subPath: ""
     enableRetentionPolicy: false
     whenDeleted: Retain
@@ -382,7 +382,7 @@ compactor:
     annotations: {}
     accessModes:
       - ReadWriteOnce
-    size: 3Gi
+    size: 1Gi
     subPath: ""
     storageClass: "longhorn"
     enableRetentionPolicy: false

@@ -4,6 +4,8 @@ global:
   extraEnvFrom:
     - secretRef:
         name: loki-s3-credentials
+  extraArgs: 
+    - "-config.expand-env=true"
 
 loki:
   annotations: {}

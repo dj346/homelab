@@ -150,12 +150,12 @@ ingester:
   annotations: {}
 
   persistentVolume:
-    enabled: true
+    enabled: false
     name: storage
     annotations: {}
     accessModes:
       - ReadWriteOnce
-    size: 2500Mi
+    size: 3Gi
     subPath: ""
     enableRetentionPolicy: false
     whenDeleted: Retain
@@ -344,12 +344,12 @@ store_gateway:
   annotations: {}
 
   persistentVolume:
-    enabled: true
+    enabled: false
     name: storage
     annotations: {}
     accessModes:
       - ReadWriteOnce
-    size: 3Gi
+    size: 1Gi
     subPath: ""
     storageClass: "longhorn"
     enableRetentionPolicy: false
@@ -377,7 +377,7 @@ compactor:
   annotations: {}
 
   persistentVolume:
-    enabled: true
+    enabled: false
     name: storage
     annotations: {}
     accessModes:

@@ -132,7 +132,7 @@ distributor:
   annotations: {}
   
 ingester:
-  replicas: 3
+  replicas: 0
 
   service:
     annotations: {}
@@ -150,7 +150,7 @@ ingester:
   annotations: {}
 
   persistentVolume:
-    enabled: false
+    enabled: true
     name: storage
     annotations: {}
     accessModes:
@@ -324,7 +324,7 @@ query_scheduler:
   annotations: {}
 
 store_gateway:
-  replicas: 1
+  replicas: 0
 
   service:
     annotations: {}
@@ -344,7 +344,7 @@ store_gateway:
   annotations: {}
 
   persistentVolume:
-    enabled: false
+    enabled: true
     name: storage
     annotations: {}
     accessModes:
@@ -357,7 +357,7 @@ store_gateway:
     whenScaled: Retain
 
 compactor:
-  replicas: 1
+  replicas: 0
 
   service:
     annotations: {}
@@ -377,7 +377,7 @@ compactor:
   annotations: {}
 
   persistentVolume:
-    enabled: false
+    enabled: true
     name: storage
     annotations: {}
     accessModes:

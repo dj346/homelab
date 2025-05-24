@@ -12,12 +12,12 @@ spec:
     server: https://kubernetes.default.svc
     namespace: loki
   sources:
-    # - repoURL: https://grafana.github.io/helm-charts
-    #   chart: loki
-    #   targetRevision: 6.29.0
-    #   helm:
-    #     valueFiles:
-    #     - $values/kubernetes/loki/prod-d1/values.yaml
+    - repoURL: https://grafana.github.io/helm-charts
+      chart: loki
+      targetRevision: 6.29.0
+      helm:
+        valueFiles:
+        - $values/kubernetes/loki/prod-d1/values.yaml
     - repoURL: 'https://gitea.kube-prod-d1.mclacken.net/dj346/homelab.git'
       targetRevision: HEAD
       path: kubernetes/loki/prod-d1

@@ -1,5 +1,10 @@
 deploymentMode: Distributed
 
+global:
+  extraEnvFrom:
+    - secretRef:
+        name: mimir-s3-credentials
+
 loki:
   annotations: {}
   podAnnotations: {}

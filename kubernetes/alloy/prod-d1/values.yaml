@@ -58,9 +58,8 @@ alloy:
       }
 
       local.file_match "hostlogs" {
-        path_targets = [
-          { __path__ = "/host/var/log/**/*.log", },
-        ]
+        path_targets = [{ __path__ = "/host/var/log/**/*.log" }]
+
       }
 
       loki.source.file "hostlogs" {

@@ -59,7 +59,7 @@ alloy:
 
       local.file_match "hostlogs" {
         path_targets = [{ __path__ = "/host/var/log/**/*.log" }]
-
+        sync_period  = "5s"
       }
 
       loki.source.file "hostlogs" {

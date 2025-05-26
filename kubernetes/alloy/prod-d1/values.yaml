@@ -57,16 +57,7 @@ alloy:
         }
       }
 
-      local.file_match "hostlogs" {
-        path_targets = [{ __path__ = "/var/log/**/*.log" }]
-        sync_period  = "5s"
-      }
-
-      loki.source.file "hostlogs" {
-        targets    = local.file_match.hostlogs.targets
-        forward_to = [loki.write.loki.receiver]
-        tail_from_end = true
-      }
+      
 
   storagePath: /tmp/alloy
 

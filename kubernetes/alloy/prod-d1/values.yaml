@@ -57,9 +57,16 @@ alloy:
         }
       }
 
-      loki.tail "host_logs" {
-        targets = [ "/host/var/log/**/*.log" ]
-        forward_to = [ loki.write.loki.receiver ]
+      local.file_match "hostlogs" {
+        path_targets = [
+          { __path__ = "/host/var/log/**/*.log" }
+        ]
+      }
+
+      loki.source.file "hostlogs" {
+        targets    = local.file_match.hostlogs.targets
+        forward_to = [loki.write.loki.receiver]
+        tail_from_end = true
       }
 
   storagePath: /tmp/alloy

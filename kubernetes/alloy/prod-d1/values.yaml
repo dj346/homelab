@@ -18,6 +18,14 @@ alloy:
         }
       }
 
+      loki.write "loki" {
+        endpoint {
+          url     = "http://loki-distributor.loki.svc.cluster.local:3100/api/v1/push"
+          
+          tenant_id = "anonymous"
+        }
+      }
+
       prometheus.exporter.self "self_metrics" {}
 
       prometheus.scrape "self_scrape" {
@@ -49,6 +57,11 @@ alloy:
         }
       }
 
+      loki.tail "host_logs" {
+        targets = [ "/host/var/log/**/*.log" ]
+        forward_to = [ loki.write.loki.receiver ]
+      }
+
   storagePath: /tmp/alloy
 
   listenAddr: 0.0.0.0
@@ -59,8 +72,8 @@ alloy:
   enableReporting: true
 
   mounts:
-    varlog: false
-    dockercontainers: false
+    varlog: true
+    dockercontainers: true
     extra: []
 
   resources: {}
@@ -79,6 +92,8 @@ controller:
   extraAnnotations: {}
   podAnnotations: {}
   podLabels: {}
+
+  
 
   # -- PodDisruptionBudget configuration.
   podDisruptionBudget:

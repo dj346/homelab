@@ -58,7 +58,7 @@ alloy:
       }
 
       local.file_match "hostlogs" {
-        path_targets = [{ __path__ = "/host/var/log/**/*.log" }]
+        path_targets = [{ __path__ = "/var/log/**/*.log" }]
         sync_period  = "5s"
       }
 

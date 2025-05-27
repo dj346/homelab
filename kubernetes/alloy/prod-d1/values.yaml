@@ -80,20 +80,32 @@ alloy:
         rule {
           source_labels = ["filename"]
           regex         = ".*/var/log/([^/]+)/.*\\.log"
-          target_label  = "service"
+          target_label  = "log-file-parent"
           replacement   = "$1"
         }
 
         rule {
           source_labels = ["filename"]
           regex         = ".*/var/log/.*/([^/]+)\\.log"
-          target_label  = "log_file"
+          target_label  = "log-file"
           replacement   = "$1"
         }
 
         rule {
+          action        = "replace"
+          target_label  = "service"
+          replacement   = "${sys.env("KUBE_NODE_NAME")}-file-logs"
+        }
+
+        rule {
+          action        = "replace"
+          target_label  = "podname"
+          replacement   = constants.hostname
+        }
+
+        rule {
           action       = "replace"
-          target_label = "node"
+          target_label = "hostname"
           replacement  = sys.env("KUBE_NODE_NAME")
         }
       }

@@ -71,7 +71,13 @@ alloy:
   mounts:
     varlog: true
     dockercontainers: true
-    extra: []
+    extra:
+      - name: host-journal-run
+        mountPath: /run/log/journal
+        readOnly: true
+      - name: host-journal-var
+        mountPath: /var/log/journal
+        readOnly: true
 
   resources: {}
 
@@ -84,13 +90,23 @@ configReloader:
       memory: "50Mi"
 
 controller:
+  type: 'daemonset'
   replicas: 1
 
   extraAnnotations: {}
   podAnnotations: {}
   podLabels: {}
 
-  
+  volumes:
+  extra:
+    - name: host-journal-run
+      hostPath:
+        path: /run/log/journal
+        type: Directory
+    - name: host-journal-var
+      hostPath:
+        path: /var/log/journal
+        type: DirectoryOrCreate
 
   # -- PodDisruptionBudget configuration.
   podDisruptionBudget:

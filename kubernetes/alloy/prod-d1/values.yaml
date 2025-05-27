@@ -57,36 +57,42 @@ alloy:
         }
       }
 
-      loki.relabel "k3s_nodes_journal" {
-        forward_to = []
+      loki.relabel "k3s_nodes_file_logs" {
+        forward_to = [loki.write.loki.receiver]
 
         rule {
-          source_labels = ["__journal__systemd_unit"]
-          target_label  = "unit"
+          source_labels = ["filename"]
+          regex         = ".*/var/log/journal/.*"
+          action        = "drop"
         }
 
         rule {
-          source_labels = ["__journal__hostname"]
-          target_label  = "hostname"
+          source_labels = ["filename"]
+          regex         = ".*/var/log/syslog/.*"
+          action        = "drop"
         }
 
         rule {
-          source_labels = ["__journal__PRIORITY"]
-          target_label  = "level"
+          source_labels = ["filename"]
+          regex         = ".*/var/log/([^/]+)/.*\\.log"
+          target_label  = "service"
+          replacement   = "$1"
+        }
+
+        rule {
+          source_labels = ["filename"]
+          regex         = ".*/var/log/.*/([^/]+)\\.log"
+          target_label  = "log_file"
+          replacement   = "$1"
         }
       }
 
-      loki.source.journal "journal" {
-        path           = "/var/log/journal"
-        format_as_json = true
-
-        labels = {
-          job       = "k3s-systemd-journal",
-          component = "k3s-journal-logs",
-        }
-
-        relabel_rules = loki.relabel.k3s_nodes_journal.rules
-        forward_to    = [loki.write.loki.receiver]
+      loki.source.file "k3s_file_logs" {
+        targets      = [
+          { __path__ = "/var/log/**/*.log" },
+        ]
+        forward_to   = [ loki.relabel.k3s_nodes_file_logs.receiver ]
+        tail_from_end = true
       }
 
       

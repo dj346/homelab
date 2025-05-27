@@ -57,7 +57,7 @@ alloy:
         }
       }
 
-      loki.relabel "journal" {
+      loki.relabel "k3s_nodes_journal" {
         forward_to = []
 
         rule {
@@ -81,13 +81,46 @@ alloy:
         format_as_json = true
 
         labels = {
-          job       = "systemd-journal",
-          component = "alloy-journal",
+          job       = "k3s-systemd-journal",
+          component = "k3s-journal-logs",
         }
 
-        relabel_rules = loki.relabel.journal.rules
+        relabel_rules = loki.relabel.k3s_nodes_journal.rules
         forward_to    = [loki.write.loki.receiver]
       }
+
+      loki.relabel "k3s_nodes_file_logs" {
+        rule {
+          source_labels = ["filename"],
+          regex         = ".*/var/log/([^/]+)/.*\\.log",
+          target_label  = "service",
+          replacement   = "$1",
+        }
+
+        rule {
+          source_labels = ["filename"],
+          regex         = ".*/var/log/.*/([^/]+)\\.log",
+          target_label  = "log_file",
+          replacement   = "$1",
+        }
+      }
+      
+      loki.source.file "k3s_file_logs" {
+        include = [ "/var/log/**/*.log"]
+
+        exclude = [
+          "/var/log/**/*.gz",
+          "/var/log/syslog",
+          "/var/log/journal",
+        ]
+
+        labels = { job = "k3s-file-logs" }
+
+        relabel_rules = loki.relabel.k3s_nodes_file_logs.rules
+
+        forward_to = [loki.write.loki.receiver]
+      }
+
 
 
       

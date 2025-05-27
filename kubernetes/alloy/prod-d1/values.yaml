@@ -57,36 +57,38 @@ alloy:
         }
       }
 
+      loki.relabel "journal" {
+        forward_to = []
+
+        rule {
+          source_labels = ["__journal__systemd_unit"]
+          target_label  = "unit"
+        }
+
+        rule {
+          source_labels = ["__journal__hostname"]
+          target_label  = "hostname"
+        }
+
+        rule {
+          source_labels = ["__journal__PRIORITY"]
+          target_label  = "level"
+        }
+      }
+
       loki.source.journal "journal" {
         path           = "/var/log/journal"
         format_as_json = true
 
         labels = {
-          job       = "systemd-journal",
-          component = "alloy-journal",
+          job       = "systemd-journal"
+          component = "alloy-journal"
         }
 
-        relabel_rules = [
-          {
-            source_labels = ["__journal__systemd_unit"],
-            target_label  = "unit",
-          },
-          {
-            source_labels = ["__journal__hostname"],
-            target_label  = "hostname",
-          },
-          {
-            source_labels = ["__journal__PRIORITY"],
-            target_label  = "level",
-          },
-        ]
+        relabel_rules = loki.relabel.journal.rules
+        forward_to    = [loki.write.loki.receiver]
       }
 
-      component "send_journal" {
-        exporter = "loki.write" "loki" {
-          target = loki.source.journal.journal,
-        }
-      }
 
       
 

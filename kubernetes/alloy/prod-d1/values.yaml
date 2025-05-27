@@ -98,15 +98,15 @@ controller:
   podLabels: {}
 
   volumes:
-  extra:
-    - name: host-journal-run
-      hostPath:
-        path: /run/log/journal
-        type: Directory
-    - name: host-journal-var
-      hostPath:
-        path: /var/log/journal
-        type: DirectoryOrCreate
+    extra:
+      - name: host-journal-run
+        hostPath:
+          path: /run/log/journal
+          type: Directory
+      - name: host-journal-var
+        hostPath:
+          path: /var/log/journal
+          type: DirectoryOrCreate
 
   # -- PodDisruptionBudget configuration.
   podDisruptionBudget:

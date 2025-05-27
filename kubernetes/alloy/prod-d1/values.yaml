@@ -89,43 +89,7 @@ alloy:
         forward_to    = [loki.write.loki.receiver]
       }
 
-      loki.relabel "k3s_nodes_file_logs" {
-        forward_to = [loki.write.loki.receiver]
-
-        rule {
-          source_labels = ["filename"]
-          regex         = ".*/var/log/journal/.*"
-          action        = "drop"
-        }
-
-        rule {
-          source_labels = ["filename"]
-          regex         = ".*/var/log/syslog/.*"
-          action        = "drop"
-        }
-
-        rule {
-          source_labels = ["filename"]
-          regex         = ".*/var/log/([^/]+)/.*\\.log"
-          target_label  = "service"
-          replacement   = "$1"
-        }
-
-        rule {
-          source_labels = ["filename"]
-          regex         = ".*/var/log/.*/([^/]+)\\.log"
-          target_label  = "log_file"
-          replacement   = "$1"
-        }
-      }
-
-      loki.source.file "k3s_file_logs" {
-        targets      = [
-          { __path__ = "/var/log/**/*.log" },
-        ]
-        forward_to   = [ loki.relabel.k3s_nodes_file_logs.receiver ]
-        tail_from_end = true
-      }
+      
 
 
 

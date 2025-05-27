@@ -120,8 +120,7 @@ alloy:
       }
 
       loki.source.file "k3s_file_logs" {
-        targets = [{ __path__ = "/var/log/**/*.log",
-          job  = "k3s-file-logs", }]
+        targets = [{ __path__ = "/var/log/**/*.log" }]
         relabel_rules   = loki.relabel.k3s_nodes_file_logs.rules
         forward_to      = [loki.write.loki.receiver]
       }

@@ -90,6 +90,20 @@ alloy:
       }
 
       loki.relabel "k3s_nodes_file_logs" {
+        forward_to = [loki.write.loki.receiver]
+
+        rule {
+          source_labels = ["filename"]
+          regex         = ".*/var/log/journal/.*"
+          action        = "drop"
+        }
+
+        rule {
+          source_labels = ["filename"]
+          regex         = ".*/var/log/syslog/.*"
+          action        = "drop"
+        }
+
         rule {
           source_labels = ["filename"]
           regex         = ".*/var/log/([^/]+)/.*\\.log"
@@ -106,13 +120,7 @@ alloy:
       }
 
       loki.source.file "k3s_file_logs" {
-        include = [ "/var/log/**/*.log"]
-
-        exclude = [
-          "/var/log/**/*.gz",
-          "/var/log/syslog",
-          "/var/log/journal",
-        ]
+        path_targets = [{ __path__ = "/var/log/**/*.log" }]
 
         labels = { job = "k3s-file-logs" }
 

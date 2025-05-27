@@ -85,6 +85,12 @@ alloy:
           target_label  = "log_file"
           replacement   = "$1"
         }
+
+        rule {
+          action        = "replace"
+          target_label  = "hostname"
+          replacement   = constants.hostname
+        }
       }
 
       local.file_match "hostlogs" {

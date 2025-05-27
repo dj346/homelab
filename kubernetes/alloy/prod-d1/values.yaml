@@ -1,5 +1,10 @@
 
 alloy:
+  extraEnv:
+    - name: KUBE_NODE_NAME
+      valueFrom:
+        fieldRef:
+          fieldPath: spec.nodeName
   clustering:
     enabled: false
     name: ""
@@ -87,9 +92,9 @@ alloy:
         }
 
         rule {
-          action        = "replace"
-          target_label  = "hostname"
-          replacement   = constants.hostname
+          action       = "replace"
+          target_label = "node"
+          replacement  = sys.env("KUBE_NODE_NAME")
         }
       }
 

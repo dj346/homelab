@@ -87,10 +87,13 @@ alloy:
         }
       }
 
+      local.file_match "hostlogs" {
+        path_targets = [{ __path__ = "/var/log/**/*.log" }]
+        sync_period  = "5s"
+      }
+
       loki.source.file "k3s_file_logs" {
-        targets      = [
-          { __path__ = "/var/log/**/*.log" },
-        ]
+        targets      = local.file_match.hostlogs.targets
         forward_to   = [ loki.relabel.k3s_nodes_file_logs.receiver ]
         tail_from_end = true
       }

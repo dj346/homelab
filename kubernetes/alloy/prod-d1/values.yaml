@@ -60,32 +60,32 @@ alloy:
       loki.source.journal "journal" {
         path           = "/var/log/journal"
         format_as_json = true
+
         labels = {
-          job       = "systemd-journal"
-          component = "alloy-journal"
+          job       = "systemd-journal",
+          component = "alloy-journal",
         }
-        relabel_rules = loki.relabel.journal.rules
+
+        relabel_rules = [
+          {
+            source_labels = ["__journal__systemd_unit"],
+            target_label  = "unit",
+          },
+          {
+            source_labels = ["__journal__hostname"],
+            target_label  = "hostname",
+          },
+          {
+            source_labels = ["__journal__PRIORITY"],
+            target_label  = "level",
+          },
+        ]
       }
 
-      loki.relabel "journal" {
-        forward_to = []
-        rule {
-          source_labels = ["__journal__systemd_unit"]
-          target_label   = "unit"
+      component "send_journal" {
+        exporter = "loki.write" "loki" {
+          target = loki.source.journal.journal,
         }
-        rule {
-          source_labels = ["__journal__hostname"]
-          target_label   = "hostname"
-        }
-        rule {
-          source_labels = ["__journal__PRIORITY"]
-          target_label   = "level"
-        }
-      }
-
-      component "send.journal" {
-        receiver = loki.relabel.journal.receiver
-        exporter = loki.write.loki
       }
 
       

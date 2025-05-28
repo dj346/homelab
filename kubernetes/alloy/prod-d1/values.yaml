@@ -133,6 +133,48 @@ alloy:
         tail_from_end = true
       }
 
+      loki.relabel "k3s_nodes_journal" {
+        forward_to = []
+
+        rule {
+          target_label  = "service"
+          replacement   = string.format("%s-journal-logs", sys.env("KUBE_NODE_NAME"))
+        }
+
+        rule {
+          source_labels = ["__journal__systemd_unit"]
+          target_label  = "unit"
+        }
+
+        rule {
+          source_labels = ["__journal__hostname"]
+          target_label  = "hostname"
+        }
+
+        rule {
+          source_labels = ["__journal__PRIORITY"]
+          target_label  = "level"
+        }
+
+        rule {
+          target_label  = "podname"
+          replacement   = constants.hostname
+        }
+      }
+
+      loki.source.journal "k3s_nodes_journal" {
+        path           = "/var/log/journal"
+        format_as_json = true
+
+        labels = {
+          job       = "k3s-systemd-journal",
+          component = "k3s-journal-logs",
+        }
+
+        relabel_rules = loki.relabel.k3s_nodes_journal.rules
+        forward_to    = [loki.write.loki.receiver]
+      }
+
       
 
 

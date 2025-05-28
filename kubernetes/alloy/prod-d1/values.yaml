@@ -94,7 +94,7 @@ alloy:
         rule {
           action        = "replace"
           target_label  = "service"
-          replacement   = "${sys.env("KUBE_NODE_NAME")}-file-logs"
+          replacement   = "${sys.env("KUBE_NODE_NAME")}"
         }
 
         rule {

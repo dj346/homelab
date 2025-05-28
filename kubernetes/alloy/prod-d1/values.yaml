@@ -78,13 +78,15 @@ alloy:
         }
 
         rule {
+          source_labels = ["filename"]
+          regex         = "^service_name$"
           action        = "labeldrop"
-          target_label  = "filename"
         }
 
         rule {
+          source_labels = ["filename"]
+          regex         = "^filename$"
           action        = "labeldrop"
-          target_label  = "service_name"
         }
 
         rule {

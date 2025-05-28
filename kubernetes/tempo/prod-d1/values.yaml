@@ -2,6 +2,9 @@ global:
   priorityClassName: null
   clusterDomain: 'cluster.local'
 
+  extraArgs: 
+    - "-config.expand-env=true"
+
   extraEnvFrom:
     - secretRef:
         name: tempo-s3-credentials

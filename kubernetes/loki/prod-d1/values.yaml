@@ -6,6 +6,7 @@ global:
         name: loki-s3-credentials
   extraArgs: 
     - "-config.expand-env=true"
+    - "--pattern-ingester.enabled=true"
 
 loki:
   # ui:

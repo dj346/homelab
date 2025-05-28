@@ -1,0 +1,369 @@
+global:
+  priorityClassName: null
+  clusterDomain: 'cluster.local'
+
+  extraEnvFrom:
+    - secretRef:
+        name: tempo-s3-credentials
+
+tempo:
+  podLabels: {}
+  podAnnotations: {}
+  
+  memberlist:
+    service:
+      annotations: {}
+
+serviceAccount:
+  annotations: {}
+
+storage:
+  trace:
+    backend: s3
+    s3:
+      access_key: "${AWS_ACCESS_KEY_ID}"
+      secret_key: "${AWS_SECRET_ACCESS_KEY}"
+      bucket: tempo-traces
+      endpoint: minio:80
+      region: us-west-1
+      insecure: true
+
+traces:
+  otlp:
+    http:
+      enabled: true
+    grpc:
+      enabled: true
+
+ingester:
+  annotations: {}
+  replicas: 3
+
+  autoscaling:
+    enabled: false
+    minReplicas: 2
+    maxReplicas: 3
+    
+  priorityClassName: null
+  podLabels: {}
+  podAnnotations: {}
+
+  resources: {}
+  
+  persistence:
+    enabled: false
+    inMemory: false
+    size: 10Gi
+    storageClassName: ""
+    storageClass: null
+    annotations: {}
+    labels: {}
+
+  service:
+    annotations: {}
+    
+  zoneAwareReplication:
+    enabled: false
+    
+    zones:
+      - name: zone-a
+        storageClass: null
+      - name: zone-b
+        storageClass: null
+      - name: zone-c
+        storageClass: null
+
+metricsGenerator:
+  enabled: false
+  kind: Deployment
+  annotations: {}
+  replicas: 1
+  
+  priorityClassName: null
+  podLabels: {}
+  podAnnotations: {}
+  
+  resources: {}
+  
+  maxUnavailable: 1
+  
+  persistence:
+    enabled: false
+    size: 10Gi
+    storageClassName: ""
+    storageClass: null
+    annotations: {}
+    labels: {}
+  
+  ports:
+    - name: grpc
+      port: 9095
+      service: true
+    - name: http-memberlist
+      port: 7946
+      service: false
+    - name: http-metrics
+      port: 3100
+      service: true
+  
+  config:
+    registry:
+      external_labels: {}
+    
+  service:
+    annotations: {}
+
+distributor:
+  replicas: 1
+
+  config:
+    log_received_spans:
+      enabled: true
+    log_discarded_spans:
+      enabled: true
+  
+  autoscaling:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 3
+
+  service:
+    annotations: {}
+    labels: {}
+    
+  serviceDiscovery:
+    annotations: {}
+    labels: {}
+
+  priorityClassName: null
+
+  podLabels: {}
+  podAnnotations: {}
+
+  resources: {}
+  
+compactor:
+  replicas: 1
+
+  autoscaling:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 3
+    
+  priorityClassName: null
+  podLabels: {}
+  podAnnotations: {}
+  
+  resources: {}
+  
+  service:
+    annotations: {}
+  
+querier:
+  replicas: 1
+  
+  autoscaling:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 3
+    
+  priorityClassName: null
+  podLabels: {}
+  podAnnotations: {}
+  
+  resources: {}
+  
+  service:
+    annotations: {}
+
+queryFrontend:
+  query:
+    enabled: false
+    resources: {}
+    
+  replicas: 1
+  
+  autoscaling:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 3
+    
+  service:
+    port: 16686
+    annotations: {}
+    labels: {}
+    
+  serviceDiscovery:
+    annotations: {}
+    labels: {}
+  
+  ingress:
+    enabled: false
+    annotations: {}
+
+    # hosts:
+    #   - host: query.tempo.example.com
+    #     paths:
+    #       - path: /
+    # tls:
+    #   - secretName: tempo-query-tls
+    #     hosts:
+    #       - query.tempo.example.com
+
+  priorityClassName: null
+  podLabels: {}
+  podAnnotations: {}
+  
+  resources: {}
+  
+multitenancyEnabled: false
+
+rollout_operator:
+  enabled: false
+
+server:
+  httpListenPort: 3100
+  logLevel: info
+  logFormat: logfmt
+  
+
+memcached:
+  enabled: true
+  
+  replicas: 1
+  
+  podLabels: {}
+  podAnnotations: {}
+  resources: {}
+  
+  service:
+    annotations: {}
+
+memcachedExporter:
+  enabled: false
+  
+  resources: {}
+
+metaMonitoring:
+  serviceMonitor:
+    enabled: false
+    namespace: null
+    namespaceSelector: {}
+    annotations: {}
+    labels: {}
+
+  grafanaAgent:
+    enabled: false
+    installOperator: false
+
+    namespace: ''
+
+    labels: {}
+    annotations: {}
+
+prometheusRule:
+  enabled: false
+  namespace: null
+  annotations: {}
+  labels: {}
+  
+minio:
+  enabled: false
+#   rootUser: grafana-tempo
+#   rootPassword: supersecret
+#   buckets:
+#     - name: tempo-traces
+#       policy: none
+#       purge: false
+#     - name: enterprise-traces
+#       policy: none
+#       purge: false
+#     - name: enterprise-traces-admin
+#       policy: none
+#       purge: false
+#   persistence:
+#     size: 5Gi
+#   resources:
+#     requests:
+#       cpu: 100m
+#       memory: 128Mi
+#   configPathmc: '/tmp/minio/mc/'
+
+gateway:
+  enabled: true
+  replicas: 1
+  
+  autoscaling:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 3
+    
+  verboseLogging: true
+  
+  priorityClassName: null
+  podLabels: {}
+  annotations: {}
+  podAnnotations: {}
+  
+  resources: {}
+  
+  maxUnavailable: 1
+  
+  service:
+    port: 80
+    type: ClusterIP
+    clusterIP: null
+    nodePort: null
+    loadBalancerIP: null
+    annotations: {}
+    labels: {}
+    
+  ingress:
+    enabled: false
+    labels: {}
+    
+    annotations: {}
+
+    # hosts:
+    #   - host: gateway.tempo.example.com
+    #     paths:
+    #       - path: /
+    # tls:
+    #   - secretName: tempo-gateway-tls
+    #     hosts:
+    #       - gateway.tempo.example.com
+
+  basicAuth:
+    enabled: false
+    username: null
+    password: null
+
+ingress:
+  enabled: false
+  annotations: {}
+  paths:
+    distributor:
+      - path: /v1/traces
+        port: 4318
+      - path: /distributor/ring
+        # -- pathType (e.g. ImplementationSpecific, Prefix, .. etc.) might also be required by some Ingress Controllers
+        # pathType: Prefix
+      - path: /ingester/ring
+      - path: /metrics-generator/ring
+    ingester:
+      - path: /flush
+      - path: /shutdown
+    query-frontend:
+      - path: /api
+    compactor:
+      - path: /compactor/ring
+  hosts:
+    - tempo.example.com
+
+provisioner:
+  enabled: false
+
+  labels: {}
+  annotations: {}
+  
+  priorityClassName: null

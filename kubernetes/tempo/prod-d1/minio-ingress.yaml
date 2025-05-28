@@ -1,0 +1,35 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: tenant-ingress
+  namespace: tempo
+  annotations:
+    cert-manager.io/cluster-issuer: cloudflare-clusterissuer
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+spec:
+  rules:
+    - host: tempo-minio.kube-prod-d1.mclacken.net
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: minio
+                port:
+                  name: http-minio
+    - host: tempo-minio-console.kube-prod-d1.mclacken.net
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: tempo-bucket-console
+                port:
+                  name: http-console
+  tls:
+    - hosts:
+        - tempo-minio.kube-prod-d1.mclacken.net
+        - tempo-minio-console.kube-prod-d1.mclacken.net
+      secretName: tenant-certificate-secret

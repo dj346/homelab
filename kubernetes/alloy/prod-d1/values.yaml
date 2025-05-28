@@ -78,6 +78,22 @@ alloy:
         }
 
         rule {
+          action        = "drop"
+          target_label  = "filename"
+        }
+
+        rule {
+          action        = "drop"
+          target_label  = "service_name"
+        }
+
+        rule {
+          source_labels = ["filename"]
+          target_label  = "log_path"
+          replacement   = "$0"  # $0 refers to the entire filename (full path)
+        }
+
+        rule {
           source_labels = ["filename"]
           regex         = ".*/var/log/([^/]+)/.*\\.log"
           target_label  = "log_file_parent"
@@ -95,12 +111,6 @@ alloy:
           action        = "replace"
           target_label  = "service"
           replacement   = string.format("%s-file-logs", sys.env("KUBE_NODE_NAME"))
-        }
-
-        rule {
-          action        = "replace"
-          target_label  = "podname"
-          replacement   = constants.hostname
         }
 
         rule {

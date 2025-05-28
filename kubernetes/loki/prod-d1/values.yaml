@@ -471,7 +471,7 @@ bloomBuilder:
   resources: {}
 
 patternIngester:
-  replicas: 1
+  replicas: 3
 
   priorityClassName: null
   podLabels: {}

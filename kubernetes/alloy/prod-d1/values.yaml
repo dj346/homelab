@@ -77,6 +77,18 @@ alloy:
           action        = "drop"
         }
 
+         rule {
+          source_labels = ["filename"]
+          regex         = ".*/var/log/pods/.*"
+          action        = "drop"
+        }
+
+         rule {
+          source_labels = ["filename"]
+          regex         = ".*/var/log/containers/.*"
+          action        = "drop"
+        }
+
         rule {
           source_labels = ["filename"]
           regex         = ".*/var/log/([^/]+)/.*\\.log"

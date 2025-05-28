@@ -5,16 +5,9 @@ global:
   extraArgs:
     - "-config.expand-env=true"
 
-  extraEnvFrom:
-    - secretRef:
-        name: tempo-s3-credentials
-
 tempo:
   podLabels: {}
   podAnnotations: {}
-
-  extraArgs:
-    - "-config.expand-env=true"
 
   extraEnvFrom:
     - secretRef:
@@ -132,6 +125,10 @@ distributor:
       enabled: true
     log_discarded_spans:
       enabled: true
+
+  extraEnvFrom:
+    - secretRef:
+        name: tempo-s3-credentials
   
   autoscaling:
     enabled: false

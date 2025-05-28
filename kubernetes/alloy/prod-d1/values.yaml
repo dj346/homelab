@@ -78,16 +78,6 @@ alloy:
         }
 
         rule {
-          regex         = "^service_name$"
-          action        = "labeldrop"
-        }
-
-        rule {
-          regex         = "^filename$"
-          action        = "labeldrop"
-        }
-
-        rule {
           source_labels = ["filename"]
           target_label  = "log_path"
           replacement   = "$1" 
@@ -117,6 +107,16 @@ alloy:
           action       = "replace"
           target_label = "hostname"
           replacement  = sys.env("KUBE_NODE_NAME")
+        }
+
+        rule {
+          regex         = "^service_name$"
+          action        = "labeldrop"
+        }
+
+        rule {
+          regex         = "^filename$"
+          action        = "labeldrop"
         }
       }
 

@@ -156,6 +156,13 @@ distributor:
 compactor:
   replicas: 1
 
+  extraArgs:
+    - "-config.expand-env=true"
+
+  extraEnvFrom:
+    - secretRef:
+        name: tempo-s3-credentials
+
   autoscaling:
     enabled: false
     minReplicas: 1

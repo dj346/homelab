@@ -3,7 +3,8 @@ global:
   clusterDomain: 'cluster.local'
 
   extraArgs: 
-    - "-config.expand-env=true"
+    -  "-config.expand-env": "true"
+
 
   extraEnvFrom:
     - secretRef:

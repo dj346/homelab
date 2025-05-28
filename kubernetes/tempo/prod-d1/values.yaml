@@ -153,9 +153,6 @@ distributor:
 compactor:
   replicas: 1
 
-  extraArgs:
-    - "-config.expand-env=true"
-
   extraEnvFrom:
     - secretRef:
         name: tempo-s3-credentials
@@ -176,6 +173,10 @@ compactor:
   
 querier:
   replicas: 1
+
+  extraEnvFrom:
+    - secretRef:
+        name: tempo-s3-credentials
   
   autoscaling:
     enabled: false
@@ -196,6 +197,10 @@ queryFrontend:
     enabled: false
     resources: {}
     
+  extraEnvFrom:
+    - secretRef:
+        name: tempo-s3-credentials
+
   replicas: 1
   
   autoscaling:

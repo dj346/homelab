@@ -1,16 +1,16 @@
-apiVersion: autoscaling/v1
-kind: HorizontalPodAutoscaler
-metadata:
-  name: paperless-ocr-autoscale
-  namespace: paperless
-  labels:
-    app.kubernetes.io/name: paperless
-    app.kubernetes.io/component: ocr
-spec:
-  maxReplicas: 5
-  minReplicas: 1
-  scaleTargetRef:
-    apiVersion: apps/v1
-    kind: Deployment
-    name: paperless-ocr
-  targetCPUUtilizationPercentage: 40
+# apiVersion: autoscaling/v1
+# kind: HorizontalPodAutoscaler
+# metadata:
+#   name: paperless-ocr-autoscale
+#   namespace: paperless
+#   labels:
+#     app.kubernetes.io/name: paperless
+#     app.kubernetes.io/component: ocr
+# spec:
+#   maxReplicas: 5
+#   minReplicas: 1
+#   scaleTargetRef:
+#     apiVersion: apps/v1
+#     kind: Deployment
+#     name: paperless-ocr
+#   targetCPUUtilizationPercentage: 40

@@ -5,7 +5,6 @@ global:
   extraArgs:
     - "-config.expand-env=true"
 
-
   extraEnvFrom:
     - secretRef:
         name: tempo-s3-credentials
@@ -13,6 +12,13 @@ global:
 tempo:
   podLabels: {}
   podAnnotations: {}
+
+  extraArgs:
+    - "-config.expand-env=true"
+
+  extraEnvFrom:
+    - secretRef:
+        name: tempo-s3-credentials
   
   memberlist:
     service:

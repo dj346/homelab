@@ -471,7 +471,7 @@ bloomBuilder:
   resources: {}
 
 patternIngester:
-  replicas: 0
+  replicas: 1
 
   priorityClassName: null
   podLabels: {}
@@ -483,16 +483,16 @@ patternIngester:
   resources: {}
 
   persistence:
-    enabled: false
-    size: 10Gi
-    storageClassName: ""
+    enabled: true
+    size: 4Gi
+    storageClassName: "longhorn"
     storageClass: null
     annotations: {}
 
     claims:
       - name: data
-        size: 10Gi
-        storageClassName: ""
+        size: 4Gi
+        storageClassName: "longhorn"
         storageClass: null
 
     enableStatefulSetAutoDeletePVC: false

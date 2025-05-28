@@ -51,10 +51,10 @@ ingester:
   resources: {}
   
   persistence:
-    enabled: false
+    enabled: true
     inMemory: false
-    size: 10Gi
-    storageClassName: ""
+    size: 1Gi
+    storageClassName: "longhorn"
     storageClass: null
     annotations: {}
     labels: {}
@@ -89,8 +89,8 @@ metricsGenerator:
   
   persistence:
     enabled: false
-    size: 10Gi
-    storageClassName: ""
+    size: 1Gi
+    storageClassName: "longhorn"
     storageClass: null
     annotations: {}
     labels: {}

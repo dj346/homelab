@@ -10,9 +10,8 @@ tempo:
   podLabels: {}
   podAnnotations: {}
 
-  extraEnvFrom:
-    - secretRef:
-        name: tempo-s3-credentials
+  extraArgs:
+    - "-config.expand-env=true"
   
   memberlist:
     service:
@@ -153,9 +152,8 @@ distributor:
 compactor:
   replicas: 1
 
-  extraEnvFrom:
-    - secretRef:
-        name: tempo-s3-credentials
+  extraArgs:
+    - "-config.expand-env=true"
 
   autoscaling:
     enabled: false
@@ -174,9 +172,8 @@ compactor:
 querier:
   replicas: 1
 
-  extraEnvFrom:
-    - secretRef:
-        name: tempo-s3-credentials
+  extraArgs:
+    - "-config.expand-env=true"
   
   autoscaling:
     enabled: false
@@ -197,9 +194,8 @@ queryFrontend:
     enabled: false
     resources: {}
     
-  extraEnvFrom:
-    - secretRef:
-        name: tempo-s3-credentials
+  extraArgs:
+    - "-config.expand-env=true"
 
   replicas: 1
   

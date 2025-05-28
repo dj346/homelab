@@ -102,6 +102,12 @@ alloy:
           target_label = "hostname"
           replacement  = sys.env("KUBE_NODE_NAME")
         }
+
+        rule {
+          action        = "replace"
+          target_label  = "podname"
+          replacement   = constants.hostname
+        }
       }
 
       local.file_match "hostlogs" {

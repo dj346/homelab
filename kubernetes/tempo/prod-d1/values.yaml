@@ -2,8 +2,8 @@ global:
   priorityClassName: null
   clusterDomain: 'cluster.local'
 
-  extraArgs: 
-    -  "-config.expand-env": "true"
+  extraArgs:
+    - "-config.expand-env=true"
 
 
   extraEnvFrom:
@@ -31,6 +31,7 @@ storage:
       endpoint: minio:80
       region: us-west-1
       insecure: true
+      # forcepathstyle: true
 
 traces:
   otlp:

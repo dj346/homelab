@@ -2,8 +2,9 @@ global:
   priorityClassName: null
   clusterDomain: 'cluster.local'
 
-  extraArgs:
-    - "-config.expand-env=true"
+  extraEnvFrom:
+    - secretRef:
+        name: tempo-s3-credentials
 
 tempo:
   podLabels: {}
@@ -126,9 +127,8 @@ distributor:
     log_discarded_spans:
       enabled: true
 
-  extraEnvFrom:
-    - secretRef:
-        name: tempo-s3-credentials
+  extraArgs:
+    - "-config.expand-env=true"
   
   autoscaling:
     enabled: false

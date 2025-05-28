@@ -90,7 +90,7 @@ alloy:
         rule {
           source_labels = ["filename"]
           target_label  = "log_path"
-          replacement   = "$0"  # $0 refers to the entire filename (full path)
+          replacement   = "$0" 
         }
 
         rule {

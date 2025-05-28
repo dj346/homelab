@@ -2,16 +2,16 @@ global:
   priorityClassName: null
   clusterDomain: 'cluster.local'
 
-  extraEnvFrom:
-    - secretRef:
-        name: tempo-s3-credentials
-
 tempo:
   podLabels: {}
   podAnnotations: {}
 
   extraArgs:
     - "-config.expand-env=true"
+
+  extraEnvFrom:
+    - secretRef:
+        name: tempo-s3-credentials
   
   memberlist:
     service:
@@ -45,6 +45,10 @@ ingester:
 
   extraArgs:
     - "-config.expand-env=true"
+
+  extraEnvFrom:
+    - secretRef:
+        name: tempo-s3-credentials
 
   autoscaling:
     enabled: false
@@ -131,6 +135,10 @@ distributor:
 
   extraArgs:
     - "-config.expand-env=true"
+
+  extraEnvFrom:
+    - secretRef:
+        name: tempo-s3-credentials
   
   autoscaling:
     enabled: false
@@ -158,6 +166,10 @@ compactor:
   extraArgs:
     - "-config.expand-env=true"
 
+  extraEnvFrom:
+    - secretRef:
+        name: tempo-s3-credentials
+
   autoscaling:
     enabled: false
     minReplicas: 1
@@ -177,6 +189,10 @@ querier:
 
   extraArgs:
     - "-config.expand-env=true"
+
+  extraEnvFrom:
+    - secretRef:
+        name: tempo-s3-credentials
   
   autoscaling:
     enabled: false
@@ -199,6 +215,10 @@ queryFrontend:
     
   extraArgs:
     - "-config.expand-env=true"
+
+  extraEnvFrom:
+    - secretRef:
+        name: tempo-s3-credentials
 
   replicas: 1
   

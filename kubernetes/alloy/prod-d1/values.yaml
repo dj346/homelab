@@ -78,12 +78,12 @@ alloy:
         }
 
         rule {
-          action        = "drop"
+          action        = "labeldrop"
           target_label  = "filename"
         }
 
         rule {
-          action        = "drop"
+          action        = "labeldrop"
           target_label  = "service_name"
         }
 

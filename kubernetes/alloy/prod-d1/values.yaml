@@ -12,21 +12,18 @@ alloy:
       port:       9411
       targetPort: 9411
       protocol:   TCP
-      appProtocol: http
 
     # OTLP gRPC receiver
     - name: otlp-grpc
       port:       4317
       targetPort: 4317
       protocol:   TCP
-      appProtocol: grpc
 
     # OTLP HTTP/protobuf receiver
     - name: otlp-http
       port:       4318
       targetPort: 4318
       protocol:   TCP
-      appProtocol: http
 
   clustering:
     enabled: false

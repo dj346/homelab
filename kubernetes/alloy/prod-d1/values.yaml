@@ -43,6 +43,10 @@ alloy:
         }
       }
 
+      otelcol.exporter.prometheus "mimir_exporter" {
+        forward_to = [prometheus.remote_write.mimir.receiver]
+      }
+
       loki.write "loki" {
         endpoint {
           url     = "http://loki-distributor.loki.svc.cluster.local:3100/loki/api/v1/push"
@@ -51,7 +55,11 @@ alloy:
         }
       }
 
-      otelcol.exporter.otlp "tempo" {
+      otelcol.exporter.loki "loki_exporter" {
+        forward_to = [loki.write.loki.receiver]
+      }
+
+      otelcol.exporter.otlp "tempo_exporter" {
         client {
           endpoint = "tempo-distributor.tempo.svc.cluster.local:4317"
           tls {
@@ -62,9 +70,9 @@ alloy:
 
       otelcol.processor.batch "default" {
         output {
-          metrics = [prometheus.remote_write.mimir.receiver]
-          logs    = [loki.write.loki.receiver]
-          traces  = [otelcol.exporter.otlp.tempo.input]
+          metrics = [otelcol.exporter.prometheus.mimir_exporter.input]
+          logs    = [otelcol.exporter.loki.loki_exporter.input]
+          traces  = [otelcol.exporter.otlp.tempo_exporter.input]
         }
       }
 

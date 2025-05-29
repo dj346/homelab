@@ -31,6 +31,15 @@ alloy:
         }
       }
 
+      otelcol.exporter.otlp "tempo" {
+        client {
+          endpoint = "tempo-distributor.tempo.svc.cluster.local:4317"
+          tls {
+            insecure = true
+          }
+        }
+      }
+
       prometheus.exporter.self "self_metrics" {}
 
       prometheus.scrape "self_scrape" {
@@ -173,6 +182,15 @@ alloy:
 
         relabel_rules = loki.relabel.k3s_nodes_journal.rules
         forward_to    = [loki.write.loki.receiver]
+      }
+
+      otelcol.receiver.zipkin "traefik" {
+        output { traces = [otelcol.exporter.otlp.tempo.input] }
+      }
+
+      tracing {
+        sampling_fraction = 1.0
+        write_to          = [otelcol.exporter.otlp.tempo.input]
       }
 
       

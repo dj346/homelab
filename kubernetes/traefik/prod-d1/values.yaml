@@ -48,6 +48,11 @@ ingressRoute:
       secretName: traefik-dashboard-certificate-secret
 
 tracing:
+  addInternals: true
+  serviceName: traefik
+  resourceAttributes:
+    service_name: traefik
+
   otlp:
     # http:
     #   enabled: true

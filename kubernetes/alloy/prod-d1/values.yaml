@@ -62,8 +62,8 @@ alloy:
 
       otelcol.processor.batch "default" {
         output {
-          metrics = [otelcol.exporter.otlp.tempo.input]
-          logs    = [otelcol.exporter.otlp.tempo.input]
+          metrics = [prometheus.remote_write.mimir.receiver]
+          logs    = [loki.write.loki.receiver]
           traces  = [otelcol.exporter.otlp.tempo.input]
         }
       }

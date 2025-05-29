@@ -48,7 +48,6 @@ ingressRoute:
       secretName: traefik-dashboard-certificate-secret
 
 tracing:
-  enabled: true
   otlp:
     grpc:
       enabled: true

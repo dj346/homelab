@@ -148,6 +148,17 @@ metricsGenerator:
   service:
     annotations: {}
 
+overrides:
+  defaults:
+    metrics_generator:
+      processors:
+        - service-graphs
+        - span-metrics
+        - local-blocks
+    local_blocks:
+      filter_server_spans: false
+      flush_to_storage: true
+
 distributor:
   replicas: 1
 

@@ -5,6 +5,14 @@ alloy:
       valueFrom:
         fieldRef:
           fieldPath: spec.nodeName
+
+  extraPorts:
+    - name: zipkin
+      port:       9411        # service port
+      targetPort: 9411        # containerPort
+      protocol:   TCP
+      appProtocol: http       # Zipkin speaks HTTP/1.1 JSON by default
+
   clustering:
     enabled: false
     name: ""
@@ -192,12 +200,6 @@ alloy:
         sampling_fraction = 1.0
         write_to          = [otelcol.exporter.otlp.tempo.input]
       }
-
-      
-
-
-
-      
 
   storagePath: /tmp/alloy
 

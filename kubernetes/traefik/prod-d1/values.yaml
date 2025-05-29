@@ -3,6 +3,7 @@ additionalArguments:
       - "--entrypoints.sftp.address=:22/tcp"
       - "--providers.file.filename=/config/config.yaml"
       - "--providers.file.watch=true"
+      # - "--tracing=true"
       
 ports:
   ldaps:
@@ -45,6 +46,14 @@ ingressRoute:
     matchRule: Host(`traefik-dashboard.kube-prod-d1.mclacken.net`)
     tls:
       secretName: traefik-dashboard-certificate-secret
+
+tracing:
+  enabled: true
+  otlp:
+    grpc:
+      enabled: true
+      endpoint: "alloy-traces.alloy.svc.cluster.local:4317"
+      insecure: true
 
 volumes:
   - name: traefik-configmap

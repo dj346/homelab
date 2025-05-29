@@ -7,11 +7,26 @@ alloy:
           fieldPath: spec.nodeName
 
   extraPorts:
+    # Zipkin (only if you still need it)
     - name: zipkin
-      port:       9411        # service port
-      targetPort: 9411        # containerPort
+      port:       9411
+      targetPort: 9411
       protocol:   TCP
-      appProtocol: http       # Zipkin speaks HTTP/1.1 JSON by default
+      appProtocol: http
+
+    # OTLP gRPC receiver
+    - name: otlp-grpc
+      port:       4317
+      targetPort: 4317
+      protocol:   TCP
+      appProtocol: grpc
+
+    # OTLP HTTP/protobuf receiver
+    - name: otlp-http
+      port:       4318
+      targetPort: 4318
+      protocol:   TCP
+      appProtocol: http
 
   clustering:
     enabled: false
@@ -46,6 +61,30 @@ alloy:
             insecure = true
           }
         }
+      }
+
+      otelcol.processor.batch "default" {
+        output {
+          metrics = [otelcol.exporter.otlp.tempo.input]
+          logs    = [otelcol.exporter.otlp.tempo.input]
+          traces  = [otelcol.exporter.otlp.tempo.input]
+        }
+      }
+
+      otelcol.receiver.otlp "default" {
+        http {}
+        grpc {}
+        
+        output {
+          metrics = [otelcol.processor.batch.default.input]
+          logs    = [otelcol.processor.batch.default.input]
+          traces  = [otelcol.processor.batch.default.input]
+        }
+      }
+
+      tracing {
+        sampling_fraction = 1.0
+        write_to          = [otelcol.exporter.otlp.tempo.input]
       }
 
       prometheus.exporter.self "self_metrics" {}
@@ -190,15 +229,6 @@ alloy:
 
         relabel_rules = loki.relabel.k3s_nodes_journal.rules
         forward_to    = [loki.write.loki.receiver]
-      }
-
-      otelcol.receiver.zipkin "traefik" {
-        output { traces = [otelcol.exporter.otlp.tempo.input] }
-      }
-
-      tracing {
-        sampling_fraction = 1.0
-        write_to          = [otelcol.exporter.otlp.tempo.input]
       }
 
   storagePath: /tmp/alloy

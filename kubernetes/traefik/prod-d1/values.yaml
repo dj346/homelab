@@ -52,7 +52,7 @@ tracing:
   otlp:
     grpc:
       enabled: true
-      endpoint: "alloy-traces.alloy.svc.cluster.local:4317"
+      endpoint: "alloy.alloy.svc.cluster.local:4317"
       insecure: true
 
 volumes:

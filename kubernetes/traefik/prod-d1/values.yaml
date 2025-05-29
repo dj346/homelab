@@ -49,15 +49,13 @@ ingressRoute:
 
 tracing:
   otlp:
-    http:
-      # -- Set to true in order to send metrics to the OpenTelemetry Collector using HTTP.
-      enabled: true
-      # -- Format: <scheme>://<host>:<port><path>. Default: http://localhost:4318/v1/metrics
-      endpoint: "alloy.alloy.svc.cluster.local:4318/v1/traces"
-    # grpc:
+    # http:
     #   enabled: true
-    #   endpoint: "alloy.alloy.svc.cluster.local:4317"
-    #   insecure: true
+    #   endpoint: "alloy.alloy.svc.cluster.local:4318/v1/traces"
+    grpc:
+      enabled: true
+      endpoint: "alloy.alloy.svc.cluster.local:4317"
+      insecure: true
 
 volumes:
   - name: traefik-configmap

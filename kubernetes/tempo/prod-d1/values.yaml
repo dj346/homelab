@@ -2,18 +2,14 @@ global:
   priorityClassName: null
   clusterDomain: 'cluster.local'
 
-overrides: |-
-  overrides:
-    defaults:
-      metrics_generator:
-        processors:
-          - service-graphs
-          - span-metrics
-          - local-blocks
-      local_blocks:
-        filter_server_spans: false
-        flush_to_storage: true
 
+overrides:
+  defaults:
+    metrics_generator:
+      processors:
+        - service-graphs
+        - span-metrics
+        
 tempo:
   podLabels: {}
   podAnnotations: {}

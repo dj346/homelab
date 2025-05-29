@@ -95,6 +95,13 @@ metricsGenerator:
   podAnnotations: {}
   
   resources: {}
+
+  extraArgs:
+    - "-config.expand-env=true"
+
+  extraEnvFrom:
+    - secretRef:
+        name: tempo-s3-credentials
   
   maxUnavailable: 1
   

@@ -47,26 +47,26 @@ ingressRoute:
     tls:
       secretName: traefik-dashboard-certificate-secret
 
-# tracing:
-#   addInternals: true
-#   serviceName: traefik
-#   resourceAttributes:
-#     service_name: traefik
+tracing:
+  addInternals: true
+  serviceName: traefik
+  resourceAttributes:
+    service_name: traefik
 
-#   otlp:
-#     # enabled: true
-#     http:
-#       enabled: true
-#       endpoint: "http://alloy.alloy.svc.cluster.local:4318/v1/traces"
-#     # grpc:
-#     #   enabled: true
-#     #   endpoint: "alloy.alloy.svc.cluster.local:4317"
-#     #   insecure: true
+  otlp:
+    # enabled: true
+    http:
+      enabled: true
+      endpoint: "http://alloy.alloy.svc.cluster.local:4318/v1/traces"
+    # grpc:
+    #   enabled: true
+    #   endpoint: "alloy.alloy.svc.cluster.local:4317"
+    #   insecure: true
 
-# volumes:
-#   - name: traefik-configmap
-#     mountPath: "/config"
-#     type: configMap
+volumes:
+  - name: traefik-configmap
+    mountPath: "/config"
+    type: configMap
 
 service:
   enabled: true

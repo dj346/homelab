@@ -1,0 +1,37 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: k8s-monitor
+  namespace: argocd
+  labels: 
+    app.kubernetes.io/name: k8s-monitor
+    app.kubernetes.io/component: app
+spec:
+  project: default
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: k8s-monitor
+  sources:
+    - repoURL: https://grafana.github.io/helm-charts
+      chart: k8s-monitoring
+      targetRevision: 2.1.4
+      helm:
+        valueFiles:
+        - $values/kubernetes/k8s-monitor/prod-d1/values.yaml
+    - repoURL: 'http://gitea-http.gitea.svc.cluster.local:3000/dj346/homelab.git'
+      targetRevision: HEAD
+      path: kubernetes/k8s-monitor/prod-d1
+      ref: values
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true 
+    automated: 
+      prune: true 
+      selfHeal: true 
+      allowEmpty: false
+    retry:
+      limit: 0 # the number of retries to attempt
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 3m

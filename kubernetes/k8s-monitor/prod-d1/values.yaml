@@ -1,0 +1,78 @@
+cluster:
+  name: "kube-prod-d1"
+
+global:
+  scrapeInterval: 60s
+  maxCacheSize: 100000
+
+destinations:
+  - name: localMetrics
+    type: prometheus
+    url: http://mimir-distributor.mimir.svc.cluster.local:8080/api/v1/push
+    extraHeaders: 
+      X-Scope-OrgID: anonymous
+  - name: localLogs
+    type: loki
+    url: "http://loki-distributor.loki.svc.cluster.local:3100/loki/api/v1/push"
+    tenantId: anonymous
+  - name: otlpLocal
+    type: otlp
+    url: "alloy.alloy.svc.cluster.local:4317"
+    logs:
+      enabled: true
+    metrics:
+      enabled: true
+    traces:
+      enabled: true
+
+
+clusterMetrics:
+  enabled: true
+
+clusterEvents:
+  enabled: true
+
+nodeLogs:
+  enabled: true
+
+podLogs:
+  enabled: true
+  
+applicationObservability:
+  enabled: true
+
+autoInstrumentation:
+  enabled: true
+
+annotationAutodiscovery:
+  enabled: true
+
+prometheusOperatorObjects:
+  enabled: true
+
+profiling:
+  enabled: false
+
+integrations:
+  destinations: []
+
+selfReporting:
+  enabled: true
+
+alloy-metrics:
+  enabled: true
+
+alloy-singleton:
+  enabled: false
+
+alloy-logs:
+  enabled: true
+
+alloy-receiver:
+  enabled: true
+
+alloy-profiles:
+  enabled: false
+
+alloy-operator:
+  deploy: true

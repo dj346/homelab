@@ -15,7 +15,7 @@ spec:
       helm:
         valueFiles:
         - $values/kubernetes/argocd/prod-d1/values.yaml
-    - repoURL: 'https://gitea.kube-prod-d1.mclacken.net/dj346/homelab.git'
+    - repoURL: 'http://gitea-http.gitea.svc.cluster.local:3000/dj346/homelab.git'
       targetRevision: HEAD
       path: kubernetes/argocd/prod-d1
       ref: values

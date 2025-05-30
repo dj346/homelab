@@ -324,7 +324,7 @@ On your local machine, navigate to your `homelab` repository and run:
 ```sh
 cd homelab
 
-git remote add origin https://gitea.kube-prod-d1.mclacken.net/dj346/homelab.git
+git remote add origin http://gitea-http.gitea.svc.cluster.local:3000/dj346/homelab.git
 git push -u origin main
 ```
 

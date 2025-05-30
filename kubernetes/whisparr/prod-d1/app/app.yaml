@@ -9,7 +9,7 @@ spec:
     server: https://kubernetes.default.svc
     namespace: whisparr
   source:
-    repoURL: 'https://gitea.kube-prod-d1.mclacken.net/dj346/homelab.git'
+    repoURL: 'http://gitea-http.gitea.svc.cluster.local:3000/dj346/homelab.git'
     targetRevision: HEAD
     path: kubernetes/whisparr/prod-d1
   syncPolicy:

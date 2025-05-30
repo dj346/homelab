@@ -47,6 +47,15 @@ traces:
       enabled: true
     grpc:
       enabled: true
+  # zipkin:
+  #   enabled: true
+  # jaeger:
+  #   thriftCompact:
+  #     enabled: true
+  #   thriftHttp:
+  #     enabled: true
+  # opencensus:
+  #   enabled: true
 
 ingester:
   annotations: {}

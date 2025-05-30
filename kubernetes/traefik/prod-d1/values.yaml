@@ -58,10 +58,6 @@ tracing:
     http:
       enabled: true
       endpoint: "http://alloy.alloy.svc.cluster.local:4318/v1/traces"
-    # grpc:
-    #   enabled: true
-    #   endpoint: "alloy.alloy.svc.cluster.local:4317"
-    #   insecure: true
 
 volumes:
   - name: traefik-configmap
@@ -70,7 +66,5 @@ volumes:
 
 service:
   enabled: true
-  ## -- Single service is using `MixedProtocolLBService` feature gate.
-  ## -- When set to false, it will create two Service, one for TCP and one for UDP.
   type: LoadBalancer
   loadBalancerIP: 10.15.21.29

@@ -1,3 +1,5 @@
+# https://chatgpt.com/c/683a8cde-4a10-8000-97a9-dc69a2a10e84
+
 cluster:
   name: "kube-prod-d1"
 
@@ -11,25 +13,10 @@ destinations:
     url: http://mimir-distributor.mimir.svc.cluster.local:8080/api/v1/push
     extraHeaders: 
       X-Scope-OrgID: anonymous
-    # extraLabels:
-    #   site: lab2
-    # extraLabelsFrom:
-    #   region: env("REGION")
-    # metricProcessingRules: |-
-    #   write_relabel_config {
-    #     source_labels = ["__name__"]
-    #     regex = "metric_to_drop|another_metric_to_drop"
-    #     action = "drop"
-    #   }
   - name: localLogs
     type: loki
     url: "http://loki-distributor.loki.svc.cluster.local:3100/loki/api/v1/push"
     tenantId: anonymous
-    # extraLabels:
-    #   site: lab2
-    # extraLabelsFrom:
-    #   region: env("REGION")
-
   - name: otlpLocal
     type: otlp
     protocol: http
@@ -37,362 +24,102 @@ destinations:
     metrics: { enabled: true }
     logs: { enabled: true }
     traces: { enabled: true }
-  - name: pyroscope
-    type: pyroscope
-    url: http://pyroscope.pyroscope.svc:4040
-
+  # - name: pyroscope
+  #   type: pyroscope
+  #   url: http://pyroscope.pyroscope.svc:4040
 
 clusterMetrics:
   enabled: true
   controlPlane:
     enabled: true
-  # kepler:
-  #   enabled: true
-  # opencost:
-  #   enabled: true
-  #   metricsSource: prometheus
-  #   opencost:
-  #     exporter:
-  #       defaultClusterId: cluster-metrics-example-cluster
-  #     prometheus:
-  #       external:
-  #         url: http://prometheus.prometheus.svc:9090/api/v1/query
-  # cadvisor:
-  #   metricsTuning:
-  #     excludeNamespaces: [kube-system, kube-public, confidential]
-  # kube-state-metrics:
-  #   namespacesDenylist: [kube-system, kube-public, confidential]
-
-  # kube-state-metrics:
-  #   extraMetricProcessingRules: |-
-  #     rule {
-  #       source_labels = ["namespace"]
-  #       regex = "production"
-  #       action = "keep"
-  #     }
-
-  # cadvisor:
-  #   metricsTuning:
-  #     includeNamespaces: [alpha, bravo, delta]
-  # kube-state-metrics:
-  #   namespaces: [alpha, bravo, delta]
-
+ 
 clusterEvents:
   enabled: true
-  # excludeNamespaces: [kube-system, kube-public, confidential]
-
-  # namespaces:
-  #   - production
-
-  # extraProcessingStages: |-
-  #   stage.logfmt {
-  #     payload = ""
-  #   }
-
-  #   stage.json {
-  #     source = "payload"
-  #     expressions = {
-  #       sku = "id",
-  #       count = "",
-  #     }
-  #   }
-
-  #   stage.static {
-  #     values = {
-  #       site = "lab2",
-  #     }
-  #   }
-
-  #   stage.labels {
-  #     values = {
-  #       sku  = "",
-  #       count = "",
-  #     }
-  #   }
-
-  # namespaces: [alpha, bravo, delta]
-
+  
 nodeLogs:
   enabled: true
-  # journal:
-  #   units:
-  #     - kubelet.service
-  #     - containerd.service
-
+  
 podLogs:
   enabled: true
 
-  # extraLogProcessingStages: |-
-  #   stage.metrics {
-  #     metric.counter {
-  #       name        = "log_lines_total"
-  #       description = "total number of log lines"
-  #       prefix      = "my_custom_tracking_"
-
-  #       match_all         = true
-  #       action            = "inc"
-  #       max_idle_duration = "24h"
-  #     }
-  #   }
-
-
-  # excludeNamespaces: [kube-system, kube-public, confidential]
-
-  # extraDiscoveryRules: |-
-  #   rule {
-  #     source_labels = ["__meta_kubernetes_namespace"]
-  #     regex = "production"
-  #     action = "keep"
-  #   }
-
-  # extraLogProcessingStages: |-
-  #   stage.json {
-  #     source = "payload"
-  #     expressions = {
-  #       sku = "id",
-  #       count = "",
-  #     }
-  #   }
-
-  #   stage.labels {
-  #     values = {
-  #       sku  = "",
-  #       count = "",
-  #     }
-  #   }
-
-  # staticLabels:
-  #   site: lab2
-
-  # staticLabelsFrom:
-  #   color: env("COLOR")
-
-  # namespaces: [alpha, bravo, delta]
-  
 applicationObservability:
   enabled: true
 
 autoInstrumentation:
   enabled: true
-  # beyla:
-  #   config:
-  #     data:
-  #       discovery:
-  #         services:
-  #           - k8s_namespace: .
-  #         exclude_services:
-  #           - k8s_namespace: kube-system
-  #           - k8s_namespace: kube-public
-  #           - k8s_namespace: confidential
-
-  # beyla:
-  #   config:
-  #     data:
-  #       attributes:
-  #         kubernetes:
-  #           enable: true
-  #         select:
-  #           beyla_network_flow_bytes:
-  #             include:
-  #               - direction
-  #               - k8s.cluster.name
-  #               - k8s.dst.name
-  #               - k8s.dst.namespace
-  #               - k8s.dst.owner.name
-  #               - k8s.dst.owner.type
-  #               - k8s.src.name
-  #               - k8s.src.namespace
-  #               - k8s.src.owner.name
-  #               - k8s.src.owner.type
-  #       discovery:
-  #         exclude_otel_instrumented_services: false
-  #         services:
-  #           - k8s_pod_labels:
-  #               instrument: beyla
-  #       log_level: debug
-  #       network:
-  #         enable: true
-  #       prometheus_export:
-  #         path: /metrics
-  #         features:
-  #           - application
-  #           - application_process
-  #           - application_service_graph
-  #           - application_span
-  #           - network
-  #       internal_metrics:
-  #         prometheus:
-  #           path: /internal/metrics
-  #       routes:
-  #         patterns:
-  #           - /account
-  #           - /api/products/{productId}
-  #           - /cart
-  #           - /fastcache
-  #           - /health
-  #           - /login
-  #           - /payment
-  #         ignored_patterns:
-  #           - /debug/*
-  #           - /metrics
-  #         unmatched: heuristic
-  # preset: application
-
+ 
 annotationAutodiscovery:
   enabled: true
-  # excludeNamespaces: [kube-system, kube-public, confidential]
-  # namespaces: [alpha, bravo, delta]
-
-  # beyla:
-  #   config:
-  #     data:
-  #       discovery:
-  #         services:
-  #           - k8s_namespace: alpha
-  #           - k8s_namespace: bravo
-  #           - k8s_namespace: delta
 
 prometheusOperatorObjects:
   enabled: true
-  # probes:
-  #   excludeNamespaces: [kube-system, kube-public, confidential]
-  # podMonitors:
-  #   excludeNamespaces: [kube-system, kube-public, confidential]
-  # serviceMonitors:
-  #   excludeNamespaces: [kube-system, kube-public, confidential]
-  
-  # serviceMonitors:
-  #   namespaces:
-  #     - development
-  #     - staging
-  #     - production
-  #   labelExpressions:
-  #     - key: preview-build
-  #       operator: DoesNotExist
-  #     - key: app.kubernetes.io/name
-  #       operator: In
-  #       values:
-  #         - my-app
-  #         - my-other-app
-
-  # probes:
-  #   namespaces: [alpha, bravo, delta]
-  # podMonitors:
-  #   namespaces: [alpha, bravo, delta]
-  # serviceMonitors:
-  #   namespaces: [alpha, bravo, delta]
 
 profiling:
   enabled: false
-  # ebpf:
-  #   excludeNamespaces: [kube-system, kube-public, confidential]
-  # java:
-  #   excludeNamespaces: [kube-system, kube-public, confidential]
-  # pprof:
-  #   excludeNamespaces: [kube-system, kube-public, confidential]
-
-  # ebpf:
-  #   namespaces: [alpha, bravo, delta]
-  # java:
-  #   namespaces: [alpha, bravo, delta]
-  # pprof:
-  #   namespaces: [alpha, bravo, delta]
-
-
+  
 integrations:
   etcd:
     instances:
       - name: etcd
         labelSelectors:
           app.kubernetes.io/component: etcd
-  alloy:
-    instances:
-      - name: alloy
-        labelSelectors:
-          app.kubernetes.io/name: alloy-metrics
-      - name: alloy
-        labelSelectors:
-          app.kubernetes.io/name: alloy-singleton
-      - name: alloy
-        labelSelectors:
-          app.kubernetes.io/name: alloy-logs
-  cert-manager:
-    instances:
-      - name: cert-manager
-        labelSelectors:
-          app.kubernetes.io/name: cert-manager
-  grafana:
-    instances:
-      - name: grafana
-        labelSelectors:
-          app.kubernetes.io/name: grafana
-        namespaces:
-          - grafana
-  loki:
-    instances:
-      - name: loki
-        labelSelectors:
-          app.kubernetes.io/name: loki
-        logs:
-          enabled: true
-        namespaces:
-          - loki
-  mimir:
-    instances:
-      - name: mimir
-        labelSelectors:
-          app.kubernetes.io/name: mimir
-        logs:
-          enabled: true
-        namespaces:
-          - mimir
-  # alloy:
-  #   instances:
-  #     - name: alloy
-  #       labelSelectors:
-  #         app.kubernetes.io/name: [alloy-metrics, alloy-logs]
-  #       metrics:
-  #         tuning:
-  #           includeMetrics: [my_custom_tracking_.*]
-
+#   alloy:
+#     instances:
+#       - name: alloy
+#         labelSelectors:
+#           app.kubernetes.io/name: alloy-metrics
+#       - name: alloy
+#         labelSelectors:
+#           app.kubernetes.io/name: alloy-singleton
+#       - name: alloy
+#         labelSelectors:
+#           app.kubernetes.io/name: alloy-logs
+#   cert-manager:
+#     instances:
+#       - name: cert-manager
+#         labelSelectors:
+#           app.kubernetes.io/name: cert-manager
+#   grafana:
+#     instances:
+#       - name: grafana
+#         labelSelectors:
+#           app.kubernetes.io/name: grafana
+#         namespaces:
+#           - grafana
+#   loki:
+#     instances:
+#       - name: loki
+#         labelSelectors:
+#           app.kubernetes.io/name: loki
+#         logs:
+#           enabled: true
+#         namespaces:
+#           - loki
+#   mimir:
+#     instances:
+#       - name: mimir
+#         labelSelectors:
+#           app.kubernetes.io/name: mimir
+#         logs:
+#           enabled: true
+#         namespaces:
+#           - mimir
 
 selfReporting:
   enabled: true
 
 alloy-metrics:
   enabled: true
-  # alloy:
-  #   extraEnv:
-  #     - name: REGION
-  #       value: northwest
-
-  extraConfig: |
-    discovery.kubernetes "animal_service" {
-      role = "service"
-      namespaces {
-        names = ["zoo"]
-      }
-      selectors {
-        role = "service"
-        label = "app.kubernetes.io/name=animal-service"
-      }
-    }
-    prometheus.scrape "animal_service" {
-      job_name   = "animal_service"
-      targets    = discovery.kubernetes.animal_service.targets
-      forward_to = [prometheus.remote_write.prometheus_kubernetes.receiver]
-    }
-
+ 
 alloy-singleton:
   enabled: true
-  # alloy:
-  #   extraEnv:
-  #     - name: REGION
-  #       value: northwest
-
+  
 alloy-logs:
   enabled: true
   alloy:
+    varlog: true
+    dockercontainers: true
+
     extraEnv:
       - name: KUBE_NODE_NAME
         valueFrom:
@@ -511,31 +238,28 @@ alloy-logs:
         relabel_rules = loki.relabel.k3s_nodes_journal.rules
         forward_to    = [loki.write.loki.receiver]
       }
-  # alloy:
-  #   extraEnv:
-  #     - name: REGION
-  #       value: northwest
-  #     - name: COLOR
-  #       value: blue
-  # alloy:
-  #   clustering:
-  #     enabled: true
-  #   mounts:
-  #     varlog: false
-  #     dockercontainers: false
-
+  
 alloy-receiver:
   enabled: true
   alloy:
     extraPorts:
+      # Zipkin
+      - name: zipkin
+        port:       9411
+        targetPort: 9411
+        protocol:   TCP
+
+      # OTLP gRPC receiver
       - name: otlp-grpc
-        port: 4317
+        port:       4317
         targetPort: 4317
-        protocol: TCP
+        protocol:   TCP
+
+      # OTLP HTTP/protobuf receiver
       - name: otlp-http
-        port: 4318
+        port:       4318
         targetPort: 4318
-        protocol: TCP
+        protocol:   TCP
 
 alloy-profiles:
   enabled: false
@@ -549,33 +273,3 @@ applicationObservability:
     otlp:
       http:
         enabled: true
-  # metrics:
-  #   filters:
-  #     metric:
-  #       - IsMatch(resource.attributes["k8s.namespace.name"], "^kube-system|kube-public|confidential$")
-  #     logs:
-  #       - IsMatch(resource.attributes["k8s.namespace.name"], "^kube-system|kube-public|confidential$")
-  #     traces:
-  #       - IsMatch(resource.attributes["k8s.namespace.name"], "^kube-system|kube-public|confidential$")
-  # metrics:
-  #   filters:
-  #     metric:
-  #       - not(IsMatch(resource.attributes["k8s.namespace.name"], "^alpha|bravo|delta$"))
-  #     logs:
-  #       - not(IsMatch(resource.attributes["k8s.namespace.name"], "^alpha|bravo|delta$"))
-  #     traces:
-  #       - not(IsMatch(resource.attributes["k8s.namespace.name"], "^alpha|bravo|delta$"))
-
-
-
-# This example shows how to enable the annotation-based autodiscovery feature, which adds scrape targets based on Kubernetes annotations. With this feature enabled, any Kubernetes Pods or Services with the k8s.grafana.com/scrape annotation set to true will be automatically discovered and scraped by the collector. There are several other annotations that can be used to customize the behavior of the scrape configuration, such as:
-
-#     k8s.grafana.com/job: The value to use for the job label.
-#     k8s.grafana.com/instance: The value to use for the instance label.
-#     k8s.grafana.com/metrics.path: The path to scrape for metrics. Defaults to /metrics.
-#     k8s.grafana.com/metrics.portNumber: The port on the Pod or Service to scrape for metrics. This is used to target a specific port by its number, rather than all ports.
-#     k8s.grafana.com/metrics.portName: The named port on the Pod or Service to scrape for metrics. This is used to target a specific port by its name, rather than all ports.
-#     k8s.grafana.com/metrics.scheme: The scheme to use when scraping metrics. Defaults to http.
-#     k8s.grafana.com/metrics.scrapeInterval: The scrape interval to use when scraping metrics. Defaults to 60s.
-
-# For more information, see the Annotation Autodiscovery feature documentation.

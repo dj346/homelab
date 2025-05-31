@@ -1,0 +1,60 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: k8s-monitor-ingress
+  namespace: k8s-monitor
+  labels:
+    app.kubernetes.io/name: k8s-monitor
+    app.kubernetes.io/component: app
+  annotations:
+    cert-manager.io/cluster-issuer: cloudflare-clusterissuer
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+spec:
+  rules:
+    - host: alloy-metrics.kube-prod-d1.mclacken.net
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: k8s-monitor-alloy-metrics
+                port:
+                  name: http-metrics
+    - host: alloy-logs.kube-prod-d1.mclacken.net
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: alloy
+                port:
+                  name: k8s-monitor-alloy-logs
+    - host: alloy-singleton.kube-prod-d1.mclacken.net
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: k8s-monitor-alloy-singleton
+                port:
+                  name: http-metrics
+    - host: alloy-receiver.kube-prod-d1.mclacken.net
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: k8s-monitor-alloy-receiver
+                port:
+                  name: http-metrics
+  tls:
+    - hosts:
+        - alloy-metrics.kube-prod-d1.mclacken.net
+        - alloy-logs.kube-prod-d1.mclacken.net
+        - alloy-singleton.kube-prod-d1.mclacken.net
+        - alloy-receiver.kube-prod-d1.mclacken.net
+      secretName: alloy-certificate-secret

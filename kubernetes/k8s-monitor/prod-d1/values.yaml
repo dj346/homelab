@@ -125,119 +125,119 @@ alloy-logs:
         valueFrom:
           fieldRef:
             fieldPath: spec.nodeName
-    extraConfig: |
-      loki.relabel "k3s_nodes_file_logs" {
-        forward_to = [loki.write.locallogs.receiver]
+  extraConfig: |-
+    loki.relabel "k3s_nodes_file_logs" {
+      forward_to = [loki.write.locallogs.receiver]
 
-        rule {
-          source_labels = ["filename"]
-          regex         = ".*/var/log/journal/.*"
-          action        = "drop"
-        }
-
-        rule {
-          source_labels = ["filename"]
-          regex         = ".*/var/log/syslog/.*"
-          action        = "drop"
-        }
-
-         rule {
-          source_labels = ["filename"]
-          regex         = ".*/var/log/pods/.*"
-          action        = "drop"
-        }
-
-         rule {
-          source_labels = ["filename"]
-          regex         = ".*/var/log/containers/.*"
-          action        = "drop"
-        }
-
-        rule {
-          source_labels = ["filename"]
-          regex         = ".*/var/log/([^/]+)/.*\\.log"
-          target_label  = "filename_parent"
-          replacement   = "$1"
-        }
-
-        rule {
-          source_labels = ["filename"]
-          regex         = ".*/var/log/.*/([^/]+)\\.log"
-          target_label  = "filename_name"
-          replacement   = "$1"
-        }
-
-        rule {
-          action        = "replace"
-          target_label  = "service"
-          replacement   = string.format("%s-var-file-logs", sys.env("KUBE_NODE_NAME"))
-        }
-
-        rule {
-          action       = "replace"
-          target_label = "hostname"
-          replacement  = sys.env("KUBE_NODE_NAME")
-        }
-
-        rule {
-          action        = "replace"
-          target_label  = "podname"
-          replacement   = constants.hostname
-        }
+      rule {
+        source_labels = ["filename"]
+        regex         = ".*/var/log/journal/.*"
+        action        = "drop"
       }
 
-      local.file_match "hostlogs" {
-        path_targets = [{ __path__ = "/var/log/**/*.log" }]
-        sync_period  = "5s"
+      rule {
+        source_labels = ["filename"]
+        regex         = ".*/var/log/syslog/.*"
+        action        = "drop"
       }
 
-      loki.source.file "k3s_file_logs" {
-        targets      = local.file_match.hostlogs.targets
-        forward_to   = [ loki.relabel.k3s_nodes_file_logs.receiver ]
-        tail_from_end = true
+        rule {
+        source_labels = ["filename"]
+        regex         = ".*/var/log/pods/.*"
+        action        = "drop"
       }
 
-      loki.relabel "k3s_nodes_journal" {
-        forward_to = []
-
         rule {
-          target_label  = "service"
-          replacement   = string.format("%s-journal-logs", sys.env("KUBE_NODE_NAME"))
-        }
-
-        rule {
-          source_labels = ["__journal__systemd_unit"]
-          target_label  = "unit"
-        }
-
-        rule {
-          source_labels = ["__journal__hostname"]
-          target_label  = "hostname"
-        }
-
-        rule {
-          source_labels = ["__journal__PRIORITY"]
-          target_label  = "level"
-        }
-
-        rule {
-          target_label  = "podname"
-          replacement   = constants.hostname
-        }
+        source_labels = ["filename"]
+        regex         = ".*/var/log/containers/.*"
+        action        = "drop"
       }
 
-      loki.source.journal "k3s_nodes_journal" {
-        path           = "/var/log/journal"
-        format_as_json = true
-
-        labels = {
-          job       = "k3s-systemd-journal",
-          component = "k3s-journal-logs",
-        }
-
-        relabel_rules = loki.relabel.k3s_nodes_journal.rules
-        forward_to    = [loki.write.locallogs.receiver]
+      rule {
+        source_labels = ["filename"]
+        regex         = ".*/var/log/([^/]+)/.*\\.log"
+        target_label  = "filename_parent"
+        replacement   = "$1"
       }
+
+      rule {
+        source_labels = ["filename"]
+        regex         = ".*/var/log/.*/([^/]+)\\.log"
+        target_label  = "filename_name"
+        replacement   = "$1"
+      }
+
+      rule {
+        action        = "replace"
+        target_label  = "service"
+        replacement   = string.format("%s-var-file-logs", sys.env("KUBE_NODE_NAME"))
+      }
+
+      rule {
+        action       = "replace"
+        target_label = "hostname"
+        replacement  = sys.env("KUBE_NODE_NAME")
+      }
+
+      rule {
+        action        = "replace"
+        target_label  = "podname"
+        replacement   = constants.hostname
+      }
+    }
+
+    local.file_match "hostlogs" {
+      path_targets = [{ __path__ = "/var/log/**/*.log" }]
+      sync_period  = "5s"
+    }
+
+    loki.source.file "k3s_file_logs" {
+      targets      = local.file_match.hostlogs.targets
+      forward_to   = [ loki.relabel.k3s_nodes_file_logs.receiver ]
+      tail_from_end = true
+    }
+
+    loki.relabel "k3s_nodes_journal" {
+      forward_to = []
+
+      rule {
+        target_label  = "service"
+        replacement   = string.format("%s-journal-logs", sys.env("KUBE_NODE_NAME"))
+      }
+
+      rule {
+        source_labels = ["__journal__systemd_unit"]
+        target_label  = "unit"
+      }
+
+      rule {
+        source_labels = ["__journal__hostname"]
+        target_label  = "hostname"
+      }
+
+      rule {
+        source_labels = ["__journal__PRIORITY"]
+        target_label  = "level"
+      }
+
+      rule {
+        target_label  = "podname"
+        replacement   = constants.hostname
+      }
+    }
+
+    loki.source.journal "k3s_nodes_journal" {
+      path           = "/var/log/journal"
+      format_as_json = true
+
+      labels = {
+        job       = "k3s-systemd-journal",
+        component = "k3s-journal-logs",
+      }
+
+      relabel_rules = loki.relabel.k3s_nodes_journal.rules
+      forward_to    = [loki.write.locallogs.receiver]
+    }
   
 alloy-receiver:
   enabled: true

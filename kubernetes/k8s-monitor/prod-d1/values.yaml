@@ -127,7 +127,7 @@ alloy-logs:
             fieldPath: spec.nodeName
     extraConfig: |
       loki.relabel "k3s_nodes_file_logs" {
-        forward_to = [loki.write.loki.receiver]
+        forward_to = [loki.write.locallogs.receiver]
 
         rule {
           source_labels = ["filename"]
@@ -236,7 +236,7 @@ alloy-logs:
         }
 
         relabel_rules = loki.relabel.k3s_nodes_journal.rules
-        forward_to    = [loki.write.loki.receiver]
+        forward_to    = [loki.write.locallogs.receiver]
       }
   
 alloy-receiver:

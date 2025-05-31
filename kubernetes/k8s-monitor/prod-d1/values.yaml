@@ -37,7 +37,7 @@ clusterEvents:
   enabled: true
   
 nodeLogs:
-  enabled: true
+  enabled: false
   
 podLogs:
   enabled: true

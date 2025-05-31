@@ -28,9 +28,9 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: alloy
+                name: k8s-monitor-alloy-logs
                 port:
-                  name: k8s-monitor-alloy-logs
+                  name: http-metrics
     - host: alloy-singleton.kube-prod-d1.mclacken.net
       http:
         paths:

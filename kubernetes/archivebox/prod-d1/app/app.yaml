@@ -9,7 +9,7 @@ spec:
     server: https://kubernetes.default.svc
     namespace: archivebox
   source:
-    repoURL: 'http://gitea-http.gitea.svc.cluster.local:3000/dj346/homelab.git'
+    repoURL: 'ssh://git@gitea-ssh.gitea.svc.cluster.local:2222/dj346/homelab.git'
     targetRevision: HEAD
     path: kubernetes/archivebox/prod-d1
   syncPolicy:

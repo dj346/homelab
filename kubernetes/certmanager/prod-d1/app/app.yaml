@@ -15,7 +15,7 @@ spec:
       helm:
         valueFiles:
         - $values/kubernetes/certmanager/prod-d1/values.yaml
-    - repoURL: 'http://gitea-http.gitea.svc.cluster.local:3000/dj346/homelab.git'
+    - repoURL: 'ssh://git@gitea-ssh.gitea.svc.cluster.local:2222/dj346/homelab.git'
       targetRevision: HEAD
       path: kubernetes/certmanager/prod-d1
       ref: values

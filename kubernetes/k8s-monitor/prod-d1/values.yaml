@@ -133,9 +133,7 @@ podLogs:
     - namespace
     - pod
     - service_name
-
-  gatherMethod: kubernetesApi
-
+  
 applicationObservability:
   enabled: true
   receivers:

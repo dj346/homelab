@@ -20,6 +20,9 @@ destinations:
   - name: otlpLocal
     type: otlp
     protocol: grpc
+    tenantId: anonymous
+    tls:
+      insecure: true
     url: "http://tempo-distributor.tempo.svc.cluster.local:4317"
     metrics: { enabled: true }
     logs: { enabled: true }

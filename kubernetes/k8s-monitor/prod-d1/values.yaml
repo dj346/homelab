@@ -66,22 +66,22 @@ clusterMetrics:
   
   kube-state-metrics:
     enabled: true
-    metricsTuning:
-      useDefaultAllowList: false
-      includeMetrics: [(.+)]
+    # metricsTuning:
+    #   useDefaultAllowList: false
+    #   includeMetrics: [(.+)]
   
   node-exporter:
     enabled: true
     deploy: true
-    metricsTuning:
-      useIntegrationAllowList: true
+    # metricsTuning:
+    #   useIntegrationAllowList: true
   
   windows-exporter:
     enabled: false
     deploy: false
   
   kepler:
-    enabled: false
+    enabled: true
   
   opencost:
     enabled: false

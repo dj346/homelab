@@ -33,8 +33,66 @@ destinations:
 
 clusterMetrics:
   enabled: true
+  
   controlPlane:
     enabled: true
+  
+  kubelet:
+    enabled: false
+  
+  kubeletResource:
+    enabled: false
+  
+  cadvisor:
+    enabled: true
+  
+  apiServer:
+    enabled: false
+  
+  kubeControllerManager:
+    enabled: false
+  
+  kubeDNS:
+    enabled: false
+  
+  kubeProxy:
+    enabled: false
+  
+  kubeScheduler:
+    enabled: false
+  
+  kube-state-metrics:
+    enabled: true
+    metricsTuning:
+      useDefaultAllowList: false
+      includeMetrics: [(.+)]
+  
+  node-exporter:
+    enabled: true
+    deploy: true
+    metricsTuning:
+      useIntegrationAllowList: true
+  
+  windows-exporter:
+    enabled: false
+    deploy: false
+  
+  kepler:
+    enabled: false
+    deploy: false
+  
+  opencost:
+    enabled: false
+    deploy: false
+
+  nodeLabels:
+    nodePool: true
+    region: true
+    availabilityZone: true
+    nodeRole: true
+    os: true
+    architecture: true
+    instanceType: true
  
 clusterEvents:
   enabled: true
@@ -45,6 +103,37 @@ nodeLogs:
 podLogs:
   enabled: true
 
+  nodeLabels:
+    nodePool: true
+    region: true
+    availabilityZone: true
+    nodeRole: true
+    os: true
+    architecture: true
+    instanceType: true
+
+  structuredMetadata:
+    nodepool:
+    region:
+    availability_zone:
+    node_role:
+    os:
+    architecture:
+    instance_type:
+
+  labelsToKeep:
+    - app
+    - app_kubernetes_io_name
+    - component
+    - container
+    - job
+    - level
+    - namespace
+    - pod
+    - service_name
+
+  gatherMethod: kubernetesApi
+
 applicationObservability:
   enabled: true
   receivers:
@@ -53,6 +142,20 @@ applicationObservability:
         enabled: true
       grpc:
         enabled: true
+  processors:
+    k8sattributes:
+      metadata:
+        - k8s.namespace.name
+        - k8s.pod.name
+        - k8s.deployment.name
+        - k8s.statefulset.name
+        - k8s.daemonset.name
+        - k8s.cronjob.name
+        - k8s.job.name
+        - k8s.node.name
+        - k8s.pod.uid
+        - k8s.pod.start_time
+        - k8s.container.name
 
 autoInstrumentation:
   enabled: true
@@ -67,31 +170,25 @@ profiling:
   enabled: false
   
 integrations:
+  nodeLabels:
+    nodepool: true
+    region: true
+    availability_zone: true
+    node_role: true
+    os: true
+    architecture: true
+    instance_type: true
+
   etcd:
     instances:
       - name: etcd
         labelSelectors:
           app.kubernetes.io/component: etcd
-  alloy-metrics:
+  alloy:
     instances:
       - name: alloy
         labelSelectors:
-          app.kubernetes.io/name: alloy-metrics
-  alloy-logs:
-    instances:
-      - name: alloy-logs
-        labelSelectors:
-          app.kubernetes.io/name: alloy-logs
-  alloy-receiver:
-    instances:
-      - name: alloy-receiver
-        labelSelectors:
-          app.kubernetes.io/name: alloy-receiver
-  alloy-singleton:
-    instances:
-      - name: alloy-singleton
-        labelSelectors:
-          app.kubernetes.io/name: alloy-singleton
+          app.kubernetes.io/name: [alloy-singleton, alloy-metrics, alloy-logs, alloy-profiles, alloy-receiver]
   cert-manager:
     instances:
       - name: cert-manager
@@ -111,6 +208,13 @@ integrations:
           app.kubernetes.io/name: loki
         logs:
           enabled: true
+          tuning:
+            # extract logfmt fields and set them as structured metadata
+            structuredMetadata:
+              caller:
+              tenant:
+              org_id:
+              user:
         namespaces:
           - loki
   mimir:
@@ -120,8 +224,31 @@ integrations:
           app.kubernetes.io/name: mimir
         logs:
           enabled: true
+          tuning:
+            # extract logfmt fields and set them as structured metadata
+            structuredMetadata:
+              caller:
+              tenant:
+              org_id:
+              user:
         namespaces:
           - mimir
+  tempo:
+    instances:
+      - name: tempo
+        labelSelectors:
+          app.kubernetes.io/name: tempo
+        logs:
+          enabled: true
+          tuning:
+            # extract logfmt fields and set them as structured metadata
+            structuredMetadata:
+              caller:
+              tenant:
+              org_id:
+              user:
+        namespaces:
+          - tempo
 
 selfReporting:
   enabled: true

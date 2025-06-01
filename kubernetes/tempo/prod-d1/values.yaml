@@ -10,6 +10,8 @@ overrides:
         - service-graphs
         - span-metrics
         - local-blocks
+    global:
+      max_bytes_per_trace: 50000000
 
 tempo:
   podLabels: {}

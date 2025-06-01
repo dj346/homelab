@@ -72,47 +72,56 @@ integrations:
       - name: etcd
         labelSelectors:
           app.kubernetes.io/component: etcd
-#   alloy:
-#     instances:
-#       - name: alloy
-#         labelSelectors:
-#           app.kubernetes.io/name: alloy-metrics
-#       - name: alloy
-#         labelSelectors:
-#           app.kubernetes.io/name: alloy-singleton
-#       - name: alloy
-#         labelSelectors:
-#           app.kubernetes.io/name: alloy-logs
-#   cert-manager:
-#     instances:
-#       - name: cert-manager
-#         labelSelectors:
-#           app.kubernetes.io/name: cert-manager
-#   grafana:
-#     instances:
-#       - name: grafana
-#         labelSelectors:
-#           app.kubernetes.io/name: grafana
-#         namespaces:
-#           - grafana
-#   loki:
-#     instances:
-#       - name: loki
-#         labelSelectors:
-#           app.kubernetes.io/name: loki
-#         logs:
-#           enabled: true
-#         namespaces:
-#           - loki
-#   mimir:
-#     instances:
-#       - name: mimir
-#         labelSelectors:
-#           app.kubernetes.io/name: mimir
-#         logs:
-#           enabled: true
-#         namespaces:
-#           - mimir
+  alloy-metrics:
+    instances:
+      - name: alloy
+        labelSelectors:
+          app.kubernetes.io/name: alloy-metrics
+  alloy-logs:
+    instances:
+      - name: alloy-logs
+        labelSelectors:
+          app.kubernetes.io/name: alloy-logs
+  alloy-receiver:
+    instances:
+      - name: alloy-receiver
+        labelSelectors:
+          app.kubernetes.io/name: alloy-receiver
+  alloy-singleton:
+    instances:
+      - name: alloy-singleton
+        labelSelectors:
+          app.kubernetes.io/name: alloy-singleton
+  cert-manager:
+    instances:
+      - name: cert-manager
+        labelSelectors:
+          app.kubernetes.io/name: cert-manager
+  grafana:
+    instances:
+      - name: grafana
+        labelSelectors:
+          app.kubernetes.io/name: grafana
+        namespaces:
+          - grafana
+  loki:
+    instances:
+      - name: loki
+        labelSelectors:
+          app.kubernetes.io/name: loki
+        logs:
+          enabled: true
+        namespaces:
+          - loki
+  mimir:
+    instances:
+      - name: mimir
+        labelSelectors:
+          app.kubernetes.io/name: mimir
+        logs:
+          enabled: true
+        namespaces:
+          - mimir
 
 selfReporting:
   enabled: true

@@ -57,7 +57,7 @@ tracing:
     enabled: true
     http:
       enabled: true
-      endpoint: "http://alloy.alloy.svc.cluster.local:4318/v1/traces"
+      endpoint: "http://k8s-monitor-alloy-receiver.k8s-monitor.svc.cluster.local:4318/v1/traces"
     # grpc:
     #   enabled: true
     #   endpoint: "alloy.alloy.svc.cluster.local:4317"

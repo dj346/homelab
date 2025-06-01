@@ -19,8 +19,8 @@ destinations:
     tenantId: anonymous
   - name: otlpLocal
     type: otlp
-    protocol: http
-    url: "http://alloy.alloy.svc.cluster.local:4318/v1/traces"
+    protocol: grpc
+    url: "http://tempo-distributor.tempo.svc.cluster.local:4317"
     metrics: { enabled: true }
     logs: { enabled: true }
     traces: { enabled: true }
@@ -44,6 +44,12 @@ podLogs:
 
 applicationObservability:
   enabled: true
+  receivers:
+    otlp:
+      http:
+        enabled: true
+      grpc:
+        enabled: true
 
 autoInstrumentation:
   enabled: true
@@ -266,10 +272,3 @@ alloy-profiles:
 
 alloy-operator:
   deploy: true
-
-applicationObservability:
-  enabled: true
-  receivers:
-    otlp:
-      http:
-        enabled: true

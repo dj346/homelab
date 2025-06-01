@@ -35,11 +35,9 @@ mimir:
       # out_of_order_time_window: 5m
       max_global_series_per_user: 500000
       
-      ingestion_rate_limit: 20000      # allow up to 20k items/sec (default is 10000)
+      ingestion_rate: 20000      # allow up to 20k items/sec (default is 10000)
       ingestion_burst_size: 400000      # allow bursts up to 400k items (default is 200k)
-
-
-
+      
     common:
       storage:
         backend: s3

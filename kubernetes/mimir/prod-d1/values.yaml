@@ -31,8 +31,9 @@ kedaAutoscaling:
 
 mimir:
   structuredConfig:
-    # limits:
-    #   out_of_order_time_window: 5m
+    limits:
+      # out_of_order_time_window: 5m
+      max_global_series_per_user: 500000
 
     common:
       storage:

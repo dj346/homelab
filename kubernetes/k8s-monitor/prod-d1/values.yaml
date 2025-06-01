@@ -39,6 +39,9 @@ clusterMetrics:
   
   kubelet:
     enabled: false
+
+  kubeletProbes:
+    enabled: false
   
   kubeletResource:
     enabled: false
@@ -46,8 +49,8 @@ clusterMetrics:
   cadvisor:
     enabled: true
   
-  apiServer:
-    enabled: false
+  # apiServer:
+  #   enabled: false
   
   kubeControllerManager:
     enabled: false
@@ -79,7 +82,6 @@ clusterMetrics:
   
   kepler:
     enabled: false
-    deploy: false
   
   opencost:
     enabled: false

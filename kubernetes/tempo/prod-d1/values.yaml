@@ -3,12 +3,11 @@ global:
   clusterDomain: 'cluster.local'
 
 
-overrides: |
+overrides:
   defaults:
     global:
       max_bytes_per_trace: 50000000
       max_traces_per_user: 30000
-
     metrics_generator:
       processors:
         - service-graphs

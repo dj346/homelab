@@ -59,7 +59,7 @@ clusterMetrics:
       rule {
         action        = "replace"
         target_label  = "cluster"
-        replacement   = "kube-prod-d1"
+        replacement   = "mimir"
       }
   
   # apiServer:
@@ -111,7 +111,7 @@ clusterMetrics:
         target_label  = "cluster"
         replacement   = "kube-prod-d1"
       }
-      
+
     # metricsTuning:
     #   useIntegrationAllowList: true
   

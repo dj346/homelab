@@ -32,6 +32,7 @@ destinations:
   #   url: http://pyroscope.pyroscope.svc:4040
 
 clusterMetrics:
+  
   enabled: true
   
   controlPlane:
@@ -48,6 +49,18 @@ clusterMetrics:
   
   cadvisor:
     enabled: true
+
+    extraMetricProcessingRules: |-
+      rule {
+        source_labels = ["namespace"]
+        regex         = "production"
+        action        = "keep"
+      }
+      rule {
+        action        = "replace"
+        target_label  = "cluster"
+        replacement   = "kube-prod-d1"
+      }
   
   # apiServer:
   #   enabled: false
@@ -66,6 +79,19 @@ clusterMetrics:
   
   kube-state-metrics:
     enabled: true
+
+    extraMetricProcessingRules: |-
+      rule {
+        source_labels = ["namespace"]
+        regex         = "production"
+        action        = "keep"
+      }
+      rule {
+        action        = "replace"
+        target_label  = "cluster"
+        replacement   = "kube-prod-d1"
+      }
+
     # metricsTuning:
     #   useDefaultAllowList: false
     #   includeMetrics: [(.+)]
@@ -73,6 +99,19 @@ clusterMetrics:
   node-exporter:
     enabled: true
     deploy: true
+
+    extraMetricProcessingRules: |-
+      rule {
+        source_labels = ["namespace"]
+        regex         = "production"
+        action        = "keep"
+      }
+      rule {
+        action        = "replace"
+        target_label  = "cluster"
+        replacement   = "kube-prod-d1"
+      }
+      
     # metricsTuning:
     #   useIntegrationAllowList: true
   
@@ -82,6 +121,18 @@ clusterMetrics:
   
   kepler:
     enabled: true
+
+    extraMetricProcessingRules: |-
+      rule {
+        source_labels = ["namespace"]
+        regex         = "production"
+        action        = "keep"
+      }
+      rule {
+        action        = "replace"
+        target_label  = "cluster"
+        replacement   = "kube-prod-d1"
+      }
   
   opencost:
     enabled: false

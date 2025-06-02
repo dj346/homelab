@@ -1,17 +1,20 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: archivebox
+  name: node-exporter
   namespace: argocd
+  labels:
+    app.kubernetes.io/name: node-exporter
+    app.kubernetes.io/component: exporter
 spec:
   project: default
   destination:
     server: https://kubernetes.default.svc
-    namespace: archivebox
+    namespace: node-exporter
   source:
     repoURL: 'ssh://git@gitea-ssh.gitea.svc.cluster.local:2222/dj346/homelab.git'
     targetRevision: HEAD
-    path: kubernetes/archivebox/prod-d1
+    path: kubernetes/node-exporter/prod-d1
   syncPolicy:
     syncOptions:
       - CreateNamespace=true 

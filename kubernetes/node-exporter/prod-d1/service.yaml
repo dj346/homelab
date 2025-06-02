@@ -2,10 +2,18 @@ kind: Service
 apiVersion: v1
 metadata:
   name: node-exporter
-  namespace: monitoring
-  annotations:
-      prometheus.io/scrape: 'true'
-      prometheus.io/port:   '9100'
+  namespace: node-exporter
+  labels:
+    app.kubernetes.io/name: node-exporter
+    app.kubernetes.io/component: exporter
+  # annotations:
+  #   k8s.grafana.com/scrape: "true"
+  #   k8s.grafana.com/instance: node-exporter
+  #   k8s.grafana.com/metrics.portNumber: "9100"
+  #   k8s.grafana.com/metrics.path: /metrics
+  #   k8s.grafana.com/job: node-exporter
+  #   k8s.grafana.com/metrics.scheme: http
+  #   k8s.grafana.com/metrics.scrapeInterval: 60s
 spec:
   selector:
       app.kubernetes.io/component: exporter

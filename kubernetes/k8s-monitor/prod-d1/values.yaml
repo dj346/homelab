@@ -50,17 +50,17 @@ clusterMetrics:
   cadvisor:
     enabled: true
 
-    extraMetricProcessingRules: |-
-      rule {
-        source_labels = ["namespace"]
-        regex         = "production"
-        action        = "keep"
-      }
-      rule {
-        action        = "replace"
-        target_label  = "cluster"
-        replacement   = "kube-prod-d1"
-      }
+    # extraMetricProcessingRules: |-
+    #   rule {
+    #     source_labels = ["namespace"]
+    #     regex         = "production"
+    #     action        = "keep"
+    #   }
+    #   rule {
+    #     action        = "replace"
+    #     target_label  = "cluster"
+    #     replacement   = "kube-prod-d1"
+    #   }
   
   # apiServer:
   #   enabled: false

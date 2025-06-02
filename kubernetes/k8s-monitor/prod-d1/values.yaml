@@ -97,8 +97,8 @@ clusterMetrics:
     #   includeMetrics: [(.+)]
   
   node-exporter:
-    enabled: true
-    deploy: true
+    enabled: false
+    deploy: false
 
     # extraMetricProcessingRules: |-
     #   rule {

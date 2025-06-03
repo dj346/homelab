@@ -17,21 +17,22 @@ spec:
         app.kubernetes.io/component: exporter
         app.kubernetes.io/name: node-exporter
     spec:
+      hostPID: true                           # optional, but ensures PID‐based collectors work
       containers:
-      - args:
-        - --path.sysfs=/host/sys
-        - --path.rootfs=/host/root
-        - --no-collector.wifi
-        - --no-collector.hwmon
-        - --collector.filesystem.ignored-mount-points=^/(dev|proc|sys|var/lib/docker/.+|var/lib/kubelet/pods/.+)($|/)
-        - --collector.netclass.ignored-devices=^(veth.*)$
-        name: node-exporter
-        image: prom/node-exporter
+      - name: node-exporter
+        image: prom/node-exporter:v1.9.1
+        args:
+          - --path.procfs=/host/proc
+          - --path.sysfs=/host/sys
+          - --path.rootfs=/host/root
+          - --no-collector.wifi
+          - --no-collector.hwmon
+          - --collector.filesystem.ignored-mount-points=^/(dev|proc|sys|var/lib/docker/.+|var/lib/kubelet/pods/.+)($|/)
+          - --collector.netclass.ignored-devices=^(veth.*)$
         ports:
           - containerPort: 9100
             protocol: TCP
             name: metrics
-
         resources:
           limits:
             cpu: 250m
@@ -40,18 +41,26 @@ spec:
             cpu: 102m
             memory: 180Mi
         volumeMounts:
-        - mountPath: /host/sys
+        - name: proc
+          mountPath: /host/proc
           mountPropagation: HostToContainer
-          name: sys
           readOnly: true
-        - mountPath: /host/root
+        - name: sys
+          mountPath: /host/sys
           mountPropagation: HostToContainer
-          name: root
           readOnly: true
+        - name: root
+          mountPath: /host/root
+          mountPropagation: HostToContainer
+          readOnly: true
+
       volumes:
-      - hostPath:
+      - name: proc
+        hostPath:
+          path: /proc
+      - name: sys
+        hostPath:
           path: /sys
-        name: sys
-      - hostPath:
+      - name: root
+        hostPath:
           path: /
-        name: root

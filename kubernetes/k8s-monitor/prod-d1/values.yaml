@@ -4,7 +4,7 @@ cluster:
   name: "kube-prod-d1"
 
 global:
-  scrapeInterval: 60s
+  scrapeInterval: 15s
   maxCacheSize: 100000
 
 destinations:

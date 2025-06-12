@@ -1,0 +1,90 @@
+Advanced -> CPU Configuration -> Enhanced Halt State (C1E) -> Auto to Enabled
+Advanced -> CPU Configuration -> CPU C6 State Support -> Auto to Enabled
+Advanced -> CPU Configuration -> CPU C7 State Support -> Auto to Enabled
+Advanced -> CPU Configuration -> Package C State Support -> Disabled to Enabled
+Advanced -> CPU Configuration -> C6DRAM -> Disabled to Enabled
+Advanced -> CPU Configuration -> View/Configure Turbo Options -> Power Limit 1 Override -> Disabled to Enabled
+Advanced -> CPU Configuration -> View/Configure Turbo Options -> Power Limit 1 -> 0 to 35000
+Advanced -> CPU Configuration -> View/Configure Turbo Options -> Power Limit 1 -> 0 to 105000
+Advanced -> CPU Configuration -> View/Configure Turbo Options -> Energy Efficient Turbo -> Disabled to Enabled
+
+Advanced -> Chipset Configuration -> SR-IOV Support -> Disabled to Enabled
+Advanced -> Chipset Configuration -> Onboard VGA (D-Sub) -> Enabled to Disabled
+Advanced -> Chipset Configuration -> DMI ASPM Support -> Disabled to Enabled
+Advanced -> Chipset Configuration -> PCH DMI ASPM Support -> Disabled to Enabled
+Advanced -> Chipset Configuration -> Onboard HDMI HD Audio -> Enabled to Disabled
+
+Advanced -> Chipset Configuration -> PCIE Hot Plug -> M.2_1 Hot Plug -> Enabled to Disabled
+Advanced -> Chipset Configuration -> PCIE Hot Plug -> M.2_2 Hot Plug -> Enabled to Disabled
+Advanced -> Chipset Configuration -> PCIE Hot Plug -> OCU1 Hot Plug -> Enabled to Disabled
+Advanced -> Chipset Configuration -> PCIE Hot Plug -> OCU2 Hot Plug -> Enabled to Disabled
+Advanced -> Chipset Configuration -> PCIE Hot Plug -> OCU3 Hot Plug -> Enabled to Disabled
+
+Advanced -> Chipset Configuration -> PCIE ASPM -> PCIE1 ASPM Support -> Disabled to L1
+Advanced -> Chipset Configuration -> PCIE ASPM -> M.2_1 ASPM Support -> Disabled to Auto
+Advanced -> Chipset Configuration -> PCIE ASPM -> M.2_2 ASPM Support -> Disabled to L1
+Advanced -> Chipset Configuration -> PCIE ASPM -> OCU1 ASPM Support -> Disabled to Auto
+Advanced -> Chipset Configuration -> PCIE ASPM -> OCU2 ASPM Support -> Disabled to Auto
+Advanced -> Chipset Configuration -> PCIE ASPM -> OCU3 ASPM Support -> Disabled to Auto
+
+Advanced -> PCH-FW Configuration -> Intel(R) Platform Trust Technology -> Enabled to Disabled
+
+Advanced -> Storage Configuration -> Sata Controller ALPM -> Enabled to Disabled
+
+Advanced -> Intel(R) Ethernet Controller X550 - MAC_ADDRESS_1 -> NIC Configuration -> Wake On LAN -> Enabled to Disabled
+Advanced -> Intel(R) Ethernet Controller X550 - MAC_ADDRESS_2 -> NIC Configuration -> Wake On LAN -> Enabled to Disabled
+
+AMI Advanced -> RC ACPI Settings -> PTID Support -> Disabled to Enabled
+AMI Advanced -> RC ACPI Settings -> Native ASPM -> Auto to Enabled
+AMI Advanced -> RC ACPI Settings -> BDAT ACPI Table Support -> Disabled to Enabled
+AMI Advanced -> RC ACPI Settings -> D3 Settings for Storage -> Disabled to D3Hot
+AMI Advanced -> RC ACPI Settings -> Low Power S0 Idle Capability -> Disabled to Enabled
+AMI Advanced -> RC ACPI Settings -> Sensor Standby -> Disabled to Enabled
+
+AMI Advanced -> RC ACPI Settings -> PEP Constraints Configuration -> PEP PCIe Storage -> D3 to D0/F1
+AMI Advanced -> RC ACPI Settings -> PEP Constraints Configuration -> PEP PCIe WLAN -> D0/F1 to D3
+AMI Advanced -> RC ACPI Settings -> PEP Constraints Configuration -> PEP PCIe Other -> No Constraint to D0/F1
+AMI Advanced -> RC ACPI Settings -> PEP Constraints Configuration -> PEP Audio -> D0/F1 to D3
+
+AMI Advanced -> Connectivity Configuration -> Onboard WAN Device -> Enabled to Disabled
+AMI Advanced -> Connectivity Configuration -> Discrete Bluetooth Interface -> Enabled to Disabled
+
+AMI Advanced -> Power & Performance -> CPU - Power Management Control -> Boot Performance Mode -> Max Non-Turbo Performance to Max Battery
+AMI Advanced -> Power & Performance -> CPU - Power Management Control -> Race To Halt (RTH) -> Disabled to Enabled
+AMI Advanced -> Power & Performance -> CPU - Power Management Control -> Power Limit 4 Override -> Disabled to Enabled
+AMI Advanced -> Power & Performance -> CPU - Power Management Control -> Power Limit 4 -> 0 to 165000
+AMI Advanced -> Power & Performance -> CPU - Power Management Control -> IO MWAIT Redirection -> Disabled to Enabled
+AMI Advanced -> Power & Performance -> CPU - Power Management Control -> Timed NWAIT -> Disabled to Enabled
+
+AMI Advanced -> Platform Settings -> Enable Powermeter -> Disabled to Enabled
+AMI Advanced -> Platform Settings -> VTIO -> Enable VTIO Support -> Disabled to Enabled
+
+AMI Advanced -> ACPI D3Cold Settings -> ACPI D3Cold Support -> Disabled to Enabled
+AMI Advanced -> ACPI D3Cold Settings -> Sata Port 0 -> Disabled to Enabled
+AMI Advanced -> ACPI D3Cold Settings -> Sata Port 1 -> Disabled to Enabled
+AMI Advanced -> ACPI D3Cold Settings -> Sata Port 2 -> Disabled to Enabled
+AMI Advanced -> ACPI D3Cold Settings -> Sata Port 3 -> Disabled to Enabled
+AMI Advanced -> ACPI D3Cold Settings -> Sata Port 4 -> Disabled to Enabled
+AMI Advanced -> ACPI D3Cold Settings -> Sata Port 5 -> Disabled to Enabled
+AMI Advanced -> ACPI D3Cold Settings -> Sata Port 6 -> Disabled to Enabled
+AMI Advanced -> ACPI D3Cold Settings -> Sata Port 7 -> Disabled to Enabled
+
+AMI Advanced -> OverClocking Performance Menu -> OverClocking Feature -> Enabled to Disabled
+
+AMI Advanced -> PCI Subsystem Settings -> PCIE Express Settings -> ASPM Support -> Disabled to Auto
+
+AMI Advanced -> WHEA Configuration -> WHEA Support -> Enabled to Disabled
+
+Chipset -> System Agent (SA) Configuration -> PCI Express Configuration -> PCI Express Root Port 3 -> PCIE1-2 ASPM Support -> Disabled to L1
+
+Chipset -> PCH-IO Configuration -> PCI Express Configuration -> PCI Express Root Port 1 -> LAN1_2 ASPM Support -> Disabled to Auto
+Chipset -> PCH-IO Configuration -> PCI Express Configuration -> PCI Express Root Port 5 -> PCH_Port4 ASPM Support -> Disabled to Auto
+Chipset -> PCH-IO Configuration -> PCI Express Configuration -> PCI Express Root Port 6 -> PCH_Port4 ASPM Support -> Disabled to Auto
+Chipset -> PCH-IO Configuration -> PCI Express Configuration -> PCI Express Root Port 7 -> PCH_Port4 ASPM Support -> Disabled to Auto
+Chipset -> PCH-IO Configuration -> PCI Express Configuration -> PCI Express Root Port 8 -> PCI Exporess Root Port 8 -> Disabled to Enabled
+Chipset -> PCH-IO Configuration -> PCI Express Configuration -> PCI Express Root Port 8 -> PCH_Port4 ASPM Support -> Disabled to Auto
+Chipset -> PCH-IO Configuration -> PCI Express Configuration -> PCI Express Root Port 9 -> PCH_Port4 ASPM Support -> Disabled to Auto
+
+Chipset -> PCH-IO Configuration -> HD Audio Configuration -> Onboard HD Audio -> Enabled to Disabled
+
+Chipset -> PCH-IO Configuration -> Restore On AC/Power Loss -> Power Off to Power OverClocking

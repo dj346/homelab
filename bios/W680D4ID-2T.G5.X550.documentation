@@ -1,0 +1,11 @@
+Advanced -> CPU Configuration -> Intel Hyper Threading Technology -> (Enabled)/Disabled : Intel Hyper Threading Technology allows multipole threads to run on each core, so that the overall performance on threaded softwware is improved.
+Advanced -> CPU Configuration -> Active Processor P-Cores -> (All)/7/6/5/4/3/2/1 : Select the number of cores to enable in each processor package.
+Advanced -> CPU Configuration -> Active Processor P-Cores -> (All)/15/14/13/12/11/10/9/8/7/6/5/4/3/2/1/0 : Number of E-Cores to enable in each processor package. Note: Number of P-Cores and E-Cores are looked at together. When both are {0, 0}
+Advanced -> CPU Configuration -> CPU C States Support -> (Enabled)/Disabled
+Advanced -> CPU Configuration -> Enhanced Halt State (C1E) -> (Auto)/Disabled/Enabled
+Advanced -> CPU Configuration -> CPU C6 State Support -> (Auto)/Disabled/Enabled
+Advanced -> CPU Configuration -> CPU C7 State Support -> (Auto)/Disabled/Enabled
+Advanced -> CPU Configuration -> Package C State Support -> (Disabled)/Auto/Enabled
+Advanced -> CPU Configuration -> CFG Lock -> (Disabled)/Enabled
+Advanced -> CPU Configuration -> C6DRAM -> (Disabled)/Enabled
+

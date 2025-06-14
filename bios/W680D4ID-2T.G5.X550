@@ -10,9 +10,9 @@ Advanced -> CPU Configuration -> View/Configure Turbo Options -> Energy Efficien
 
 Advanced -> Chipset Configuration -> SR-IOV Support -> Disabled to Enabled
 Advanced -> Chipset Configuration -> Onboard VGA (D-Sub) -> Enabled to Disabled
+Advanced -> Chipset Configuration -> Onboard HDMI HD Audio -> Enabled to Disabled
 Advanced -> Chipset Configuration -> DMI ASPM Support -> Disabled to Enabled
 Advanced -> Chipset Configuration -> PCH DMI ASPM Support -> Disabled to Enabled
-Advanced -> Chipset Configuration -> Onboard HDMI HD Audio -> Enabled to Disabled
 
 Advanced -> Chipset Configuration -> PCIE Hot Plug -> M.2_1 Hot Plug -> Enabled to Disabled
 Advanced -> Chipset Configuration -> PCIE Hot Plug -> M.2_2 Hot Plug -> Enabled to Disabled
@@ -29,7 +29,10 @@ Advanced -> Chipset Configuration -> PCIE ASPM -> OCU3 ASPM Support -> Disabled 
 
 Advanced -> PCH-FW Configuration -> Intel(R) Platform Trust Technology -> Enabled to Disabled
 
-Advanced -> Storage Configuration -> Sata Controller ALPM -> Enabled to Disabled
+Advanced -> Storage Configuration -> Sata Controller ALPM -> Disabled to Enabled
+
+Advanced -> Super IO Configuration -> Serial Port 1 Configuration -> Serial Port -> Enabled to Disabled
+Advanced -> Super IO Configuration -> SOL Configuration -> SOL Port -> Enabled to Disabled
 
 Advanced -> Intel(R) Ethernet Controller X550 - MAC_ADDRESS_1 -> NIC Configuration -> Wake On LAN -> Enabled to Disabled
 Advanced -> Intel(R) Ethernet Controller X550 - MAC_ADDRESS_2 -> NIC Configuration -> Wake On LAN -> Enabled to Disabled
@@ -46,8 +49,7 @@ AMI Advanced -> RC ACPI Settings -> PEP Constraints Configuration -> PEP PCIe WL
 AMI Advanced -> RC ACPI Settings -> PEP Constraints Configuration -> PEP PCIe Other -> No Constraint to D0/F1
 AMI Advanced -> RC ACPI Settings -> PEP Constraints Configuration -> PEP Audio -> D0/F1 to D3
 
-AMI Advanced -> Connectivity Configuration -> Onboard WAN Device -> Enabled to Disabled
-AMI Advanced -> Connectivity Configuration -> Discrete Bluetooth Interface -> Enabled to Disabled
+AMI Advanced -> Connectivity Configuration -> Discrete Bluetooth Interface -> USB to Disabled
 
 AMI Advanced -> Power & Performance -> CPU - Power Management Control -> Boot Performance Mode -> Max Non-Turbo Performance to Max Battery
 AMI Advanced -> Power & Performance -> CPU - Power Management Control -> Race To Halt (RTH) -> Disabled to Enabled
@@ -81,7 +83,7 @@ Chipset -> PCH-IO Configuration -> PCI Express Configuration -> PCI Express Root
 Chipset -> PCH-IO Configuration -> PCI Express Configuration -> PCI Express Root Port 5 -> PCH_Port4 ASPM Support -> Disabled to Auto
 Chipset -> PCH-IO Configuration -> PCI Express Configuration -> PCI Express Root Port 6 -> PCH_Port4 ASPM Support -> Disabled to Auto
 Chipset -> PCH-IO Configuration -> PCI Express Configuration -> PCI Express Root Port 7 -> PCH_Port4 ASPM Support -> Disabled to Auto
-Chipset -> PCH-IO Configuration -> PCI Express Configuration -> PCI Express Root Port 8 -> PCI Exporess Root Port 8 -> Disabled to Enabled
+Chipset -> PCH-IO Configuration -> PCI Express Configuration -> PCI Express Root Port 8 -> PCI Exporess Root Port 8 -> Disabled to Enabled ***
 Chipset -> PCH-IO Configuration -> PCI Express Configuration -> PCI Express Root Port 8 -> PCH_Port4 ASPM Support -> Disabled to Auto
 Chipset -> PCH-IO Configuration -> PCI Express Configuration -> PCI Express Root Port 9 -> PCH_Port4 ASPM Support -> Disabled to Auto
 

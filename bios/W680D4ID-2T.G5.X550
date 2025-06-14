@@ -18,7 +18,7 @@ Advanced -> Chipset Configuration -> PCIE Hot Plug -> M.2_1 Hot Plug -> Enabled 
 Advanced -> Chipset Configuration -> PCIE Hot Plug -> M.2_2 Hot Plug -> Enabled to Disabled
 Advanced -> Chipset Configuration -> PCIE Hot Plug -> OCU1 Hot Plug -> Enabled to Disabled
 Advanced -> Chipset Configuration -> PCIE Hot Plug -> OCU2 Hot Plug -> Enabled to Disabled
-Advanced -> Chipset Configuration -> PCIE Hot Plug -> OCU3 Hot Plug -> Enabled to Disabled
+Advanced -> Chipset Configuration -> PCIE Hot Plug -> OCU3 Hot Plug -> Enabled *LEAVE ENABLED, BREAKS INTERFACE WHEN DISABLED*
 
 Advanced -> Chipset Configuration -> PCIE ASPM -> PCIE1 ASPM Support -> Disabled to L1
 Advanced -> Chipset Configuration -> PCIE ASPM -> M.2_1 ASPM Support -> Disabled to Auto

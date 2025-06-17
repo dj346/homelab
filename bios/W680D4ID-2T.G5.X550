@@ -78,8 +78,9 @@ AMI Advanced -> PCI Subsystem Settings -> PCIE Express Settings -> ASPM Support 
 AMI Advanced -> WHEA Configuration -> WHEA Support -> Enabled to Disabled
 
 Chipset -> System Agent (SA) Configuration -> PCI Express Configuration -> PCI Express Root Port 3 -> PCIE1-2 ASPM Support -> Disabled to L1
+Chipset -> System Agent (SA) Configuration -> Memory Configuration -> SA GV -> Disabled 
 
-Chipset -> PCH-IO Configuration -> PCI Express Configuration -> PCI Express Root Port 1 -> LAN1_2 ASPM Support -> Disabled to Auto
+Chipset -> PCH-IO Configuration -> PCI Express Configuration -> PCI Express Root Port 1 -> LAN1_2 ASPM Support -> Disabled **SETTING THIS BREAKS C6 AND CAUSES LAN DEVICES TO BE DISABLED**
 Chipset -> PCH-IO Configuration -> PCI Express Configuration -> PCI Express Root Port 5 -> PCH_Port4 ASPM Support -> Disabled to Auto
 Chipset -> PCH-IO Configuration -> PCI Express Configuration -> PCI Express Root Port 6 -> PCH_Port4 ASPM Support -> Disabled to Auto
 Chipset -> PCH-IO Configuration -> PCI Express Configuration -> PCI Express Root Port 7 -> PCH_Port4 ASPM Support -> Disabled to Auto
@@ -90,3 +91,18 @@ Chipset -> PCH-IO Configuration -> PCI Express Configuration -> PCI Express Root
 Chipset -> PCH-IO Configuration -> HD Audio Configuration -> Onboard HD Audio -> Enabled to Disabled
 
 Chipset -> PCH-IO Configuration -> Restore On AC/Power Loss -> Power Off to Power OverClocking
+
+---
+
+powertop --quiet --auto-tune
+echo "powersupersave" > /sys/module/pcie_aspm/parameters/policy
+
+cpupower frequency-set -g powersave
+cpupower idle-set -E
+cpupower set -b 15
+
+echo "balance_power" | tee /sys/devices/system/cpu/cpu*/cpufreq/energy_performance_preference
+
+---
+
+echo s2idle >/sys/power/mem_sleep; systemctl suspend

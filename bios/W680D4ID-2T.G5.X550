@@ -49,14 +49,12 @@ AMI Advanced -> RC ACPI Settings -> PEP Constraints Configuration -> PEP PCIe WL
 AMI Advanced -> RC ACPI Settings -> PEP Constraints Configuration -> PEP PCIe Other -> No Constraint to D0/F1
 AMI Advanced -> RC ACPI Settings -> PEP Constraints Configuration -> PEP Audio -> D0/F1 to D3
 
+AMI Advanced -> Connectivity Configuration -> Onboard WAN Device -> USB to Disabled
 AMI Advanced -> Connectivity Configuration -> Discrete Bluetooth Interface -> USB to Disabled
 
 AMI Advanced -> Power & Performance -> CPU - Power Management Control -> Boot Performance Mode -> Max Non-Turbo Performance to Max Battery
-AMI Advanced -> Power & Performance -> CPU - Power Management Control -> Race To Halt (RTH) -> Disabled to Enabled
 AMI Advanced -> Power & Performance -> CPU - Power Management Control -> Power Limit 4 Override -> Disabled to Enabled
 AMI Advanced -> Power & Performance -> CPU - Power Management Control -> Power Limit 4 -> 0 to 165000
-AMI Advanced -> Power & Performance -> CPU - Power Management Control -> IO MWAIT Redirection -> Disabled to Enabled
-AMI Advanced -> Power & Performance -> CPU - Power Management Control -> Timed NWAIT -> Disabled to Enabled
 
 AMI Advanced -> Platform Settings -> Enable Powermeter -> Disabled to Enabled
 AMI Advanced -> Platform Settings -> VTIO -> Enable VTIO Support -> Disabled to Enabled
@@ -106,3 +104,4 @@ echo "balance_power" | tee /sys/devices/system/cpu/cpu*/cpufreq/energy_performan
 ---
 
 echo s2idle >/sys/power/mem_sleep; systemctl suspend
+watch -n3 "cpufreq-info | grep 'current CPU'"

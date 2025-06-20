@@ -14,10 +14,10 @@ spec:
       targetRevision: 7.7.17
       helm:
         valueFiles:
-        - $values/kubernetes/argocd/prod-d1/values.yaml
+        - $values/kubernetes/kube-prod-d1/argocd/prod-d1/values.yaml
     - repoURL: 'ssh://git@gitea-ssh.gitea.svc.cluster.local:2222/dj346/homelab.git'
       targetRevision: HEAD
-      path: kubernetes/argocd/prod-d1
+      path: kubernetes/kube-prod-d1/argocd/prod-d1
       ref: values
   syncPolicy:
     automated: 

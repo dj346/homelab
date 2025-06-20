@@ -17,10 +17,10 @@ spec:
       targetRevision: 2.1.4
       helm:
         valueFiles:
-        - $values/kubernetes/k8s-monitor/prod-d1/values.yaml
+        - $values/kubernetes/kube-prod-d1/k8s-monitor/prod-d1/values.yaml
     - repoURL: 'https://gitea.kube-prod-d1.mclacken.net/dj346/homelab.git'
       targetRevision: HEAD
-      path: kubernetes/k8s-monitor/prod-d1
+      path: kubernetes/kube-prod-d1/k8s-monitor/prod-d1
       ref: values
   syncPolicy:
     syncOptions:

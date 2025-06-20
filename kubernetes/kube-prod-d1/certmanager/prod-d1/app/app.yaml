@@ -14,10 +14,10 @@ spec:
       targetRevision: 1.16.3
       helm:
         valueFiles:
-        - $values/kubernetes/certmanager/prod-d1/values.yaml
+        - $values/kubernetes/kube-prod-d1/certmanager/prod-d1/values.yaml
     - repoURL: 'ssh://git@gitea-ssh.gitea.svc.cluster.local:2222/dj346/homelab.git'
       targetRevision: HEAD
-      path: kubernetes/certmanager/prod-d1
+      path: kubernetes/kube-prod-d1/certmanager/prod-d1
       ref: values
   syncPolicy:
     automated: 

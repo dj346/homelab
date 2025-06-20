@@ -17,10 +17,10 @@ spec:
       targetRevision: 7.1.1
       helm:
         valueFiles:
-        - $values/kubernetes/minio-operator/prod-d1/values.yaml
+        - $values/kubernetes/kube-prod-d1/minio-operator/prod-d1/values.yaml
     - repoURL: 'ssh://git@gitea-ssh.gitea.svc.cluster.local:2222/dj346/homelab.git'
       targetRevision: HEAD
-      path: kubernetes/minio-operator/prod-d1
+      path: kubernetes/kube-prod-d1/minio-operator/prod-d1
       ref: values
   syncPolicy:
     syncOptions:

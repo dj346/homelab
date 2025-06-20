@@ -17,10 +17,10 @@ spec:
       targetRevision: 1.39.4
       helm:
         valueFiles:
-        - $values/kubernetes/tempo/prod-d1/values.yaml
+        - $values/kubernetes/kube-prod-d1/tempo/prod-d1/values.yaml
     - repoURL: 'ssh://git@gitea-ssh.gitea.svc.cluster.local:2222/dj346/homelab.git'
       targetRevision: HEAD
-      path: kubernetes/tempo/prod-d1
+      path: kubernetes/kube-prod-d1/tempo/prod-d1
       ref: values
   syncPolicy:
     syncOptions:

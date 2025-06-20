@@ -14,7 +14,7 @@ spec:
   source:
     repoURL: 'ssh://git@gitea-ssh.gitea.svc.cluster.local:2222/dj346/homelab.git'
     targetRevision: HEAD
-    path: kubernetes/node-exporter/prod-d1
+    path: kubernetes/kube-prod-d1/node-exporter/prod-d1
   syncPolicy:
     syncOptions:
       - CreateNamespace=true 

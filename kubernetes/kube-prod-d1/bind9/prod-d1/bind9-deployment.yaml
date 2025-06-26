@@ -47,9 +47,21 @@ spec:
           - name: bind9-pvc
             mountPath: /var/cache/bind
             subPath: cache
+          - name: bind-config
+            mountPath: /etc/bind                
+            readOnly: true
       volumes:
         - name: bind9-pvc
           persistentVolumeClaim:
             claimName: bind9-pvc
             readOnly: false
+        - name: bind-config
+          configMap:
+            name: bind-config
+            defaultMode: 0644                    
+            items:                               
+            - key: named.conf.local
+              path: named.conf.local
+            - key: named.conf.options
+              path: named.conf.options
       restartPolicy: Always

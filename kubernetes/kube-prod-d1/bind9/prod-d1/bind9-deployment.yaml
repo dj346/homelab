@@ -25,6 +25,13 @@ spec:
         - name: bind9-pvc
           mountPath: /var/cache/bind
           subPath: cache
+      - name: init-bind9-cache-perms2
+        image: ubuntu
+        command: ["ls -la /var/bind"]
+        volumeMounts:
+        - name: bind9-pvc
+          mountPath: /var/cache/bind
+          subPath: cache
       containers:
       - name: bind9
         image: ubuntu/bind9:9.18-22.04_beta

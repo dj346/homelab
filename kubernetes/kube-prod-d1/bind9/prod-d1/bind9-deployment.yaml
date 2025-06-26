@@ -18,16 +18,9 @@ spec:
         runAsGroup: 101
         fsGroup: 101
       initContainers:
-      # - name: init-bind9-cache-perms
-      #   image: ubuntu
-      #   command: ["chown", "-R", "101:101", "/var/cache/bind"]
-      #   volumeMounts:
-      #   - name: bind9-pvc
-      #     mountPath: /var/cache/bind
-      #     subPath: cache
-      - name: init-bind9-cache-perms2
+      - name: init-bind9-cache-perms
         image: ubuntu
-        command: ["ls", "-lan, "/etc/bind/"]
+        command: ["chown", "-R", "101:101", "/var/cache/bind"]
         volumeMounts:
         - name: bind9-pvc
           mountPath: /var/cache/bind
@@ -51,11 +44,11 @@ spec:
           name: dns-admin
           protocol: TCP
         volumeMounts:
-          # - name: bind9-pvc
-          #   mountPath: /var/cache/bind
-          #   subPath: cache
+          - name: bind9-pvc
+            mountPath: /var/cache/bind
+            subPath: cache
           - name: bind-config
-            mountPath: /etc/bind                
+            mountPath: /var/cache/bind/   
             readOnly: true
       volumes:
         - name: bind9-pvc

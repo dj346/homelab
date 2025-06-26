@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bind9
+  namespace: bind9
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bind9
+  template:
+    metadata:
+      labels:
+        app: bind9
+    spec:
+      # securityContext:
+      #   runAsUser: 101
+      #   runAsGroup: 101
+      #   fsGroup: 101
+      initContainers:
+      - name: init-bind9-cache-perms
+        image: ubuntu
+        command: ["chown", "-R", "101:101", "/var/cache/bind"]
+        volumeMounts:
+        - name: bind9-pvc
+          mountPath: /var/cache/bind
+          subPath: cache
+      containers:
+      - name: bind9
+        image: ubuntu/bind9:9.18-22.04_beta
+        env:
+        - name: TZ
+          value: "PT"
+        - name: BIND9_USER
+          value: "bind"
+        ports:
+        - containerPort: 53
+          name: dns-tcp
+          protocol: TCP
+        - containerPort: 53
+          name: dns-udp
+          protocol: UDP
+        - containerPort: 53001
+          name: dns-admin
+          protocol: TCP
+        volumeMounts:
+          - name: bind9-pvc
+            mountPath: /var/cache/bind
+            subPath: cache
+      volumes:
+        - name: bind9-pvc
+          persistentVolumeClaim:
+            claimName: bind9-pvc
+            readOnly: false
+      restartPolicy: Always

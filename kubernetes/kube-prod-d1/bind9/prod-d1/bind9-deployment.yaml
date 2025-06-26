@@ -13,10 +13,10 @@ spec:
       labels:
         app: bind9
     spec:
-      # securityContext:
-      #   runAsUser: 101
-      #   runAsGroup: 101
-      #   fsGroup: 101
+      securityContext:
+        runAsUser: 101
+        runAsGroup: 101
+        fsGroup: 101
       initContainers:
       - name: init-bind9-cache-perms
         image: ubuntu

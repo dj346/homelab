@@ -14,7 +14,7 @@ spec:
         app: bind9
     spec:
       securityContext:
-        runAsUser: 101
+        runAsUser: 0
         runAsGroup: 101
         fsGroup: 101
       # initContainers:

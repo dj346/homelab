@@ -27,7 +27,7 @@ spec:
       #     subPath: cache
       - name: init-bind9-cache-perms2
         image: ubuntu
-        command: ["ls -lan /etc/bind"]
+        command: ["ls", "-lan, "/etc/bind/"]
         volumeMounts:
         - name: bind9-pvc
           mountPath: /var/cache/bind

@@ -57,7 +57,12 @@ spec:
             mountPath: /var/cache/bind
             subPath: cache
           - name: bind-config
-            mountPath: /etc/bind/   
+            mountPath: /etc/bind/named.conf.local
+            subPath: named.conf.local
+            readOnly: true
+          - name: bind-config
+            mountPath: /etc/bind/named.conf.options
+            subPath: named.conf.options
             readOnly: true
       volumes:
         - name: bind9-pvc
@@ -69,8 +74,8 @@ spec:
             name: bind-config
             defaultMode: 0644                    
             items:                               
-            # - key: named.conf.local
-            #   path: named.conf.local
-            - key: named.conf.options2
-              path: named.conf.options2
+            - key: named.conf.local
+              path: named.conf.local
+            - key: named.conf.options
+              path: named.conf.options
       restartPolicy: Always

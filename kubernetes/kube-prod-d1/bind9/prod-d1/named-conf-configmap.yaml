@@ -12,7 +12,7 @@ data:
     // organization
     //include "/etc/bind/zones.rfc1918";
 
-  named.conf.options: |
+  named.conf.options2: |
     options {
       directory "/var/cache/bind";
 

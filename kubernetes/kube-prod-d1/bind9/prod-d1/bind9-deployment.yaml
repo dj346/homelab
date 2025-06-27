@@ -69,8 +69,8 @@ spec:
             name: bind-config
             defaultMode: 0644                    
             items:                               
-            - key: named.conf.local
-              path: named.conf.local
-            - key: named.conf.options
-              path: named.conf.options
+            # - key: named.conf.local
+            #   path: named.conf.local
+            - key: named.conf.options2
+              path: named.conf.options2
       restartPolicy: Always

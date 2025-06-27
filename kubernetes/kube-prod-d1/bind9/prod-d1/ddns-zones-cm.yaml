@@ -15,7 +15,7 @@ data:
         )
         NS          ns
 
-    @               CNAME   ns
+    @               A       10.15.21.50
 
     ns              A       10.15.21.50
     router          A       10.15.21.28

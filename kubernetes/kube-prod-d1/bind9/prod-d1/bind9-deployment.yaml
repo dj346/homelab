@@ -26,6 +26,18 @@ spec:
               if [ ! -f "$dest" ]; then
                 cp "$file" "$dest"
                 echo "Copied $file to $dest (file didn't exist in destination)"
+              else
+                new_ver=$(grep -m1 '^; *file-version:' "$file" 2>/dev/null | sed 's/[^0-9]//g')
+                old_ver=$(grep -m1 '^; *file-version:' "$dest" 2>/dev/null | sed 's/[^0-9]//g')
+                if [ -n "$new_ver" ] && [ -n "$old_ver" ]; then
+                  if [ "$new_ver" != "$old_ver" ]; then
+                    cp "$file" "$dest"
+                    echo "Updated $dest from $file (version changed from $old_ver to $new_ver)"
+                  fi
+                else
+                  cp "$file" "$dest"
+                  echo "Copied $file to $dest (no version info found)"
+                fi
               fi
             done
         securityContext:

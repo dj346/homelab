@@ -18,7 +18,7 @@ spec:
       initContainers:
       - name: cp-ddns-zones
         image: ubuntu
-        command: ["/bin/sh", "-c", "cp", "-an", "/var/lib/bind/default-ddns-zones/.", "/var/lib/bind/ddns-zones/"]
+        command: ["/bin/sh", "-c", "cp -an /var/lib/bind/default-ddns-zones/. /var/lib/bind/ddns-zones/"]
         securityContext:
           runAsUser: 0                 # run init container as root to adjust perms
           allowPrivilegeEscalation: false

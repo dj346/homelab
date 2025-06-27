@@ -4,7 +4,7 @@ metadata:
   name: default-ddns-zones-cm
 data:
   local-d1-mclacken-net.zone: |
-    ; file-version: 3
+    ; file-version: 4
     
     $ORIGIN local-d1.mclacken.net.
     $TTL   172800   ; 2 days

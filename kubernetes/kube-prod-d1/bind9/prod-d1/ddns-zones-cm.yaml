@@ -4,6 +4,8 @@ metadata:
   name: default-ddns-zones-cm
 data:
   local-d1-mclacken-net.zone: |
+    ; file-version: 1
+    
     $ORIGIN local-d1.mclacken.net.
     $TTL   172800   ; 2 days
     @   IN  SOA   local-d1.mclacken.net. admin.mclacken.net. (
@@ -35,6 +37,8 @@ data:
     wksrv-prod-d4   A       10.15.21.34
 
   21-15-10.zone: |
+    ; file-version: 1
+    
     $ORIGIN 21.15.10.in-addr.arpa.
     $TTL   604800   ; 1 week
     @   IN  SOA   local-d1.mclacken.net. admin.mclacken.net. (
@@ -47,7 +51,7 @@ data:
         NS          ns.local-d1.mclacken.net.
 
     @           PTR     ns.local-d1.mclacken.net.
-    
+
     50          PTR     ns.local-d1.mclacken.net.
     28          PTR     router.local-d1.mclacken.net.
 

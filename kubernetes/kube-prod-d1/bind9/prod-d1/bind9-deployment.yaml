@@ -18,16 +18,45 @@ spec:
       initContainers:
       - name: cp-ddns-zones
         image: ubuntu
-        command: ["/bin/sh", "-c", "cp -an /var/lib/bind/default-ddns-zones/. /var/lib/bind/ddns-zones/"]
+        command:
+          - /bin/bash
+          - -c
+          - |
+            set -e
+            src_dir=/var/lib/bind/default-ddns-zones
+            dst_dir=/var/lib/bind/ddns-zones
+
+            for src in "${src_dir}"/*; do
+              base=${src##*/}
+              dst="${dst_dir}/${base}"
+
+              # A. copy if the destination file is missing
+              if [[ ! -e "${dst}" ]]; then
+                cp -a -- "${src}" "${dst}"
+                continue
+              fi
+
+              # B. copy if the custom file-version differs
+              src_ver=$(awk -F':' '/^[[:space:]]*;/ && $2 ~ /file-version/ {gsub(/[[:space:]]*/,"",$3); print $3; exit}' "${src}")
+              dst_ver=$(awk -F':' '/^[[:space:]]*;/ && $2 ~ /file-version/ {gsub(/[[:space:]]*/,"",$3); print $3; exit}' "${dst}")
+
+              [[ -z "${src_ver}" ]] && src_ver=unknown
+              [[ -z "${dst_ver}" ]] && dst_ver=unknown
+
+              if [[ "${src_ver}" != "${dst_ver}" ]]; then
+                cp -a -- "${src}" "${dst}"
+              fi
+            done
         securityContext:
           runAsUser: 0                 # run init container as root to adjust perms
           allowPrivilegeEscalation: false
         volumeMounts:
-        - name: bind-default-ddns-zones
-          mountPath: /var/lib/bind/default-ddns-zones/
-        - name: bind9-ddns-zones-pvc
-          mountPath: /var/lib/bind/ddns-zones
-          subPath: ddns-zones
+          - name: bind-default-ddns-zones
+            mountPath: /var/lib/bind/default-ddns-zones/
+          - name: bind9-ddns-zones-pvc
+            mountPath: /var/lib/bind/ddns-zones
+            subPath: ddns-zones
+
       - name: init-bind9-cache-perms
         image: ubuntu
         command: ["chown", "-R", "101:101", "/var/cache/bind"]

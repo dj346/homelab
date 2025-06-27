@@ -25,17 +25,6 @@ spec:
               dest="/var/lib/bind/ddns-zones/$(basename "$file")"
               if [ ! -f "$dest" ]; then
                 cp -a "$file" "$dest"
-              else
-                new_ver=$(grep -m1 '^; *file-version:' "$file" 2>/dev/null | sed 's/[^0-9]//g')
-                old_ver=$(grep -m1 '^; *file-version:' "$dest" 2>/dev/null | sed 's/[^0-9]//g')
-
-                if [ -n "$new_ver" ] && [ -n "$old_ver" ]; then
-                  if [ "$new_ver" != "$old_ver" ]; then
-                    cp -a "$file" "$dest"
-                  fi
-                else
-                  cp -a "$file" "$dest"
-                fi
               fi
             done
         securityContext:

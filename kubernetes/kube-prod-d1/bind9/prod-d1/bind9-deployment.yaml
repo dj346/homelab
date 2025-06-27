@@ -17,46 +17,29 @@ spec:
         fsGroup: 101                   # Files created by volumes will have group 'bind'
       initContainers:
       - name: cp-ddns-zones
-        image: ubuntu
-        command:
-        - /bin/bash
-        - -c
-        - |
-          set -eu            # bail on any error, print failing cmd with -x if you need debug
-          src_dir=/var/lib/bind/default-ddns-zones
-          dst_dir=/var/lib/bind/ddns-zones
+        image: ubuntu:latest
+        command: ["/bin/sh", "-c"]
+        args:
+          - |
+            for file in /var/lib/bind/default-ddns-zones/*; do
+              dest="/var/lib/bind/ddns-zones/$(basename "$file")"
+              if [ ! -f "$dest" ]; then
+                cp -a "$file" "$dest"
+              else
+                new_ver=$(grep -m1 '^; *file-version:' "$file" 2>/dev/null | sed 's/[^0-9]//g')
+                old_ver=$(grep -m1 '^; *file-version:' "$dest" 2>/dev/null | sed 's/[^0-9]//g')
 
-          # return the first decimal number that follows “file-version:”
-          get_ver () {
-            # grep:  -m1 stop after first match
-            #        -o  output only the matching part
-            #        -P  perl-regex so we can use \K
-            grep -m1 -oP '^[[:space:]]*;[[:space:]]*file-version:[[:space:]]*\K[0-9]+' "$1" || true
-          }
-
-          for src in "$src_dir"/*; do
-            base=${src##*/}
-            dst="$dst_dir/$base"
-
-            # copy if the file is not there at all
-            if [[ ! -e $dst ]]; then
-              echo "→ new file $base"
-              cp -a -- "$src" "$dst"
-              continue
-            fi
-
-            src_ver=$(get_ver "$src")
-            dst_ver=$(get_ver "$dst")
-            [[ -z $src_ver ]] && src_ver=unknown
-            [[ -z $dst_ver ]] && dst_ver=unknown
-
-            if [[ $src_ver != "$dst_ver" ]]; then
-              echo "→ version change $base  $dst_ver → $src_ver"
-              cp -a -- "$src" "$dst"
-            fi
-          done
+                if [ -n "$new_ver" ] && [ -n "$old_ver" ]; then
+                  if [ "$new_ver" != "$old_ver" ]; then
+                    cp -a "$file" "$dest"
+                  fi
+                else
+                  cp -a "$file" "$dest"
+                }
+              fi
+            done
         securityContext:
-          runAsUser: 0                 # run init container as root to adjust perms
+          runAsUser: 0
           allowPrivilegeEscalation: false
         volumeMounts:
           - name: bind-default-ddns-zones
@@ -64,7 +47,6 @@ spec:
           - name: bind9-ddns-zones-pvc
             mountPath: /var/lib/bind/ddns-zones
             subPath: ddns-zones
-
       - name: init-bind9-cache-perms
         image: ubuntu
         command: ["chown", "-R", "101:101", "/var/cache/bind"]

@@ -82,6 +82,9 @@ spec:
           #   readOnly: true
           - name: bind-zones
             mountPath: /var/lib/bind/zones/
+          - name: bind9-pvc
+            mountPath: /var/lib/bind/ddns-zones
+            subPath: ddns-zones
       volumes:
         - name: bind9-pvc
           persistentVolumeClaim:

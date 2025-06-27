@@ -33,7 +33,8 @@ spec:
                   if [ "$new_ver" != "$old_ver" ]; then
                     cp "$file" "$dest"
                     echo "Updated $dest from $file (version changed from $old_ver to $new_ver)"
-                  fi
+                  else
+                    echo "Skipped $dest (version unchanged: $old_ver)
                 else
                   cp "$file" "$dest"
                   echo "Copied $file to $dest (no version info found)"

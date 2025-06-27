@@ -80,9 +80,8 @@ spec:
           #   mountPath: /etc/bind/dhcp1-ns1.key
           #   subPath: dhcp1-ns1.key
           #   readOnly: true
-          - name: bind9-pvc
-            mountPath: /var/lib/bind/ddns-zones
-            subPath: ddns-zones
+          - name: bind-zones
+            mountPath: /var/lib/bind/ddns-zones/
       volumes:
         - name: bind9-pvc
           persistentVolumeClaim:
@@ -106,6 +105,13 @@ spec:
               path: local-d1-mclacken-net.zone
             - key: 21-15-10.zone
               path: 21-15-10.zone
+        - name: bind-zones
+          configMap:
+            name: zones-cm
+            defaultMode: 0644                    
+            items:                               
+            - key: kube-prod-d1-mclacken-net.zone
+              path: kube-prod-d1-mclacken-net.zone
         # - name: bind-ddns-key
         #   secret: 
         #     secretName: dhcp1-ns1-key-secret

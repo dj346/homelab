@@ -3,7 +3,19 @@ kind: ConfigMap
 metadata:
   name: zones-cm
 data:
-  named.conf.local: |
+  kube-prod-d1-mclacken-net.zone: |
+    $ORIGIN .
+    $TTL 604800	; 1 week
+    21.15.10.in-addr.arpa	IN SOA	mclacken.net. admin.mclacken.net. (
+            202308833  ; serial
+            604800     ; refresh (1 week)
+            86400      ; retry (1 day)
+            2419200    ; expire (4 weeks)
+            604800     ; minimum (1 week)
+            )
+          NS	ns1.mclacken.net.
+    $ORIGIN 21.15.10.in-addr.arpa.
     
-  named.conf.options: |
+    1			PTR	ns1.mclacken.net.
+    
     

@@ -19,35 +19,42 @@ spec:
       - name: cp-ddns-zones
         image: ubuntu
         command:
-          - /bin/bash
-          - -c
-          - |
-            set -e
-            src_dir=/var/lib/bind/default-ddns-zones
-            dst_dir=/var/lib/bind/ddns-zones
+        - /bin/bash
+        - -c
+        - |
+          set -eu            # bail on any error, print failing cmd with -x if you need debug
+          src_dir=/var/lib/bind/default-ddns-zones
+          dst_dir=/var/lib/bind/ddns-zones
 
-            get_ver() {
-              sed -nE 's/^[[:space:]]*;[[:space:]]*file-version:[[:space:]]*([0-9]+).*/\1/p' "$1" | head -n1
-            }
+          # return the first decimal number that follows “file-version:”
+          get_ver () {
+            # grep:  -m1 stop after first match
+            #        -o  output only the matching part
+            #        -P  perl-regex so we can use \K
+            grep -m1 -oP '^[[:space:]]*;[[:space:]]*file-version:[[:space:]]*\K[0-9]+' "$1" || true
+          }
 
-            for src in "${src_dir}"/*; do
-              base=${src##*/}
-              dst="${dst_dir}/${base}"
+          for src in "$src_dir"/*; do
+            base=${src##*/}
+            dst="$dst_dir/$base"
 
-              if [[ ! -e "${dst}" ]]; then
-                cp -a -- "${src}" "${dst}"
-                continue
-              fi
+            # copy if the file is not there at all
+            if [[ ! -e $dst ]]; then
+              echo "→ new file $base"
+              cp -a -- "$src" "$dst"
+              continue
+            fi
 
-              src_ver=$(get_ver "${src}")
-              dst_ver=$(get_ver "${dst}")
-              [[ -z ${src_ver} ]] && src_ver=unknown
-              [[ -z ${dst_ver} ]] && dst_ver=unknown
+            src_ver=$(get_ver "$src")
+            dst_ver=$(get_ver "$dst")
+            [[ -z $src_ver ]] && src_ver=unknown
+            [[ -z $dst_ver ]] && dst_ver=unknown
 
-              if [[ "${src_ver}" != "${dst_ver}" ]]; then
-                cp -a -- "${src}" "${dst}"
-              fi
-            done
+            if [[ $src_ver != "$dst_ver" ]]; then
+              echo "→ version change $base  $dst_ver → $src_ver"
+              cp -a -- "$src" "$dst"
+            fi
+          done
         securityContext:
           runAsUser: 0                 # run init container as root to adjust perms
           allowPrivilegeEscalation: false

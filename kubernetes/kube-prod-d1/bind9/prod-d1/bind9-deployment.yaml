@@ -34,7 +34,7 @@ spec:
                     cp "$file" "$dest"
                     echo "Updated $dest from $file (version changed from $old_ver to $new_ver)"
                   else
-                    echo "Skipped $dest (version unchanged: $old_ver)
+                    echo "Skipped $dest (version unchanged: $old_ver)"
                   fi
                 else
                   cp "$file" "$dest"

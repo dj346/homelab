@@ -76,10 +76,10 @@ spec:
             mountPath: /etc/bind/named.conf.options
             subPath: named.conf.options
             readOnly: true
-          - name: bind-ddns-key
-            mountPath: /etc/bind/dhcp1-ns1.key
-            subPath: dhcp1-ns1.key
-            readOnly: true
+          # - name: bind-ddns-key
+          #   mountPath: /etc/bind/dhcp1-ns1.key
+          #   subPath: dhcp1-ns1.key
+          #   readOnly: true
           - name: bind9-pvc
             mountPath: /var/lib/bind/ddns-zones
             subPath: ddns-zones
@@ -106,10 +106,10 @@ spec:
               path: local-d1-mclacken-net.zone
             - key: 21-15-10.zone
               path: 21-15-10.zone
-        - name: bind-ddns-key
-          secret: 
-            secretName: dhcp1-ns1-key-secret
-            items:
-            - key: dhcp1-ns1.key
-              path: dhcp1-ns1.key
+        # - name: bind-ddns-key
+        #   secret: 
+        #     secretName: dhcp1-ns1-key-secret
+        #     items:
+        #     - key: dhcp1-ns1.key
+        #       path: dhcp1-ns1.key
       restartPolicy: Always

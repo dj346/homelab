@@ -35,7 +35,7 @@ spec:
                   fi
                 else
                   cp -a "$file" "$dest"
-                }
+                fi
               fi
             done
         securityContext:

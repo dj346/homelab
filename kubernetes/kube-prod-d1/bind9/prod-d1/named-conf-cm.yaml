@@ -12,7 +12,7 @@ data:
     // organization
     //include "/etc/bind/zones.rfc1918";
 
-    include "/etc/bind/dhcp1-ns1.key";
+    // include "/etc/bind/dhcp1-ns1.key";
 
     // zone "mclacken.net" {
     //   type master;

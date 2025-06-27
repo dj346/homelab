@@ -14,13 +14,13 @@ data:
 
     // include "/etc/bind/dhcp1-ns1.key";
 
-    zone "local-d1.mclacken.net" {
-      type master;
-      file "/var/lib/bind/ddns-zones/local-d1-mclacken-net.zone"; 
-      // update-policy {
-      //   grant dhcp1-ns1 wildcard *.mclacken.net A DHCID;
-      // };
-    };
+    // zone "local-d1.mclacken.net" {
+    //   type master;
+    //   file "/var/lib/bind/ddns-zones/local-d1-mclacken-net.zone"; 
+    //   // update-policy {
+    //   //   grant dhcp1-ns1 wildcard *.mclacken.net A DHCID;
+    //   // };
+    // };
 
     // zone "networking.mclacken.net" {
     //         type master;
@@ -57,13 +57,13 @@ data:
     //   file "/var/lib/bind/local-mclacken-net.zone";
     // };
 
-    zone "21.15.10.in-addr.arpa" {
-      type master;
-      file "/var/lib/bind/ddns-zones/21-15-10.zone";
-      // update-policy {
-      //   grant dhcp1-ns1 wildcard *.21.15.10.in-addr.arpa PTR DHCID;
-      // };
-    };
+    // zone "21.15.10.in-addr.arpa" {
+    //   type master;
+    //   file "/var/lib/bind/ddns-zones/21-15-10.zone";
+    //   // update-policy {
+    //   //   grant dhcp1-ns1 wildcard *.21.15.10.in-addr.arpa PTR DHCID;
+    //   // };
+    // };
 
   named.conf.options: |
     acl "trusted" {

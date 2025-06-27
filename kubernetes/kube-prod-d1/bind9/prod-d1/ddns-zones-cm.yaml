@@ -46,6 +46,8 @@ data:
         )
         NS          ns.local-d1.mclacken.net.
 
+    @           PTR     ns.local-d1.mclacken.net.
+    
     50          PTR     ns.local-d1.mclacken.net.
     28          PTR     router.local-d1.mclacken.net.
 

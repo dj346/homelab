@@ -81,7 +81,7 @@ spec:
           #   subPath: dhcp1-ns1.key
           #   readOnly: true
           - name: bind-zones
-            mountPath: /var/lib/bind/ddns-zones/
+            mountPath: /var/lib/bind/zones/
       volumes:
         - name: bind9-pvc
           persistentVolumeClaim:

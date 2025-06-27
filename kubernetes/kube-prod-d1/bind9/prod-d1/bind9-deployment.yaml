@@ -26,22 +26,23 @@ spec:
             src_dir=/var/lib/bind/default-ddns-zones
             dst_dir=/var/lib/bind/ddns-zones
 
+            get_ver() {
+              sed -nE 's/^[[:space:]]*;[[:space:]]*file-version:[[:space:]]*([0-9]+).*/\1/p' "$1" | head -n1
+            }
+
             for src in "${src_dir}"/*; do
               base=${src##*/}
               dst="${dst_dir}/${base}"
 
-              # A. copy if the destination file is missing
               if [[ ! -e "${dst}" ]]; then
                 cp -a -- "${src}" "${dst}"
                 continue
               fi
 
-              # B. copy if the custom file-version differs
-              src_ver=$(awk -F':' '/^[[:space:]]*;/ && $2 ~ /file-version/ {gsub(/[[:space:]]*/,"",$3); print $3; exit}' "${src}")
-              dst_ver=$(awk -F':' '/^[[:space:]]*;/ && $2 ~ /file-version/ {gsub(/[[:space:]]*/,"",$3); print $3; exit}' "${dst}")
-
-              [[ -z "${src_ver}" ]] && src_ver=unknown
-              [[ -z "${dst_ver}" ]] && dst_ver=unknown
+              src_ver=$(get_ver "${src}")
+              dst_ver=$(get_ver "${dst}")
+              [[ -z ${src_ver} ]] && src_ver=unknown
+              [[ -z ${dst_ver} ]] && dst_ver=unknown
 
               if [[ "${src_ver}" != "${dst_ver}" ]]; then
                 cp -a -- "${src}" "${dst}"

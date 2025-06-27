@@ -9,7 +9,7 @@ data:
     $ORIGIN local-d1.mclacken.net.
     $TTL   172800   ; 2 days
     @   IN  SOA   local-d1.mclacken.net. admin.mclacken.net. (
-            2023074378 ; serial
+            2023074379 ; serial
             43200      ; refresh (12 hours)
             900        ; retry (15 minutes)
             1814400    ; expire (3 weeks)
@@ -40,7 +40,7 @@ data:
     $ORIGIN 21.15.10.in-addr.arpa.
     $TTL   604800   ; 1 week
     @   IN  SOA   local-d1.mclacken.net. admin.mclacken.net. (
-            202308833 ; serial
+            202308834 ; serial
             604800    ; refresh (1 week)
             86400     ; retry (1 day)
             2419200   ; expire (4 weeks)

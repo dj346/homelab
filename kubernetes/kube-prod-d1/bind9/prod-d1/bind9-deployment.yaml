@@ -25,7 +25,7 @@ spec:
         volumeMounts:
         - name: bind-default-ddns-zones
           mountPath: /var/lib/bind/default-ddns-zones/
-        - name: bind9-pvc
+        - name: bind9-cache-pvc
           mountPath: /var/lib/bind/ddns-zones
           subPath: ddns-zones
       - name: init-bind9-cache-perms
@@ -35,7 +35,7 @@ spec:
           runAsUser: 0                 # run init container as root to adjust perms
           allowPrivilegeEscalation: false
         volumeMounts:
-        - name: bind9-pvc
+        - name: bind9-cache-pvc
           mountPath: /var/cache/bind
           subPath: cache
       containers:
@@ -65,7 +65,7 @@ spec:
             drop: ["ALL"]            # drop all default Linux capabilities
             add: ["NET_BIND_SERVICE"] # only add capability to bind low-number ports
         volumeMounts:
-          - name: bind9-pvc
+          - name: bind9-cache-pvc
             mountPath: /var/cache/bind
             subPath: cache
           - name: bind-config
@@ -82,13 +82,17 @@ spec:
           #   readOnly: true
           - name: bind-zones
             mountPath: /var/lib/bind/zones/
-          - name: bind9-pvc
+          - name: bind9-ddns-zones-pvc
             mountPath: /var/lib/bind/ddns-zones
             subPath: ddns-zones
       volumes:
-        - name: bind9-pvc
+        - name: bind9-cache-pvc
           persistentVolumeClaim:
-            claimName: bind9-pvc
+            claimName: bind9-cache-pvc
+            readOnly: false
+        - name: bind9-ddns-zones-pvc
+          persistentVolumeClaim:
+            claimName: bind9-ddns-zones-pvc
             readOnly: false
         - name: bind-config
           configMap:

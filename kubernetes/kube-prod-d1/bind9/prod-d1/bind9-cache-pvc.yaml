@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: bind9-pvc
+  name: bind9-cache-pvc
   namespace: bind9
 spec:
   accessModes:

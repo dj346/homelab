@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: zones-cm
+data:
+  named.conf.local: |
+    
+  named.conf.options: |
+    

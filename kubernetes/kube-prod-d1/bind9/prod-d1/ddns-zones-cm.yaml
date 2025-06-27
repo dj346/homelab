@@ -1,0 +1,60 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: default-ddns-zones-cm
+data:
+  local-d1-mclacken-net.zone: |
+    $ORIGIN .
+    $TTL 172800	; 2 days
+    mclacken.net		IN SOA	ns1.mclacken.net. admin.mclacken.net. (
+            2023074378 ; serial
+            43200      ; refresh (12 hours)
+            900        ; retry (15 minutes)
+            1814400    ; expire (3 weeks)
+            7200       ; minimum (2 hours)
+            )
+          NS	ns1.mclacken.net.
+
+    $ORIGIN mclacken.net.
+
+    proxmox			CNAME	ns1
+    proxmox2		CNAME	ns1
+    pve1			A		10.15.21.3
+    pve2			A		10.15.21.4
+    qdev1			A		10.15.21.5
+    router			CNAME	ns1
+    rtr				A		10.15.21.28
+    unraid			CNAME	ns1
+
+  21-15-10.zone: |
+    $ORIGIN .
+    $TTL 604800	; 1 week
+    21.15.10.in-addr.arpa	IN SOA	mclacken.net. admin.mclacken.net. (
+            202308833  ; serial
+            604800     ; refresh (1 week)
+            86400      ; retry (1 day)
+            2419200    ; expire (4 weeks)
+            604800     ; minimum (1 week)
+            )
+          NS	ns1.mclacken.net.
+    $ORIGIN 21.15.10.in-addr.arpa.
+    1			PTR	ns1.mclacken.net.
+    $TTL 2000	; 33 minutes 20 seconds
+    131			PTR	pi1.mclacken.net.
+          DHCID	( AAEBHZq2htv/lO8RA+Gu5djvaMs/2Usd16x7w0ocFr22
+            iZg= ) ; 1 1 32
+    132			PTR	nas-unraid.mclacken.net.
+          DHCID	( AAEBUI0Jl42IgB2aocJGPP/ZzPYSemq/CmFgR+v0yyTa
+            dZY= ) ; 1 1 32
+    147			PTR	ipmi-bifrost.mclacken.net.
+          DHCID	( AAEBC9heWw8+KugJLxY9M326O2nWlyTYL3d9caXiw8uj
+            2I4= ) ; 1 1 32
+    163			PTR	gamews-prod-d1.mclacken.net.
+          DHCID	( AAEBow36QfBYtn3iXX++UhF59+A7AA3ZBJI6+64TX4EX
+            vbA= ) ; 1 1 32
+    224			PTR	iphone.mclacken.net.
+          DHCID	( AAEB4N9/x6yF+Ow/eavscnQgBq1JuNdZyCmDiUUozeP8
+            93U= ) ; 1 1 32
+    $TTL 604800	; 1 week
+    28			PTR	router.mclacken.net.
+

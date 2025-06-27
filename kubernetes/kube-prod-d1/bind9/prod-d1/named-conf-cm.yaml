@@ -14,27 +14,27 @@ data:
 
     // include "/etc/bind/dhcp1-ns1.key";
 
-    // zone "mclacken.net" {
-    //   type master;
-    //   file "/var/lib/bind/mclacken-net.zone"; # zone file path
-    //   update-policy {
-    //     grant dhcp1-ns1 wildcard *.mclacken.net A DHCID;
-    //   };
-    // };
+    zone "local-d1.mclacken.net" {
+      type master;
+      file "/var/lib/bind/ddns-zones/local-d1-mclacken-net.zone"; 
+      // update-policy {
+      //   grant dhcp1-ns1 wildcard *.mclacken.net A DHCID;
+      // };
+    };
 
     // zone "networking.mclacken.net" {
     //         type master;
-    //         file "/var/lib/bind/networking-mclacken-net.zone"; # zone file path
+    //         file "/var/lib/bind/networking-mclacken-net.zone"; 
     // };
 
     // zone "apps.mclacken.net" {
     //         type master;
-    //         file "/var/lib/bind/apps-mclacken-net.zone"; # zone file path
+    //         file "/var/lib/bind/apps-mclacken-net.zone"; 
     // };
 
     // zone "lightapps.mclacken.net" {
     //         type master;
-    //         file "/var/lib/bind/lightapps-mclacken-net.zone"; # zone file path
+    //         file "/var/lib/bind/lightapps-mclacken-net.zone"; 
     // };
 
     // zone "kube-prod-d1.mclacken.net" {
@@ -49,21 +49,21 @@ data:
 
     // zone "ratgang.lgbt" {
     //         type master;
-    //         file "/var/lib/bind/ratgang-lgbt.zone"; # zone file path
+    //         file "/var/lib/bind/ratgang-lgbt.zone"; 
     // };
 
     // zone "local.mclacken.net" {
     //   type master;
-    //   file "/var/lib/bind/local-mclacken-net.zone"; #zone file path
+    //   file "/var/lib/bind/local-mclacken-net.zone";
     // };
 
-    // zone "21.15.10.in-addr.arpa" {
-    //   type master;
-    //   file "/var/lib/bind/21.15.10.zone";
-    //   update-policy {
-    //     grant dhcp1-ns1 wildcard *.21.15.10.in-addr.arpa PTR DHCID;
-    //   };
-    // };
+    zone "21.15.10.in-addr.arpa" {
+      type master;
+      file "/var/lib/bind/ddns-zones/21-15-10.zone";
+      // update-policy {
+      //   grant dhcp1-ns1 wildcard *.21.15.10.in-addr.arpa PTR DHCID;
+      // };
+    };
 
   named.conf.options: |
     acl "trusted" {

@@ -25,7 +25,7 @@ spec:
         volumeMounts:
         - name: bind-default-ddns-zones
           mountPath: /var/lib/bind/default-ddns-zones/
-        - name: bind9-cache-pvc
+        - name: bind9-ddns-zones-pvc
           mountPath: /var/lib/bind/ddns-zones
           subPath: ddns-zones
       - name: init-bind9-cache-perms

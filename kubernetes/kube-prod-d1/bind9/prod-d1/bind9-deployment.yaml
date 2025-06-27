@@ -23,7 +23,10 @@ spec:
           - |
             for file in /var/lib/bind/default-ddns-zones/*; do
               dest="/var/lib/bind/ddns-zones/$(basename "$file")"
-              cp -n "$file" "$dest" || echo "File $dest already exists, skipping copy."
+              if [ ! -f "$dest" ]; then
+                cp "$file" "$dest"
+                echo "Copied $file to $dest (file didn't exist in destination)"
+              fi
             done
         securityContext:
           runAsUser: 0

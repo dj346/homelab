@@ -9,3 +9,101 @@ Advanced -> CPU Configuration -> Package C State Support -> (Disabled)/Auto/Enab
 Advanced -> CPU Configuration -> CFG Lock -> (Disabled)/Enabled
 Advanced -> CPU Configuration -> C6DRAM -> (Disabled)/Enabled
 
+Debug Value                                   0
+MRC ULT Safe Config                           [Disabled]
+LPDDR DqDqs Re-Training                       [Enabled]
+Safe Mode Support                             [Disabled]
+Memory Test on Warm Boot                      [Enabled]
+DRAM Frequency DDR5-3600                      [Auto]
+(100:18:2)
+
+LP5 Bank Mode                                 [Auto]
+DDR5 DFE Gain                                 [0]
+
+Frequency Limit for Mixed 2DPC DDR4           0
+Frequency Limit for Mixed 2DPC DDR5 1 Rank 8GB and 8GB    2000
+Frequency Limit for Mixed 2DPC DDR5 1 Rank 16GB and 16GB  2000
+Frequency Limit for Mixed 2DPC DDR5 2 Rank                2000
+
+LCT Cmd Eye Width                             96
+HOB Buffer Size                               [Auto]
+ECC Support                                   [Enabled]
+Error Injection Address Match                 0
+Error Injection Mask                          0
+
+Error Injection Mask                0
+Error Injection Insertion Count     15
+Top Of Lower Usable Dram            [Dynamic]
+SA GV                               [Enabled]
+
+First Point Frequency               2000
+First Point Gear                    2
+Second Point Frequency              3200
+Second Point Gear                   2
+Third Point Frequency               3200
+Third Point Gear                    2
+Fourth Point Frequency              3600
+Fourth Point Gear                   2
+
+SAGV Switch Factor IA               30
+SAGV Switch Factor GT               30
+SAGV Switch Factor IO               30
+SAGV Switch Factor Stall            30
+
+Threshold For Switch Up             1
+Threshold For Switch Down           1
+Retrain on Fast Fail                [Enabled]
+
+DDR4_1DPC                           [Enabled]
+Row Hammer Mode                     [RFM]
+RH LFSR0 Mask                       [1/2 11]
+RH LFSR1 Mask                       [1/2 11]
+MC Refresh Rate                     [NORMAL Refresh]
+Refresh Watermarks                  [High]
+LPDDR ODT RttWr                   0
+LPDDR ODT RtiCa                   0
+Exit On Failure (MRC)             [Enabled]
+New Features 1 - MRC              [Disabled]
+New Features 2 - MRC              [Disabled]
+Ch Hash Override                  [Disabled]
+Ch Hash Support                   [Enabled]
+Ch Hash Mask                      2096
+Ch Hash Interleaved Bit           [BIT8]
+Extended Bank Hashing             [Enabled]
+Per Bank Refresh                  [Enabled]
+VC1 Read Metering                 [Enabled]
+Strong Weak Leaker                7
+Power Down Mode                   [Auto]
+Pwr Down Idle Timer               0
+Page Close Idle Timeout           [Enabled]
+Memory Scrambler                  [Enabled]
+Force ColdReset                   [Disabled]
+Controller 0, Channel 0 Control   [Enabled]
+Controller 0, Channel 1 Control   [Enabled]
+Controller 0, Channel 2 Control   [Enabled]
+Controller 0, Channel 3 Control   [Enabled]
+Controller 1, Channel 0 Control   [Enabled]
+Controller 1, Channel 1 Control   [Enabled]
+Controller 1, Channel 2 Control   [Enabled]
+Controller 1, Channel 3 Control        [Enabled]
+
+Force Single Rank                      [Disabled]
+In-Band ECC Support                    [Disabled]
+Memory Remap                           [Enabled]
+Time Measure                           [Disabled]
+CsPiStartHighinEct                     [Disabled]
+DisableFGRAndPBRWA                     [Disabled]
+MRC Fast Boot                          [Auto]
+
+Rank Margin Tool Per Task              [Disabled]
+Training Tracing                       [Disabled]
+Lpddr Mem WL Set                       [Set B]
+BDAT Memory Test Type                  [Rank Margin Tool Rank]
+Rank Margin Tool Loop Count            0
+
+ECC DFT                                [Disabled]
+Write0                                 [Disabled]
+Periodic DCC                           [Disabled]
+LPMode                                 [Auto]
+PPR Enable                             [Disabled]
+SAM Overloading                        [Disabled]

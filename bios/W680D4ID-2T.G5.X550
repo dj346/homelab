@@ -8,6 +8,8 @@ Advanced -> CPU Configuration -> View/Configure Turbo Options -> Power Limit 1 -
 Advanced -> CPU Configuration -> View/Configure Turbo Options -> Power Limit 1 -> 0 to 105000
 Advanced -> CPU Configuration -> View/Configure Turbo Options -> Energy Efficient Turbo -> Disabled to Enabled
 
+Advanced -> Memory Configuration -> ECC Support -> Disabled to Enabled
+
 Advanced -> Chipset Configuration -> SR-IOV Support -> Disabled to Enabled
 Advanced -> Chipset Configuration -> Onboard VGA (D-Sub) -> Enabled to Disabled
 Advanced -> Chipset Configuration -> Onboard HDMI HD Audio -> Enabled to Disabled
@@ -76,7 +78,26 @@ AMI Advanced -> PCI Subsystem Settings -> PCIE Express Settings -> ASPM Support 
 AMI Advanced -> WHEA Configuration -> WHEA Support -> Enabled to Disabled
 
 Chipset -> System Agent (SA) Configuration -> PCI Express Configuration -> PCI Express Root Port 3 -> PCIE1-2 ASPM Support -> Disabled to L1
-Chipset -> System Agent (SA) Configuration -> Memory Configuration -> SA GV -> Disabled 
+Chipset -> System Agent (SA) Configuration -> Memory Configuration -> Memory -> Memory Voltage -> 0 to 1000
+Chipset -> System Agent (SA) Configuration -> Memory Configuration -> Memory -> Memory Voltage VDDQ -> 0 to 1000
+Chipset -> System Agent (SA) Configuration -> Memory Configuration -> LPDDR DqDqs Re-Training -> Enabled to Disabled
+Chipset -> System Agent (SA) Configuration -> Memory Configuration -> Memory Test on Warm Boot -> Enabled
+Chipset -> System Agent (SA) Configuration -> Memory Configuration -> DRAM Frequency DDR5-3600 (100:18:2) -> Auto to 3200
+Chipset -> System Agent (SA) Configuration -> Memory Configuration -> SA GV to Disabled 
+Chipset -> System Agent (SA) Configuration -> Memory Configuration -> First Point Frequency -> 0 to 2000
+Chipset -> System Agent (SA) Configuration -> Memory Configuration -> First Point Gear -> 0 to  2
+Chipset -> System Agent (SA) Configuration -> Memory Configuration -> Second Point Frequency -> 0 to 3200
+Chipset -> System Agent (SA) Configuration -> Memory Configuration -> Second Point Gear -> 0 to 2
+Chipset -> System Agent (SA) Configuration -> Memory Configuration -> Third Point Frequency -> 0 to 3200
+Chipset -> System Agent (SA) Configuration -> Memory Configuration -> Third Point Gear -> 0 to  2
+Chipset -> System Agent (SA) Configuration -> Memory Configuration -> Fourth Point Frequency -> 0 to 3200 **Can set to 3600, but need to up DRAM freq too**
+Chipset -> System Agent (SA) Configuration -> Memory Configuration -> Fourth Point Gear -> 0 to  2
+Chipset -> System Agent (SA) Configuration -> Memory Configuration -> Threshold For Switch Up -> 1 to 8
+Chipset -> System Agent (SA) Configuration -> Memory Configuration -> Threshold For Switch Down -> 1 to 2
+Chipset -> System Agent (SA) Configuration -> Memory Configuration -> DDR4_1DPC -> Enabled to Disabled
+Chipset -> System Agent (SA) Configuration -> Memory Configuration -> Power Down Mode -> Auto to PPD-DLLoff
+Chipset -> System Agent (SA) Configuration -> Memory Configuration -> Power Down Idle Timer -> 0 to 64
+Chipset -> System Agent (SA) Configuration -> Memory Configuration -> LPMode -> Auto to Enabled
 
 Chipset -> PCH-IO Configuration -> PCI Express Configuration -> PCI Express Root Port 1 -> LAN1_2 ASPM Support -> Disabled **SETTING THIS BREAKS C6 AND CAUSES LAN DEVICES TO BE DISABLED**
 Chipset -> PCH-IO Configuration -> PCI Express Configuration -> PCI Express Root Port 5 -> PCH_Port4 ASPM Support -> Disabled to Auto
@@ -101,7 +122,11 @@ cpupower set -b 15
 
 echo "balance_power" | tee /sys/devices/system/cpu/cpu*/cpufreq/energy_performance_preference
 
+rtcwake -s 10 -m freeze
+
 ---
 
 echo s2idle >/sys/power/mem_sleep; systemctl suspend
 watch -n3 "cpufreq-info | grep 'current CPU'"
+
+lspci -vv | awk '/ASPM/{print $0}' RS= | grep --color -P '(^[a-z0-9:.]+|ASPM )'

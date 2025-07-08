@@ -11,7 +11,7 @@ spec:
   sources:
     - repoURL: https://charts.longhorn.io
       chart: longhorn
-      targetRevision: v1.8.1
+      targetRevision: v1.9.0
       helm:
         valueFiles:
         - $values/kubernetes/kube-prod-d1/longhorn/prod-d1/values.yaml

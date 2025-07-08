@@ -34,7 +34,6 @@ spec:
         ipv4NativeRoutingCIDR: "10.42.0.0/16"
   syncPolicy:
     syncOptions:
-      - ServerSideApply=true
       - CreateNamespace=true 
     automated: 
       prune: true 

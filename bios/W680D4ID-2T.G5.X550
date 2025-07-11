@@ -100,7 +100,6 @@ Chipset -> System Agent (SA) Configuration -> Memory Configuration -> Power Down
 Chipset -> System Agent (SA) Configuration -> Memory Configuration -> Power Down Idle Timer -> 0 to 64
 Chipset -> System Agent (SA) Configuration -> Memory Configuration -> LPMode -> Auto to Enabled
 
-Chipset -> PCH-IO Configuration -> PCI Express Configuration -> PCI Express Root Port 1 -> LAN1_2 ASPM Support -> PCI Exporess Root Port 1 -> Enabled to Disabled
 Chipset -> PCH-IO Configuration -> PCI Express Configuration -> PCI Express Root Port 1 -> LAN1_2 ASPM Support -> Disabled **SETTING THIS BREAKS C6 AND CAUSES LAN DEVICES TO BE DISABLED**
 Chipset -> PCH-IO Configuration -> PCI Express Configuration -> PCI Express Root Port 5 -> PCH_Port4 ASPM Support -> Disabled to Auto
 Chipset -> PCH-IO Configuration -> PCI Express Configuration -> PCI Express Root Port 6 -> PCH_Port4 ASPM Support -> Disabled to Auto

@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: duplicate_pod
+  name: duplicatepod
   namespace: argocd
 spec:
   project: default

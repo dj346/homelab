@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Pod
 metadata:
   name: pvc-copy
-  namespace: temporary
+  namespace: lldap
 spec:
   containers:
   - name: pvc-copy-container

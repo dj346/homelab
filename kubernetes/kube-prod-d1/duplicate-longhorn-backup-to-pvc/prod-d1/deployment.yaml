@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pvc-copy
+  namespace: temporary
+spec:
+  containers:
+  - name: pvc-copy-container
+    image: busybox
+    command: ["/bin/sh"]
+    args: ["-c", "sleep 3600"]
+    volumeMounts:
+    - mountPath: /source
+      name: source-pvc
+    - mountPath: /target
+      name: target-pvc
+  volumes:
+  - name: source-pvc
+    persistentVolumeClaim:
+      claimName: lldap-cluster-backup
+  - name: target-pvc
+    persistentVolumeClaim:
+      claimName: pvc-754e0827-7f83-4520-9372-72715cbde9d4
+  restartPolicy: Never

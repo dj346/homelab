@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: duplicate_pod
+  namespace: argocd
+spec:
+  project: default
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: temporary
+  source:
+    repoURL: 'ssh://git@gitea-ssh.gitea.svc.cluster.local:2222/dj346/homelab.git'
+    targetRevision: HEAD
+    path: kubernetes/kube-prod-d1/duplicate-longhorn-backup-to-pvc/prod-d1
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true 
+    automated: 
+      prune: true 
+      selfHeal: true 
+      allowEmpty: false
+    retry:
+      limit: 0 # the number of retries to attempt
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 3m

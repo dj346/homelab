@@ -4,5 +4,8 @@ lldap-pgdb-credentials.yaml
 lldap-credentials.yaml
 postgres-admin-secret.yaml
 *secret*
-data/*
-meta/*
+
+# Ignore SQLite files
+homelab/docker/s3b-prod-d1/garage/meta/db.sqlite
+homelab/docker/s3b-prod-d1/garage/meta/db.sqlite-shm
+homelab/docker/s3b-prod-d1/garage/meta/db.sqlite-wal

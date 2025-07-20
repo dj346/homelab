@@ -6,6 +6,6 @@ postgres-admin-secret.yaml
 *secret*
 
 # Ignore SQLite files
-homelab/docker/s3b-prod-d1/garage/meta/db.sqlite
-homelab/docker/s3b-prod-d1/garage/meta/db.sqlite-shm
-homelab/docker/s3b-prod-d1/garage/meta/db.sqlite-wal
+docker/s3b-prod-d1/garage/meta/db.sqlite
+docker/s3b-prod-d1/garage/meta/db.sqlite-shm
+docker/s3b-prod-d1/garage/meta/db.sqlite-wal

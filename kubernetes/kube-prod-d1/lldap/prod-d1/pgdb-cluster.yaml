@@ -23,12 +23,12 @@ spec:
     pg_hba:
       - host all all 10.244.0.0/16 md5
 
-  bootstrap:
-    initdb:
-      database: lldapdb
-      owner: lldap-service-user
-      secret:
-        name: pgdb-service-user-secret
+  # bootstrap:
+  #   initdb:
+  #     database: lldapdb
+  #     owner: lldap-service-user
+  #     secret:
+  #       name: pgdb-service-user-secret
     # Alternative bootstrap method: start from a backup
     #recovery:
     #  backup:

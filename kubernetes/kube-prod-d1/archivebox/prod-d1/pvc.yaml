@@ -8,6 +8,6 @@ spec:
     - ReadWriteOnce # This should be ReadWriteOnce.
   resources:
     requests:
-      storage: 5Gi
+      storage: 300Mi
   storageClassName: longhorn
   

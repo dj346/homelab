@@ -17,6 +17,25 @@ spec:
     spec:
       restartPolicy: Always
       initContainers:
+      - name: restore-from-backup
+        image: busybox
+        command: ["sh", "-c"]
+        args:
+          - |
+            if [ "$RESTORE_BACKUP" = "1" ]; then
+              echo "Restoring backup from original PVC..."
+              cp -a /backup/. /data/
+            else
+              echo "Skipping backup restore"
+            fi
+        env:
+          - name: RESTORE_BACKUP
+            value: "1" # Set this to "0" to skip restore
+        volumeMounts:
+          - name: archivebox-storage
+            mountPath: /data
+          - name: archivebox-backup-storage
+            mountPath: /backup
       - name: wait-for-sonic
         image: busybox
         command: ["sh", "-c"]
@@ -113,6 +132,10 @@ spec:
         - name: archivebox-storage
           persistentVolumeClaim:
             claimName: archivebox-pvc
+        - name: archivebox-backup-storage ## Uncomment this and set claimname to PVC
+          persistentVolumeClaim:
+            claimName: pvc-aa99a347-4490-415b-aa75-13e2b6d8afea
+            readOnly: false
         - name: archivebox-nfs
           nfs:
             server: 10.15.21.5

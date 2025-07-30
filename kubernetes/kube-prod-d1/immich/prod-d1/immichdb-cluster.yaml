@@ -49,7 +49,7 @@ spec:
 
   storage:
     storageClass: longhorn-strict-local
-    size: 10Gi
+    size: 2Gi
 
   # resources:
   #   requests: 

@@ -51,7 +51,7 @@ spec:
         - name: sonic-data
           persistentVolumeClaim:
             claimName: sonic-pvc
-        - name: pywb-backup-storage ## Uncomment this and set claimname to PVC
+        - name: sonic-backup-storage ## Uncomment this and set claimname to PVC
           persistentVolumeClaim:
             claimName: pvc-1f9ee1d4-6360-4bc3-8068-6cd268ed28ac
             readOnly: false

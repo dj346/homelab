@@ -53,7 +53,3 @@ spec:
         nfs:
           server: 10.15.21.132
           path: /mnt/user/video/
-      - name: jellyfin-config
-        persistentVolumeClaim:
-          claimName: jellyfin-pvc
-          readOnly: false

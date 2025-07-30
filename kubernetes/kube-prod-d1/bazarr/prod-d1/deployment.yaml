@@ -35,8 +35,8 @@ spec:
           volumeMounts:
             - name: bazarr-config
               mountPath: /data
-            - name: bazarr-backup-storage
-              mountPath: /backup
+            # - name: bazarr-backup-storage
+            #   mountPath: /backup
       containers:
         - name: bazarr
           image: lscr.io/linuxserver/bazarr:latest

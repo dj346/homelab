@@ -35,8 +35,8 @@ spec:
           volumeMounts:
             - name: anibazarr-config
               mountPath: /data
-            - name: anibazarr-backup-storage
-              mountPath: /backup
+            # - name: anibazarr-backup-storage
+            #   mountPath: /backup
       containers:
         - name: anibazarr
           image: lscr.io/linuxserver/bazarr:latest

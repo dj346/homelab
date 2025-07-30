@@ -41,6 +41,6 @@ spec:
             readOnly: false
         - name: data
           nfs:
-            server: 10.15.21.132
+            server: 10.15.21.5
             path: /mnt/user/video/
 

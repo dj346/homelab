@@ -115,6 +115,6 @@ spec:
             claimName: archivebox-pvc
         - name: archivebox-nfs
           nfs:
-            server: 10.15.21.132
+            server: 10.15.21.5
             path: /mnt/user/archives/websites/archivebox
     

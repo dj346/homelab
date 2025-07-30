@@ -18,13 +18,14 @@ spec:
     spec:
       initContainers:
         - name: restore-from-backup
-          image: busybox
+          image: alpine
           command: ["sh", "-c"]
           args:
             - |
+              apk add --no-cache rsync
               if [ "$RESTORE_BACKUP" = "1" ]; then
                 echo "Restoring backup from original PVC..."
-                cp -a /backup/. /data/
+                rsync -avh --delete /backup/ /data/
               else
                 echo "Skipping backup restore"
               fi

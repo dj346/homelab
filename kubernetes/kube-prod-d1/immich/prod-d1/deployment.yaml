@@ -85,5 +85,5 @@ spec:
       volumes:
         - name: library-nfs
           nfs:
-            server: 10.15.21.132
+            server: 10.15.21.5
             path: /mnt/user/images/immich/

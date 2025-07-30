@@ -30,12 +30,12 @@ spec:
               fi
           env:
             - name: RESTORE_BACKUP
-              value: "1" # Set this to "0" to skip restore
+              value: "0" # Set this to "0" to skip restore
           volumeMounts:
             - name: anibazarr-config
               mountPath: /data
-            - name: anibazarr-backup-storage
-              mountPath: /backup
+            # - name: anibazarr-backup-storage
+            #   mountPath: /backup
       containers:
         - name: anibazarr
           image: lscr.io/linuxserver/bazarr:latest
@@ -59,10 +59,10 @@ spec:
           persistentVolumeClaim:
             claimName: anibazarr-pvc
             readOnly: false
-        - name: anibazarr-backup-storage
-          persistentVolumeClaim:
-            claimName: anibazarr
-            readOnly: false
+        # - name: anibazarr-backup-storage
+        #   persistentVolumeClaim:
+        #     claimName: anibazarr
+        #     readOnly: false
         - name: data
           nfs:
             server: 10.15.21.5

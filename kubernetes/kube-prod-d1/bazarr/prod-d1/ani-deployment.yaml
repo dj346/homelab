@@ -59,7 +59,7 @@ spec:
           persistentVolumeClaim:
             claimName: anibazarr-pvc
             readOnly: false
-        # - name: anibazarr-backup-storage
+        # - name: anibazarr-backup-storage ## Uncomment this and set claimname to PVC
         #   persistentVolumeClaim:
         #     claimName: anibazarr
         #     readOnly: false

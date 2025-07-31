@@ -35,7 +35,7 @@ spec:
             - name: RESTORE_BACKUP
               value: "1" # Set this to "0" to skip restore
           volumeMounts:
-            - name: data
+            - name: key-pvc
               mountPath: /data
             - name: sftp-backup-storage
               mountPath: /backup

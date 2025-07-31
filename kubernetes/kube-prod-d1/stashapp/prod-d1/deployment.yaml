@@ -17,6 +17,27 @@ spec:
       labels:
         app: stashapp
     spec:
+      initContainers:
+        - name: restore-from-backup
+          image: alpine
+          command: ["sh", "-c"]
+          args:
+            - |
+              if [ "$RESTORE_BACKUP" = "1" ]; then
+                echo "Restoring backup from original PVC..."
+                apk add --no-cache rsync
+                rsync -avh --delete /backup/ /data/
+              else
+                echo "Skipping backup restore"
+              fi
+          env:
+            - name: RESTORE_BACKUP
+              value: "1" # Set this to "0" to skip restore
+          volumeMounts:
+            - name: stashapp-config
+              mountPath: /data
+            - name: stashapp-backup-storage
+              mountPath: /backup
       containers:
         - name: stashapp
           image: stashapp/stash:latest
@@ -44,8 +65,12 @@ spec:
           persistentVolumeClaim:
             claimName: stashapp-pvc
             readOnly: false
+        - name: stashapp-backup-storage ## Uncomment this and set claimname to PVC
+          persistentVolumeClaim:
+            claimName: pvc-7bf57b38-2bff-47cf-92a9-60cf0a11c707
+            readOnly: false
         - name: data
           nfs:
-            server: 10.15.21.132
+            server: 10.15.21.5
             path: /mnt/user/adult/
         

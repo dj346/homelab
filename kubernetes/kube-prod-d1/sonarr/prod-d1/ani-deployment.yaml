@@ -31,12 +31,12 @@ spec:
               fi
           env:
             - name: RESTORE_BACKUP
-              value: "1" # Set this to "0" to skip restore
+              value: "0" # Set this to "0" to skip restore
           volumeMounts:
             - name: anisonarr-config
               mountPath: /data
-            - name: anisonarr-backup-storage
-              mountPath: /backup
+            # - name: anisonarr-backup-storage
+            #   mountPath: /backup
       containers:
         - name: anisonarr
           image: lscr.io/linuxserver/sonarr:latest
@@ -60,10 +60,10 @@ spec:
           persistentVolumeClaim:
             claimName: anisonarr-pvc
             readOnly: false
-        - name: anisonarr-backup-storage ## Uncomment this and set claimname to PVC
-          persistentVolumeClaim:
-            claimName: pvc-ce60dadf-220e-48a4-9cd5-f325c474253a
-            readOnly: false
+        # - name: anisonarr-backup-storage ## Uncomment this and set claimname to PVC
+        #   persistentVolumeClaim:
+        #     claimName: pvc-ce60dadf-220e-48a4-9cd5-f325c474253a
+        #     readOnly: false
         - name: data
           nfs:
             server: 10.15.21.5

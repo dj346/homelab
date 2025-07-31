@@ -16,6 +16,27 @@ spec:
       labels:
         app: sonarr
     spec:
+      initContainers:
+        - name: restore-from-backup
+          image: alpine
+          command: ["sh", "-c"]
+          args:
+            - |
+              if [ "$RESTORE_BACKUP" = "1" ]; then
+                echo "Restoring backup from original PVC..."
+                apk add --no-cache rsync
+                rsync -avh --delete /backup/ /data/
+              else
+                echo "Skipping backup restore"
+              fi
+          env:
+            - name: RESTORE_BACKUP
+              value: "1" # Set this to "0" to skip restore
+          volumeMounts:
+            - name: sonarr-config
+              mountPath: /data
+            - name: sonarr-backup-storage
+              mountPath: /backup
       containers:
         - name: sonarr
           image: lscr.io/linuxserver/sonarr:latest
@@ -39,8 +60,12 @@ spec:
           persistentVolumeClaim:
             claimName: sonarr-pvc
             readOnly: false
+        - name: sonarr-backup-storage ## Uncomment this and set claimname to PVC
+          persistentVolumeClaim:
+            claimName: pvc-88819c0d-621c-4a4a-b3cc-7cc783677f4b
+            readOnly: false
         - name: data
           nfs:
-            server: 10.15.21.132
+            server: 10.15.21.5
             path: /mnt/user/video/
         

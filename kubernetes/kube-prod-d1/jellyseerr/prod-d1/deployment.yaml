@@ -16,6 +16,27 @@ spec:
       labels:
         app: jellyseerr
     spec:
+      initContainers:
+        - name: restore-from-backup
+          image: alpine
+          command: ["sh", "-c"]
+          args:
+            - |
+              if [ "$RESTORE_BACKUP" = "1" ]; then
+                echo "Restoring backup from original PVC..."
+                apk add --no-cache rsync
+                rsync -avh --delete /backup/ /data/
+              else
+                echo "Skipping backup restore"
+              fi
+          env:
+            - name: RESTORE_BACKUP
+              value: "1" # Set this to "0" to skip restore
+          volumeMounts:
+            - name: jellyseerr-config
+              mountPath: /data
+            - name: jellyseerr-backup-storage
+              mountPath: /backup
       containers:
         - name: jellyseerr
           image: ghcr.io/fallenbagel/jellyseerr:latest
@@ -34,5 +55,9 @@ spec:
         - name: jellyseerr-config
           persistentVolumeClaim:
             claimName: jellyseerr-pvc
+            readOnly: false
+        - name: jellyseerr-backup-storage ## Uncomment this and set claimname to PVC
+          persistentVolumeClaim:
+            claimName: pvc-76b100b3-f6c1-4f15-9fd1-9ad776ff8ba9
             readOnly: false
         

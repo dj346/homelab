@@ -31,12 +31,12 @@ spec:
               fi
           env:
             - name: RESTORE_BACKUP
-              value: "1" # Set this to "0" to skip restore
+              value: "0" # Set this to "0" to skip restore
           volumeMounts:
             - name: prowlarr-config
               mountPath: /data
-            - name: prowlarr-backup-storage
-              mountPath: /backup
+            # - name: prowlarr-backup-storage
+            #   mountPath: /backup
       containers:
         - name: prowlarr
           image: lscr.io/linuxserver/prowlarr:latest
@@ -58,8 +58,8 @@ spec:
           persistentVolumeClaim:
             claimName: prowlarr-pvc
             readOnly: false
-        - name: prowlarr-backup-storage ## Uncomment this and set claimname to PVC
-          persistentVolumeClaim:
-            claimName: pvc-38431b7e-e28b-495b-9420-ec7261edd2a2
-            readOnly: false
+        # - name: prowlarr-backup-storage ## Uncomment this and set claimname to PVC
+        #   persistentVolumeClaim:
+        #     claimName: pvc-38431b7e-e28b-495b-9420-ec7261edd2a2
+        #     readOnly: false
 

@@ -19,6 +19,27 @@ spec:
         app.kubernetes.io/name: paperless
         app.kubernetes.io/component: app
     spec:
+      initContainers:
+        - name: restore-from-backup
+          image: alpine
+          command: ["sh", "-c"]
+          args:
+            - |
+              if [ "$RESTORE_BACKUP" = "1" ]; then
+                echo "Restoring backup from original PVC..."
+                apk add --no-cache rsync
+                rsync -avh --delete /backup/ /data/
+              else
+                echo "Skipping backup restore"
+              fi
+          env:
+            - name: RESTORE_BACKUP
+              value: "1" # Set this to "0" to skip restore
+          volumeMounts:
+            - name: data
+              mountPath: /data
+            - name: paperless-backup-storage
+              mountPath: /backup
       containers:
         - name: paperless-app
           envFrom:
@@ -69,6 +90,10 @@ spec:
         - name: data
           persistentVolumeClaim:
             claimName: paperless-pvc
+            readOnly: false
+        - name: paperless-backup-storage ## Uncomment this and set claimname to PVC
+          persistentVolumeClaim:
+            claimName: pvc-d59805df-1a17-4d83-b0bf-21185effd309
             readOnly: false
         - name: media
           nfs:

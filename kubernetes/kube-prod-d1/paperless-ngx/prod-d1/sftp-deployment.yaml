@@ -18,6 +18,27 @@ spec:
         app.kubernetes.io/name: paperless
         app.kubernetes.io/component: sftp
     spec:
+      initContainers:
+        - name: restore-from-backup
+          image: alpine
+          command: ["sh", "-c"]
+          args:
+            - |
+              if [ "$RESTORE_BACKUP" = "1" ]; then
+                echo "Restoring backup from original PVC..."
+                apk add --no-cache rsync
+                rsync -avh --delete /backup/ /data/
+              else
+                echo "Skipping backup restore"
+              fi
+          env:
+            - name: RESTORE_BACKUP
+              value: "1" # Set this to "0" to skip restore
+          volumeMounts:
+            - name: data
+              mountPath: /data
+            - name: sftp-backup-storage
+              mountPath: /backup
       containers:
       - name: sftp
         image: "atmoz/sftp@sha256:0960390462a4441dbb63698d7c185b76a41ffcee7b78ff4adf275f3e66f9c475"
@@ -63,6 +84,10 @@ spec:
         - name: key-pvc
           persistentVolumeClaim:
             claimName: paperless-sftp-pvc
+            readOnly: false
+        - name: sftp-backup-storage ## Uncomment this and set claimname to PVC
+          persistentVolumeClaim:
+            claimName: pvc-d59805df-1a17-4d83-b0bf-21185effd309
             readOnly: false
         # - name: sftp-pub-key
         #   configMap:

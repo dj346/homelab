@@ -16,6 +16,27 @@ spec:
       labels:
         app: prowlarr
     spec:
+      initContainers:
+        - name: restore-from-backup
+          image: alpine
+          command: ["sh", "-c"]
+          args:
+            - |
+              if [ "$RESTORE_BACKUP" = "1" ]; then
+                echo "Restoring backup from original PVC..."
+                apk add --no-cache rsync
+                rsync -avh --delete /backup/ /data/
+              else
+                echo "Skipping backup restore"
+              fi
+          env:
+            - name: RESTORE_BACKUP
+              value: "1" # Set this to "0" to skip restore
+          volumeMounts:
+            - name: prowlarr-config
+              mountPath: /data
+            - name: prowlarr-backup-storage
+              mountPath: /backup
       containers:
         - name: prowlarr
           image: lscr.io/linuxserver/prowlarr:latest
@@ -36,5 +57,9 @@ spec:
         - name: prowlarr-config
           persistentVolumeClaim:
             claimName: prowlarr-pvc
+            readOnly: false
+        - name: prowlarr-backup-storage ## Uncomment this and set claimname to PVC
+          persistentVolumeClaim:
+            claimName: pvc-38431b7e-e28b-495b-9420-ec7261edd2a2
             readOnly: false
 

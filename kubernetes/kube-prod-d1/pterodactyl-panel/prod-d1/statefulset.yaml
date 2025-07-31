@@ -17,6 +17,27 @@ spec:
       labels:
         app: pterodactyl-panel
     spec:
+      initContainers:
+        - name: restore-from-backup
+          image: alpine
+          command: ["sh", "-c"]
+          args:
+            - |
+              if [ "$RESTORE_BACKUP" = "1" ]; then
+                echo "Restoring backup from original PVC..."
+                apk add --no-cache rsync
+                rsync -avh --delete /backup/ /data/
+              else
+                echo "Skipping backup restore"
+              fi
+          env:
+            - name: RESTORE_BACKUP
+              value: "0" # Set this to "0" to skip restore
+          volumeMounts:
+            - name: pterodactyl-panel-config
+              mountPath: /data
+            - name: pterodactyl-backup-storage
+              mountPath: /backup
       containers:
         - image: ghcr.io/pterodactyl/panel:latest
           imagePullPolicy: IfNotPresent

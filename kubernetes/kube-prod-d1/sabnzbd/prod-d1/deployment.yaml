@@ -124,12 +124,12 @@ spec:
       volumes:
         - name: data
           nfs:
-            server: 10.15.21.132
+            server: 10.15.21.5
             path: /mnt/user/video/
             readOnly: false
         - name: data2
           nfs:
-            server: 10.15.21.132
+            server: 10.15.21.5
             path: /mnt/user/adult/
         - name: sabnzbd-config
           persistentVolumeClaim:

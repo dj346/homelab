@@ -4,12 +4,10 @@ metadata:
   name: aniradarr-pvc
   namespace: radarr
 spec:
-  volumeMode: Filesystem
-  volumeName: pvc-7ad5058f-98c7-4198-a652-57b3ab93a826
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 1Gi
+      storage: 300Mi
   storageClassName: longhorn
   

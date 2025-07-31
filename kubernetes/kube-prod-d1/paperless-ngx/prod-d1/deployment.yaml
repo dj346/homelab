@@ -34,12 +34,12 @@ spec:
               fi
           env:
             - name: RESTORE_BACKUP
-              value: "1" # Set this to "0" to skip restore
+              value: "0" # Set this to "0" to skip restore
           volumeMounts:
             - name: data
               mountPath: /data
-            - name: paperless-backup-storage
-              mountPath: /backup
+            # - name: paperless-backup-storage
+            #   mountPath: /backup
       containers:
         - name: paperless-app
           envFrom:
@@ -91,10 +91,10 @@ spec:
           persistentVolumeClaim:
             claimName: paperless-pvc
             readOnly: false
-        - name: paperless-backup-storage ## Uncomment this and set claimname to PVC
-          persistentVolumeClaim:
-            claimName: pvc-d59805df-1a17-4d83-b0bf-21185effd309
-            readOnly: false
+        # - name: paperless-backup-storage ## Uncomment this and set claimname to PVC
+        #   persistentVolumeClaim:
+        #     claimName: pvc-d59805df-1a17-4d83-b0bf-21185effd309
+        #     readOnly: false
         - name: media
           nfs:
             server: 10.15.21.5

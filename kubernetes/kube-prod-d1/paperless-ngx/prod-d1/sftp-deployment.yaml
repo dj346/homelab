@@ -33,12 +33,12 @@ spec:
               fi
           env:
             - name: RESTORE_BACKUP
-              value: "1" # Set this to "0" to skip restore
+              value: "0" # Set this to "0" to skip restore
           volumeMounts:
             - name: key-pvc
               mountPath: /data
-            - name: sftp-backup-storage
-              mountPath: /backup
+            # - name: sftp-backup-storage
+            #   mountPath: /backup
       containers:
       - name: sftp
         image: "atmoz/sftp@sha256:0960390462a4441dbb63698d7c185b76a41ffcee7b78ff4adf275f3e66f9c475"
@@ -85,10 +85,10 @@ spec:
           persistentVolumeClaim:
             claimName: paperless-sftp-pvc
             readOnly: false
-        - name: sftp-backup-storage ## Uncomment this and set claimname to PVC
-          persistentVolumeClaim:
-            claimName: pvc-e7d1e8bd-8f35-48f0-83ed-906ebb738839
-            readOnly: false
+        # - name: sftp-backup-storage ## Uncomment this and set claimname to PVC
+        #   persistentVolumeClaim:
+        #     claimName: pvc-e7d1e8bd-8f35-48f0-83ed-906ebb738839
+        #     readOnly: false
         # - name: sftp-pub-key
         #   configMap:
         #     name: sftp-pub-key

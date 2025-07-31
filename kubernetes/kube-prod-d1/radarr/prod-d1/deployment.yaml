@@ -64,7 +64,7 @@ spec:
           nfs:
             server: 10.15.21.5
             path: /mnt/user/video/
-        - name: aniradarr-backup-storage ## Uncomment this and set claimname to PVC
+        - name: radarr-backup-storage ## Uncomment this and set claimname to PVC
           persistentVolumeClaim:
             claimName: pvc-07acad48-9774-4621-850a-c68af05ae0fa
             readOnly: false

@@ -87,7 +87,7 @@ spec:
             readOnly: false
         - name: sftp-backup-storage ## Uncomment this and set claimname to PVC
           persistentVolumeClaim:
-            claimName: pvc-d59805df-1a17-4d83-b0bf-21185effd309
+            claimName: pvc-e7d1e8bd-8f35-48f0-83ed-906ebb738839
             readOnly: false
         # - name: sftp-pub-key
         #   configMap:

@@ -16,6 +16,27 @@ spec:
       labels:
         app: radarr
     spec:
+      initContainers:
+        - name: restore-from-backup
+          image: alpine
+          command: ["sh", "-c"]
+          args:
+            - |
+              if [ "$RESTORE_BACKUP" = "1" ]; then
+                echo "Restoring backup from original PVC..."
+                apk add --no-cache rsync
+                rsync -avh --delete /backup/ /data/
+              else
+                echo "Skipping backup restore"
+              fi
+          env:
+            - name: RESTORE_BACKUP
+              value: "1" # Set this to "0" to skip restore
+          volumeMounts:
+            - name: radarr-config
+              mountPath: /data
+            - name: radarr-backup-storage
+              mountPath: /backup
       containers:
         - name: radarr
           image: lscr.io/linuxserver/radarr:latest
@@ -43,4 +64,8 @@ spec:
           nfs:
             server: 10.15.21.5
             path: /mnt/user/video/
+        - name: aniradarr-backup-storage ## Uncomment this and set claimname to PVC
+          persistentVolumeClaim:
+            claimName: pvc-07acad48-9774-4621-850a-c68af05ae0fa
+            readOnly: false
         

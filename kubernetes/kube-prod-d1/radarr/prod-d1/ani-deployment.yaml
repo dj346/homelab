@@ -31,7 +31,7 @@ spec:
               fi
           env:
             - name: RESTORE_BACKUP
-              value: "0" # Set this to "0" to skip restore
+              value: "1" # Set this to "0" to skip restore
           volumeMounts:
             - name: aniradarr-config
               mountPath: /data
@@ -60,9 +60,9 @@ spec:
           persistentVolumeClaim:
             claimName: aniradarr-pvc
             readOnly: false
-        - name: anibazarr-backup-storage ## Uncomment this and set claimname to PVC
+        - name: aniradarr-backup-storage ## Uncomment this and set claimname to PVC
           persistentVolumeClaim:
-            claimName: pvc-bc57f2c8-cc57-4828-bd37-e4e84fd7cfbf
+            claimName: pvc-6ec2a144-1601-4825-bf7d-265c5077ce8b
             readOnly: false
         - name: data
           nfs:

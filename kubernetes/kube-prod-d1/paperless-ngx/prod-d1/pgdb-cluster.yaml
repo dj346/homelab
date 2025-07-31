@@ -27,21 +27,21 @@ spec:
       - host all all 10.244.0.0/16 md5
 
   bootstrap:
-    # initdb:
-    #   database: paperlessdb
-    #   owner: paperless-service-user
-    #   secret:
-    #     name: pgdb-service-user-secret
-    recovery:
+    initdb:
       database: paperlessdb
       owner: paperless-service-user
       secret:
         name: pgdb-service-user-secret
-      volumeSnapshots:
-        storage:
-          name: paperless
-          kind: PersistentVolumeClaim
-          apiGroup: ""
+    # recovery:
+    #   database: paperlessdb
+    #   owner: paperless-service-user
+    #   secret:
+    #     name: pgdb-service-user-secret
+    #   volumeSnapshots:
+    #     storage:
+    #       name: paperless
+    #       kind: PersistentVolumeClaim
+    #       apiGroup: ""
     # Alternative bootstrap method: start from a backup
     #recovery:
     #  backup:
@@ -52,7 +52,7 @@ spec:
 
   storage:
     storageClass: longhorn-strict-local
-    size: 800Mi
+    size: 1Gi
 
   # backup:
   #   barmanObjectStore:

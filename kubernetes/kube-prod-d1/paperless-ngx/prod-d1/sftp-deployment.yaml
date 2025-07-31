@@ -51,7 +51,7 @@ spec:
       volumes:
         - name: data
           nfs:
-            server: 10.15.21.132
+            server: 10.15.21.5
             path: /mnt/user/documents/downloads/paperless-ngx/consume/
             readOnly: false
         - name: authorizedkeys

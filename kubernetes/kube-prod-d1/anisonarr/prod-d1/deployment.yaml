@@ -2,7 +2,10 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: anisonarr
+    app.kubernetes.io/name: anisonarr
+    app.kubernetes.io/instance: anisonarr
+    app.kubernetes.io/app: anisonarr
+    app.kubernetes.io/component: web
   name: anisonarr
   namespace: sonarr
 spec:

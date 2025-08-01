@@ -1,14 +1,14 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
-  name: grafana-cluster
-  namespace: grafana
+  name: anisonarr-cluster
+  namespace: anisonarr
   labels:
-    app.kubernetes.io/name: grafana
+    app.kubernetes.io/name: anisonarr
     app.kubernetes.io/component: pgdb
 spec:
-  description: "Grafana Cloudnative PG Cluster"
-  imageName: ghcr.io/cloudnative-pg/postgresql:15.3
+  description: "Anisonarr Cloudnative PG Cluster"
+  imageName: ghcr.io/cloudnative-pg/postgresql:17.5
   # imagePullSecret is only required if the images are located in a private registry
   # imagePullSecrets:
   #   - name: private_registry_access
@@ -28,8 +28,8 @@ spec:
 
   bootstrap:
     initdb:
-      database: grafana
-      owner: grafana
+      database: anisonarrdb
+      owner: anisonarr
       secret:
         name: pgdb-service-user-secret
     # Alternative bootstrap method: start from a backup
@@ -42,7 +42,7 @@ spec:
 
   storage:
     storageClass: longhorn-strict-local
-    size: 1Gi
+    size: 450Mi
 
   # backup:
   #   barmanObjectStore:

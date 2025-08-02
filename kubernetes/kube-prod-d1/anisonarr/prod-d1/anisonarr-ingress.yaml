@@ -2,7 +2,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: anisonarr-ingress
-  namespace: sonarr
+  namespace: anisonarr
   labels:
     app.kubernetes.io/name: anisonarr
     app.kubernetes.io/component: networking
@@ -21,7 +21,7 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: anisonarr-web
+                name: anisonarr-web-service
                 port:
                   name: http
   tls:

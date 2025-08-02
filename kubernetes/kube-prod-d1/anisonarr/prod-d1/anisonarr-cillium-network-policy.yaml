@@ -2,7 +2,7 @@ apiVersion: cilium.io/v2
 kind: CiliumNetworkPolicy
 metadata:
   name: anisonarr-cillium-network-policy
-  namespace: sonarr
+  namespace: anisonarr
   labels:
     app.kubernetes.io/name: anisonarr
     app.kubernetes.io/component: networking

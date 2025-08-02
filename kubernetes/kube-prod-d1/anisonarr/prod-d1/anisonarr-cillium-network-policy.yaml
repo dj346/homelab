@@ -25,6 +25,6 @@ spec:
     - toEndpoints:
         - matchLabels:
             "k8s:io.kubernetes.pod.namespace": kube-system
-  policyTypes:
-    - Ingress
-    - Egress
+  # policyTypes:
+  #   - Ingress
+  #   - Egress

@@ -1,0 +1,30 @@
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: anisonarr-cillium-network-policy
+  namespace: sonarr
+  labels:
+    app.kubernetes.io/name: anisonarr
+    app.kubernetes.io/component: networking
+    app.kubernetes.io/instance: anisonarr-prod-d1
+    app.kubernetes.io/managed-by: argocd
+  annotations:
+    description: "Cilium Network Policy for Anisonarr application, allowing ingress from ingress controller and egress to kube-system namespace."
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/name: anisonarr
+  ingress:
+    - fromEndpoints:
+        - matchLabels:
+            app.kubernetes.io/name: ingress-controller
+    - fromEndpoints:
+        - matchLabels:
+            app.kubernetes.io/name: prometheus
+  egress:
+    - toEndpoints:
+        - matchLabels:
+            "k8s:io.kubernetes.pod.namespace": kube-system
+  policyTypes:
+    - Ingress
+    - Egress

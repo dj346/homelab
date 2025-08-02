@@ -3,9 +3,15 @@ kind: Ingress
 metadata:
   name: anisonarr-ingress
   namespace: sonarr
+  labels:
+    app.kubernetes.io/name: anisonarr
+    app.kubernetes.io/component: networking
+    app.kubernetes.io/instance: anisonarr-prod-d1
+    app.kubernetes.io/managed-by: argocd
   annotations:
     cert-manager.io/cluster-issuer: cloudflare-clusterissuer
     traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    description: "Ingress for Anisonarr application, routing traffic to the Anisonarr web service."
 spec:
   rules:
     - host: anisonarr.kube-prod-d1.mclacken.net
@@ -17,7 +23,7 @@ spec:
               service:
                 name: anisonarr-web
                 port:
-                  number: 8989
+                  name: http
   tls:
     - hosts:
         - anisonarr.kube-prod-d1.mclacken.net

@@ -1,0 +1,98 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: anisonarr-statefulset
+  namespace: anisonarr
+  labels:
+    app.kubernetes.io/name: anisonarr
+    app.kubernetes.io/instance: anisonarr-prod
+    app.kubernetes.io/component: application
+    app.kubernetes.io/managed-by: argocd
+spec:
+  serviceName: anisonarr-web
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: anisonarr
+  updateStrategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: anisonarr
+    spec:
+      priorityClassName: low-priority
+      securityContext:
+        runAsUser: 1000
+        fsGroup: 1000
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: app.kubernetes.io/name
+                    operator: In
+                    values:
+                      - anisonarr
+              topologyKey: kubernetes.io/hostname
+      containers:
+        - name: anisonarr
+          image: lscr.io/linuxserver/sonarr:4.0.5
+          imagePullPolicy: IfNotPresent
+          securityContext:
+            runAsNonRoot: true
+            allowPrivilegeEscalation: false
+          env:
+            - name: PUID
+              value: "1000"
+            - name: PGID
+              value: "1000"
+            - name: TZ
+              value: "America/Los_Angeles"
+          ports:
+            - name: http
+              containerPort: 8989
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+            initialDelaySeconds: 30
+            periodSeconds: 15
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+            initialDelaySeconds: 15
+            periodSeconds: 10
+          startupProbe:
+            httpGet:
+              path: /
+              port: http
+            failureThreshold: 30
+            periodSeconds: 10
+          # resources:
+          #   requests:
+          #     memory: "256Mi"
+          #     cpu: "250m"
+          #   limits:
+          #     memory: "512Mi"
+          #     cpu: "500m"
+          volumeMounts:
+            - name: anisonarr-config
+              mountPath: /config
+            - name: data
+              mountPath: /data
+      volumes:
+        - name: data
+          nfs:
+            server: 10.15.21.5
+            path: /mnt/user/video/
+  volumeClaimTemplates:
+    - metadata:
+        name: anisonarr-config
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        storageClassName: longhorn
+        resources:
+          requests:
+            storage: 1Gi

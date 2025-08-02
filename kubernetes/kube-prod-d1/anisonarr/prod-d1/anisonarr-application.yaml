@@ -1,10 +1,11 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: anisonarr
+  name: anisonarr-application
   namespace: argocd
   labels:
     app.kubernetes.io/name: anisonarr
+    app.kubernetes.io/component: application
     app.kubernetes.io/instance: anisonarr-prod-d1
     app.kubernetes.io/managed-by: argocd
   annotations:

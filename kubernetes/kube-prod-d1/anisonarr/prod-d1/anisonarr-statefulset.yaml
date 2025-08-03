@@ -103,10 +103,10 @@ spec:
               mountPath: /config
             - name: data
               mountPath: /data
-            - name: config-xml-file
-              mountPath: /config/config.xml
-              subPath: config.xml
-              readOnly: true
+            # - name: config-xml-file
+            #   mountPath: /config/config.xml
+            #   subPath: config.xml
+            #   readOnly: true
       volumes:
         - name: data
           nfs:

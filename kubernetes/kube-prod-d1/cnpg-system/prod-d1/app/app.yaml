@@ -14,10 +14,20 @@ spec:
     repoURL: 'https://cloudnative-pg.github.io/charts'
     chart: cloudnative-pg
     targetRevision: 0.23.0
-    # helm:
-    #   values: |
-    #     crds:
-    #       create: true
+    valuesObject:
+      replicaCount: 1
+
+      commonAnnotations: {}
+      podAnnotations: {}
+      podLabels:
+        app.kubernetes.io/name: cnpg-cloudnative-pg
+        app.kubernetes.io/instance: cnpg-cloudnative-pg-prod-d1
+        app.kubernetes.io/component: database
+        app.kubernetes.io/managed-by: argocd
+
+      priorityClassName: ""
+
+      resources: {}
   syncPolicy:
     syncOptions:
       - ServerSideApply=true

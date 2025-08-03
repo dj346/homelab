@@ -70,6 +70,18 @@ spec:
               value: "1000"
             - name: TZ
               value: "America/Los_Angeles"
+            - name: PostgresOptions__User
+              value: "qstick"
+            - name: PostgresOptions__Password
+              value: "qstick"
+            - name: PostgresOptions__Port
+              value: "5432"
+            - name: PostgresOptions__Host
+              value: "postgres14"
+            - name: PostgresOptions__MainDb
+              value: "MainDbName"
+            - name: PostgresOptions__LogDb
+              value: "LogDbName"
           ports:
             - name: http
               containerPort: 8989

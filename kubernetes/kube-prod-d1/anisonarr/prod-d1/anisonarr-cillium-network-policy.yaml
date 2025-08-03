@@ -15,12 +15,10 @@ spec:
     matchLabels:
       app.kubernetes.io/name: anisonarr
   ingress:
-    - fromEndpoints:
+    - toEndpoints:
         - matchLabels:
-            app.kubernetes.io/name: ingress-controller
-    - fromEndpoints:
-        - matchLabels:
-            app.kubernetes.io/name: prometheus
+            app.kubernetes.io/name: anisonarr
+            app.kubernetes.io/component: database
   egress:
     - toEndpoints:
         - matchLabels:

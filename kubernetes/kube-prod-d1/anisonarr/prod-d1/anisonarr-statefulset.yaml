@@ -65,31 +65,31 @@ spec:
           # securityContext:
           #   runAsNonRoot: false
           #   allowPrivilegeEscalation: false
-      env:
-        - name: PUID
-          value: "1000"
-        - name: PGID
-          value: "1000"
-        - name: TZ
-          value: "America/Los_Angeles"
-        - name: Sonarr__Postgres__User
-          valueFrom:
-            secretKeyRef:
-              name: anisonarr-postgres-credentials-secret
-              key: username
-        - name: Sonarr__Postgres__Password
-          valueFrom:
-            secretKeyRef:
-              name: anisonarr-postgres-credentials-secret
-              key: password
-        - name: Sonarr__Postgres__Port
-          value: "5432"
-        - name: Sonarr__Postgres__Host
-          value: "anisonarr-postgres-cluster-rw"
-        # - name: Sonarr__Postgres__MainDb
-        #   value: "MainDbName"
-        # - name: Sonarr__Postgres__LogDb
-        #   value: "LogDbName"
+          env:
+            - name: PUID
+              value: "1000"
+            - name: PGID
+              value: "1000"
+            - name: TZ
+              value: "America/Los_Angeles"
+            - name: Sonarr__Postgres__User
+              valueFrom:
+                secretKeyRef:
+                  name: anisonarr-postgres-credentials-secret
+                  key: username
+            - name: Sonarr__Postgres__Password
+              valueFrom:
+                secretKeyRef:
+                  name: anisonarr-postgres-credentials-secret
+                  key: password
+            - name: Sonarr__Postgres__Port
+              value: "5432"
+            - name: Sonarr__Postgres__Host
+              value: "anisonarr-postgres-cluster-rw"
+            # - name: Sonarr__Postgres__MainDb
+            #   value: "MainDbName"
+            # - name: Sonarr__Postgres__LogDb
+            #   value: "LogDbName"
           ports:
             - name: http
               containerPort: 8989

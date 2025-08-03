@@ -1,7 +1,7 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
-  name: anisonarr-postgres-main-cluster
+  name: anisonarr-postgres-cluster
   namespace: anisonarr
   labels:
     app.kubernetes.io/name: anisonarr
@@ -34,7 +34,9 @@ spec:
       database: sonarr-main
       owner: anisonarr
       secret:
-        name: anisonarr-postgres-main-credentials-secret
+        name: anisonarr-postgres-credentials-secret
+      postInitSQL:
+        - CREATE DATABASE sonarr-log OWNER anisonarr
     # For recovery scenarios, uncomment below:
     # recovery:
     #   backup:

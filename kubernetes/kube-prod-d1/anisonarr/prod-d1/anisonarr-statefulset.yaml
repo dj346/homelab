@@ -23,8 +23,8 @@ spec:
     spec:
       priorityClassName: low-priority
       securityContext:
-        runAsUser: 1000
-        fsGroup: 1000
+        runAsUser: 0
+        runAsGroup: 0
       affinity:
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:

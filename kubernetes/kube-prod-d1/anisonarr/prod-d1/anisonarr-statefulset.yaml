@@ -93,24 +93,24 @@ spec:
           ports:
             - name: http
               containerPort: 8989
-          # livenessProbe:
-          #   httpGet:
-          #     path: /
-          #     port: http
-          #   initialDelaySeconds: 30
-          #   periodSeconds: 15
-          # readinessProbe:
-          #   httpGet:
-          #     path: /
-          #     port: http
-          #   initialDelaySeconds: 15
-          #   periodSeconds: 10
-          # startupProbe:
-          #   httpGet:
-          #     path: /
-          #     port: http
-          #   failureThreshold: 30
-          #   periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+            initialDelaySeconds: 30
+            periodSeconds: 15
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+            initialDelaySeconds: 15
+            periodSeconds: 10
+          startupProbe:
+            httpGet:
+              path: /
+              port: http
+            failureThreshold: 30
+            periodSeconds: 10
           # resources:
           #   requests:
           #     memory: "256Mi"
@@ -123,22 +123,11 @@ spec:
               mountPath: /config
             - name: data
               mountPath: /data
-            # - name: config-xml-file
-            #   mountPath: /config/config.xml
-            #   subPath: config.xml
-            #   readOnly: true
       volumes:
         - name: data
           nfs:
             server: 10.15.21.5
             path: /mnt/user/video/
-        - name: config-xml-file
-          secret:
-            secretName: anisonarr-config-secret
-            defaultMode: 0644                    
-            items:                               
-            - key: config.xml
-              path: config.xml
         # - name: anisonarr-backup-storage ## Uncomment this and set claimname to PVC
         #   persistentVolumeClaim:
         #     claimName: pvc-bc57f2c8-cc57-4828-bd37-e4e84fd7cfbf

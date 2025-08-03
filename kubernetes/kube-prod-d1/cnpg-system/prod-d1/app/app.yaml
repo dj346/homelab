@@ -3,8 +3,6 @@ kind: Application
 metadata:
   name: cnpg-cloudnative-pg
   namespace: argocd
-  #annotations:
-    #argocd.argoproj.io/sync-wave: "2"
 spec:
   project: default
   destination:
@@ -14,20 +12,18 @@ spec:
     repoURL: 'https://cloudnative-pg.github.io/charts'
     chart: cloudnative-pg
     targetRevision: 0.23.0
-    valuesObject:
-      replicaCount: 1
-
-      commonAnnotations: {}
-      podAnnotations: {}
-      podLabels:
-        app.kubernetes.io/name: cnpg-cloudnative-pg
-        app.kubernetes.io/instance: cnpg-cloudnative-pg-prod-d1
-        app.kubernetes.io/component: database
-        app.kubernetes.io/managed-by: argocd
-
-      priorityClassName: ""
-
-      resources: {}
+    helm:
+      valuesObject:
+        replicaCount: 1
+        commonAnnotations: {}
+        podAnnotations: {}
+        podLabels:
+          app.kubernetes.io/name: cnpg-cloudnative-pg
+          app.kubernetes.io/instance: cnpg-cloudnative-pg-prod-d1
+          app.kubernetes.io/component: database
+          app.kubernetes.io/managed-by: argocd
+        priorityClassName: ""
+        resources: {}
   syncPolicy:
     syncOptions:
       - ServerSideApply=true
@@ -37,7 +33,7 @@ spec:
       selfHeal: true 
       allowEmpty: false
     retry:
-      limit: 0 # the number of retries to attempt
+      limit: 0
       backoff:
         duration: 5s
         factor: 2

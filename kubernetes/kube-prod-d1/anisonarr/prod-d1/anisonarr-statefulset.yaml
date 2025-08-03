@@ -8,6 +8,8 @@ metadata:
     app.kubernetes.io/instance: anisonarr-prod
     app.kubernetes.io/component: application
     app.kubernetes.io/managed-by: argocd
+  annotations:
+    description: "StatefulSet for Animation Sonarr application managed by ArgoCD"
 spec:
   serviceName: anisonarr-web-service
   replicas: 1
@@ -71,17 +73,23 @@ spec:
         - name: TZ
           value: "America/Los_Angeles"
         - name: Sonarr__Postgres__User
-          value: "qstick"
+          valueFrom:
+            secretKeyRef:
+              name: anisonarr-postgres-credentials-secret
+              key: username
         - name: Sonarr__Postgres__Password
-          value: "qstick"
+          valueFrom:
+            secretKeyRef:
+              name: anisonarr-postgres-credentials-secret
+              key: password
         - name: Sonarr__Postgres__Port
           value: "5432"
         - name: Sonarr__Postgres__Host
-          value: "postgres14"
-        - name: Sonarr__Postgres__MainDb
-          value: "MainDbName"
-        - name: Sonarr__Postgres__LogDb
-          value: "LogDbName"
+          value: "anisonarr-postgres-cluster-rw"
+        # - name: Sonarr__Postgres__MainDb
+        #   value: "MainDbName"
+        # - name: Sonarr__Postgres__LogDb
+        #   value: "LogDbName"
           ports:
             - name: http
               containerPort: 8989

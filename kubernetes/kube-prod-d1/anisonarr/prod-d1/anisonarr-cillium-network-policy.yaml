@@ -25,6 +25,11 @@ spec:
     - toEndpoints:
         - matchLabels:
             "k8s:io.kubernetes.pod.namespace": kube-system
+    - toEndpoints:
+        - matchLabels:
+            app.kubernetes.io/name: anisonarr
+            app.kubernetes.io/component: database
+
   # policyTypes:
   #   - Ingress
   #   - Egress

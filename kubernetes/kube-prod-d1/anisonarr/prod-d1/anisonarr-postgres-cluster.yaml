@@ -36,7 +36,7 @@ spec:
       secret:
         name: anisonarr-postgres-credentials-secret
       postInitSQL:
-        - CREATE DATABASE sonarr-log OWNER anisonarr
+        - CREATE DATABASE "sonarr-log" OWNER anisonarr
     # For recovery scenarios, uncomment below:
     # recovery:
     #   backup:

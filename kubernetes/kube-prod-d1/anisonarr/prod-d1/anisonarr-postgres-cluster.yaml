@@ -55,7 +55,7 @@ spec:
 
   walStorage:
     storageClass: longhorn-strict-local
-    size: 200Mi
+    size: 1Gi
 
   # backup:
   #   barmanObjectStore:

@@ -90,9 +90,11 @@ spec:
             #   value: "MainDbName"
             # - name: Sonarr__Postgres__LogDb
             #   value: "LogDbName"
+
           ports:
             - name: http
               containerPort: 8989
+
           startupProbe:
             httpGet:
               path: /
@@ -105,7 +107,7 @@ spec:
               path: /
               port: http
             initialDelaySeconds: 5
-            periodSeconds: 5
+            periodSeconds: 2
 
           livenessProbe:
             httpGet:
@@ -113,6 +115,7 @@ spec:
               port: http
             initialDelaySeconds: 20
             periodSeconds: 10
+
           # resources:
           #   requests:
           #     memory: "256Mi"
@@ -120,11 +123,13 @@ spec:
           #   limits:
           #     memory: "512Mi"
           #     cpu: "500m"
+
           volumeMounts:
             - name: anisonarr-config
               mountPath: /config
             - name: data
               mountPath: /data
+
       volumes:
         - name: data
           nfs:
@@ -134,6 +139,7 @@ spec:
         #   persistentVolumeClaim:
         #     claimName: pvc-bc57f2c8-cc57-4828-bd37-e4e84fd7cfbf
         #     readOnly: false
+        
   volumeClaimTemplates:
     - metadata:
         name: anisonarr-config

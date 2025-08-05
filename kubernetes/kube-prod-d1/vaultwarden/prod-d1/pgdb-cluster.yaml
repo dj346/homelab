@@ -39,7 +39,7 @@ spec:
 
   storage:
     storageClass: longhorn-strict-local
-    size: 250Mi
+    size: 400Mi
 
   # backup:
   #   barmanObjectStore:

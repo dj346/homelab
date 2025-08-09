@@ -1,0 +1,42 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: openbao-application
+  namespace: argocd
+  labels:
+    app.kubernetes.io/name: openbao
+    app.kubernetes.io/component: application
+    app.kubernetes.io/instance: openbao-prod-d1
+    app.kubernetes.io/managed-by: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+    description: "ArgoCD managed deployment for OpenBao application in production"
+spec:
+  project: default
+  revisionHistoryLimit: 5
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: openbao
+  sources:
+    - repoURL: https://openbao.github.io/openbao-helm
+      chart: openbao
+      targetRevision: 0.16.2
+      # helm:
+      #   valuesObject:
+    - repoURL: 'ssh://git@gitea-ssh.gitea.svc.cluster.local:2222/dj346/homelab.git'
+      targetRevision: HEAD
+      path: kubernetes/kube-prod-d1/openbao/prod-d1
+      ref: values
+  syncPolicy:
+    syncOptions:
+      - Validate=true
+      - PrunePropagationPolicy=foreground
+    automated:
+      prune: true
+      selfHeal: true
+    retry:
+      limit: 5
+      backoff:
+        duration: 10s
+        factor: 2
+        maxDuration: 5m

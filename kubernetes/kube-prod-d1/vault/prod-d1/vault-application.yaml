@@ -121,7 +121,7 @@ spec:
                   }
 
                   seal "awskms" {
-                    region     = "us-west-1"
+                    region     = "us-east-1"
                     kms_key_id = "d4bea16e-c110-4668-a8e1-a010471cd950"
                   }
 

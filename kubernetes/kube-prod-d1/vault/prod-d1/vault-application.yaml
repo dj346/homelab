@@ -129,19 +129,19 @@ spec:
                   storage "raft" {
                     path = "/vault/data"
                     retry_join {
-                      leader_api_addr = "https://vault-0.vault-internal:8200"
+                      leader_api_addr = "https://vault-application-0.vault-application-internal.svc.cluster.local:8200"
                     }
                     retry_join {
-                      leader_api_addr = "https://vault-1.vault-internal:8200"
+                      leader_api_addr = "https://vault-application-1.vault-application-internal.svc.cluster.local:8200"
                     }
                     retry_join {
-                      leader_api_addr = "https://vault-2.vault-internal:8200"
+                      leader_api_addr = "https://vault-application-2.vault-application-internal.svc.cluster.local:8200"
                     }
                     retry_join {
-                      leader_api_addr = "https://vault-3.vault-internal:8200"
+                      leader_api_addr = "https://vault-application-3.vault-application-internal.svc.cluster.local:8200"
                     }
                     retry_join {
-                      leader_api_addr = "https://vault-4.vault-internal:8200"
+                      leader_api_addr = "https://vault-application-4.vault-application-internal.svc.cluster.local:8200"
                     }
                   }
 

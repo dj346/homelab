@@ -103,6 +103,9 @@ spec:
               - envName: AWS_SECRET_ACCESS_KEY
                 secretName: vault-aws-token-secret
                 secretKey: AWS_SECRET_ACCESS_KEY
+              - envName: VAULT_PG_CONNECTION_URL
+                secretName: vault-aws-token-secret
+                secretKey: VAULT_PG_CONNECTION_URL
 
             # Run Vault in "HA" mode.
             ha:
@@ -124,6 +127,10 @@ spec:
                   seal "awskms" {
                     region     = "us-west-1"
                     kms_key_id = "b51776f9-44d6-44e6-8740-faa6dcc4b2cd"
+                  }
+
+                  storage "postgresql" {
+                    ha_enabled = "true"
                   }
 
                   storage "raft" {

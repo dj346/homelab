@@ -128,11 +128,7 @@ spec:
                     region     = "us-west-1"
                     kms_key_id = "b51776f9-44d6-44e6-8740-faa6dcc4b2cd"
                   }
-
-                  storage "postgresql" {
-                    ha_enabled = "true"
-                  }
-
+                  
                   storage "raft" {
                     path = "/vault/data"
                     retry_join {

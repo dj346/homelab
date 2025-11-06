@@ -1,0 +1,42 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: coredns
+  namespace: kube-system
+data:
+  Corefile: |
+    .:53 {
+        errors
+        health
+        rewrite stop {
+          name regex (.*)-ns-(.*)\.kube-prod-d1i\.mclacken\.net\.$ {1}.{2}.svc.cluster.local
+          answer name (.*)\.(.*)\.svc\.cluster\.local  {1}-ns-{2}.kube-prod-d1i.mclacken.net.
+        }
+        ready
+        kubernetes cluster.local in-addr.arpa ip6.arpa {
+          pods insecure
+          fallthrough in-addr.arpa ip6.arpa
+        }
+        hosts /etc/coredns/NodeHosts {
+          ttl 60
+          reload 15s
+          fallthrough
+        }
+        prometheus :9153
+        forward . /etc/resolv.conf
+        cache 30
+        loop
+        reload
+        loadbalance
+        import /etc/coredns/custom/*.override
+    }
+    import /etc/coredns/custom/*.server
+  NodeHosts: |
+    10.15.21.21 rpi5-prod-d1
+    10.15.21.22 rpi5-prod-d2
+    10.15.21.23 cksrv-prod-d1
+    10.15.21.30 rpi5-prod-d3
+    10.15.21.31 wksrv-prod-d1
+    10.15.21.32 wksrv-prod-d2
+    10.15.21.33 wksrv-prod-d3
+    10.15.21.34 wksrv-prod-d4

@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: debian-tools
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: debian-tools
+  template:
+    metadata:
+      labels:
+        app: debian-tools
+    spec:
+      containers:
+        - name: debian
+          image: debian:latest
+          command: ["sleep", "infinity"]
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+          securityContext:
+            privileged: true
+          stdin: true
+          tty: true
+          # Optional: install useful tools automatically
+          lifecycle:
+            postStart:
+              exec:
+                command:
+                  [
+                    "/bin/sh",
+                    "-c",
+                    "apt-get update && apt-get install -y dnsutils iputils-ping net-tools curl wget vim",
+                  ]

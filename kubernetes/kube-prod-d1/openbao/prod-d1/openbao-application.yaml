@@ -26,7 +26,7 @@ spec:
           # Vault Helm Chart Value Overrides
           global:
             enabled: true
-            tlsDisable: false
+            tlsDisable: true
 
           injector:
             enabled: true
@@ -131,7 +131,7 @@ spec:
                   ui = true
                   cluster_name = "openbao-integrated-storage"
                   listener "tcp" {
-                    tls_disable = "false"
+                    tls_disable = "true"
                     address = "[::]:8200"
                     cluster_address = "[::]:8201"
                     tls_cert_file   = "/openbao/tls/tls.crt"
@@ -146,19 +146,19 @@ spec:
                   storage "raft" {
                     path = "/openbao/data"
                     retry_join {
-                      leader_api_addr = "https://openbao-application-0-hs-openbao-application-internal.openbao.kube-prod-d1i.mclacken.net:8200"
+                      leader_api_addr = "http://openbao-application-0-hs-openbao-application-internal.openbao.kube-prod-d1i.mclacken.net:8200"
                     }
                     retry_join {
-                      leader_api_addr = "https://openbao-application-1-hs-openbao-application-internal.openbao.kube-prod-d1i.mclacken.net:8200"
+                      leader_api_addr = "http://openbao-application-1-hs-openbao-application-internal.openbao.kube-prod-d1i.mclacken.net:8200"
                     }
                     retry_join {
-                      leader_api_addr = "https://openbao-application-2-hs-openbao-application-internal.openbao.kube-prod-d1i.mclacken.net:8200"
+                      leader_api_addr = "http://openbao-application-2-hs-openbao-application-internal.openbao.kube-prod-d1i.mclacken.net:8200"
                     }
                     retry_join {
-                      leader_api_addr = "https://openbao-application-3-hs-openbao-application-internal.openbao.kube-prod-d1i.mclacken.net:8200"
+                      leader_api_addr = "http://openbao-application-3-hs-openbao-application-internal.openbao.kube-prod-d1i.mclacken.net:8200"
                     }
                     retry_join {
-                      leader_api_addr = "https://openbao-application-4-hs-openbao-application-internal.openbao.kube-prod-d1i.mclacken.net:8200"
+                      leader_api_addr = "http://openbao-application-4-hs-openbao-application-internal.openbao.kube-prod-d1i.mclacken.net:8200"
                     }
                   }
 

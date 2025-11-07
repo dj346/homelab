@@ -146,19 +146,19 @@ spec:
                   storage "raft" {
                     path = "/openbao/data"
                     retry_join {
-                      leader_api_addr = "https://openbao-application-0-ns-openbao.openbao-application-internal:8200"
+                      leader_api_addr = "https://openbao-application-0-hs-openbao-application-internal.openbao.kube-prod-d1i.mclacken.net:8200"
                     }
                     retry_join {
-                      leader_api_addr = "https://openbao-application-1.openbao-application-internal:8200"
+                      leader_api_addr = "https://openbao-application-1-hs-openbao-application-internal.openbao.kube-prod-d1i.mclacken.net:8200"
                     }
                     retry_join {
-                      leader_api_addr = "https://openbao-application-2.openbao-application-internal:8200"
+                      leader_api_addr = "https://openbao-application-2-hs-openbao-application-internal.openbao.kube-prod-d1i.mclacken.net:8200"
                     }
                     retry_join {
-                      leader_api_addr = "https://openbao-application-3.openbao-application-internal:8200"
+                      leader_api_addr = "https://openbao-application-3-hs-openbao-application-internal.openbao.kube-prod-d1i.mclacken.net:8200"
                     }
                     retry_join {
-                      leader_api_addr = "https://openbao-application-4.openbao-application-internal:8200"
+                      leader_api_addr = "https://openbao-application-4-hs-openbao-application-internal.openbao.kube-prod-d1i.mclacken.net:8200"
                     }
                   }
 

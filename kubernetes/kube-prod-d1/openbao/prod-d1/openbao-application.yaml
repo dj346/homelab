@@ -26,7 +26,7 @@ spec:
           # Vault Helm Chart Value Overrides
           global:
             enabled: true
-            tlsDisable: true
+            tlsDisable: false
 
           injector:
             enabled: true
@@ -44,6 +44,16 @@ spec:
             #       cpu: 250m
 
           server:
+            volumes:
+              - name: tls
+                secret:
+                  secretName: openbao-certificate-secret   # from your Certificate
+                  defaultMode: 420
+            volumeMounts:
+              - name: tls
+                mountPath: /openbao/tls
+                readOnly: true
+              
             # This configures the Vault Statefulset to create a PVC for data
             # storage when using the file or raft backend storage engines.
             # See https://www.vaultproject.io/docs/configuration/storage/index.html to know more
@@ -121,9 +131,11 @@ spec:
                   ui = true
                   cluster_name = "openbao-integrated-storage"
                   listener "tcp" {
-                    tls_disable = "true"
+                    tls_disable = "false"
                     address = "[::]:8200"
                     cluster_address = "[::]:8201"
+                    tls_cert_file   = "/openbao/tls/tls.crt"
+                    tls_key_file    = "/openbao/tls/tls.key"
                   }
 
                   seal "awskms" {
@@ -134,19 +146,19 @@ spec:
                   storage "raft" {
                     path = "/openbao/data"
                     retry_join {
-                      leader_api_addr = "http://openbao-application-0.openbao-application-internal:8200"
+                      leader_api_addr = "https://openbao-application-0.openbao-application-internal:8200"
                     }
                     retry_join {
-                      leader_api_addr = "http://openbao-application-1.openbao-application-internal:8200"
+                      leader_api_addr = "https://openbao-application-1.openbao-application-internal:8200"
                     }
                     retry_join {
-                      leader_api_addr = "http://openbao-application-2.openbao-application-internal:8200"
+                      leader_api_addr = "https://openbao-application-2.openbao-application-internal:8200"
                     }
                     retry_join {
-                      leader_api_addr = "http://openbao-application-3.openbao-application-internal:8200"
+                      leader_api_addr = "https://openbao-application-3.openbao-application-internal:8200"
                     }
                     retry_join {
-                      leader_api_addr = "http://openbao-application-4.openbao-application-internal:8200"
+                      leader_api_addr = "https://openbao-application-4.openbao-application-internal:8200"
                     }
                   }
 

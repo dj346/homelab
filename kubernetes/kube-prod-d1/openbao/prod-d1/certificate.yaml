@@ -10,4 +10,5 @@ spec:
     kind: ClusterIssuer
   dnsNames:
     - "*.kube-prod-d1i.mclacken.net"
+    - "*.openbao.kube-prod-d1i.mclacken.net"
     - "*.kube-prod-d1.mclacken.net"

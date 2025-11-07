@@ -10,12 +10,12 @@ data:
         errors
         health
         rewrite stop {
-          name regex ^(.+)-ns-(.+)\.kube-prod-d1i\.mclacken\.net\.$ {1}.{2}.svc.cluster.local
-          answer name ^(.+)\.(.+)\.svc\.cluster\.local\.?$ {1}-ns-{2}.kube-prod-d1i.mclacken.net.
+          name regex ^(.+)-hs-(.+)\.(.+)\.kube-prod-d1i\.mclacken\.net\.?$ {1}.{2}.{3}.svc.cluster.local
+          answer name ^(.+)\.(.+)\.(.+)\.svc\.cluster\.local\.?$ {1}-hs-{2}.{3}.kube-prod-d1i.mclacken.net.
         }
         rewrite stop {
-          name regex ^(.+)-hs-(.+)-ns-(.+)\.kube-prod-d1i\.mclacken\.net\.$ {1}.{2}.{3}.svc.cluster.local
-          answer name ^(.+)\.(.+)\.(.+)\.svc\.cluster\.local\.?$ {1}-hs-{2}-ns-{3}.kube-prod-d1i.mclacken.net.
+          name regex ^(.+)\.(.+)\.kube-prod-d1i\.mclacken\.net\.?$ {1}.{2}.svc.cluster.local
+          answer name ^(.+)\.(.+)\.svc\.cluster\.local\.?$ {1}.{2}.kube-prod-d1i.mclacken.net.
         }
         ready
         kubernetes cluster.local in-addr.arpa ip6.arpa {

@@ -1,0 +1,23 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: cert-manager-tokenrequest
+  namespace: cert-manager
+rules:
+  - apiGroups: [""]
+    resources: ["serviceaccounts/token"]
+    verbs: ["create"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: cert-manager-tokenrequest
+  namespace: cert-manager
+subjects:
+  - kind: ServiceAccount
+    name: certmanager-cert-manager        # <- matches the SA in the error
+    namespace: cert-manager
+roleRef:
+  kind: Role
+  name: cert-manager-tokenrequest
+  apiGroup: rbac.authorization.k8s.io

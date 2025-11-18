@@ -10,6 +10,6 @@ spec:
     auth:
       kubernetes:
         mountPath: /v1/auth/kubernetes
-        role: issuer
+        role: pki-apps-kube-prod-d1
         serviceAccountRef:
           name: issuer

@@ -1,0 +1,12 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: example-com
+  namespace: cert-manager
+spec:
+  secretName: example-com-tls
+  issuerRef:
+    name: vault-issuer
+  commonName: test.kube-prod-d1.mclacken.net
+  dnsNames:
+  - test.kube-prod-d1.mclacken.net

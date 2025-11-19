@@ -8,3 +8,4 @@ spec:
   commonName: openbao-ops
   issuerRef:
     name: vault-issuer
+    kind: ClusterIssuer

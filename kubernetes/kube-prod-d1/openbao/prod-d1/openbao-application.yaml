@@ -153,8 +153,8 @@ spec:
                   }
                   
                   storage "raft" {
-                    path = "/vault/data"
-
+                    path = "/openbao/data"
+                    
                     retry_join {
                       leader_api_addr       = "https://openbao-application-0-hs-openbao-application-internal.openbao.kube-prod-d1i.mclacken.net:8200"
                       leader_ca_cert_file   = "/vault/userconfig/tls-ca/ca.crt"

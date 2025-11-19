@@ -49,9 +49,16 @@ spec:
                 secret:
                   secretName: openbao-certificate-secret   # from your Certificate
                   defaultMode: 420
+              - name: clientca
+                secret:
+                  secretName: openbao-client-ca
+                  defaultMode: 420
             volumeMounts:
               - name: tls
                 mountPath: /openbao/tls
+                readOnly: true
+              - name: clientca
+                mountPath: /openbao/clientca
                 readOnly: true
               
             # This configures the Vault Statefulset to create a PVC for data
@@ -134,8 +141,10 @@ spec:
                     tls_disable = "false"
                     address = "[::]:8200"
                     cluster_address = "[::]:8201"
-                    tls_cert_file   = "/openbao/tls/tls.crt"
-                    tls_key_file    = "/openbao/tls/tls.key"
+                    tls_cert_file = "/openbao/tls/tls.crt"
+                    tls_key_file = "/openbao/tls/tls.key"
+                    tls_client_ca_file = "/openbao/clientca/ca.crt"
+                    tls_require_and_verify_client_cert = "true"
                   }
 
                   seal "awskms" {
@@ -143,23 +152,35 @@ spec:
                     kms_key_id = "b51776f9-44d6-44e6-8740-faa6dcc4b2cd"
                   }
                   
-                  storage "raft" {
-                    path = "/openbao/data"
-                    retry_join {
-                      leader_api_addr = "https://openbao-application-0-hs-openbao-application-internal.openbao.kube-prod-d1i.mclacken.net:8200"
-                    }
-                    retry_join {
-                      leader_api_addr = "https://openbao-application-1-hs-openbao-application-internal.openbao.kube-prod-d1i.mclacken.net:8200"
-                    }
-                    retry_join {
-                      leader_api_addr = "https://openbao-application-2-hs-openbao-application-internal.openbao.kube-prod-d1i.mclacken.net:8200"
-                    }
-                    retry_join {
-                      leader_api_addr = "https://openbao-application-3-hs-openbao-application-internal.openbao.kube-prod-d1i.mclacken.net:8200"
-                    }
-                    retry_join {
-                      leader_api_addr = "https://openbao-application-4-hs-openbao-application-internal.openbao.kube-prod-d1i.mclacken.net:8200"
-                    }
+                  retry_join {
+                    leader_api_addr       = "https://openbao-application-0-hs-openbao-application-internal.openbao.kube-prod-d1i.mclacken.net:8200"
+                    leader_ca_cert_file   = "/vault/userconfig/tls-ca/ca.crt"
+                    leader_client_cert_file = "/vault/userconfig/tls-server/tls.crt"
+                    leader_client_key_file  = "/vault/userconfig/tls-server/tls.key"
+                  }
+                  retry_join {
+                    leader_api_addr       = "https://openbao-application-1-hs-openbao-application-internal.openbao.kube-prod-d1i.mclacken.net:8200"
+                    leader_ca_cert_file   = "/vault/userconfig/tls-ca/ca.crt"
+                    leader_client_cert_file = "/vault/userconfig/tls-server/tls.crt"
+                    leader_client_key_file  = "/vault/userconfig/tls-server/tls.key"
+                  }
+                  retry_join {
+                    leader_api_addr       = "https://openbao-application-2-hs-openbao-application-internal.openbao.kube-prod-d1i.mclacken.net:8200"
+                    leader_ca_cert_file   = "/vault/userconfig/tls-ca/ca.crt"
+                    leader_client_cert_file = "/vault/userconfig/tls-server/tls.crt"
+                    leader_client_key_file  = "/vault/userconfig/tls-server/tls.key"
+                  }
+                  retry_join {
+                    leader_api_addr       = "https://openbao-application-3-hs-openbao-application-internal.openbao.kube-prod-d1i.mclacken.net:8200"
+                    leader_ca_cert_file   = "/vault/userconfig/tls-ca/ca.crt"
+                    leader_client_cert_file = "/vault/userconfig/tls-server/tls.crt"
+                    leader_client_key_file  = "/vault/userconfig/tls-server/tls.key"
+                  }
+                  retry_join {
+                    leader_api_addr       = "https://openbao-application-4-hs-openbao-application-internal.openbao.kube-prod-d1i.mclacken.net:8200"
+                    leader_ca_cert_file   = "/vault/userconfig/tls-ca/ca.crt"
+                    leader_client_cert_file = "/vault/userconfig/tls-server/tls.crt"
+                    leader_client_key_file  = "/vault/userconfig/tls-server/tls.key"
                   }
 
                   service_registration "kubernetes" {}

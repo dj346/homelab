@@ -125,6 +125,13 @@ spec:
               - envName: VAULT_PG_CONNECTION_URL
                 secretName: vault-aws-token-secret
                 secretKey: VAULT_PG_CONNECTION_URL
+            
+            extraEnvironmentVars:
+              VAULT_CACERT: /openbao/clientca/ca.crt
+              VAULT_TLSCERT: /openbao/tls/tls.crt
+              VAULT_TLSKEY: /openbao/tls/tls.key
+
+
 
             # Run Vault in "HA" mode.
             ha:
@@ -138,13 +145,11 @@ spec:
                   ui = true
                   cluster_name = "openbao-integrated-storage"
                   listener "tcp" {
-                    tls_disable = "false"
                     address = "[::]:8200"
                     cluster_address = "[::]:8201"
                     tls_cert_file = "/openbao/tls/tls.crt"
                     tls_key_file = "/openbao/tls/tls.key"
                     tls_client_ca_file = "/openbao/clientca/ca.crt"
-                    tls_require_and_verify_client_cert = "true"
                   }
 
                   seal "awskms" {

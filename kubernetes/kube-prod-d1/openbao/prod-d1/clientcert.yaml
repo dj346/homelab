@@ -1,0 +1,14 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: openbao-client
+  namespace: openbao
+spec:
+  secretName: openbao-client-secret
+  usages:
+    - digital signature
+    - key encipherment
+    - client auth     # <-- required for mTLS
+  commonName: openbao-ops
+  issuerRef:
+    name: vault-issuer

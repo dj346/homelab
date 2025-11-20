@@ -130,9 +130,12 @@ spec:
               VAULT_CACERT: /openbao/clientca/ca.crt
               VAULT_TLSCERT: /openbao/tls/tls.crt
               VAULT_TLSKEY: /openbao/tls/tls.key
+              
+              VAULT_CLIENT_CERT: /openbao/clientca/ca.crt
+              VAULT_CLIENT_KEY: /openbao/clientca/tls.key
+              
               VAULT_API_ADDR: https://openbao-application-0-hs-openbao-application-internal.openbao.kube-prod-d1i.mclacken.net:8200
               VAULT_CLUSTER_ADDR: https://openbao-application-0-hs-openbao-application-internal.openbao.kube-prod-d1i.mclacken.net:8201
-
 
             # Run Vault in "HA" mode.
             ha:

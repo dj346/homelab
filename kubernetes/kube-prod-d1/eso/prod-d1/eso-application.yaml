@@ -30,6 +30,8 @@ spec:
     syncOptions:
       - Validate=true
       - PrunePropagationPolicy=foreground
+      - ServerSideApply=true
+      - CreateNamespace=true 
     automated:
       prune: true
       selfHeal: true

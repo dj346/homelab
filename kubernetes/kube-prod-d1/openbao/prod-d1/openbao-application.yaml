@@ -150,7 +150,7 @@ spec:
                     tls_cert_file = "/openbao/tls/tls.crt"
                     tls_key_file = "/openbao/tls/tls.key"
                     tls_client_ca_file = "/openbao/clientca/ca.crt"
-                    tls_require_and_verify_client_cert = "true"
+                    tls_require_and_verify_client_cert = "false"
                   }
 
                   seal "awskms" {

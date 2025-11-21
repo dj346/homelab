@@ -18,6 +18,7 @@ spec:
             - port: "5432"
               protocol: TCP
   egress:
+    # DNS to kube-dns (UDP and TCP 53)
     - toEndpoints:
         - matchLabels:
             io.kubernetes.pod.namespace: kube-system
@@ -26,8 +27,18 @@ spec:
         - ports:
             - port: "53"
               protocol: UDP
+            - port: "53"
+              protocol: TCP
           rules:
             dns:
               - matchPattern: "*"
+    # Allow egress to the Kubernetes API server
+    - toEntities:
+        - kube-apiserver
+      toPorts:
+        - ports:
+            - port: "443"
+              protocol: TCP
+    # (Optional) allow egress to any pods in the cluster
     - toEndpoints:
         - {}

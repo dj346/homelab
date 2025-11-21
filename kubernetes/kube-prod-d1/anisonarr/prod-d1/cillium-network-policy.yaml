@@ -8,6 +8,15 @@ spec:
   ingress:
     - fromEndpoints:
         - {}
+    - fromEndpoints:
+        - matchLabels:
+            io.kubernetes.pod.namespace: cnpg-system
+      toPorts:
+        - ports:
+            - port: "8000"
+              protocol: TCP
+            - port: "5432"
+              protocol: TCP
   egress:
     - toEndpoints:
         - matchLabels:

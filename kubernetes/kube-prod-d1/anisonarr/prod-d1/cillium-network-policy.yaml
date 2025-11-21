@@ -1,33 +1,53 @@
 apiVersion: cilium.io/v2
 kind: CiliumNetworkPolicy
 metadata:
-  name: anisonarr-network-policy
+  name: anisonarr-namespace-isolation
   namespace: anisonarr
   labels:
     app.kubernetes.io/name: anisonarr
     app.kubernetes.io/component: networking
     app.kubernetes.io/instance: anisonarr-prod
-    app.kubernetes.io/managed-by: argocd
-  annotations:
-    description: "Allow anisonarr app to access its database and kube-system egress."
 spec:
+  # Apply to all pods in this namespace
   endpointSelector:
     matchLabels:
-      app.kubernetes.io/name: anisonarr
-      app.kubernetes.io/instance: anisonarr-prod
-      app.kubernetes.io/component: application
+      "k8s:io.kubernetes.pod.namespace": anisonarr
+
+  # Ingress: only from same namespace
   ingress:
     - fromEndpoints:
         - matchLabels:
-            app.kubernetes.io/name: anisonarr
-            app.kubernetes.io/component: application
-            app.kubernetes.io/instance: anisonarr-prod
+            "k8s:io.kubernetes.pod.namespace": anisonarr
+
+  # Egress: only to same namespace + DNS (+ optional apiserver)
   egress:
+    # Intra-namespace egress
     - toEndpoints:
         - matchLabels:
-            app.kubernetes.io/name: anisonarr
-            app.kubernetes.io/component: database
-            app.kubernetes.io/instance: anisonarr-prod-d1
+            "k8s:io.kubernetes.pod.namespace": anisonarr
+
+    # DNS to CoreDNS (label match; adjust label if your cluster differs)
     - toEndpoints:
         - matchLabels:
             "k8s:io.kubernetes.pod.namespace": kube-system
+            k8s-app: kube-dns       # some clusters use k8s-app=kube-dns
+        - matchLabels:
+            "k8s:io.kubernetes.pod.namespace": kube-system
+            app.kubernetes.io/name: coredns  # others use app.kubernetes.io/name=coredns
+      toPorts:
+        - ports:
+            - port: "53"
+              protocol: UDP
+            - port: "53"
+              protocol: TCP
+          rules:
+            dns:
+              - matchPattern: "*"
+
+    # # allow calls to the Kubernetes API server if needed
+    # - toEntities:
+    #     - kube-apiserver
+    #   toPorts:
+    #     - ports:
+    #         - port: "443"
+    #           protocol: TCP

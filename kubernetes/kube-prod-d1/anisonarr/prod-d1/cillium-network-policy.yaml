@@ -3,53 +3,22 @@ kind: CiliumNetworkPolicy
 metadata:
   name: anisonarr-namespace-isolation
   namespace: anisonarr
-  labels:
-    app.kubernetes.io/name: anisonarr
-    app.kubernetes.io/component: networking
-    app.kubernetes.io/instance: anisonarr-prod
 spec:
-  # Apply to all pods in this namespace
-  endpointSelector:
-    matchLabels:
-      "k8s:io.kubernetes.pod.namespace": anisonarr
-
-  # Ingress: only allow traffic from the same namespace
+  endpointSelector: {}
   ingress:
     - fromEndpoints:
-        - matchLabels:
-            "k8s:io.kubernetes.pod.namespace": anisonarr
-    
-    - fromEntities:
-      - kube-apiserver
-
-  # Egress: only to the same namespace + k8s essentials
+        - {}
   egress:
     - toEndpoints:
         - matchLabels:
-            "k8s:io.kubernetes.pod.namespace": anisonarr
-
-    # DNS to CoreDNS (adjust if your cluster differs)
-    - toEndpoints:
-        - matchLabels:
-            "k8s:io.kubernetes.pod.namespace": kube-system
+            io.kubernetes.pod.namespace: kube-system
             k8s-app: kube-dns
-        - matchLabels:
-            "k8s:io.kubernetes.pod.namespace": kube-system
-            app.kubernetes.io/name: coredns
       toPorts:
         - ports:
             - port: "53"
               protocol: UDP
-            - port: "53"
-              protocol: TCP
           rules:
             dns:
               - matchPattern: "*"
-
-    # allow calls to the Kubernetes API server if any pod needs it
-    - toEntities:
-        - kube-apiserver
-      toPorts:
-        - ports:
-            - port: "443"
-              protocol: TCP
+    - toEndpoints:
+        - {}

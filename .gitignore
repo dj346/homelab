@@ -3,7 +3,9 @@ lldap-postgres-secret.yaml
 lldap-pgdb-credentials.yaml
 lldap-credentials.yaml
 postgres-admin-secret.yaml
+
 *secret*
+!*external-secret*
 
 # Ignore SQLite files
 docker/s3b-prod-d1/garage/meta/db.sqlite

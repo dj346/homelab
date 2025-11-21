@@ -33,8 +33,9 @@ spec:
             dns:
               - matchPattern: "*"
     # Allow egress to the Kubernetes API server
-    - toEntities:
-        - kube-apiserver
+    - toEndpoints:
+        - matchLabels:
+            io.kubernetes.pod.namespace: default
       toPorts:
         - ports:
             - port: "443"

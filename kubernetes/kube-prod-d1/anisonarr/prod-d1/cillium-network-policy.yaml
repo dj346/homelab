@@ -8,18 +8,15 @@ metadata:
     app.kubernetes.io/component: networking
     app.kubernetes.io/instance: anisonarr-prod
 spec:
-  # Apply to all pods in this namespace
   endpointSelector:
     matchLabels:
       "k8s:io.kubernetes.pod.namespace": anisonarr
 
-  # Ingress: only from same namespace
   ingress:
     - fromEndpoints:
         - matchLabels:
             "k8s:io.kubernetes.pod.namespace": anisonarr
 
-  # Egress: only to same namespace + DNS (+ optional apiserver)
   egress:
     # Intra-namespace egress
     - toEndpoints:
@@ -31,14 +28,14 @@ spec:
         - matchLabels:
             "k8s:io.kubernetes.pod.namespace": cnpg-system
 
-    # DNS to CoreDNS (label match; adjust label if your cluster differs)
+    # DNS to CoreDNS (adjust if your cluster differs)
     - toEndpoints:
         - matchLabels:
             "k8s:io.kubernetes.pod.namespace": kube-system
-            k8s-app: kube-dns       # some clusters use k8s-app=kube-dns
+            k8s-app: kube-dns
         - matchLabels:
             "k8s:io.kubernetes.pod.namespace": kube-system
-            app.kubernetes.io/name: coredns  # others use app.kubernetes.io/name=coredns
+            app.kubernetes.io/name: coredns
       toPorts:
         - ports:
             - port: "53"
@@ -49,19 +46,9 @@ spec:
             dns:
               - matchPattern: "*"
 
-    # Allow the Kubernetes API via its ClusterIP Service (kubernetes.default.svc)
-    - toServices:
-        - k8sService:
-            namespace: default
-            serviceName: kubernetes
-      toPorts:
-        - ports:
-            - port: "443"
-              protocol: TCP
-
-    # allow calls to the Kubernetes API server if needed (needed for CNPG)
-    - toEntities:
-        - kube-apiserver
+    # Allow the Kubernetes API Service ClusterIP directly
+    - toCIDR:
+        - 10.43.0.1/32
       toPorts:
         - ports:
             - port: "443"

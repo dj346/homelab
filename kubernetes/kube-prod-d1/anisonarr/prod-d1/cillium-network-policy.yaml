@@ -49,6 +49,16 @@ spec:
             dns:
               - matchPattern: "*"
 
+    # Allow the Kubernetes API via its ClusterIP Service (kubernetes.default.svc)
+    - toServices:
+        - k8sService:
+            namespace: default
+            serviceName: kubernetes
+      toPorts:
+        - ports:
+            - port: "443"
+              protocol: TCP
+
     # allow calls to the Kubernetes API server if needed (needed for CNPG)
     - toEntities:
         - kube-apiserver

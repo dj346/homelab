@@ -7,7 +7,7 @@ postgres-admin-secret.yaml
 *secret*
 !*external-secret*
 !*template-secret*
-
+!*push-secret*
 # Ignore SQLite files
 docker/s3b-prod-d1/garage/meta/db.sqlite
 docker/s3b-prod-d1/garage/meta/db.sqlite-shm

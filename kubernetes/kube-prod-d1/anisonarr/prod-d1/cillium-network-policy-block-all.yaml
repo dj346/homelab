@@ -1,7 +1,7 @@
 apiVersion: cilium.io/v2
 kind: CiliumNetworkPolicy
 metadata:
-  name: allow-app-egress-to-db
+  name: anisonarr-cillium-network-policy-block-all
   namespace: anisonarr
 spec:
   endpointSelector: {}
@@ -25,3 +25,9 @@ spec:
           rules:
             dns:
               - matchPattern: "*"
+    - fromEndpoints:
+        - matchLabels:
+            io.kubernetes.pod.namespace: traefik
+      toPorts:
+        - port: "8989"
+          protocol: TCP

@@ -1,7 +1,7 @@
 apiVersion: cilium.io/v2
 kind: CiliumNetworkPolicy
 metadata:
-  name: anisonarr-cillium-network-policy-block-all
+  name: anisonarr-cillium-network-policy-postgres
   namespace: anisonarr
 spec:
   endpointSelector:

@@ -4,10 +4,10 @@ metadata:
   name: anisonarr-cillium-network-policy-postgres
   namespace: anisonarr
   labels:
-  app.kubernetes.io/name: anisonarr
-  app.kubernetes.io/component: network-policy
-  app.kubernetes.io/instance: anisonarr-prod-d1
-  app.kubernetes.io/managed-by: argocd
+    app.kubernetes.io/name: anisonarr
+    app.kubernetes.io/component: network-policy
+    app.kubernetes.io/instance: anisonarr-prod-d1
+    app.kubernetes.io/managed-by: argocd
   annotations:
     description: "Cilium Network Policy to allow Anisonarr application to communicate with Postgres database"
 spec:

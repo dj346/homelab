@@ -1,0 +1,41 @@
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: anisonarr-cillium-network-policy-block-all
+  namespace: anisonarr
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/name: anisonarr
+      app.kubernetes.io/component: database
+  ingress:
+    - fromEndpoints:
+        - matchLabels:
+            app.kubernetes.io/name: anisonarr
+            app.kubernetes.io/component: program
+            io.kubernetes.pod.namespace: anisonarr
+      toPorts:
+        - port: "5432"
+          protocol: TCP
+    - fromEndpoints:
+        - matchLabels:
+            io.kubernetes.pod.namespace: cnpg-system
+      toPorts:
+        - port: "8000"
+          protocol: TCP
+        - port: "5432"
+          protocol: TCP
+  egress:
+    - toEntities:
+        - kube-apiserver
+    - toEndpoints:
+        - matchLabels:
+            io.kubernetes.pod.namespace: kube-system
+            k8s-app: kube-dns
+      toPorts:
+        - ports:
+            - port: "53"
+              protocol: UDP
+          rules:
+            dns:
+              - matchPattern: "*"

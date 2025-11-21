@@ -3,6 +3,13 @@ kind: CiliumNetworkPolicy
 metadata:
   name: anisonarr-cillium-network-policy-block-all
   namespace: anisonarr
+  labels:
+    app.kubernetes.io/name: anisonarr
+    app.kubernetes.io/component: network-policy
+    app.kubernetes.io/instance: anisonarr-prod-d1
+    app.kubernetes.io/managed-by: argocd
+  annotations:
+    description: "Cilium Network Policy to block all traffic except allowed ingress and egress for Anisonarr application"
 spec:
   endpointSelector: {}
   ingress: 

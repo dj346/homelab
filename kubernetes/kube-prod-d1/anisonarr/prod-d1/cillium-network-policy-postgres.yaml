@@ -9,6 +9,7 @@ spec:
       app.kubernetes.io/name: anisonarr
       app.kubernetes.io/component: database
   ingress:
+    # Allow Anisonarr application to Postgres
     - fromEndpoints:
         - matchLabels:
             app.kubernetes.io/name: anisonarr
@@ -17,6 +18,8 @@ spec:
       toPorts:
         - port: "5432"
           protocol: TCP
+
+    # Allow CloudNativePG operator to Postgres
     - fromEndpoints:
         - matchLabels:
             io.kubernetes.pod.namespace: cnpg-system
@@ -26,8 +29,11 @@ spec:
         - port: "5432"
           protocol: TCP
   egress:
+    # Allow access to Kube API Server
     - toEntities:
         - kube-apiserver
+
+    # Allow access to DNS
     - toEndpoints:
         - matchLabels:
             io.kubernetes.pod.namespace: kube-system

@@ -1,0 +1,17 @@
+apiVersion: external-secrets.io/v1
+kind: SecretStore
+metadata:
+  name: eso-vault-store
+  namespace: eso
+spec:
+  provider:
+    vault:
+      server: "https://openbao-application-0-hs-openbao-application-internal.openbao.kube-prod-d1i.mclacken.net:8200"
+      path: "secret"
+      version: "v2"
+      auth:
+        kubernetes:
+          mountPath: "/v1/auth/kubernetes"
+          role: "eso-kube-prod-d1"
+          serviceAccountRef:
+            name: "eso-issuer-service-account"

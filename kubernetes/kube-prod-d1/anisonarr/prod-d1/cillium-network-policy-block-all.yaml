@@ -24,7 +24,7 @@ spec:
         - ports:
             - port: "5432"
               protocol: TCP
-              
+
     # Allow access to DNS
     - toEndpoints:
         - matchLabels:
@@ -37,3 +37,7 @@ spec:
           rules:
             dns:
               - matchPattern: "*"
+
+    # Allow access to global internet
+    - toEntities:
+      - world

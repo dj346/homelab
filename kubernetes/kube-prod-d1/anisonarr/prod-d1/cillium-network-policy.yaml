@@ -49,10 +49,10 @@ spec:
             dns:
               - matchPattern: "*"
 
-    # # allow calls to the Kubernetes API server if needed
-    # - toEntities:
-    #     - kube-apiserver
-    #   toPorts:
-    #     - ports:
-    #         - port: "443"
-    #           protocol: TCP
+    # allow calls to the Kubernetes API server if needed (needed for CNPG)
+    - toEntities:
+        - kube-apiserver
+      toPorts:
+        - ports:
+            - port: "443"
+              protocol: TCP

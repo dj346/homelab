@@ -11,7 +11,7 @@ spec:
       version: "v2"
       auth:
         kubernetes:
-          mountPath: "/v1/auth/kubernetes"
+          mountPath: "kubernetes"
           role: "eso-kube-prod-d1"
           serviceAccountRef:
             name: "eso-issuer-service-account"

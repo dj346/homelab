@@ -26,6 +26,11 @@ spec:
         - matchLabels:
             "k8s:io.kubernetes.pod.namespace": anisonarr
 
+    # Allow egress to cnpg-system (for database connectivity)
+    - toEndpoints:
+        - matchLabels:
+            "k8s:io.kubernetes.pod.namespace": cnpg-system
+
     # DNS to CoreDNS (label match; adjust label if your cluster differs)
     - toEndpoints:
         - matchLabels:

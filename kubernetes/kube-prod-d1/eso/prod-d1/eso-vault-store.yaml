@@ -17,5 +17,6 @@ spec:
           role: "eso-kube-prod-d1"
           serviceAccountRef:
             name: "eso-issuer-service-account"
+            namespace: "eso"
             audiences:
               - "eso-vault-auth"

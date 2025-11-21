@@ -1,0 +1,13 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: eso-rbac-role-binding-token-request
+  namespace: eso
+subjects:
+  - kind: ServiceAccount
+    name: eso-issuer-service-account
+    namespace: eso
+roleRef:
+  kind: Role
+  name: eso-rbac-role-token-request
+  apiGroup: rbac.authorization.k8s.io

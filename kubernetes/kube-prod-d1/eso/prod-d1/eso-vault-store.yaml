@@ -1,5 +1,5 @@
 apiVersion: external-secrets.io/v1
-kind: SecretStore
+kind: ClusterSecretStore
 metadata:
   name: eso-vault-store
   namespace: eso
@@ -9,6 +9,8 @@ spec:
       server: "https://openbao-application-0-hs-openbao-application-internal.openbao.kube-prod-d1i.mclacken.net:8200"
       path: "kube-prod-d1"
       version: "v2"
+      checkAndSet:
+        required: true
       auth:
         kubernetes:
           mountPath: "kubernetes"

@@ -11,6 +11,15 @@ spec:
       version: "v2"
       checkAndSet:
         required: true
+      tls:
+        certSecretRef:
+          name: "eso-vault-certificate-secret"
+          key: "tls.crt"
+          namespace: "eso"
+        keySecretRef:
+          name: "eso-vault-certificate-secret"
+          key: "tls.key"
+          namespace: "eso"
       auth:
         kubernetes:
           mountPath: "kubernetes"
@@ -20,12 +29,12 @@ spec:
             namespace: "eso"
             audiences:
               - "eso-vault-auth"
-        cert:
-          clientCert:
-            name: "eso-vault-certificate-secret"
-            key: "tls.crt"
-            namespace: "eso"
-          secretRef:
-            name: "eso-vault-certificate-secret"
-            key: "tls.key"
-            namespace: "eso"
+        # cert:
+        #   clientCert:
+        #     name: "eso-vault-certificate-secret"
+        #     key: "tls.crt"
+        #     namespace: "eso"
+        #   secretRef:
+        #     name: "eso-vault-certificate-secret"
+        #     key: "tls.key"
+        #     namespace: "eso"

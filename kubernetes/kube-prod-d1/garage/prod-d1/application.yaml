@@ -1,0 +1,28 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: garage
+  namespace: argocd
+spec:
+  project: default
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: garage        # or whatever ns you want
+  source:
+    repoURL: 'https://gitea.kube-prod-d1.mclacken.net/public/garage.git'  # the *Git* URL
+    targetRevision: main-v1  # your branch
+    path: script/helm/garage # path to Chart.yaml within the repo
+    helm:
+      valuesObject:
+        replicaCount: 1
+        ingress:
+          enabled: false
+        serviceMonitor:
+          enabled: false
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
+    automated:
+      prune: true
+      selfHeal: true

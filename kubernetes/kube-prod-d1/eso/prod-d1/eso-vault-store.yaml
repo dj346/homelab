@@ -29,12 +29,3 @@ spec:
             namespace: "eso"
             audiences:
               - "eso-vault-auth"
-        # cert:
-        #   clientCert:
-        #     name: "eso-vault-certificate-secret"
-        #     key: "tls.crt"
-        #     namespace: "eso"
-        #   secretRef:
-        #     name: "eso-vault-certificate-secret"
-        #     key: "tls.key"
-        #     namespace: "eso"

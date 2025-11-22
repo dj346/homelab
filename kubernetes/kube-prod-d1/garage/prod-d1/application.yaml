@@ -7,22 +7,42 @@ spec:
   project: default
   destination:
     server: https://kubernetes.default.svc
-    namespace: garage        # or whatever ns you want
-  source:
-    repoURL: 'https://gitea.kube-prod-d1.mclacken.net/public/garage.git'  # the *Git* URL
-    targetRevision: main-v1  # your branch
-    path: script/helm/garage # path to Chart.yaml within the repo
-    helm:
-      valuesObject:
-        replicaCount: 1
-        ingress:
-          enabled: false
-        serviceMonitor:
-          enabled: false
+    namespace: garage
+  sources:
+    - repoURL: 'http://gitea-ssh.gitea.svc.cluster.local:3000/public/garage.git'  # the *Git* URL
+      targetRevision: main-v1
+      path: script/helm/garage # path to Chart.yaml within the repo
+      helm:
+        valuesObject:
+          garage:
+            # Use only 2 replicas per object
+            replicationFactor: 2
+
+            # -- String Template for the garage configuration
+            # if set, ignores above values.
+            # Values can be templated,
+            # see https://garagehq.deuxfleurs.fr/documentation/reference-manual/configuration/
+            garageTomlString: ""
+
+          # Start 4 instances (StatefulSets) of garage
+          deployment:
+            replicaCount: 3
+
+          # Override default storage class and size
+          persistence:
+            meta:
+              storageClass: "longhorn-strict-local"
+              size: 100Mi
+            data:
+              storageClass: "longhorn-strict-local"
+              size: 1Gi
+    - repoURL: 'ssh://git@gitea-ssh.gitea.svc.cluster.local:2222/dj346/homelab.git'
+      targetRevision: HEAD
+      path: kubernetes/kube-prod-d1/garage/prod-d1
   syncPolicy:
     syncOptions:
-      - CreateNamespace=true
-      - ServerSideApply=true
+      - Validate=true
+      - PrunePropagationPolicy=foreground
     automated:
       prune: true
       selfHeal: true

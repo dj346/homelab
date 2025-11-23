@@ -12,8 +12,10 @@ spec:
     - repoURL: https://seaweedfs.github.io/seaweedfs-operator/
       chart: seaweedfs-operator
       targetRevision: 0.1.2
-      # helm:
-      #   valuesObject:
+      helm:
+        valuesObject:
+          webhook:
+            enabled: true
     - repoURL: 'ssh://git@gitea-ssh.gitea.svc.cluster.local:2222/dj346/homelab.git'
       targetRevision: HEAD
       path: kubernetes/kube-prod-d1/seaweedfs-operator/prod-d1

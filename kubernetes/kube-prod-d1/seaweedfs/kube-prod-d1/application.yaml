@@ -1,0 +1,30 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: seaweedfs
+  namespace: argocd
+spec:
+  project: default
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: seaweedfs
+  sources:
+    - repoURL: https://seaweedfs.github.io/seaweedfs-operator/
+      chart: seaweedfs-operator
+      targetRevision: 0.1.2
+      # helm:
+      #   valuesObject:
+    - repoURL: 'ssh://git@gitea-ssh.gitea.svc.cluster.local:2222/dj346/homelab.git'
+      targetRevision: HEAD
+      path: kubernetes/kube-prod-d1/seaweedfs/prod-d1
+  syncPolicy:
+    automated: 
+      prune: true 
+      selfHeal: true 
+      allowEmpty: false
+    retry:
+      limit: 0 # the number of retries to attempt
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 3m

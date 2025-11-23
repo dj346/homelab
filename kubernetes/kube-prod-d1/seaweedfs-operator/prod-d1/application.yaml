@@ -1,13 +1,13 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: seaweedfs
+  name: seaweedfs-operator
   namespace: argocd
 spec:
   project: default
   destination:
     server: https://kubernetes.default.svc
-    namespace: seaweedfs
+    namespace: seaweedfs-operator
   sources:
     - repoURL: https://seaweedfs.github.io/seaweedfs-operator/
       chart: seaweedfs-operator
@@ -16,7 +16,7 @@ spec:
       #   valuesObject:
     - repoURL: 'ssh://git@gitea-ssh.gitea.svc.cluster.local:2222/dj346/homelab.git'
       targetRevision: HEAD
-      path: kubernetes/kube-prod-d1/seaweedfs/prod-d1
+      path: kubernetes/kube-prod-d1/seaweedfs-operator/prod-d1
   syncPolicy:
     automated: 
       prune: true 

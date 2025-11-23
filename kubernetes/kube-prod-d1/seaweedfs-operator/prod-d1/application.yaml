@@ -15,7 +15,7 @@ spec:
       helm:
         valuesObject:
           webhook:
-            enabled: true
+            enabled: false
     - repoURL: 'ssh://git@gitea-ssh.gitea.svc.cluster.local:2222/dj346/homelab.git'
       targetRevision: HEAD
       path: kubernetes/kube-prod-d1/seaweedfs-operator/prod-d1

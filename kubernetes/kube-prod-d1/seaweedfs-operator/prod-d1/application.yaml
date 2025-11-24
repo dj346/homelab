@@ -15,11 +15,14 @@ spec:
       helm:
         valuesObject:
           webhook:
-            enabled: false
+            enabled: true
     - repoURL: 'ssh://git@gitea-ssh.gitea.svc.cluster.local:2222/dj346/homelab.git'
       targetRevision: HEAD
       path: kubernetes/kube-prod-d1/seaweedfs-operator/prod-d1
   syncPolicy:
+    syncOptions:
+      - ServerSideApply=true
+      - CreateNamespace=true
     automated: 
       prune: true 
       selfHeal: true 

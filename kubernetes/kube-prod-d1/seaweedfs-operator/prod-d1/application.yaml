@@ -9,9 +9,9 @@ spec:
     server: https://kubernetes.default.svc
     namespace: seaweedfs-operator
   sources:
-    - repoURL: https://seaweedfs.github.io/seaweedfs-operator/
-      chart: seaweedfs-operator
-      targetRevision: 0.1.2
+    - repoURL: https://github.com/seaweedfs/seaweedfs-operator
+      targetRevision: master    # consider pinning to a tag or commit SHA for repeatability
+      path: deploy/helm
       helm:
         valuesObject:
           webhook:
@@ -25,7 +25,7 @@ spec:
       selfHeal: true 
       allowEmpty: false
     retry:
-      limit: 0 # the number of retries to attempt
+      limit: 0
       backoff:
         duration: 5s
         factor: 2

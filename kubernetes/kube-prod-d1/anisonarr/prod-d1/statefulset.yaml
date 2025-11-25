@@ -86,7 +86,7 @@ spec:
             - name: Sonarr__Postgres__Port
               value: "5432"
             - name: Sonarr__Postgres__Host
-              value: "anisonarr-postgres-cluster-rw.anisonarr.kube-prod-d1i.mclacken.net"
+              value: "https://anisonarr-postgres-cluster-rw.anisonarr.kube-prod-d1i.mclacken.net"
             # - name: Sonarr__Postgres__MainDb
             #   value: "MainDbName"
             # - name: Sonarr__Postgres__LogDb

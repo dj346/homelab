@@ -1,0 +1,36 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: seaweedfs-backup-application
+  namespace: argocd
+  labels:
+    app.kubernetes.io/name: seaweedfs-backup
+    app.kubernetes.io/component: application
+    app.kubernetes.io/instance: seaweedfs-backup-prod-d1
+    app.kubernetes.io/managed-by: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+    description: "ArgoCD managed deployment for SeaweedFS Backups (CloudNative Postgres Containers) application in production"
+spec:
+  project: default
+  revisionHistoryLimit: 5
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: seaweedfs-backup
+  source:
+    repoURL: 'ssh://git@gitea-ssh.gitea.svc.cluster.local:2222/dj346/homelab.git'
+    targetRevision: HEAD
+    path: kubernetes/kube-prod-d1/seaweedfs-backup/prod-d1
+  syncPolicy:
+    syncOptions:
+      - Validate=true
+      - PrunePropagationPolicy=foreground
+    automated:
+      prune: true
+      selfHeal: true
+    retry:
+      limit: 5
+      backoff:
+        duration: 10s
+        factor: 2
+        maxDuration: 5m

@@ -42,9 +42,9 @@ spec:
             enabled: true
             replicas: 2
             
-            idx:
-              type: "persistentVolumeClaim"
-              size: 10Gi
+            # idx:
+            #   type: "persistentVolumeClaim"
+            #   size: 10Gi
               
             logs:
               type: "emptyDir"

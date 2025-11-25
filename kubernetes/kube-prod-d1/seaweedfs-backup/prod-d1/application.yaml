@@ -59,15 +59,8 @@ spec:
               hostname = "seaweedfs-backup-postgres-cluster-ro.seaweedfs-backup.kube-prod-d1i.mclacken.net."
               port = 5432
               username = "seaweed"
-              password = "${POSTGRES_PASSWORD}"    # or read from env/secret instead
+              password = "${POSTGRES_PASSWORD}"
               database = "filemeta"
-              schema = ""
-              sslmode = "disable"
-              connection_max_idle = 50
-              connection_max_open = 100
-              connection_max_lifetime_seconds = 0
-              enableUpsert = true
-
             
             logs:
               type: "emptyDir"

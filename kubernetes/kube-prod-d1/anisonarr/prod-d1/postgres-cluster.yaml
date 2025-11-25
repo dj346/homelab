@@ -49,6 +49,10 @@ spec:
     #   backup:
     #     name: backup-name
 
+  certificates:
+    serverTLSSecret: anisonarr-postgres-certificate-secret
+    serverCASecret: anisonarr-postgres-certificate-secret
+
   storage:
     storageClass: longhorn-strict-local
     size: 450Mi

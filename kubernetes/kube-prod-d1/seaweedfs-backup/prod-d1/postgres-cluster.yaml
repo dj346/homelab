@@ -38,20 +38,23 @@ spec:
 
   bootstrap:
     initdb:
-      database: seaweedfs-backup-main
+      database: filemeta
       owner: seaweedfs-backup
       secret:
         name: seaweedfs-backup-postgres-credentials-secret
-    #   postInitSQL:
-    #     - CREATE DATABASE "some-db" OWNER some-owner
-    # # For recovery scenarios, uncomment below:
-    # # recovery:
-    # #   backup:
-    # #     name: backup-name
+      postInitSQL:
+        - |
+          CREATE TABLE IF NOT EXISTS filemeta (
+            dirhash   BIGINT,
+            name      VARCHAR(65535),
+            directory VARCHAR(65535),
+            meta      BYTEA,
+            PRIMARY KEY (dirhash, name)
+          );
 
-  certificates:
-    serverTLSSecret: seaweedfs-backup-postgres-certificate-secret
-    serverCASecret: seaweedfs-backup-postgres-certificate-secret
+  # certificates:
+  #   serverTLSSecret: seaweedfs-backup-postgres-certificate-secret
+  #   serverCASecret: seaweedfs-backup-postgres-certificate-secret
 
   storage:
     storageClass: longhorn-strict-local

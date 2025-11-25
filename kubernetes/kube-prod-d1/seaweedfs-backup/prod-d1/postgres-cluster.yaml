@@ -1,0 +1,109 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: seaweedfs-backup-postgres-cluster
+  namespace: seaweedfs-backup
+  labels:
+    app.kubernetes.io/name: seaweedfs-backup
+    app.kubernetes.io/component: database
+    app.kubernetes.io/instance: seaweedfs-backup-prod-d1
+    app.kubernetes.io/managed-by: argocd
+  annotations:
+    description: "Production PostgreSQL cluster for SeaweedFS Filler"
+spec:
+  description: "Production PostgreSQL cluster for SeaweedFS Filler"
+  imageName: ghcr.io/cloudnative-pg/postgresql:17.7
+  imagePullPolicy: IfNotPresent
+
+  inheritedMetadata:
+    labels:
+      app.kubernetes.io/name: seaweedfs-backup
+      app.kubernetes.io/component: database
+      app.kubernetes.io/instance: seaweedfs-backup-prod-d1
+      app.kubernetes.io/managed-by: argocd
+
+  instances: 2
+  primaryUpdateStrategy: unsupervised
+
+  postgresql:
+    parameters:
+      shared_buffers: 512MB
+      effective_cache_size: 1GB
+      max_connections: "100"
+      pg_stat_statements.max: "10000"
+      pg_stat_statements.track: all
+      auto_explain.log_min_duration: "5s"
+    pg_hba:
+      - host all all 10.244.0.0/16 md5
+
+  bootstrap:
+    initdb:
+      database: seaweedfs-backup-main
+      owner: seaweedfs-backup
+      secret:
+        name: seaweedfs-backup-postgres-credentials-secret
+    #   postInitSQL:
+    #     - CREATE DATABASE "some-db" OWNER some-owner
+    # # For recovery scenarios, uncomment below:
+    # # recovery:
+    # #   backup:
+    # #     name: backup-name
+
+  certificates:
+    serverTLSSecret: seaweedfs-backup-postgres-certificate-secret
+    serverCASecret: seaweedfs-backup-postgres-certificate-secret
+
+  storage:
+    storageClass: longhorn-strict-local
+    size: 450Mi
+
+  walStorage:
+    storageClass: longhorn-strict-local
+    size: 1Gi
+
+  # backup:
+  #   barmanObjectStore:
+  #     destinationPath: s3://anisonarr-backups/
+  #     endpointURL: https://your-s3-endpoint
+  #     s3Credentials:
+  #       accessKeyId:
+  #         name: backup-creds
+  #         key: ACCESS_KEY_ID
+  #       secretAccessKey:
+  #         name: backup-creds
+  #         key: ACCESS_SECRET_KEY
+  #     wal:
+  #       compression: gzip
+  #       encryption: AES256
+  #     data:
+  #       compression: gzip
+  #       encryption: AES256
+  #       immediateCheckpoint: true
+  #       jobs: 2
+  #   retentionPolicy: "14d"
+
+  # resources:
+  #   requests:
+  #     cpu: "250m"
+  #     memory: "512Mi"
+  #   limits:
+  #     cpu: "1"
+  #     memory: "1Gi"
+
+  affinity:
+    enablePodAntiAffinity: true
+    topologyKey: topology.kubernetes.io/zone
+
+  priorityClassName: medium-priority
+
+  # monitoring:
+  #   enablePodMonitor: true
+
+  topologySpreadConstraints:
+    - maxSkew: 1
+      topologyKey: kubernetes.io/hostname
+      whenUnsatisfiable: ScheduleAnyway
+      labelSelector:
+        matchLabels:
+          app.kubernetes.io/name: seaweedfs-backup
+          app.kubernetes.io/component: database

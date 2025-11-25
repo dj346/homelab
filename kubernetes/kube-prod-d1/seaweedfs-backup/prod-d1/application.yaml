@@ -17,10 +17,83 @@ spec:
   destination:
     server: https://kubernetes.default.svc
     namespace: seaweedfs-backup
-  source:
-    repoURL: 'ssh://git@gitea-ssh.gitea.svc.cluster.local:2222/dj346/homelab.git'
-    targetRevision: HEAD
-    path: kubernetes/kube-prod-d1/seaweedfs-backup/prod-d1
+  sources:
+    - repoURL: https://seaweedfs.github.io/seaweedfs/helm
+      chart: seaweedfs
+      targetRevision: 4.0.400
+      helm:
+        valuesObject:
+          global:
+            monitoring:
+              enabled: true
+              additionalLabels: {}
+            extraEnvironmentVars:
+              WEED_CLUSTER_DEFAULT: "sw"
+              WEED_CLUSTER_SW_MASTER: "seaweedfs-master.seaweedfs:9333"
+              WEED_CLUSTER_SW_FILER: "seaweedfs-filer-client.seaweedfs:8888"
+            enableReplication: true
+            replicationPlacement: "000"
+            enableSecurity: false
+          master:
+            enabled: true
+            replicas: 1
+            
+          volume:
+            enabled: true
+            replicas: 2
+            
+            idx:
+              type: "persistentVolumeClaim"
+              size: 10Gi
+              
+            logs:
+              type: "emptyDir"
+
+          filer:
+            enabled: true
+            replicas: 2
+
+            config: |
+              [postgres]
+              enabled = true
+              hostname = "seaweedfs-backup-postgres-cluster-ro.seaweedfs-backup.kube-prod-d1i.mclacken.net."
+              port = 5432
+              username = "seaweed"
+              password = "${POSTGRES_PASSWORD}"    # or read from env/secret instead
+              database = "filemeta"
+              schema = ""
+              sslmode = "disable"
+              connection_max_idle = 50
+              connection_max_open = 100
+              connection_max_lifetime_seconds = 0
+              enableUpsert = true
+
+            
+            logs:
+              type: "emptyDir"
+
+            extraEnvironmentVars: {}
+
+            s3:
+              enabled: true
+              # enableAuth: true
+              port: 8333
+              httpsPort: 0
+              allowEmptyFolder: true
+              createBuckets:
+                - name: cnpg-backups
+                  anonymousRead: false
+            livenessProbe:
+              periodSeconds: 15
+            readinessProbe:
+              periodSeconds: 15
+          s3:
+            enabled: false
+          cosi:
+            enabled: false
+    - repoURL: 'ssh://git@gitea-ssh.gitea.svc.cluster.local:2222/dj346/homelab.git'
+      targetRevision: HEAD
+      path: kubernetes/kube-prod-d1/seaweedfs-backup/prod-d1
   syncPolicy:
     syncOptions:
       - Validate=true

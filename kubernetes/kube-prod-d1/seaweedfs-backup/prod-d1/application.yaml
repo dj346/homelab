@@ -23,67 +23,34 @@ spec:
       targetRevision: 4.0.400
       helm:
         valuesObject:
-          global:
-            monitoring:
-              enabled: true
-              additionalLabels: {}
-            extraEnvironmentVars:
-              WEED_CLUSTER_DEFAULT: "sw"
-              WEED_CLUSTER_SW_MASTER: "seaweedfs-master.seaweedfs:9333"
-              WEED_CLUSTER_SW_FILER: "seaweedfs-filer-client.seaweedfs:8888"
-            enableReplication: true
-            replicationPlacement: "000"
-            enableSecurity: false
-          master:
-            enabled: true
-            replicas: 1
-            
-          volume:
-            enabled: true
-            replicas: 2
-            
-            # idx:
-            #   type: "persistentVolumeClaim"
-            #   size: 10Gi
-              
-            logs:
-              type: "emptyDir"
-
           filer:
             enabled: true
             replicas: 2
 
             config: |
+              [leveldb2]
+              enabled = false
+              
               [postgres]
               enabled = true
               hostname = "seaweedfs-backup-postgres-cluster-ro.seaweedfs-backup.kube-prod-d1i.mclacken.net."
               port = 5432
               username = "seaweed"
-              password = "${POSTGRES_PASSWORD}"
+              password = "c2VhZXdvb2Rmcy1wYXNzd29yZA=="
               database = "filemeta"
+              
             
-            logs:
-              type: "emptyDir"
-
-            extraEnvironmentVars: {}
-
-            s3:
-              enabled: true
-              # enableAuth: true
-              port: 8333
-              httpsPort: 0
-              allowEmptyFolder: true
-              createBuckets:
-                - name: cnpg-backups
-                  anonymousRead: false
-            livenessProbe:
-              periodSeconds: 15
-            readinessProbe:
-              periodSeconds: 15
-          s3:
-            enabled: false
-          cosi:
-            enabled: false
+            # WEED_POSTGRES_ENABLED=true
+            # WEED_POSTGRES_HOSTNAME=postgres
+            # WEED_POSTGRES_PORT=5432
+            # WEED_POSTGRES_DATABASE=seaweedfs
+            # WEED_POSTGRES_USERNAME=seaweedfs
+            # WEED_POSTGRES_PASSWORD=secret
+            # WEED_POSTGRES_SSLMODE=disable
+            # WEED_POSTGRES_CONNECTION_MAX_IDLE=5
+            # WEED_POSTGRES_CONNECTION_MAX_OPEN=75
+            # WEED_POSTGRES_CONNECTION_MAX_LIFETIME_SECONDS=600
+            # WEED_LEVELDB2_ENABLED=false
     - repoURL: 'ssh://git@gitea-ssh.gitea.svc.cluster.local:2222/dj346/homelab.git'
       targetRevision: HEAD
       path: kubernetes/kube-prod-d1/seaweedfs-backup/prod-d1

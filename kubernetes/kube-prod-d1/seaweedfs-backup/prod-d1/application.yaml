@@ -23,6 +23,31 @@ spec:
       targetRevision: 4.0.400
       helm:
         valuesObject:
+          global:
+            global.createClusterRole: true
+            enableSecurity: true
+            masterServer: seaweedfs-master.seaweedfs-backup.kube-prod-d1i.mclacken.net:9333
+
+            securityConfig:
+              jwtSigning: 
+                volumeWrite: true
+                volumeRead: true
+                filerWrite: true
+                filerRead: true
+
+            monitoring:
+              enabled: true
+              additionalLabels: {}
+
+            extraEnvironmentVars:
+              WEED_CLUSTER_DEFAULT: "sw"
+              WEED_CLUSTER_SW_MASTER: "seaweedfs-master.seaweedfs-backup.kube-prod-d1i.mclacken.net:9333"
+              WEED_CLUSTER_SW_FILER: "seaweedfs-filer-client.seaweedfs-backup.kube-prod-d1i.mclacken.net:8888"
+
+              WEED_JWT_SIGNING_KEY:
+                secretKeyRef:
+                  name: swb-jwt-signing-key-template-secret
+                  key: signingKey
           filer:
             enabled: true
             replicas: 2

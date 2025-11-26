@@ -37,7 +37,7 @@ spec:
               WEED_POSTGRES_HOSTNAME: "seaweedfs-backup-postgres-cluster-rw.seaweedfs-backup.kube-prod-d1i.mclacken.net."
               WEED_POSTGRES_PORT: "5432"
               WEED_POSTGRES_DATABASE: "filemeta"
-              WEED_POSTGRES_USERNAME: "seaweedfs"
+              WEED_POSTGRES_USERNAME: "seaweedfs-backup"
               WEED_POSTGRES_PASSWORD: "seaewoodfs-password"
               WEED_POSTGRES_SSLMODE: "disable"
               # WEED_POSTGRES_CONNECTION_MAX_IDLE: 5    

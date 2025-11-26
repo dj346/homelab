@@ -52,6 +52,11 @@ spec:
           PRIMARY KEY (dirhash, name)
         );
 
+
+        ALTER TABLE filemeta OWNER TO "seaweedfs-backup";
+        GRANT ALL PRIVILEGES ON TABLE filemeta TO "seaweedfs-backup";
+
+
   # certificates:
   #   serverTLSSecret: seaweedfs-backup-postgres-certificate-secret
   #   serverCASecret: seaweedfs-backup-postgres-certificate-secret

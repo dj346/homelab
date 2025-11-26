@@ -27,17 +27,23 @@ spec:
             enabled: true
             replicas: 2
 
+            s3:
+              enabled: true
+              enableAuth: true
+              existingConfigSecret: my-s3-secret
+
             config: |
               [leveldb2]
               enabled = false
               
               [postgres]
               enabled = true
-              hostname = "seaweedfs-backup-postgres-cluster-ro.seaweedfs-backup.kube-prod-d1i.mclacken.net."
+              hostname = "seaweedfs-backup-postgres-cluster-rw.seaweedfs-backup.kube-prod-d1i.mclacken.net."
               port = 5432
               username = "seaweed"
               password = "seaewoodfs-password"
               database = "filemeta"
+              sslmode = "disable"
               
             
             # WEED_POSTGRES_ENABLED=true

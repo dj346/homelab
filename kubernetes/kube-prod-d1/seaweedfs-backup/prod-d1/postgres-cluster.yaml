@@ -42,15 +42,15 @@ spec:
       owner: seaweedfs-backup
       secret:
         name: seaweedfs-backup-postgres-credentials-secret
-      postInitSQL:
-        - |
-          CREATE TABLE IF NOT EXISTS filemeta (
-            dirhash   BIGINT,
-            name      VARCHAR(65535),
-            directory VARCHAR(65535),
-            meta      BYTEA,
-            PRIMARY KEY (dirhash, name)
-          );
+      postInitApplicationSQL:
+      - |
+        CREATE TABLE IF NOT EXISTS filemeta (
+          dirhash   BIGINT,
+          name      VARCHAR(65535),
+          directory VARCHAR(65535),
+          meta      BYTEA,
+          PRIMARY KEY (dirhash, name)
+        );
 
   # certificates:
   #   serverTLSSecret: seaweedfs-backup-postgres-certificate-secret

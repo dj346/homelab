@@ -1,0 +1,12 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: seaweedfs-master-cert
+  namespace: seaweedfs-backup
+spec:
+  dnsNames:
+    - '*.seaweedfs-backup.kube-prod-d1i.mclacken.net'
+  issuerRef:
+    name: cloudflare-clusterissuer
+    kind: ClusterIssuer
+  secretName: seaweedfs-master-cert # This is required to be named this.

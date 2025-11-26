@@ -36,7 +36,7 @@ spec:
               hostname = "seaweedfs-backup-postgres-cluster-ro.seaweedfs-backup.kube-prod-d1i.mclacken.net."
               port = 5432
               username = "seaweed"
-              password = "c2VhZXdvb2Rmcy1wYXNzd29yZA=="
+              password = "seaewoodfs-password"
               database = "filemeta"
               
             

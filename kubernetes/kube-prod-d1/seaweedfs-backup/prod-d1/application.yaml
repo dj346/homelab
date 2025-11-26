@@ -30,33 +30,21 @@ spec:
             s3:
               enabled: true
               enableAuth: true
-              existingConfigSecret: my-s3-secret
+              existingConfigSecret: s3-credentials-secret
 
-            config: |
-              [leveldb2]
-              enabled = false
+            extraEnvironmentVars: 
+              WEED_POSTGRES_ENABLED: true
+              WEED_POSTGRES_HOSTNAME: seaweedfs-backup-postgres-cluster-rw.seaweedfs-backup.kube-prod-d1i.mclacken.net.
+              WEED_POSTGRES_PORT: 5432
+              WEED_POSTGRES_DATABASE: seaweedfs
+              WEED_POSTGRES_USERNAME: seaweedfs
+              WEED_POSTGRES_PASSWORD: seaewoodfs-password
+              WEED_POSTGRES_SSLMODE: disable
+              # WEED_POSTGRES_CONNECTION_MAX_IDLE: 5
+              # WEED_POSTGRES_CONNECTION_MAX_OPEN: 75
+              # WEED_POSTGRES_CONNECTION_MAX_LIFETIME_SECONDS: 600
+              WEED_LEVELDB2_ENABLED: false
               
-              [postgres]
-              enabled = true
-              hostname = "seaweedfs-backup-postgres-cluster-rw.seaweedfs-backup.kube-prod-d1i.mclacken.net."
-              port = 5432
-              username = "seaweed"
-              password = "seaewoodfs-password"
-              database = "filemeta"
-              sslmode = "disable"
-              
-            
-            # WEED_POSTGRES_ENABLED=true
-            # WEED_POSTGRES_HOSTNAME=postgres
-            # WEED_POSTGRES_PORT=5432
-            # WEED_POSTGRES_DATABASE=seaweedfs
-            # WEED_POSTGRES_USERNAME=seaweedfs
-            # WEED_POSTGRES_PASSWORD=secret
-            # WEED_POSTGRES_SSLMODE=disable
-            # WEED_POSTGRES_CONNECTION_MAX_IDLE=5
-            # WEED_POSTGRES_CONNECTION_MAX_OPEN=75
-            # WEED_POSTGRES_CONNECTION_MAX_LIFETIME_SECONDS=600
-            # WEED_LEVELDB2_ENABLED=false
     - repoURL: 'ssh://git@gitea-ssh.gitea.svc.cluster.local:2222/dj346/homelab.git'
       targetRevision: HEAD
       path: kubernetes/kube-prod-d1/seaweedfs-backup/prod-d1

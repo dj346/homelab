@@ -48,7 +48,13 @@ spec:
                 secretKeyRef:
                   name: swb-jwt-signing-key-template-secret
                   key: signingKey
+          
           certificates:
+            externalCertificates:
+              # This will avoid the need to use cert-manager and will rely on providing your own external certificates and CA
+              # you will need to store your provided certificates in the secret read by the different services:
+              # seaweedfs-master-cert, seaweedfs-filer-cert, etc. Can see any statefulset definition to see secret names
+              enabled: true
             
           filer:
             enabled: true
@@ -71,13 +77,6 @@ spec:
               # WEED_POSTGRES_CONNECTION_MAX_OPEN: 75
               # WEED_POSTGRES_CONNECTION_MAX_LIFETIME_SECONDS: 600
               WEED_LEVELDB2_ENABLED: "false"
-
-            certificates:
-              externalCertificates:
-                # This will avoid the need to use cert-manager and will rely on providing your own external certificates and CA
-                # you will need to store your provided certificates in the secret read by the different services:
-                # seaweedfs-master-cert, seaweedfs-filer-cert, etc. Can see any statefulset definition to see secret names
-                enabled: true
               
     - repoURL: 'ssh://git@gitea-ssh.gitea.svc.cluster.local:2222/dj346/homelab.git'
       targetRevision: HEAD

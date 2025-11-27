@@ -13,6 +13,7 @@ spec:
   issuerRef:
     name: vault-app-kube-prod-d1-issuer
     kind: ClusterIssuer
+  commonName: anisonarr-postgres-certificate
   dnsNames:
     - anisonarr-postgres-cluster-rw.kube-prod-d1i.mclacken.net.
     - anisonarr-postgres-cluster-rw

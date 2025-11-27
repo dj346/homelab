@@ -50,8 +50,10 @@ spec:
     #     name: backup-name
 
   certificates:
-    serverTLSSecret: anisonarr-postgres-certificate-secret
-    serverCASecret: anisonarr-postgres-certificate-secret
+    serverTLSSecret: anisonarr-postgres-server-certificate-secret
+    serverCASecret: anisonarr-postgres-server-certificate-secret
+    clientCASecret: anisonarr-postgres-client-certificate-secret
+    replicationTLSSecret: anisonarr-postgres-client-certificate-secret
 
   storage:
     storageClass: longhorn-strict-local

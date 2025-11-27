@@ -1,7 +1,7 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: anisonarr-postgres-certificate
+  name: anisonarr-postgres-server-certificate
   namespace: anisonarr
   labels:
     app.kubernetes.io/name: anisonarr
@@ -9,11 +9,11 @@ metadata:
     app.kubernetes.io/instance: anisonarr-prod-d1
     app.kubernetes.io/managed-by: argocd
 spec:
-  secretName: anisonarr-postgres-certificate-secret
+  secretName: anisonarr-postgres-server-certificate-secret
   issuerRef:
     name: vault-cnpg-kube-prod-d1-issuer
     kind: ClusterIssuer
-  commonName: anisonarr-postgres-certificate
+  commonName: anisonarr-postgres-server-certificate
   dnsNames:
     - anisonarr-postgres-cluster-rw.kube-prod-d1i.mclacken.net.
     - anisonarr-postgres-cluster-rw

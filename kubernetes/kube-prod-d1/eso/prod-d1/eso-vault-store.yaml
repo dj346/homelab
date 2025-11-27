@@ -22,7 +22,7 @@ spec:
           namespace: "eso"
       auth:
         kubernetes:
-          mountPath: "kubernetes"
+          mountPath: "kubernetes/kube-prod-d1"
           role: "eso-kube-prod-d1"
           serviceAccountRef:
             name: "eso-issuer-service-account"

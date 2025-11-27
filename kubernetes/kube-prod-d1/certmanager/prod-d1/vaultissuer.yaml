@@ -17,7 +17,7 @@ spec:
       kubernetes:
         mountPath: /v1/auth/kubernetes/kube-prod-d1
         role: pki-role-apps-kube-prod-d1
-        audiences:
-          - certmanager-vault-auth 
         serviceAccountRef:
           name: certmanager-vault-pki-apps-service-account 
+          audiences:
+          - certmanager-vault-auth 

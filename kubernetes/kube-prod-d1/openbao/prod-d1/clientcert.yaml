@@ -5,7 +5,7 @@ metadata:
   namespace: openbao
 spec:
   secretName: openbao-client-certificate-secret
-  commonName: openbao-ops
+  commonName: openbao-client-certificate
   issuerRef:
     name: vault-issuer
     kind: ClusterIssuer

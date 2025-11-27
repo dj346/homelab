@@ -1,10 +1,10 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: openbao-client
+  name: openbao-client-certificate
   namespace: openbao
 spec:
-  secretName: openbao-client-secret
+  secretName: openbao-client-certificate-secret
   commonName: openbao-ops
   issuerRef:
     name: vault-issuer

@@ -1,0 +1,218 @@
+ 
+bao secrets enable -path=pki/kube-prod-d1/ICA1 pki
+bao secrets enable -path=pki/kube-prod-d1/apps-prod-d1/ICA2 pki
+bao secrets enable -path=pki/kube-prod-d1/seaweedfs-prod-d1/ICA2 pki
+
+bao secrets tune -max-lease-ttl=87600h pki/kube-prod-d1/ICA1
+
+certstrap init \
+  --common-name "kube-prod-d1 CA" \
+  --organization "kube-prod-d1" \
+  --organizational-unit "McLacken net" \
+  --country "US" \
+  --province "California" \
+  --locality "San Francisco" \
+  --key-bits 4096 \
+  --expires "20 years" \
+  --path-length 2
+
+bao write pki/kube-prod-d1/ICA1/intermediate/generate/internal \
+    common_name="kube-prod-d1 ICA1 v1" \
+    organization="kube-prod-d1" \
+    ou="McLacken net" \
+    country="US" \
+    province="California" \
+    locality="San Francisco" \
+    key_bits=4096 \
+    ttl=87600h > ICA1.csr
+
+make sure to edit this file and remove all the extra stuff, you just need the
+
+----BEGIN CERTIFICATE REQUEST-----
+... data ...
+-----END CERTIFICATE REQUEST-----
+
+certstrap sign \
+  --expires "10 years" \
+  --CA "kube-prod-d1 CA" \
+  --csr ./ICA1.csr \
+  --intermediate \
+  --path-length 1 \
+  "kube-prod-d1 ICA1 v1"
+
+cat out/kube-prod-d1_ICA1_v1.crt out/kube-prod-d1_CA.crt > ICA1_bundle.pem
+
+bao write pki/kube-prod-d1/apps-prod-d1/ICA2/intermediate/generate/internal \
+  common_name="apps-prod-d1 ICA2 v1" \
+  organization="kube-prod-d1" \
+  ou="McLacken net" \
+  country="US" \
+  province="California" \
+  locality="San Francisco" \
+  key_bits=4096 \
+  max_path_length=0 \
+  ttl=26298h > ICA2-a.csr
+
+  make sure to edit this file and remove all the extra stuff, you just need the
+
+----BEGIN CERTIFICATE REQUEST-----
+... data ...
+-----END CERTIFICATE REQUEST-----
+
+bao write pki/kube-prod-d1/ICA1/root/sign-intermediate \
+  csr=@ICA2-a.csr \
+  format=pem_bundle \
+  ttl=26298h \
+  max_path_length=0 > ICA2_bundle.pem
+
+Make sure to edit this file too and clean it up, you should see something like
+
+ca_chain [
+----BEGIN CERTIFICATE REQUEST-----
+... data ...
+-----END CERTIFICATE REQUEST-----
+----BEGIN CERTIFICATE REQUEST-----
+... data ...
+-----END CERTIFICATE REQUEST-----
+----BEGIN CERTIFICATE REQUEST-----
+... data ...
+-----END CERTIFICATE REQUEST-----]
+
+make sure to only get the 3 certificates in this chain and clean it up so that it looks like
+
+----BEGIN CERTIFICATE REQUEST-----
+... data ...
+-----END CERTIFICATE REQUEST-----
+----BEGIN CERTIFICATE REQUEST-----
+... data ...
+-----END CERTIFICATE REQUEST-----
+----BEGIN CERTIFICATE REQUEST-----
+... data ...
+-----END CERTIFICATE REQUEST-----
+
+bao write pki/kube-prod-d1/apps-prod-d1/ICA2/intermediate/set-signed \
+  certificate=@ICA2_bundle.pem
+
+Done with all of that. Now to do it again.
+
+bao write pki/kube-prod-d1/seaweedfs-prod-d1/ICA2/intermediate/generate/internal \
+  common_name="seaweedfs-prod-d1 ICA2 v1" \
+  organization="kube-prod-d1" \
+  ou="McLacken net" \
+  country="US" \
+  province="California" \
+  locality="San Francisco" \
+  key_bits=4096 \
+  ttl=26298h > ICA2-b.csr
+
+  make sure to edit this file and remove all the extra stuff, you just need the
+
+----BEGIN CERTIFICATE REQUEST-----
+... data ...
+-----END CERTIFICATE REQUEST-----
+
+
+bao write pki/kube-prod-d1/ICA1/root/sign-intermediate \
+  csr=@ICA2-b.csr \
+  format=pem_bundle \
+  ttl=26298h \
+  max_path_length=0 > ICA2_bundle-b.pem
+
+Make sure to edit this file too and clean it up, you should see something like
+
+ca_chain [
+----BEGIN CERTIFICATE REQUEST-----
+... data ...
+-----END CERTIFICATE REQUEST-----
+----BEGIN CERTIFICATE REQUEST-----
+... data ...
+-----END CERTIFICATE REQUEST-----
+----BEGIN CERTIFICATE REQUEST-----
+... data ...
+-----END CERTIFICATE REQUEST-----]
+
+make sure to only get the 3 certificates in this chain and clean it up so that it looks like
+
+----BEGIN CERTIFICATE REQUEST-----
+... data ...
+-----END CERTIFICATE REQUEST-----
+----BEGIN CERTIFICATE REQUEST-----
+... data ...
+-----END CERTIFICATE REQUEST-----
+----BEGIN CERTIFICATE REQUEST-----
+... data ...
+-----END CERTIFICATE REQUEST-----
+
+bao write pki/kube-prod-d1/seaweedfs-prod-d1/ICA2/intermediate/set-signed \
+  certificate=@ICA2_bundle-b.pem
+
+
+Create a new policy named: 
+apps-policy-kube-prod-d1
+
+---
+path "pki/kube-prod-d1/apps-prod-d1/ICA2/ca"            { capabilities = ["read"] }
+path "pki/kube-prod-d1/apps-prod-d1/ICA2/ca_chain" { capabilities = ["read"] }
+
+path "pki/kube-prod-d1/apps-prod-d1/ICA2/sign/apps-role-kube-prod-d1" {
+  capabilities = ["create", "update"]
+}
+---
+
+Create a new policy named: 
+seaweedfs-policy-kube-prod-d1
+
+---
+path "pki/kube-prod-d1/seaweedfs-prod-d1/ICA2/ca"       { capabilities = ["read"] }
+path "pki/kube-prod-d1/seaweedfs-prod-d1/ICA2/ca_chain" { capabilities = ["read"] }
+
+path "pki/kube-prod-d1/seaweedfs-prod-d1/ICA2/sign/seaweedfs-role-kube-prod-d1" {
+  capabilities = ["create", "update"]
+}
+---
+
+bao write pki/kube-prod-d1/apps-prod-d1/ICA2/roles/apps-role-kube-prod-d1 \
+    max_ttl="2160h" \
+    allow_bare_domains=true \
+    allow_subdomains=true \
+    allow_wildcard_certificates=true \
+    allow_any_name=true \
+    enforce_hostnames=false \
+    allowed_domains="*" \
+    organization="kube-prod-d1" \
+    ou="McLacken net" \
+    country="US" \
+    province="California" \
+    locality="San Francisco"
+
+bao write pki/kube-prod-d1/seaweedfs-prod-d1/ICA2/roles/seaweedfs-role-kube-prod-d1 \
+    max_ttl="2160h" \
+    allow_bare_domains=true \
+    allow_subdomains=true \
+    allow_wildcard_certificates=true \
+    allow_any_name=true \
+    enforce_hostnames=false \
+    allowed_domains="*" \
+    organization="kube-prod-d1" \
+    ou="McLacken net" \
+    country="US" \
+    province="California" \
+    locality="San Francisco"
+
+bao auth enable -path=kubernetes/kube-prod-d1 kubernetes
+
+now youre gonna wanna download your kubernetes cert, and jwt token. From my understanding you should be able to get this from any prod
+
+in my case I'm going to download it from a debian pod i have running.
+
+kubectl exec -n default debian-tools-7856458bc6-zdwnz -- \
+  cat /var/run/secrets/kubernetes.io/serviceaccount/ca.crt > ca.crt
+
+kubectl exec -n default debian-tools-7856458bc6-zdwnz -- \
+  cat /var/run/secrets/kubernetes.io/serviceaccount/token > token
+
+bao write auth/kubernetes/kube-prod-d1/config \
+    kubernetes_host="https://kubernetes.default.svc.cluster.local:443" \
+    kubernetes_ca_cert=@ca.crt \
+    token_reviewer_jwt="$(cat ./token)"
+

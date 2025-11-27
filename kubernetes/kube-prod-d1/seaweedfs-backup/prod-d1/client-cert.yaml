@@ -1,0 +1,21 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: seaweedfs-client-cert
+  namespace: seaweedfs-backup
+spec:
+  commonName: seaweedfs-client-cert
+  dnsNames:
+    - '*.seaweedfs-backup.kube-prod-d1i.mclacken.net'
+    - '*.seaweedfs-master.seaweedfs-backup.kube-prod-d1i.mclacken.net'
+    - '*.seaweedfs-backup'
+    - '*.seaweedfs-backup.svc'
+    - '*.seaweedfs-backup.svc.cluster.local'
+    - '*.seaweedfs-master'
+    - '*.seaweedfs-master.seaweedfs-backup'
+    - '*.seaweedfs-master.seaweedfs-backup.svc'
+    - '*.seaweedfs-master.seaweedfs-backup.svc.cluster.local'
+  issuerRef:
+    name: vault-seaweedfs-kube-prod-d1-issuer
+    kind: ClusterIssuer
+  secretName: seaweedfs-client-cert # This is required to be named this.

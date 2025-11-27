@@ -15,7 +15,7 @@ spec:
     #   key: tls.key
     auth:
       kubernetes:
-        mountPath: /v1/auth/kubernetes
+        mountPath: /v1/auth/kubernetes/kube-prod-d1
         role:  apps-role-kube-prod-d1
         audiences:
           - certmanager-vault-auth 

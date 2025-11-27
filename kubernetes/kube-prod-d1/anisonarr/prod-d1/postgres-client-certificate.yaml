@@ -13,4 +13,4 @@ spec:
   issuerRef:
     name: vault-cnpg-kube-prod-d1-issuer
     kind: ClusterIssuer
-  commonName: anisonarr-postgres-client-certificate
+  commonName: streaming_replica

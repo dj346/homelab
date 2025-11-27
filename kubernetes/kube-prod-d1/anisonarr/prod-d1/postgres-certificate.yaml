@@ -11,7 +11,16 @@ metadata:
 spec:
   secretName: anisonarr-postgres-certificate-secret
   issuerRef:
-    name: cloudflare-clusterissuer
+    name: vault-app-kube-prod-d1-issuer
     kind: ClusterIssuer
   dnsNames:
-    - "*.openbao.kube-prod-d1i.mclacken.net"
+    - anisonarr-postgres-cluster-rw.kube-prod-d1i.mclacken.net.
+    - anisonarr-postgres-cluster-rw
+    - anisonarr-postgres-cluster-rw.anisonarr
+    - anisonarr-postgres-cluster-rw.anisonarr.svc
+    - anisonarr-postgres-cluster-r
+    - anisonarr-postgres-cluster-r.anisonarr
+    - anisonarr-postgres-cluster-r.anisonarr.svc
+    - anisonarr-postgres-cluster-ro
+    - anisonarr-postgres-cluster-ro.anisonarr
+    - anisonarr-postgres-cluster-ro.anisonarr.svc

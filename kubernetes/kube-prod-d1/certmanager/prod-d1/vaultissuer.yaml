@@ -19,5 +19,5 @@ spec:
         role: pki-role-apps-kube-prod-d1
         serviceAccountRef:
           name: certmanager-vault-pki-apps-service-account 
-          # audiences:
-          # - certmanager-vault-auth 
+          audiences:
+          - certmanager-vault-auth 

@@ -11,7 +11,7 @@ metadata:
 spec:
   secretName: anisonarr-postgres-certificate-secret
   issuerRef:
-    name: vault-app-kube-prod-d1-issuer
+    name: vault-cnpg-kube-prod-d1-issuer
     kind: ClusterIssuer
   commonName: anisonarr-postgres-certificate
   dnsNames:

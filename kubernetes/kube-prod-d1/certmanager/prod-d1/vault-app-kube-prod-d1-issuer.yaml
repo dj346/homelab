@@ -1,7 +1,7 @@
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
 metadata:
-  name: vault-app-kube-prod-d1-issuer
+  name: vault-cnpg-kube-prod-d1-issuer
   namespace: cert-manager
 spec:
   vault:

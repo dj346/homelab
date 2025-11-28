@@ -64,10 +64,62 @@ spec:
           
           masterServer:
             enabled: true
-            imageOverride: null
-            restartPolicy: null
-            replicas: 1
+            # imageOverride: null
+            # restartPolicy: null
+            replicas: 3
+
+            port: 9333
+            grpcPort: 19333
+            metricsPort: 9327
+
+            volumeSizeLimitMB: 1000 # 1GB per volume limit 
+            loggingOverrideLevel: null
+            garbageThreshold: null # fraction of “wasted” space before vacuum/compaction kicks in (e.g. 0.3 means 30% garbage).
+            metricsIntervalSec: 15
             
+            disableHttp: false # if true, only gRPC operations are allowed; HTTP endpoints disabled (more locked-down).
+            resumeState: true # resume previous master state at startup (useful for HA clusters).
+            raftHashicorp: false # use Hashicorp Raft implementation instead of the built-in one.
+            raftBootstrap: false
+        
+            data:
+              type: "persistentVolumeClaim"
+              size: "20Gi"
+              storageClass: "longhorn-strict-local"
+              annotations: {}
+              hostPathPrefix: /master
+
+            logs:
+              type: "emptyDir"
+                
+            sidecars: []
+            initContainers: ""
+            extraVolumes: ""
+            extraVolumeMounts: ""
+
+            podLabels: {}
+            podAnnotations: {}
+            annotations: {}
+            resources: {}
+
+            affinity: |
+              podAntiAffinity:
+                requiredDuringSchedulingIgnoredDuringExecution:
+                  - labelSelector:
+                      matchLabels:
+                        app.kubernetes.io/name: cnpg-backups
+                        app.kubernetes.io/instance: cnpg-backups-prod-d1
+                        app.kubernetes.io/component: master
+                    topologyKey: kubernetes.io/hostname
+
+            topologySpreadConstraints: ""
+            tolerations: ""
+            nodeSelector: ""
+            priorityClassName: ""
+            serviceAccountName: ""
+            
+
+
           filer:
             enabled: true
             replicas: 2

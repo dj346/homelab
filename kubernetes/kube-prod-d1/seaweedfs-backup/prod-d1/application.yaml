@@ -1,12 +1,12 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: seaweedfs-backup-application
+  name: cnpg-backups-application
   namespace: argocd
   labels:
-    app.kubernetes.io/name: seaweedfs-backup
+    app.kubernetes.io/name: cnpg-backups
     app.kubernetes.io/component: application
-    app.kubernetes.io/instance: seaweedfs-backup-prod-d1
+    app.kubernetes.io/instance: cnpg-backups-prod-d1
     app.kubernetes.io/managed-by: argocd
   annotations:
     argocd.argoproj.io/sync-wave: "1"
@@ -16,33 +16,39 @@ spec:
   revisionHistoryLimit: 5
   destination:
     server: https://kubernetes.default.svc
-    namespace: seaweedfs-backup
+    namespace: cnpg-backups
   sources:
     - repoURL: https://seaweedfs.github.io/seaweedfs/helm
       chart: seaweedfs
       targetRevision: 4.0.400
       helm:
         valuesObject:
+          # image:
+          #   registry: ""
+          #   repository: ""
+          #   tag: ""
+
           global:
-            global.createClusterRole: true
+            loggingLevel: 1
+            createClusterRole: true
             enableSecurity: true
-            masterServer: seaweedfs-master.seaweedfs-backup.kube-prod-d1i.mclacken.net:9333
+            masterServer: seaweedfs-master.cnpg-backups.kube-prod-d1i.mclacken.net:9333
 
             securityConfig:
               jwtSigning: 
-                volumeWrite: true
-                volumeRead: true
-                filerWrite: true
-                filerRead: true
+                volumeWrite: true   # -> [jwt.signing]
+                volumeRead: false   # -> [jwt.signing.read]
+                filerWrite: true    # -> [jwt.filer_signing]
+                filerRead: false    # -> [jwt.filer_signing.read]
 
             monitoring:
               enabled: false
               additionalLabels: {}
 
             extraEnvironmentVars:
-              WEED_CLUSTER_DEFAULT: "sw"
-              WEED_CLUSTER_SW_MASTER: "seaweedfs-master.seaweedfs-backup.kube-prod-d1i.mclacken.net:9333"
-              WEED_CLUSTER_SW_FILER: "seaweedfs-filer-client.seaweedfs-backup.kube-prod-d1i.mclacken.net:8888"
+              WEED_CLUSTER_DEFAULT: "backup-seaweedfs-prod-d1"
+              WEED_CLUSTER_SW_MASTER: "seaweedfs-master.cnpg-backups.kube-prod-d1i.mclacken.net:9333"
+              WEED_CLUSTER_SW_FILER: "seaweedfs-filer-client.cnpg-backups.kube-prod-d1i.mclacken.net:8888"
 
               WEED_JWT_SIGNING_KEY:
                 secretKeyRef:
@@ -55,6 +61,12 @@ spec:
               # you will need to store your provided certificates in the secret read by the different services:
               # seaweedfs-master-cert, seaweedfs-filer-cert, etc. Can see any statefulset definition to see secret names
               enabled: true
+          
+          masterServer:
+            enabled: true
+            imageOverride: null
+            restartPolicy: null
+            replicas: 1
             
           filer:
             enabled: true
@@ -67,10 +79,10 @@ spec:
 
             extraEnvironmentVars:
               WEED_POSTGRES_ENABLED: "true"
-              WEED_POSTGRES_HOSTNAME: "seaweedfs-backup-postgres-cluster-rw.seaweedfs-backup.kube-prod-d1i.mclacken.net."
+              WEED_POSTGRES_HOSTNAME: "cnpg-backups-postgres-cluster-rw.cnpg-backups.kube-prod-d1i.mclacken.net."
               WEED_POSTGRES_PORT: "5432"
               WEED_POSTGRES_DATABASE: "filemeta"
-              WEED_POSTGRES_USERNAME: "seaweedfs-backup"
+              WEED_POSTGRES_USERNAME: "cnpg-backups"
               WEED_POSTGRES_PASSWORD: "seaewoodfs-password"
               WEED_POSTGRES_SSLMODE: "disable"
               # WEED_POSTGRES_CONNECTION_MAX_IDLE: 5    
@@ -80,7 +92,7 @@ spec:
               
     - repoURL: 'ssh://git@gitea-ssh.gitea.svc.cluster.local:2222/dj346/homelab.git'
       targetRevision: HEAD
-      path: kubernetes/kube-prod-d1/seaweedfs-backup/prod-d1
+      path: kubernetes/kube-prod-d1/cnpg-backups/prod-d1
   syncPolicy:
     syncOptions:
       - Validate=true

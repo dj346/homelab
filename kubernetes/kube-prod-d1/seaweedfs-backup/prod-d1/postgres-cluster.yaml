@@ -1,12 +1,12 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
-  name: seaweedfs-backup-postgres-cluster
-  namespace: seaweedfs-backup
+  name: cnpg-backups-postgres-cluster
+  namespace: cnpg-backups
   labels:
-    app.kubernetes.io/name: seaweedfs-backup
+    app.kubernetes.io/name: cnpg-backups
     app.kubernetes.io/component: database
-    app.kubernetes.io/instance: seaweedfs-backup-prod-d1
+    app.kubernetes.io/instance: cnpg-backups-prod-d1
     app.kubernetes.io/managed-by: argocd
   annotations:
     description: "Production PostgreSQL cluster for SeaweedFS Filler"
@@ -17,9 +17,9 @@ spec:
 
   inheritedMetadata:
     labels:
-      app.kubernetes.io/name: seaweedfs-backup
+      app.kubernetes.io/name: cnpg-backups
       app.kubernetes.io/component: database
-      app.kubernetes.io/instance: seaweedfs-backup-prod-d1
+      app.kubernetes.io/instance: cnpg-backups-prod-d1
       app.kubernetes.io/managed-by: argocd
 
   instances: 2
@@ -39,9 +39,9 @@ spec:
   bootstrap:
     initdb:
       database: filemeta
-      owner: seaweedfs-backup
+      owner: cnpg-backups
       secret:
-        name: seaweedfs-backup-postgres-credentials-secret
+        name: cnpg-backups-postgres-credentials-secret
       postInitApplicationSQL:
       - |
         CREATE TABLE IF NOT EXISTS filemeta (
@@ -53,13 +53,13 @@ spec:
         );
 
 
-        ALTER TABLE filemeta OWNER TO "seaweedfs-backup";
-        GRANT ALL PRIVILEGES ON TABLE filemeta TO "seaweedfs-backup";
+        ALTER TABLE filemeta OWNER TO "cnpg-backups";
+        GRANT ALL PRIVILEGES ON TABLE filemeta TO "cnpg-backups";
 
 
   # certificates:
-  #   serverTLSSecret: seaweedfs-backup-postgres-certificate-secret
-  #   serverCASecret: seaweedfs-backup-postgres-certificate-secret
+  #   serverTLSSecret: cnpg-backups-postgres-certificate-secret
+  #   serverCASecret: cnpg-backups-postgres-certificate-secret
 
   storage:
     storageClass: longhorn-strict-local
@@ -113,5 +113,5 @@ spec:
       whenUnsatisfiable: ScheduleAnyway
       labelSelector:
         matchLabels:
-          app.kubernetes.io/name: seaweedfs-backup
+          app.kubernetes.io/name: cnpg-backups
           app.kubernetes.io/component: database

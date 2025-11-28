@@ -2,19 +2,19 @@ apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
   name: seaweedfs-volume-cert
-  namespace: seaweedfs-backup
+  namespace: cnpg-backups
 spec:
   commonName: seaweedfs-volume-cert
   dnsNames:
-    - '*.seaweedfs-backup.kube-prod-d1i.mclacken.net'
-    - '*.seaweedfs-master.seaweedfs-backup.kube-prod-d1i.mclacken.net'
-    - '*.seaweedfs-backup'
-    - '*.seaweedfs-backup.svc'
-    - '*.seaweedfs-backup.svc.cluster.local'
+    - '*.cnpg-backups.kube-prod-d1i.mclacken.net'
+    - '*.seaweedfs-master.cnpg-backups.kube-prod-d1i.mclacken.net'
+    - '*.cnpg-backups'
+    - '*.cnpg-backups.svc'
+    - '*.cnpg-backups.svc.cluster.local'
     - '*.seaweedfs-master'
-    - '*.seaweedfs-master.seaweedfs-backup'
-    - '*.seaweedfs-master.seaweedfs-backup.svc'
-    - '*.seaweedfs-master.seaweedfs-backup.svc.cluster.local'
+    - '*.seaweedfs-master.cnpg-backups'
+    - '*.seaweedfs-master.cnpg-backups.svc'
+    - '*.seaweedfs-master.cnpg-backups.svc.cluster.local'
   issuerRef:
     name: vault-seaweedfs-kube-prod-d1-issuer
     kind: ClusterIssuer

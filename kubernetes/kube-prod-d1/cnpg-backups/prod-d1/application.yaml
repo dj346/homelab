@@ -107,8 +107,8 @@ spec:
                 requiredDuringSchedulingIgnoredDuringExecution:
                   - labelSelector:
                       matchLabels:
-                        app.kubernetes.io/name: cnpg-backups
-                        app.kubernetes.io/instance: cnpg-backups-prod-d1
+                        app.kubernetes.io/name: seaweedfs
+                        app.kubernetes.io/instance: cnpg-backups-application
                         app.kubernetes.io/component: master
                     topologyKey: kubernetes.io/hostname
 
@@ -134,7 +134,7 @@ spec:
               WEED_POSTGRES_HOSTNAME: "cnpg-backups-postgres-cluster-rw.cnpg-backups.kube-prod-d1i.mclacken.net."
               WEED_POSTGRES_PORT: "5432"
               WEED_POSTGRES_DATABASE: "filemeta"
-              WEED_POSTGRES_USERNAME: "cnpg-backups"
+              WEED_POSTGRES_USERNAME: "seaweedfs-backup"
               WEED_POSTGRES_PASSWORD: "seaewoodfs-password"
               WEED_POSTGRES_SSLMODE: "disable"
               # WEED_POSTGRES_CONNECTION_MAX_IDLE: 5    

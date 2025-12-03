@@ -426,10 +426,10 @@ spec:
             serviceAccountName: ""
 
             livenessProbe:
-              enabled: false
+              enabled: true
               httpGet:
                 path: /status
-                scheme: HTTP
+                scheme: HTTPS
               initialDelaySeconds: 20
               periodSeconds: 60
               successThreshold: 1
@@ -437,10 +437,10 @@ spec:
               timeoutSeconds: 10
 
             readinessProbe:
-              enabled: false
+              enabled: true
               httpGet:
                 path: /status
-                scheme: HTTP
+                scheme: HTTPS
               initialDelaySeconds: 15
               periodSeconds: 15
               successThreshold: 1

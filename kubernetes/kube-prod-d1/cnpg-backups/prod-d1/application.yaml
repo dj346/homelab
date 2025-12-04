@@ -20,7 +20,7 @@ spec:
   sources:
     - repoURL: https://seaweedfs.github.io/seaweedfs/helm
       chart: seaweedfs
-      targetRevision: 4.0.400
+      targetRevision: 4.0.401
       helm:
         valuesObject:
           # image:
@@ -147,27 +147,27 @@ spec:
             #   WEED_MASTER_VOLUME_GROWTH_COPY_3: '3'
             #   WEED_MASTER_VOLUME_GROWTH_COPY_OTHER: '1'
 
-            # livenessProbe:
-            #   enabled: true
-            #   httpGet:
-            #     path: /cluster/status
-            #     scheme: HTTP
-            #   initialDelaySeconds: 20
-            #   periodSeconds: 30
-            #   successThreshold: 1
-            #   failureThreshold: 4
-            #   timeoutSeconds: 10
+            livenessProbe:
+              enabled: true
+              httpGet:
+                path: /cluster/status
+                scheme: HTTP
+              initialDelaySeconds: 20
+              periodSeconds: 30
+              successThreshold: 1
+              failureThreshold: 4
+              timeoutSeconds: 10
 
-            # readinessProbe:
-            #   enabled: true
-            #   httpGet:
-            #     path: /cluster/status
-            #     scheme: HTTP
-            #   initialDelaySeconds: 10
-            #   periodSeconds: 45
-            #   successThreshold: 2
-            #   failureThreshold: 100
-            #   timeoutSeconds: 10
+            readinessProbe:
+              enabled: true
+              httpGet:
+                path: /cluster/status
+                scheme: HTTP
+              initialDelaySeconds: 10
+              periodSeconds: 45
+              successThreshold: 2
+              failureThreshold: 100
+              timeoutSeconds: 10
 
           volume:
             enabled: true
@@ -247,27 +247,27 @@ spec:
 
             extraEnvironmentVars: {}
 
-            # livenessProbe:
-            #   enabled: true
-            #   httpGet:
-            #     path: /healthz
-            #     scheme: HTTP
-            #   initialDelaySeconds: 20
-            #   periodSeconds: 90
-            #   successThreshold: 1
-            #   failureThreshold: 4
-            #   timeoutSeconds: 30
+            livenessProbe:
+              enabled: true
+              httpGet:
+                path: /healthz
+                scheme: HTTP
+              initialDelaySeconds: 20
+              periodSeconds: 90
+              successThreshold: 1
+              failureThreshold: 4
+              timeoutSeconds: 30
 
-            # readinessProbe:
-            #   enabled: true
-            #   httpGet:
-            #     path: /healthz
-            #     scheme: HTTP
-            #   initialDelaySeconds: 15
-            #   periodSeconds: 15
-            #   successThreshold: 1
-            #   failureThreshold: 100
-            #   timeoutSeconds: 30
+            readinessProbe:
+              enabled: true
+              httpGet:
+                path: /healthz
+                scheme: HTTP
+              initialDelaySeconds: 15
+              periodSeconds: 15
+              successThreshold: 1
+              failureThreshold: 100
+              timeoutSeconds: 30
 
           filer:
             enabled: true

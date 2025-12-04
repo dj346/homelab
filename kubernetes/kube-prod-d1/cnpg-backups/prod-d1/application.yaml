@@ -425,22 +425,26 @@ spec:
             priorityClassName: ""
             serviceAccountName: ""
 
+            # Per https://github.com/seaweedfs/seaweedfs/issues/7615, putting scheme twice until fixed
             livenessProbe:
               enabled: true
               httpGet:
                 path: /status
                 scheme: HTTPS
+              scheme: HTTPS
               initialDelaySeconds: 20
               periodSeconds: 60
               successThreshold: 1
               failureThreshold: 20
               timeoutSeconds: 10
 
+            # Per https://github.com/seaweedfs/seaweedfs/issues/7615, putting scheme twice until fixed
             readinessProbe:
               enabled: true
               httpGet:
                 path: /status
                 scheme: HTTPS
+              scheme: HTTPS
               initialDelaySeconds: 15
               periodSeconds: 15
               successThreshold: 1

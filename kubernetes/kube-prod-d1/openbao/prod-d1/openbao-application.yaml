@@ -204,7 +204,7 @@ spec:
             serviceType: "LoadBalancer"
             serviceNodePort: null
             externalPort: 8200
-    - repoURL: 'ssh://git@gitea-ssh.gitea.svc.cluster.local:2222/dj346/homelab.git'
+    - repoURL: 'https://github.com/dj346/homelab.git' # repoURL: 'ssh://git@gitea-ssh.gitea.svc.cluster.local:2222/dj346/homelab.git'
       targetRevision: HEAD
       path: kubernetes/kube-prod-d1/openbao/prod-d1
   syncPolicy:

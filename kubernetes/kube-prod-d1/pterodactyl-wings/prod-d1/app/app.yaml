@@ -9,7 +9,7 @@ spec:
     server: https://kubernetes.default.svc
     namespace: pterodactyl-wings
   source:
-    repoURL: 'ssh://git@gitea-ssh.gitea.svc.cluster.local:2222/dj346/homelab.git'
+    repoURL: 'https://github.com/dj346/homelab.git' # repoURL: 'ssh://git@gitea-ssh.gitea.svc.cluster.local:2222/dj346/homelab.git'
     targetRevision: HEAD
     path: kubernetes/kube-prod-d1/pterodactyl-wings/prod-d1
     ref: values

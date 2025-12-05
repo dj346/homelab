@@ -1,0 +1,36 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: lldap-operator-application
+  namespace: argocd
+  labels:
+    app.kubernetes.io/name: lldap-operator
+    app.kubernetes.io/component: application
+    app.kubernetes.io/instance: lldap-operator-prod-d1
+    app.kubernetes.io/managed-by: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+    description: "ArgoCD managed deployment for Animation Sonarr application in production"
+spec:
+  project: default
+  revisionHistoryLimit: 5
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: lldap-operator
+  source:
+    repoURL: 'https://github.com/dj346/homelab.git' # repoURL: 'ssh://git@gitea-ssh.gitea.svc.cluster.local:2222/dj346/homelab.git'
+    targetRevision: HEAD
+    path: kubernetes/kube-prod-d1/lldap-operator/prod-d1
+  syncPolicy:
+    syncOptions:
+      - Validate=true
+      - PrunePropagationPolicy=foreground
+    automated:
+      prune: true
+      selfHeal: true
+    retry:
+      limit: 5
+      backoff:
+        duration: 10s
+        factor: 2
+        maxDuration: 5m

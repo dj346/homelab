@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lldap-operator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: lldap-operator
+  template:
+    metadata:
+      labels:
+        app: lldap-operator
+    spec:
+      containers:
+        - name: lldap-operator
+          image: ghcr.io/dj346/lldap-operator:latest
+          imagePullPolicy: Always

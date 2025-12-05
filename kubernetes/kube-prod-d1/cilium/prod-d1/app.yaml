@@ -24,9 +24,6 @@ spec:
           operator:
             clusterPoolIPv4PodCIDRList: "10.42.0.0/16"
 
-        k8sServiceHost: kubernetes.default.svc
-        k8sServicePort: 443
-
         routingMode: native
         autoDirectNodeRoutes: true
         ipv4NativeRoutingCIDR: "10.42.0.0/16"

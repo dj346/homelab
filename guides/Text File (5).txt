@@ -1,0 +1,59 @@
+
+sudo nano /boot/firmware/config.txt
+
+kernel=kernel8.img
+
+sudo reboot 
+
+getconf PAGESIZE
+
+wget https://github.com/wofferl/proxmox-backup-arm64/releases/download/3.4.8-1/proxmox-backup-client_3.4.8-1_arm64.deb
+
+sudo apt install ./proxmox-backup-client_3.4.8-1_arm64.deb
+
+sudo install -d -m 700 /root/.config/pbs
+
+sudo sh -c 'printf "%s" "TOKEN_HERE" > /root/.config/pbs/pbs.pass'
+
+sudo chmod 600 /root/.config/pbs/pbs.pass
+
+sudo tee /usr/local/sbin/pbs-hourly-backup.sh >/dev/null <<'EOF'
+#!/usr/bin/env bash
+set -euo pipefail
+
+export PBS_REPOSITORY='root@pam!pdm-admin-rpi5-prod-d2@10.15.21.10:main-stg'
+export PBS_PASSWORD_FILE='/root/.config/pbs/pbs.pass'
+
+# Prevent overlapping runs (skip if already running)
+exec /usr/bin/flock -n /var/lock/pbs-hourly-backup.lock \
+  /usr/bin/proxmox-backup-client backup \
+    boot.pxar:/boot \
+    bootfirmware.pxar:/boot/firmware \
+    root.pxar:/ \
+  || exit 0
+EOF
+
+sudo chmod 700 /usr/local/sbin/pbs-hourly-backup.sh
+
+sudo sh -c /usr/local/sbin/pbs-hourly-backup.sh
+
+sudo crontab -e
+
+5 * * * * /usr/local/sbin/pbs-hourly-backup.sh >> /var/log/pbs-hourly-backup.log 2>&1
+
+sudo crontab -l
+
+sudo nano /etc/logrotate.d/proxmox-backup-client
+
+/var/log/proxmox-backup-client.log {
+  size 5M
+  rotate 14
+  compress
+  delaycompress
+  missingok
+  notifempty
+  copytruncate
+}
+
+sudo sh -c '/usr/local/sbin/pbs-hourly-backup.sh >> /var/log/pbs-hourly-backup.log 2>&1'
+sudo tail -n 100 /var/log/pbs-hourly-backup.log

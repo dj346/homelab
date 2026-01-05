@@ -62,7 +62,7 @@ spec:
                   key: database-url
             - name: LLDAP_VERBOSE
               value: "true"
-          image: nitnelave/lldap:latest
+          image: nitnehomelab/kubernetes/kube-prod-d1/lldap/prod-d1/deployment.yamllave/lldap:latest
           name: lldap
           ports:
             - containerPort: 3890

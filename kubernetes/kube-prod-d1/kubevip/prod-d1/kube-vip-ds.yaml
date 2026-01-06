@@ -41,7 +41,9 @@ spec:
             fieldRef:
               fieldPath: spec.nodeName
         - name: vip_interface
-          value: ens18
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.labels['vip.interface']
         - name: vip_cidr
           value: "32"
         - name: dns_mode

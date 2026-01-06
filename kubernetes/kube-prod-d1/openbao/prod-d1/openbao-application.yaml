@@ -26,7 +26,7 @@ spec:
           # Vault Helm Chart Value Overrides
           global:
             enabled: true
-            tlsDisable: true
+            tlsDisable: false
 
           injector:
             enabled: true
@@ -44,22 +44,22 @@ spec:
             #       cpu: 250m
 
           server:
-            # volumes:
-            #   - name: tls
-            #     secret:
-            #       secretName: openbao-certificate-secret   # from your Certificate
-            #       defaultMode: 420
-            #   - name: clientca
-            #     secret:
-            #       secretName: openbao-client-secret
-            #       defaultMode: 420
-            # volumeMounts:
-            #   - name: tls
-            #     mountPath: /openbao/tls
-            #     readOnly: true
-            #   - name: clientca
-            #     mountPath: /openbao/clientca
-            #     readOnly: true
+            volumes:
+              - name: tls
+                secret:
+                  secretName: openbao-certificate-secret   # from your Certificate
+                  defaultMode: 420
+              - name: clientca
+                secret:
+                  secretName: openbao-client-secret
+                  defaultMode: 420
+            volumeMounts:
+              - name: tls
+                mountPath: /openbao/tls
+                readOnly: true
+              - name: clientca
+                mountPath: /openbao/clientca
+                readOnly: true
               
             # This configures the Vault Statefulset to create a PVC for data
             # storage when using the file or raft backend storage engines.
@@ -128,11 +128,11 @@ spec:
             
             extraEnvironmentVars:
               # VAULT_CACERT: /openbao/clientca/ca.crt
-              # VAULT_TLSCERT: /openbao/tls/tls.crt
-              # VAULT_TLSKEY: /openbao/tls/tls.key
+              VAULT_TLSCERT: /openbao/tls/tls.crt
+              VAULT_TLSKEY: /openbao/tls/tls.key
               
-              # VAULT_CLIENT_CERT: /openbao/clientca/ca.crt
-              # VAULT_CLIENT_KEY: /openbao/clientca/tls.key
+              VAULT_CLIENT_CERT: /openbao/clientca/ca.crt
+              VAULT_CLIENT_KEY: /openbao/clientca/tls.key
               
               VAULT_API_ADDR: https://openbao-application-0-hs-openbao-application-internal.openbao.kube-prod-d1i.mclacken.net:8200
               VAULT_CLUSTER_ADDR: https://openbao-application-0-hs-openbao-application-internal.openbao.kube-prod-d1i.mclacken.net:8201
@@ -151,9 +151,10 @@ spec:
                   listener "tcp" {
                     address = "[::]:8200"
                     cluster_address = "[::]:8201"
-                    # tls_cert_file = "/openbao/tls/tls.crt"
-                    # tls_key_file = "/openbao/tls/tls.key"
-                    # tls_client_ca_file = "/openbao/clientca/ca.crt"
+                    tls_disable = "false"
+                    tls_cert_file = "/openbao/tls/tls.crt"
+                    tls_key_file = "/openbao/tls/tls.key"
+                    tls_client_ca_file = "/openbao/clientca/ca.crt"
                     tls_require_and_verify_client_cert = "false"
                   }
 
@@ -166,21 +167,21 @@ spec:
                     path = "/openbao/data"
                     retry_join {
                       leader_api_addr = "https://openbao-application-0-hs-openbao-application-internal.openbao.kube-prod-d1i.mclacken.net:8200"
-                      # leader_ca_cert_file = "/openbao/clientca/ca.crt"
-                      # leader_client_cert_file = "/openbao/clientca/tls.crt"
-                      # leader_client_key_file = "/openbao/clientca/tls.key"
+                      leader_ca_cert_file = "/openbao/clientca/ca.crt"
+                      leader_client_cert_file = "/openbao/clientca/tls.crt"
+                      leader_client_key_file = "/openbao/clientca/tls.key"
                     }
                     retry_join {
                       leader_api_addr = "https://openbao-application-1-hs-openbao-application-internal.openbao.kube-prod-d1i.mclacken.net:8200"
-                      # leader_ca_cert_file = "/openbao/clientca/ca.crt"
-                      # leader_client_cert_file = "/openbao/clientca/tls.crt"
-                      # leader_client_key_file = "/openbao/clientca/tls.key"
+                      leader_ca_cert_file = "/openbao/clientca/ca.crt"
+                      leader_client_cert_file = "/openbao/clientca/tls.crt"
+                      leader_client_key_file = "/openbao/clientca/tls.key"
                     }
                     retry_join {
                       leader_api_addr = "https://openbao-application-2-hs-openbao-application-internal.openbao.kube-prod-d1i.mclacken.net:8200"
-                      # leader_ca_cert_file = "/openbao/clientca/ca.crt"
-                      # leader_client_cert_file = "/openbao/clientca/tls.crt"
-                      # leader_client_key_file = "/openbao/clientca/tls.key"
+                      leader_ca_cert_file = "/openbao/clientca/ca.crt"
+                      leader_client_cert_file = "/openbao/clientca/tls.crt"
+                      leader_client_key_file = "/openbao/clientca/tls.key"
                     }
                   }
 

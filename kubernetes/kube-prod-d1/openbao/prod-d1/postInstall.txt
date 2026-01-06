@@ -1,0 +1,7 @@
+kubectl exec -ti -n openbao openbao-application-0 -- bao operator init
+
+kubectl exec --stdin=true --tty=true openbao-application-0 -n openbao -- vault operator unseal
+kubectl exec --stdin=true --tty=true openbao-application-1 -n openbao -- vault operator unseal
+kubectl exec --stdin=true --tty=true openbao-application-2 -n openbao -- vault operator unseal
+
+kubectl exec --stdin=true --tty=true openbao-application-0 -n openbao -- vault status

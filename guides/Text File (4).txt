@@ -299,3 +299,82 @@ bao write auth/kubernetes/kube-prod-d1/role/pki-role-apps-kube-prod-d1 \
   token_policies="apps-policy-kube-prod-d1,cnpg-policy-kube-prod-d1,seaweedfs-policy-kube-prod-d1" \
   token_ttl="1h" \
   token_max_ttl="24h"
+
+---------------
+
+ENAbLE ACME 
+
+bao write pki/kube-prod-d1/apps-prod-d1/ICA2/config/cluster \
+  path="https://openbao.kube-prod-d1.mclacken.net:443/v1/pki/kube-prod-d1/apps-prod-d1/ICA2" \
+  aia_path="https://openbao.kube-prod-d1.mclacken.net:443/v1/pki/kube-prod-d1/apps-prod-d1/ICA2"
+
+bao write pki/kube-prod-d1/cnpg-prod-d1/ICA2/config/cluster \
+  path="https://openbao.kube-prod-d1.mclacken.net:443/v1/pki/kube-prod-d1/cnpg-prod-d1/ICA2" \
+  aia_path="https://openbao.kube-prod-d1.mclacken.net:443/v1/pki/kube-prod-d1/cnpg-prod-d1/ICA2"
+
+bao write pki/kube-prod-d1/seaweedfs-prod-d1/ICA2/config/cluster \
+  path="https://openbao.kube-prod-d1.mclacken.net:443/v1/pki/kube-prod-d1/seaweedfs-prod-d1/ICA2" \
+  aia_path="https://openbao.kube-prod-d1.mclacken.net:443/v1/pki/kube-prod-d1/seaweedfs-prod-d1/ICA2"
+
+bao write pki/kube-prod-d1/apps-prod-d1/ICA2/config/urls \
+  issuing_certificates="{{cluster_aia_path}}/issuer/{{issuer_id}}/der" \
+  crl_distribution_points="{{cluster_aia_path}}/issuer/{{issuer_id}}/crl/der" \
+  ocsp_servers="{{cluster_path}}/ocsp" \
+  enable_templating=true
+
+bao write pki/kube-prod-d1/cnpg-prod-d1/ICA2/config/urls \
+  issuing_certificates="{{cluster_aia_path}}/issuer/{{issuer_id}}/der" \
+  crl_distribution_points="{{cluster_aia_path}}/issuer/{{issuer_id}}/crl/der" \
+  ocsp_servers="{{cluster_path}}/ocsp" \
+  enable_templating=true
+
+bao write pki/kube-prod-d1/seaweedfs-prod-d1/ICA2/config/urls \
+  issuing_certificates="{{cluster_aia_path}}/issuer/{{issuer_id}}/der" \
+  crl_distribution_points="{{cluster_aia_path}}/issuer/{{issuer_id}}/crl/der" \
+  ocsp_servers="{{cluster_path}}/ocsp" \
+  enable_templating=true
+
+bao secrets tune \
+  -passthrough-request-headers=If-Modified-Since \
+  -allowed-response-headers=Last-Modified \
+  -allowed-response-headers=Location \
+  -allowed-response-headers=Replay-Nonce \
+  -allowed-response-headers=Link \
+  pki/kube-prod-d1/apps-prod-d1/ICA2
+
+
+bao write pki/kube-prod-d1/apps-prod-d1/ICA2/roles/acme-role-kube-prod-d1 \
+  max_ttl="2160h" \
+  allow_bare_domains=true \
+  allow_subdomains=true \
+  allow_wildcard_certificates=true \
+  enforce_hostnames=true \
+  allow_any_name=false \
+  allowed_domains="mclacken.net" \
+  organization="kube-prod-d1" \
+  ou="McLacken net" \
+  country="US" \
+  province="California" \
+  locality="San Francisco" \
+  no_store=false
+
+bao write pki/kube-prod-d1/apps-prod-d1/ICA2/config/acme \
+  enabled=true \
+  allowed_roles="acme-apps-kube-prod-d1" \
+  default_directory_policy="role:acme-apps-kube-prod-d1" \
+  eab_policy="always-required" \
+  dns_resolver="10.15.21.28:53"
+
+pki/kube-prod-d1/apps-prod-d1/ICA2/roles/acme-apps-kube-prod-d1/acme/new-eab \
+| jq -r '.data.id, .data.key'
+
+In proxmox: 
+
+cp ca.crt /usr/local/share/ca-certificates/openbao-kube-prod-d1.crt
+
+Account name: openbao-kube-prod-d1
+Email: pve-prod-d1@mclacken.net
+ACME Directory: Custom
+URL: https://openbao.kube-prod-d1.mclacken.net:443/v1/pki/kube-prod-d1/apps-prod-d1/ICA2/roles/acme-apps-kube-prod-d1/acme/directory
+EAB Key ID:360a3529-f425-3d14-2749-3c5227ed7050
+EAB Key: vault-eab-0-QMy7luHgP0PRemTD7nAOXt-MUDdIMGXI-QJlAq3Qr6Y

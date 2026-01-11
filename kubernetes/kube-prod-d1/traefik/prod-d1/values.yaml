@@ -72,3 +72,7 @@ service:
   enabled: true
   type: LoadBalancer
   loadBalancerIP: 10.15.21.29
+
+providers:
+  kubernetesCRD:
+    allowExternalNameServices: false

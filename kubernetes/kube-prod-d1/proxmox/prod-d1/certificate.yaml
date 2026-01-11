@@ -1,0 +1,16 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: proxmox-vault-certificate
+  namespace: proxmox-prod-d1
+  labels:
+    app.kubernetes.io/name: proxmox
+    app.kubernetes.io/component: networking
+    app.kubernetes.io/instance: proxmox-prod-d1
+    app.kubernetes.io/managed-by: argocd
+spec:
+  secretName: proxmox-vault-certificate-secret
+  issuerRef:
+    name: vault-issuer
+    kind: ClusterIssuer
+  commonName: proxmox.pve-prod-d1.mclacken.net

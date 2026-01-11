@@ -3,15 +3,9 @@ kind: Ingress
 metadata:
   name: proxmox-ingress
   namespace: proxmox-prod-d1
-  labels:
-    app.kubernetes.io/name: proxmox
-    app.kubernetes.io/component: networking
-    app.kubernetes.io/instance: proxmox-prod-d1
-    app.kubernetes.io/managed-by: argocd
   annotations:
     cert-manager.io/cluster-issuer: cloudflare-clusterissuer
     traefik.ingress.kubernetes.io/router.entrypoints: websecure
-    description: "Ingress for Proxmox application, routing traffic to the Proxmox web service."
 spec:
   rules:
     - host: proxmox.pve-prod-d1.mclacken.net

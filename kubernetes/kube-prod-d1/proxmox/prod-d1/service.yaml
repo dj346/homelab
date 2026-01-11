@@ -3,10 +3,11 @@ kind: Service
 metadata:
   name: proxmox-service
   namespace: proxmox-prod-d1
+  annotations:
+    traefik.ingress.kubernetes.io/service.serversscheme: https
 spec:
   type: ExternalName
   externalName: pve-prod-d1.local-d1.mclacken.net
   ports:
-    - name: http
-      port: 8200
-      targetPort: 8200
+    - name: https
+      port: 8006

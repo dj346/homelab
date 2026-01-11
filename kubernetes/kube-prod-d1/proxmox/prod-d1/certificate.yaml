@@ -11,6 +11,6 @@ metadata:
 spec:
   secretName: proxmox-vault-certificate-secret
   issuerRef:
-    name: vault-apps-kube-prod-d1-issuer
+    name: vault-issuer
     kind: ClusterIssuer
   commonName: proxmox.pve-prod-d1.mclacken.net

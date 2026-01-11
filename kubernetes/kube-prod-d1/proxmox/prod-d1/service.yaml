@@ -5,6 +5,7 @@ metadata:
   namespace: proxmox-prod-d1
   annotations:
     traefik.ingress.kubernetes.io/service.serversscheme: https
+    traefik.ingress.kubernetes.io/service.serverstransport: proxmox-prod-d1-proxmox-transport@kubernetescrd
 spec:
   type: ExternalName
   externalName: pve-prod-d1.local-d1.mclacken.net

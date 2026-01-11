@@ -75,4 +75,4 @@ service:
 
 providers:
   kubernetesCRD:
-    allowExternalNameServices: false
+    allowExternalNameServices: true

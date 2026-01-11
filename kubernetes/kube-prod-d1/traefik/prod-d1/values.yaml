@@ -76,3 +76,5 @@ service:
 providers:
   kubernetesCRD:
     allowExternalNameServices: true
+  kubernetesIngress:
+    allowExternalNameServices: true

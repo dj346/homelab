@@ -78,3 +78,14 @@ providers:
     allowExternalNameServices: true
   kubernetesIngress:
     allowExternalNameServices: true
+
+deployment:
+  additionalVolumes:
+    - name: vault-upstream-ca
+      secret:
+        secretName: vault-certificate-secret
+
+additionalVolumeMounts:
+  - name: vault-upstream-ca
+    mountPath: /etc/vault/ca
+    readOnly: true

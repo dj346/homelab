@@ -28,7 +28,7 @@ data:
           fallthrough
         }
         prometheus :9153
-        forward . /etc/resolv.conf
+        forward . 10.15.21.28
         cache 30
         loop
         reload
@@ -45,4 +45,3 @@ data:
     10.15.21.32 wksrv-prod-d2
     10.15.21.33 wksrv-prod-d3
     10.15.21.34 wksrv-prod-d4
-    10.15.21.11 pve-prod-d1.local-d1.mclacken.net

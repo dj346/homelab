@@ -6,4 +6,5 @@ metadata:
 spec:
   rootCAsSecrets:
     - openbao-server-certificate-secret
-  serverName: openbao-application-0.openbao-application-internal.openbao
+  serverName: openbao-applicationa.openbao-application-internal.openbao
+  insecureSkipVerify: true

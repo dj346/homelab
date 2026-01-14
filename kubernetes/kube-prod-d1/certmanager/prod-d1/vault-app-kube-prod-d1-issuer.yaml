@@ -5,7 +5,7 @@ metadata:
   namespace: cert-manager
 spec:
   vault:
-    server: https://temp.openbao:8200
+    server: https://openbao-application-internal.openbao:8200
     path: pki/kube-prod-d1/cnpg-prod-d1/ICA2/sign/cnpg-role-kube-prod-d1 
     clientCertSecretRef:
       name: openbao-client-certificate-secret

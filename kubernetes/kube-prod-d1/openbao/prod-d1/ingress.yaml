@@ -11,6 +11,7 @@ metadata:
   annotations:
     cert-manager.io/cluster-issuer: cloudflare-clusterissuer
     traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/service.serverstransport: openbao-openbao-backend-transport@kubernetescrd
 spec:
   rules:
     - host: openbao.kube-prod-d1.mclacken.net

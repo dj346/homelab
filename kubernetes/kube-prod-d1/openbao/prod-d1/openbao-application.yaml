@@ -51,7 +51,7 @@ spec:
                   defaultMode: 420
               - name: clientca
                 secret:
-                  secretName: openbao-client-secret
+                  secretName: openbao-client-certificate-secret
                   defaultMode: 420
             volumeMounts:
               - name: tls

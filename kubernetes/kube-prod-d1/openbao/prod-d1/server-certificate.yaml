@@ -15,6 +15,11 @@ spec:
     - 'openbao-application-1-hs-openbao-application-internal.openbao.kube-prod-d1i.mclacken.net'
     - 'openbao-application-2-hs-openbao-application-internal.openbao.kube-prod-d1i.mclacken.net'
     
+    - 'openbao-application-internal'
+    - 'openbao-application-0.openbao-application-internal'
+    - 'openbao-application-1.openbao-application-internal'
+    - 'openbao-application-2.openbao-application-internal'
+
     - 'openbao-application-internal.openbao'
     - 'openbao-application-internal.openbao.svc'
     - 'openbao-application-internal.openbao.svc.cluster.local'

@@ -1,11 +1,23 @@
-bao secrets enable -path=kube-prod-d1 kv
-Success! Enabled the kv secrets engine at: kube-prod-d1/
+bao write auth/kubernetes/kube-prod-d1/role/eso-kube-prod-d1 \
+  bound_service_account_names="eso-issuer-service-account" \
+  bound_service_account_namespaces="" \
+  policies="eso-policy" \
+  ttl="1h" \
+  audiences="eso-vault-auth"
+Success! Data written to: auth/kubernetes/kube-prod-d1/role/eso-kube-prod-d1
 
-bao write kube-prod-d1/config max_versions=100000
-Success! Data written to: kube-prod-d1/config
+cat > eso-policy.hcl <<'EOF'
+path "kube-prod-d1/metadata/*" {
+  capabilities = ["read", "list", "create", "update"]
+}
 
-bao read kube-prod-d1/config
-Key                 Value
----                 -----
-refresh_interval    768h
-max_versions        100000
+path "kube-prod-d1/data/*" {
+  capabilities = ["read", "create", "update"]
+}
+EOF
+
+bao policy write eso-policy eso-policy.hcl
+Success! Uploaded policy: eso-policy
+
+rm eso-policy.hcl
+

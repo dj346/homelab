@@ -47,7 +47,7 @@ spec:
             volumes:
               - name: tls
                 secret:
-                  secretName: openbao-certificate-secret   # from your Certificate
+                  secretName: openbao-server-certificate-secret   # from your Certificate
                   defaultMode: 420
               - name: clientca
                 secret:

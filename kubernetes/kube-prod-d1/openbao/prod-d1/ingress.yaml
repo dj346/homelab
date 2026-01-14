@@ -28,4 +28,4 @@ spec:
   tls:
     - hosts:
         - openbao.kube-prod-d1.mclacken.net
-      secretName: openbao-certificate-secret
+      secretName: openbao-certificate-secrets

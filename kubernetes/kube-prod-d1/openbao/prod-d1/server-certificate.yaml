@@ -4,11 +4,12 @@ metadata:
   name: openbao-ingressroute-certificate
   namespace: openbao
 spec:
-  secretName: openbao-certificate-secret
+  commonName: openbao-server-certificate
+  secretName: openbao-server-certificate-secret
   issuerRef:
-    name: cloudflare-clusterissuer
+    name: vault-issuer
     kind: ClusterIssuer
   dnsNames:
-    - "*.kube-prod-d1i.mclacken.net"
-    - "*.openbao.kube-prod-d1i.mclacken.net"
-    - "*.kube-prod-d1.mclacken.net"
+    - '*.openbao'
+    - '*.openbao.svc'
+    - '*.openbao.svc.cluster.local'

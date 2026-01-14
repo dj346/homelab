@@ -134,8 +134,8 @@ spec:
               VAULT_CLIENT_CERT: /openbao/clientca/ca.crt
               VAULT_CLIENT_KEY: /openbao/clientca/tls.key
               
-              VAULT_API_ADDR: https://openbao-application-0-hs-openbao-application-internal.openbao.kube-prod-d1i.mclacken.net:8200
-              VAULT_CLUSTER_ADDR: https://openbao-application-0-hs-openbao-application-internal.openbao.kube-prod-d1i.mclacken.net:8201
+              VAULT_API_ADDR: https://openbao-application-internal:8200
+              VAULT_CLUSTER_ADDR: https://openbao-application-internal:8201
 
             # Run Vault in "HA" mode.
             ha:
@@ -166,19 +166,19 @@ spec:
                   storage "raft" {
                     path = "/openbao/data"
                     retry_join {
-                      leader_api_addr = "https://openbao-application-0-hs-openbao-application-internal.openbao.kube-prod-d1i.mclacken.net:8200"
+                      leader_api_addr = "https://openbao-application-0.openbao-application-internal:8200"
                       leader_ca_cert_file = "/openbao/clientca/ca.crt"
                       leader_client_cert_file = "/openbao/clientca/tls.crt"
                       leader_client_key_file = "/openbao/clientca/tls.key"
                     }
                     retry_join {
-                      leader_api_addr = "https://openbao-application-1-hs-openbao-application-internal.openbao.kube-prod-d1i.mclacken.net:8200"
+                      leader_api_addr = "https://openbao-application-1.openbao-application-internal:8200"
                       leader_ca_cert_file = "/openbao/clientca/ca.crt"
                       leader_client_cert_file = "/openbao/clientca/tls.crt"
                       leader_client_key_file = "/openbao/clientca/tls.key"
                     }
                     retry_join {
-                      leader_api_addr = "https://openbao-application-2-hs-openbao-application-internal.openbao.kube-prod-d1i.mclacken.net:8200"
+                      leader_api_addr = "https://openbao-application-2.openbao-application-internal:8200"
                       leader_ca_cert_file = "/openbao/clientca/ca.crt"
                       leader_client_cert_file = "/openbao/clientca/tls.crt"
                       leader_client_key_file = "/openbao/clientca/tls.key"

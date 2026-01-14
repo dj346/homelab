@@ -4,5 +4,6 @@ metadata:
   name: openbao-backend-transport
   namespace: openbao
 spec:
+  rootCAsSecrets:
+    - openbao-server-certificate-secret
   serverName: openbao-application-0.openbao-application-internal.openbao
-  insecureSkipVerify: true

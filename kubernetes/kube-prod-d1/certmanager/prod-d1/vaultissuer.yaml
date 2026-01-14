@@ -5,7 +5,7 @@ metadata:
   namespace: cert-manager
 spec:
   vault:
-    server: https://openbao-application-0-hs-openbao-application-internal.openbao.kube-prod-d1i.mclacken.net:8200
+    server: https://temp.openbao:8200
     path: pki/kube-prod-d1/apps-prod-d1/ICA2/sign/apps-role-kube-prod-d1 
     clientCertSecretRef:
       name: openbao-client-certificate-secret

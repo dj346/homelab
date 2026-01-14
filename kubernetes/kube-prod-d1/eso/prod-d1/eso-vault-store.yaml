@@ -6,11 +6,12 @@ metadata:
 spec:
   provider:
     vault:
-      server: "https://openbao-application-0-hs-openbao-application-internal.openbao.kube-prod-d1i.mclacken.net:8200"
+      server: "https://openbao-application-internal.openbao:8200"
       path: "kube-prod-d1"
       version: "v2"
       checkAndSet:
         required: true
+      caBundle: openbao-server-ca
       tls:
         certSecretRef:
           name: "eso-vault-certificate-secret"

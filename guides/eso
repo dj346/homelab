@@ -1,0 +1,11 @@
+bao secrets enable -path=kube-prod-d1 kv
+Success! Enabled the kv secrets engine at: kube-prod-d1/
+
+bao write kube-prod-d1/config max_versions=100000
+Success! Data written to: kube-prod-d1/config
+
+bao read kube-prod-d1/config
+Key                 Value
+---                 -----
+refresh_interval    768h
+max_versions        100000

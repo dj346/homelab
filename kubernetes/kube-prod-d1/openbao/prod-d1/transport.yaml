@@ -4,5 +4,5 @@ metadata:
   name: openbao-backend-transport
   namespace: openbao
 spec:
-  serverName: openbao.kube-prod-d1.mclacken.net
+  serverName: openbao-application-0.openbao-application-internal.openbao
   insecureSkipVerify: true

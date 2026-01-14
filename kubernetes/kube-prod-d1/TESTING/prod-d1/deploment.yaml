@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: debian-tools
-  namespace: proxmox-prod-d1
+  namespace: openbao
 spec:
   replicas: 1
   selector:

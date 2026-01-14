@@ -57,3 +57,5 @@ sudo nano /etc/logrotate.d/proxmox-backup-client
 
 sudo sh -c '/usr/local/sbin/pbs-hourly-backup.sh >> /var/log/pbs-hourly-backup.log 2>&1'
 sudo tail -n 100 /var/log/pbs-hourly-backup.log
+
+

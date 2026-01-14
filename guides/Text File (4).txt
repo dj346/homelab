@@ -365,12 +365,14 @@ bao write pki/kube-prod-d1/apps-prod-d1/ICA2/config/acme \
   eab_policy="always-required" \
   dns_resolver="10.15.21.28:53"
 
-pki/kube-prod-d1/apps-prod-d1/ICA2/roles/acme-apps-kube-prod-d1/acme/new-eab \
-| jq -r '.data.id, .data.key'
+bao write -format=json -f "pki/kube-prod-d1/apps-prod-d1/ICA2/roles/acme-apps-kube-prod-d1/acme/new-eab" | jq -r '.data.id, .data.key'
 
 In proxmox: 
 
 cp ca.crt /usr/local/share/ca-certificates/openbao-kube-prod-d1.crt
+
+update-ca-certificates
+dpkg-reconfigure ca-certificates
 
 Account name: openbao-kube-prod-d1
 Email: pve-prod-d1@mclacken.net
@@ -378,3 +380,49 @@ ACME Directory: Custom
 URL: https://openbao.kube-prod-d1.mclacken.net:443/v1/pki/kube-prod-d1/apps-prod-d1/ICA2/roles/acme-apps-kube-prod-d1/acme/directory
 EAB Key ID:360a3529-f425-3d14-2749-3c5227ed7050
 EAB Key: vault-eab-0-QMy7luHgP0PRemTD7nAOXt-MUDdIMGXI-QJlAq3Qr6Y
+
+-----
+
+cp ca.crt /usr/local/share/ca-certificates/openbao-kube-prod-d1.crt
+
+update-ca-certificates
+dpkg-reconfigure ca-certificates
+
+proxmox-backup-manager acme account register default pbs-prod-d1@mclacken.net \
+--directory https://openbao.kube-prod-d1.mclacken.net:443/v1/pki/kube-prod-d1/apps-prod-d1/ICA2/roles/acme-apps-kube-prod-d1/acme/directory
+
+bao write -format=json -f "pki/kube-prod-d1/apps-prod-d1/ICA2/roles/acme-apps-kube-prod-d1/acme/new-eab" | jq -r '.data.id, .data.key'
+
+---
+cp ca.crt /usr/local/share/ca-certificates/openbao-kube-prod-d1.crt
+
+update-ca-certificates
+dpkg-reconfigure ca-certificates
+
+in ui add new token named: temp, copy both the id and key it gives u in the format it does ( it looks weird )
+afterwards go to permissions, temp make a token permission on /, select the api token, role admin.
+
+bao write -format=json -f "pki/kube-prod-d1/apps-prod-d1/ICA2/roles/acme-apps-kube-prod-d1/acme/new-eab" | jq -r '.data.id, .data.key'
+
+curl -k \
+  -H "Authorization: PDMAPIToken <TOKENID>:<TOKENKEY>" \
+  -d "name=<account-name>" \
+  -d "contact=mailto:you@example.com" \
+  -d "directory=https://your-ca.example.com/acme/acme/directory" \
+  -d 'eab_kid=<EAB KEY ID>' \
+  -d 'eab_hmac_key=EAB KEY' \
+  https://pdm:8443/api2/json/config/acme/account
+
+curl -k \
+  -H 'Authorization: PDMAPIToken=root@pam!temp:MYTOKEN' \
+  -d 'name=default' \
+  -d 'contact=mailto:pdm-prod-d1@mclacken.net' \
+  -d 'directory=https://openbao.kube-prod-d1.mclacken.net/v1/pki/kube-prod-d1/apps-prod-d1/ICA2/roles/acme-apps-kube-prod-d1/acme/directory' \
+  -d 'eab_kid=MYKEYID' \
+  -d 'eab_hmac_key=MYKEY' \
+  https://10.15.21.10:8443/api2/json/config/acme/account
+
+delete the token you generated earlier
+
+
+---------------

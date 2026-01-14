@@ -10,6 +10,7 @@ spec:
     name: vault-issuer
     kind: ClusterIssuer
   dnsNames:
+    - 'openbao-application-0-hs-openbao-application-internal.openbao.kube-prod-d1i.mclacken.net'
     - '*.openbao'
     - '*.openbao.svc'
     - '*.openbao.svc.cluster.local'

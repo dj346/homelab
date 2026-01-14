@@ -5,4 +5,4 @@ metadata:
   namespace: openbao
 spec:
   serverName: openbao.kube-prod-d1.mclacken.net
-  insecureSkipVerify: false
+  insecureSkipVerify: true

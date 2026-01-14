@@ -11,7 +11,12 @@ spec:
       version: "v2"
       checkAndSet:
         required: true
-      caBundle: openbao-server-ca
+      caProvider: 
+        type: "Secret"
+        namespace: "eso"
+        name: "openbao-server-ca"
+        key: "ca.crt"
+
       tls:
         certSecretRef:
           name: "eso-vault-certificate-secret"

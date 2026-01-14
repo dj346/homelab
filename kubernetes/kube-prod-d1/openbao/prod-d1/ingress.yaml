@@ -13,6 +13,7 @@ metadata:
     traefik.ingress.kubernetes.io/router.entrypoints: websecure
     traefik.ingress.kubernetes.io/service.serverstransport: openbao-openbao-backend-transport@kubernetescrd
 spec:
+  insecureSkipVerify: true
   rules:
     - host: openbao.kube-prod-d1.mclacken.net
       http:

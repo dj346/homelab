@@ -377,7 +377,7 @@ dpkg-reconfigure ca-certificates
 Account name: openbao-kube-prod-d1
 Email: pve-prod-d1@mclacken.net
 ACME Directory: Custom
-URL: https://openbao.kube-prod-d1.mclacken.net:443/v1/pki/kube-prod-d1/apps-prod-d1/ICA2/roles/acme-apps-kube-prod-d1/acme/directory
+URL: https://openbao.kube-prod-d1.mclacken.net/v1/pki/kube-prod-d1/apps-prod-d1/ICA2/roles/acme-apps-kube-prod-d1/acme/directory
 EAB Key ID:360a3529-f425-3d14-2749-3c5227ed7050
 EAB Key: vault-eab-0-QMy7luHgP0PRemTD7nAOXt-MUDdIMGXI-QJlAq3Qr6Y
 
@@ -426,3 +426,70 @@ delete the token you generated earlier
 
 
 ---------------
+
+journalctl -f -u pveproxy -u pvedaemon
+Jan 15 22:38:53 pve-prod-m1 pveproxy[3682]: worker 3684 finished
+Jan 15 22:38:53 pve-prod-m1 pveproxy[3682]: starting 1 worker(s)
+Jan 15 22:38:53 pve-prod-m1 pveproxy[3682]: worker 17632 started
+Jan 15 22:39:22 pve-prod-m1 pvedaemon[1217]: <root@pam> successful auth for user 'root@pam'
+Jan 15 22:51:09 pve-prod-m1 pveproxy[15598]: worker exit
+Jan 15 22:51:09 pve-prod-m1 pveproxy[3682]: worker 15598 finished
+Jan 15 22:51:09 pve-prod-m1 pveproxy[3682]: starting 1 worker(s)
+Jan 15 22:51:09 pve-prod-m1 pveproxy[3682]: worker 19714 started
+Jan 15 22:52:50 pve-prod-m1 pvedaemon[1215]: <root@pam> successful auth for user 'root@pam'
+Jan 15 22:54:22 pve-prod-m1 pvedaemon[1215]: <root@pam> successful auth for user 'root@pam'
+Jan 15 23:04:03 pve-prod-m1 pveproxy[13625]: worker exit
+Jan 15 23:04:03 pve-prod-m1 pveproxy[3682]: worker 13625 finished
+Jan 15 23:04:03 pve-prod-m1 pveproxy[3682]: starting 1 worker(s)
+Jan 15 23:04:03 pve-prod-m1 pveproxy[3682]: worker 21942 started
+Jan 15 23:06:40 pve-prod-m1 pvedaemon[1215]: <root@pam> starting task UPID:pve-prod-m1:00005798:00077743:6969E380:acmeregister::root@pam:
+Jan 15 23:06:42 pve-prod-m1 pvedaemon[22424]: Registration failed: Error: POST to https://openbao.kube-prod-d1.mclacken.net:443/v1/pki/kube-prod-d1/apps-prod-d1/ICA2/roles/acme-apps-kube-prod-d1/acme/new-account {"type":"urn:ietf:params:acme:error:malformed","detail":"eab payload does not match outer JWK key: The request message was malformed"}
+Jan 15 23:06:42 pve-prod-m1 pvedaemon[1215]: <root@pam> end task UPID:pve-prod-m1:00005798:00077743:6969E380:acmeregister::root@pam: Registration failed: Error: POST to https://openbao.kube-prod-d1.mclacken.net:443/v1/pki/kube-prod-d1/apps-prod-d1/ICA2/roles/acme-apps-kube-prod-d1/acme/new-account {"type":"urn:ietf:params:acme:error:malformed","detail":"eab payload does not match outer JWK key: The request message was malformed"}
+
+026:23:05:50 -0800] "GET /api2/json/cluster/resources HTTP/1.1" 200 820
+::ffff:10.15.21.148 - root@pam [15/01/2026:23:05:51 -0800] "GET /api2/json/cluster/resources HTTP/1.1" 200 820
+::ffff:10.15.21.148 - root@pam [15/01/2026:23:05:51 -0800] "GET /api2/json/nodes/pve-prod-m1/certificates/info HTTP/1.1" 200 3257
+::ffff:10.15.21.148 - root@pam [15/01/2026:23:05:51 -0800] "GET /api2/json/cluster/tasks HTTP/1.1" 200 1270
+::ffff:10.15.21.148 - root@pam [15/01/2026:23:05:53 -0800] "GET /api2/json/nodes/pve-prod-m1/config HTTP/1.1" 200 89
+::ffff:10.15.21.148 - root@pam [15/01/2026:23:05:53 -0800] "GET /api2/json/cluster/resources HTTP/1.1" 200 820
+::ffff:10.15.21.148 - root@pam [15/01/2026:23:05:54 -0800] "GET /api2/extjs/cluster/acme/meta?_dc=1768547154036&directory=https%3A%2F%2Fopenbao.kube-prod-d1.mclacken.net%3A443%2Fv1%2Fpki%2Fkube-prod-d1%2Fapps-prod-d1%2FICA2%2Froles%2Facme-apps-kube-prod-d1%2Facme%2Fdirectory HTTP/1.1" 200 53
+::ffff:10.15.21.148 - root@pam [15/01/2026:23:05:54 -0800] "GET /api2/json/cluster/tasks HTTP/1.1" 200 1298
+::ffff:10.15.21.148 - root@pam [15/01/2026:23:05:54 -0800] "GET /api2/json/nodes/pve-prod-m1/status HTTP/1.1" 200 885
+::ffff:10.15.21.148 - root@pam [15/01/2026:23:05:54 -0800] "GET /api2/json/cluster/tasks HTTP/1.1" 200 1270
+::ffff:10.15.21.148 - root@pam [15/01/2026:23:05:54 -0800] "GET /api2/json/nodes/pve-prod-m1/certificates/info HTTP/1.1" 200 3265
+
+.21.148 - root@pam [15/01/2026:23:06:36 -0800] "GET /api2/json/cluster/tasks HTTP/1.1" 200 1266
+::ffff:10.15.21.148 - root@pam [15/01/2026:23:06:36 -0800] "GET /api2/json/nodes/pve-prod-m1/config HTTP/1.1" 200 89
+::ffff:10.15.21.148 - root@pam [15/01/2026:23:06:36 -0800] "GET /api2/json/cluster/tasks HTTP/1.1" 200 1263
+::ffff:10.15.21.148 - root@pam [15/01/2026:23:06:37 -0800] "GET /api2/json/cluster/resources HTTP/1.1" 200 820
+::ffff:10.15.21.148 - root@pam [15/01/2026:23:06:39 -0800] "GET /api2/json/cluster/tasks HTTP/1.1" 200 1273
+::ffff:10.15.21.148 - root@pam [15/01/2026:23:06:39 -0800] "GET /api2/json/nodes/pve-prod-m1/certificates/info HTTP/1.1" 200 3262
+::ffff:10.15.21.148 - root@pam [15/01/2026:23:06:39 -0800] "GET /api2/json/cluster/resources HTTP/1.1" 200 820
+::ffff:10.15.21.148 - root@pam [15/01/2026:23:06:39 -0800] "GET /api2/json/nodes/pve-prod-m1/status HTTP/1.1" 200 890
+::ffff:10.15.21.148 - root@pam [15/01/2026:23:06:40 -0800] "GET /api2/json/cluster/resources HTTP/1.1" 200 820
+::ffff:10.15.21.148 - root@pam [15/01/2026:23:06:40 -0800] "GET /api2/json/nodes/pve-prod-m1/status HTTP/1.1" 200 889
+::ffff:10.15.21.148 - root@pam [15/01/2026:23:06:40 -0800] "POST /api2/extjs/cluster/acme/account HTTP/1.1" 200 90
+::ffff:10.15.21.148 - root@pam [15/01/2026:23:06:40 -0800] "GET /api2/json/nodes/pve-prod-m1/tasks/UPID%3Apve-prod-m1%3A00005798%3A00077743%3A6969E380%3Aacmeregister%3A%3Aroot%40pam%3A/status HTTP/1.1" 200 226
+::ffff:10.15.21.148 - root@pam [15/01/2026:23:06:41 -0800] "GET /api2/extjs/nodes/pve-prod-m1/tasks/UPID%3Apve-prod-m1%3A00005798%3A00077743%3A6969E380%3Aacmeregister%3A%3Aroot%40pam%3A/log?_dc=1768547201034&start=0&limit=510 HTTP/1.1" 200 76
+::ffff:10.15.21.148 - root@pam [15/01/2026:23:06:41 -0800] "GET /api2/extjs/nodes/pve-prod-m1/tasks/UPID%3Apve-prod-m1%3A00005798%3A00077743%3A6969E380%3Aacmeregister%3A%3Aroot%40pam%3A/log?_dc=1768547201599&start=0&limit=510 HTTP/1.1" 200 76
+::ffff:10.15.21.148 - root@pam [15/01/2026:23:06:42 -0800] "GET /api2/json/nodes/pve-prod-m1/tasks/UPID%3Apve-prod-m1%3A00005798%3A00077743%3A6969E380%3Aacmeregister%3A%3Aroot%40pam%3A/status HTTP/1.1" 200 226
+::ffff:10.15.21.148 - root@pam [15/01/2026:23:06:42 -0800] "GET /api2/extjs/nodes/pve-prod-m1/tasks/UPID%3Apve-prod-m1%3A00005798%3A00077743%3A6969E380%3Aacmeregister%3A%3Aroot%40pam%3A/log?_dc=1768547202036&start=0&limit=510 HTTP/1.1" 200 117
+::ffff:10.15.21.148 - root@pam [15/01/2026:23:06:42 -0800] "GET /api2/json/cluster/tasks HTTP/1.1" 200 1277
+::ffff:10.15.21.148 - root@pam [15/01/2026:23:06:42 -0800] "GET /api2/extjs/nodes/pve-prod-m1/tasks/UPID%3Apve-prod-m1%3A00005798%3A00077743%3A6969E380%3Aacmeregister%3A%3Aroot%40pam%3A/log?_dc=1768547202342&start=0&limit=510 HTTP/1.1" 200 453
+::ffff:10.15.21.148 - root@pam [15/01/2026:23:06:42 -0800] "GET /api2/json/nodes/pve-prod-m1/certificates/info HTTP/1.1" 200 3261
+::ffff:10.15.21.148 - root@pam [15/01/2026:23:06:42 -0800] "GET /api2/extjs/nodes/pve-prod-m1/tasks/UPID%3Apve-prod-m1%3A00005798%3A00077743%3A6969E380%3Aacmeregister%3A%3Aroot%40pam%3A/log?_dc=1768547202593&start=0&limit=510 HTTP/1.1" 200 453
+::ffff:10.15.21.148 - root@pam [15/01/2026:23:06:43 -0800] "GET /api2/extjs/nodes/pve-prod-m1/tasks/UPID%3Apve-prod-m1%3A00005798%3A00077743%3A6969E380%3Aacmeregister%3A%3Aroot%40pam%3A/log?_dc=1768547203045&start=0&limit=510 HTTP/1.1" 200 453
+::ffff:10.15.21.148 - root@pam [15/01/2026:23:06:43 -0800] "GET /api2/json/nodes/pve-prod-m1/tasks/UPID%3Apve-prod-m1%3A00005798%3A00077743%3A6969E380%3Aacmeregister%3A%3Aroot%40pam%3A/status HTTP/1.1" 200 551
+::ffff:10.15.21.148 - root@pam [15/01/2026:23:06:43 -0800] "GET /api2/json/cluster/acme/account HTTP/1.1" 200 11
+::ffff:10.15.21.148 - root@pam [15/01/2026:23:06:43 -0800] "GET /api2/json/nodes/pve-prod-m1/config HTTP/1.1" 200 89
+::ffff:10.15.21.148 - root@pam [15/01/2026:23:06:43 -0800] "GET /api2/json/cluster/resources HTTP/1.1" 200 820
+::ffff:10.15.21.148 - root@pam [15/01/2026:23:06:43 -0800] "GET /api2/json/cluster/acme/account HTTP/1.1" 200 11
+::ffff:10.15.21.148 - root@pam [15/01/2026:23:06:43 -0800] "GET /api2/extjs/nodes/pve-prod-m1/tasks/UPID%3Apve-prod-m1%3A00005798%3A00077743%3A6969E380%3Aacmeregister%3A%3Aroot%40pam%3A/log?_dc=1768547203499&start=0&limit=510 HTTP/1.1" 200 453
+::ffff:10.15.21.148 - root@pam [15/01/2026:23:06:43 -0800] "GET /api2/json/cluster/tasks HTTP/1.1" 200 1277
+::ffff:10.15.21.148 - root@pam [15/01/2026:23:06:43 -0800] "GET /api2/json/nodes/pve-prod-m1/config HTTP/1.1" 200 89
+::ffff:10.15.21.148 - root@pam [15/01/2026:23:06:45 -0800] "GET /api2/json/nodes/pve-prod-m1/status HTTP/1.1" 200 891
+::ffff:10.15.21.148 - root@pam [15/01/2026:23:06:45 -0800] "GET /api2/json/nodes/pve-prod-m1/config HTTP/1.1" 200 89
+::ffff:10.15.21.148 - root@pam [15/01/2026:23:06:45 -0800] "GET /api2/json/cluster/tasks HTTP/1.1" 200 1275
+::ffff:10.15.21.148 - root@pam [15/01/2026:23:06:45 -0800] "GET /api2/json/cluster/acme/account HTTP/1.1" 200 11
+::ffff:10.15.21.148 - root@pam [15/01/2026:23:06:45 -0800] "GET /api2/json/nodes/pve-prod-m1/certificates/info HTTP/1.1" 200 3260
+::ffff:10.15.21.148 - root@pam [15/01/2026:23:06:46 -0800] "GET /api2/json/cluster/resources HTTP/1.1" 200 820

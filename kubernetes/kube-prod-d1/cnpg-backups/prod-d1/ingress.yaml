@@ -10,8 +10,8 @@ spec:
     - match: Host(`cnpg-backups-master.kube-prod-d1.mclacken.net`)
       kind: Rule
       services:
-        - name: seaweedfs-master
-          port: 9333
+        - name: seaweedfs-volume
+          port: 8080
           scheme: http
   tls:
     secretName: cnpg-backups-master-certificate-secrets

@@ -73,7 +73,7 @@ spec:
             # restartPolicy: null
             replicas: 3
 
-            disableHttp: false # if true, only gRPC operations are allowed; HTTP endpoints disabled (more locked-down).
+            disableHttp: true # if true, only gRPC operations are allowed; HTTP endpoints disabled (more locked-down).
             port: 9333
             grpcPort: 19333
             metricsPort: 9327

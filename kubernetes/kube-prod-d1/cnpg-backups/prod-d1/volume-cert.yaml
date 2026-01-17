@@ -20,6 +20,61 @@ spec:
     - 'seaweedfs-filer.cnpg-backups'
     - 'seaweedfs-filer.cnpg-backups.svc'
     - 'seaweedfs-filer.cnpg-backups.svc.cluster.local'
+
+    - 'seaweedfs-volume'
+    - 'seaweedfs-volume.cnpg-backups'
+    - 'seaweedfs-volume.cnpg-backups.svc'
+    - 'seaweedfs-volume.cnpg-backups.svc.cluster.local'
+
+    - 'seaweedfs-s3'
+    - 'seaweedfs-s3.cnpg-backups'
+    - 'seaweedfs-s3.cnpg-backups.svc'
+    - 'seaweedfs-s3.cnpg-backups.svc.cluster.local'
+
+    - 'seaweedfs-master-0.seaweedfs-master'
+    - 'seaweedfs-master-0.seaweedfs-master.cnpg-backups'
+    - 'seaweedfs-master-0.seaweedfs-master.cnpg-backups.svc'
+    - 'seaweedfs-master-0.seaweedfs-master.cnpg-backups.svc.cluster.local'
+
+    - 'seaweedfs-master-1.seaweedfs-master'
+    - 'seaweedfs-master-1.seaweedfs-master.cnpg-backups'
+    - 'seaweedfs-master-1.seaweedfs-master.cnpg-backups.svc'
+    - 'seaweedfs-master-1.seaweedfs-master.cnpg-backups.svc.cluster.local'
+
+    - 'seaweedfs-master-2.seaweedfs-master'
+    - 'seaweedfs-master-2.seaweedfs-master.cnpg-backups'
+    - 'seaweedfs-master-2.seaweedfs-master.cnpg-backups.svc'
+    - 'seaweedfs-master-2.seaweedfs-master.cnpg-backups.svc.cluster.local'
+
+    - 'seaweedfs-filer-0.seaweedfs-filer'
+    - 'seaweedfs-filer-0.seaweedfs-filer.cnpg-backups'
+    - 'seaweedfs-filer-0.seaweedfs-filer.cnpg-backups.svc'
+    - 'seaweedfs-filer-0.seaweedfs-filer.cnpg-backups.svc.cluster.local'
+
+    - 'seaweedfs-filer-1.seaweedfs-filer'
+    - 'seaweedfs-filer-1.seaweedfs-filer.cnpg-backups'
+    - 'seaweedfs-filer-1.seaweedfs-filer.cnpg-backups.svc'
+    - 'seaweedfs-filer-1.seaweedfs-filer.cnpg-backups.svc.cluster.local'
+
+    - 'seaweedfs-filer-0.seaweedfs-filer-client'
+    - 'seaweedfs-filer-0.seaweedfs-filer-client.cnpg-backups'
+    - 'seaweedfs-filer-0.seaweedfs-filer-client.cnpg-backups.svc'
+    - 'seaweedfs-filer-0.seaweedfs-filer-client.cnpg-backups.svc.cluster.local'
+
+    - 'seaweedfs-filer-1.seaweedfs-filer-client'
+    - 'seaweedfs-filer-1.seaweedfs-filer-client.cnpg-backups'
+    - 'seaweedfs-filer-1.seaweedfs-filer-client.cnpg-backups.svc'
+    - 'seaweedfs-filer-1.seaweedfs-filer-client.cnpg-backups.svc.cluster.local'
+
+    - 'seaweedfs-volume-0.seaweedfs-volume'
+    - 'seaweedfs-volume-0.seaweedfs-volume.cnpg-backups'
+    - 'seaweedfs-volume-0.seaweedfs-volume.cnpg-backups.svc'
+    - 'seaweedfs-volume-0.seaweedfs-volume.cnpg-backups.svc.cluster.local'
+
+    - 'seaweedfs-volume-1.seaweedfs-volume'
+    - 'seaweedfs-volume-1.seaweedfs-volume.cnpg-backups'
+    - 'seaweedfs-volume-1.seaweedfs-volume.cnpg-backups.svc'
+    - 'seaweedfs-volume-1.seaweedfs-volume.cnpg-backups.svc.cluster.local'
   issuerRef:
     name: vault-seaweedfs-kube-prod-d1-issuer
     kind: ClusterIssuer

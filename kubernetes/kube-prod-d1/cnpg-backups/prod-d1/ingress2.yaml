@@ -15,7 +15,7 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: seaweedfs-filer
+                name: seaweedfs-filer-client
                 port:
                   number: 8888
   tls:

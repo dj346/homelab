@@ -69,26 +69,29 @@ spec:
     storageClass: longhorn-strict-local
     size: 1Gi
 
-  # backup:
-  #   barmanObjectStore:
-  #     destinationPath: s3://anisonarr-backups/
-  #     endpointURL: https://your-s3-endpoint
-  #     s3Credentials:
-  #       accessKeyId:
-  #         name: backup-creds
-  #         key: ACCESS_KEY_ID
-  #       secretAccessKey:
-  #         name: backup-creds
-  #         key: ACCESS_SECRET_KEY
-  #     wal:
-  #       compression: gzip
-  #       encryption: AES256
-  #     data:
-  #       compression: gzip
-  #       encryption: AES256
-  #       immediateCheckpoint: true
-  #       jobs: 2
-  #   retentionPolicy: "14d"
+  backup:
+    barmanObjectStore:
+      destinationPath: s3://cnpg-backups/cnpg-backups/
+      endpointURL: https://seaweedfs-s3:8333
+      endpointCA:
+        name: seaweedfs-ca-cert
+        key: ca.crt
+      s3Credentials:
+        accessKeyId:
+          name: postgres-s3-secret
+          key: ACCESS_KEY_ID
+        secretAccessKey:
+          name: postgres-s3-secret
+          key: ACCESS_SECRET_KEY
+      wal:
+        compression: gzip
+        encryption: AES256
+      data:
+        compression: gzip
+        encryption: AES256
+        immediateCheckpoint: true
+        jobs: 2
+    retentionPolicy: "14d"
 
   # resources:
   #   requests:

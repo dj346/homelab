@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: cnpg-backups-volumes-ingress
+  namespace: cnpg-backups
+  annotations:
+    cert-manager.io/cluster-issuer: cloudflare-clusterissuer
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+spec:
+  rules:
+    - host: cnpg-backups-volumes.kube-prod-d1.mclacken.net
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: seaweedfs-volumes
+                port:
+                  number: 8080
+  tls:
+    - hosts:
+        - cnpg-backups-volumes.kube-prod-d1.mclacken.net
+      secretName: cnpg-backups-volumes-certificate-secret

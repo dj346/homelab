@@ -6,13 +6,20 @@ metadata:
 spec:
   commonName: seaweedfs-filer-cert
   dnsNames:
-    - '*.cnpg-backups'
-    - '*.cnpg-backups.svc'
-    - '*.cnpg-backups.svc.cluster.local'
-    - '*.seaweedfs-master'
-    - '*.seaweedfs-master.cnpg-backups'
-    - '*.seaweedfs-master.cnpg-backups.svc'
-    - '*.seaweedfs-master.cnpg-backups.svc.cluster.local'
+    - 'seaweedfs-master'
+    - 'seaweedfs-master.cnpg-backups'
+    - 'seaweedfs-master.cnpg-backups.svc'
+    - 'seaweedfs-master.cnpg-backups.svc.cluster.local'
+
+    - 'seaweedfs-filer-client'
+    - 'seaweedfs-filer-client.cnpg-backups'
+    - 'seaweedfs-filer-client.cnpg-backups.svc'
+    - 'seaweedfs-filer-client.cnpg-backups.svc.cluster.local'
+
+    - 'seaweedfs-filer'
+    - 'seaweedfs-filer.cnpg-backups'
+    - 'seaweedfs-filer.cnpg-backups.svc'
+    - 'seaweedfs-filer.cnpg-backups.svc.cluster.local'
   issuerRef:
     name: vault-seaweedfs-kube-prod-d1-issuer
     kind: ClusterIssuer

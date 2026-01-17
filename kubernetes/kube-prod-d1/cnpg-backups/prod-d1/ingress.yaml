@@ -12,6 +12,6 @@ spec:
       services:
         - name: seaweedfs-volume
           port: 8080
-          scheme: http
+          scheme: https
   tls:
     secretName: cnpg-backups-master-certificate-secrets

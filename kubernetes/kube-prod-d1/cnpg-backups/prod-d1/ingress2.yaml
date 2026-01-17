@@ -15,7 +15,7 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: seaweedfs-volumes
+                name: seaweedfs-volume
                 port:
                   number: 8080
   tls:

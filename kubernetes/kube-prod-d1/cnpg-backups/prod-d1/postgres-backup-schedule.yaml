@@ -1,0 +1,11 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: ScheduledBackup
+metadata:
+  name: cnpg-backups-postgres-cluster-6h
+  namespace: cnpg-backups
+spec:
+  cluster:
+    name: cnpg-backups-postgres-cluster
+  schedule: "0 */6 * * *"
+  backupOwnerReference: self
+  method: barmanObjectStore

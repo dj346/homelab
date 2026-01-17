@@ -11,7 +11,7 @@ spec:
       kind: Rule
       services:
         - name: seaweedfs-master
-          port: 8333
+          port: 9333
           scheme: https
           serversTransport: cnpg-backups-backend-transport
   tls:

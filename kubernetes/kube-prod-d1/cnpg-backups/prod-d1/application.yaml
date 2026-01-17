@@ -151,7 +151,7 @@ spec:
               enabled: true
               httpGet:
                 path: /cluster/status
-                scheme: HTTP
+                scheme: HTTPS
               initialDelaySeconds: 20
               periodSeconds: 30
               successThreshold: 1
@@ -162,7 +162,7 @@ spec:
               enabled: true
               httpGet:
                 path: /cluster/status
-                scheme: HTTP
+                scheme: HTTPS
               initialDelaySeconds: 10
               periodSeconds: 45
               successThreshold: 2

@@ -34,7 +34,7 @@ spec:
             loggingLevel: 3
             createClusterRole: true
             enableSecurity: true
-            masterServer: seaweedfs-master.cnpg-backups.kube-prod-d1i.mclacken.net:9333
+            masterServer: seaweedfs-master:9333
 
             securityConfig:
               jwtSigning: 
@@ -52,8 +52,8 @@ spec:
 
             extraEnvironmentVars:
               WEED_CLUSTER_DEFAULT: "backup-seaweedfs-prod-d1"
-              WEED_CLUSTER_SW_MASTER: "seaweedfs-master.cnpg-backups.kube-prod-d1i.mclacken.net:9333"
-              WEED_CLUSTER_SW_FILER: "seaweedfs-filer-client.cnpg-backups.kube-prod-d1i.mclacken.net:8888"
+              WEED_CLUSTER_SW_MASTER: "seaweedfs-master:9333"
+              WEED_CLUSTER_SW_FILER: "seaweedfs-filer-client:8888"
 
               WEED_JWT_SIGNING_KEY:
                 secretKeyRef:
@@ -336,7 +336,7 @@ spec:
 
             extraEnvironmentVars:
               WEED_POSTGRES_ENABLED: "true"
-              WEED_POSTGRES_HOSTNAME: "cnpg-backups-postgres-cluster-rw.cnpg-backups.kube-prod-d1i.mclacken.net."
+              WEED_POSTGRES_HOSTNAME: "cnpg-backups-postgres-cluster-rw"
               WEED_POSTGRES_PORT: "5432"
               WEED_POSTGRES_DATABASE: "filemeta"
               WEED_POSTGRES_USERNAME: "cnpg-backups"

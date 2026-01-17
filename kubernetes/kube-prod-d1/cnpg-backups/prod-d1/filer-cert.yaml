@@ -6,8 +6,6 @@ metadata:
 spec:
   commonName: seaweedfs-filer-cert
   dnsNames:
-    - '*.cnpg-backups.kube-prod-d1i.mclacken.net'
-    - '*.seaweedfs-master.cnpg-backups.kube-prod-d1i.mclacken.net'
     - '*.cnpg-backups'
     - '*.cnpg-backups.svc'
     - '*.cnpg-backups.svc.cluster.local'

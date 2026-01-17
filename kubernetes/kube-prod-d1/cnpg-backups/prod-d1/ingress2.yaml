@@ -17,7 +17,7 @@ spec:
               service:
                 name: seaweedfs-filer
                 port:
-                  number: 8080
+                  number: 8888
   tls:
     - hosts:
         - cnpg-backups-volumes.kube-prod-d1.mclacken.net

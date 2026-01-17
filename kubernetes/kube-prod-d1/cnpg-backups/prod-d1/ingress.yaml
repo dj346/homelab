@@ -12,6 +12,6 @@ spec:
       services:
         - name: seaweedfs-filer-client
           port: 8888
-          scheme: http
+          scheme: https
   tls:
     secretName: cnpg-backups-master-certificate-secrets

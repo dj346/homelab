@@ -12,7 +12,6 @@ spec:
       services:
         - name: seaweedfs-master
           port: 9333
-          scheme: https
-          serversTransport: cnpg-backups-backend-transport
+          scheme: http
   tls:
     secretName: cnpg-backups-master-certificate-secrets

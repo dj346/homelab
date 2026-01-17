@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: seaweedfs-master-1
+  namespace: seaweedfs-master
+spec:
+  ports:
+    - name: http
+      port: 9333
+      targetPort: 9333
+  selector:
+    statefulset.kubernetes.io/pod-name: seaweedfs-master-1

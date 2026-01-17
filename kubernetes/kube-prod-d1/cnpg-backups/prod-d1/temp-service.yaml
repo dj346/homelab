@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: seaweedfs-master-1
-  namespace: seaweedfs-master
+  namespace: cnpg-backups
 spec:
   ports:
     - name: http

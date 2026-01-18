@@ -11,7 +11,7 @@ spec:
   sources:
     - repoURL: https://charts.jetstack.io
       chart: cert-manager
-      targetRevision: 1.16.3
+      targetRevision: v1.19.2
       helm:
         valueFiles:
         - $values/kubernetes/kube-prod-d1/certmanager/prod-d1/values.yaml

@@ -31,6 +31,11 @@ spec:
     - 'seaweedfs-s3.cnpg-backups.svc'
     - 'seaweedfs-s3.cnpg-backups.svc.cluster.local'
 
+    - 'seaweedfs-admin'
+    - 'seaweedfs-admin.cnpg-backups'
+    - 'seaweedfs-admin.cnpg-backups.svc'
+    - 'seaweedfs-admin.cnpg-backups.svc.cluster.local'
+
     - 'seaweedfs-master-0.seaweedfs-master'
     - 'seaweedfs-master-0.seaweedfs-master.cnpg-backups'
     - 'seaweedfs-master-0.seaweedfs-master.cnpg-backups.svc'
@@ -75,6 +80,12 @@ spec:
     - 'seaweedfs-volume-1.seaweedfs-volume.cnpg-backups'
     - 'seaweedfs-volume-1.seaweedfs-volume.cnpg-backups.svc'
     - 'seaweedfs-volume-1.seaweedfs-volume.cnpg-backups.svc.cluster.local'
+
+    - 'seaweedfs-admin-0.seaweedfs-admin'
+    - 'seaweedfs-admin-0.seaweedfs-admin.cnpg-backups'
+    - 'seaweedfs-admin-0.seaweedfs-admin.cnpg-backups.svc'
+    - 'seaweedfs-admin-0.seaweedfs-admin.cnpg-backups.svc.cluster.local'
+    
   issuerRef:
     name: vault-seaweedfs-kube-prod-d1-issuer
     kind: ClusterIssuer

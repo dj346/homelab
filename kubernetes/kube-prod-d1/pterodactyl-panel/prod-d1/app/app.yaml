@@ -12,7 +12,7 @@ spec:
     - repoURL: registry-1.docker.io/bitnamicharts
       chart: mariadb
       path: mariadb
-      targetRevision: 20.5.3
+      targetRevision: 24.0.3
       helm:
         valueFiles:
         - $values/kubernetes/kube-prod-d1/pterodactyl-panel/prod-d1/values.yaml

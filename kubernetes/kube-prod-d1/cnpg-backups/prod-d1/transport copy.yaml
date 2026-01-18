@@ -1,9 +1,0 @@
-apiVersion: traefik.io/v1alpha1
-kind: ServersTransport
-metadata:
-  name: cnpg-backups-backend-transport
-  namespace: cnpg-backups
-spec:
-  rootCAsSecrets:
-    - seaweedfs-client-cert
-  serverName: seaweedfs-master

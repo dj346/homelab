@@ -1,0 +1,30 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: cnpg-backups-ingress-seaweedfs-master
+  namespace: cnpg-backups
+  labels:
+    app.kubernetes.io/name: cnpg-backups
+    app.kubernetes.io/component: networking
+    app.kubernetes.io/instance: cnpg-backups-prod-d1
+    app.kubernetes.io/managed-by: argocd
+  annotations:
+    cert-manager.io/cluster-issuer: cloudflare-clusterissuer
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    description: "Ingress for SeaweedFS Master application, routing traffic to the SeaweedFS Master web service."
+spec:
+  rules:
+    - host: cnpg-backups-master.kube-prod-d1.mclacken.net
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: seaweedfs-master
+                port:
+                  name: swfs-master
+  tls:
+    - hosts:
+        - cnpg-backups-master.kube-prod-d1.mclacken.net
+      secretName: cnpg-backups-master-certificate-secrets

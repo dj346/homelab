@@ -5,7 +5,7 @@ metadata:
   namespace: anisonarr
   labels:
     app.kubernetes.io/name: anisonarr
-    app.kubernetes.io/instance: anisonarr-prod
+    app.kubernetes.io/instance: anisonarr-prod-d1
     app.kubernetes.io/component: program
     app.kubernetes.io/managed-by: argocd
   annotations:

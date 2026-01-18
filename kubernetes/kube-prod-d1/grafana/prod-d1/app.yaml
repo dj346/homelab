@@ -14,7 +14,7 @@ spec:
   sources:
     - repoURL: https://grafana.github.io/helm-charts
       chart: grafana
-      targetRevision: 9.0.0
+      targetRevision: 10.5.8
       helm:
         valueFiles:
         - $values/kubernetes/kube-prod-d1/grafana/prod-d1/values.yaml

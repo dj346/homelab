@@ -15,7 +15,7 @@ spec:
     spec:
       initContainers:
       - name: restore-from-backup
-        image: alpine
+        image: alpine@sha256:865b95f46d98cf867a156fe4a135ad3fe50d2056aa3f25ed31662dff6da4eb62
         command: ["sh", "-c"]
         args:
           - |
@@ -36,7 +36,7 @@ spec:
           #   mountPath: /backup
       containers:
         - name: sonic
-          image: archivebox/sonic:latest
+          image: archivebox/sonic:latest@sha256:452064bfdab535fb8a6019937f1d753e0dfb2c94d2a87ebd166e2d556de78692
           ports:
             - containerPort: 1491
           env:

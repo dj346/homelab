@@ -18,7 +18,7 @@ spec:
       restartPolicy: Always
       initContainers:
       - name: restore-from-backup
-        image: alpine
+        image: alpine@sha256:865b95f46d98cf867a156fe4a135ad3fe50d2056aa3f25ed31662dff6da4eb62
         command: ["sh", "-c"]
         args:
           - |
@@ -38,7 +38,7 @@ spec:
           # - name: archivebox-backup-storage
           #   mountPath: /backup
       - name: wait-for-sonic
-        image: busybox
+        image: busybox@sha256:2383baad1860bbe9d8a7a843775048fd07d8afe292b94bd876df64a69aae7cb1
         command: ["sh", "-c"]
         args:
           - |
@@ -49,13 +49,13 @@ spec:
             done
             echo "Sonic is up!"
       - name: cleanup-lost-found
-        image: busybox
+        image: busybox@sha256:2383baad1860bbe9d8a7a843775048fd07d8afe292b94bd876df64a69aae7cb1
         command: ["sh", "-c", "rm -rf /data/lost+found"]
         volumeMounts:
           - mountPath: /data
             name: archivebox-storage
       - name: init-archivebox
-        image: archivebox/archivebox
+        image: archivebox/archivebox@sha256:fdf2936192aa1e909b0c3f286f60174efa24078555be4b6b90a07f2cef1d4909
         args: ['init']
         volumeMounts:
           - name: archivebox-storage
@@ -63,7 +63,7 @@ spec:
           - name: archivebox-nfs
             mountPath: /data/archive
       - name: init-sonic
-        image: archivebox/archivebox
+        image: archivebox/archivebox@sha256:fdf2936192aa1e909b0c3f286f60174efa24078555be4b6b90a07f2cef1d4909
         args: ['update', '--index-only']
         volumeMounts:
           - name: archivebox-storage
@@ -73,7 +73,7 @@ spec:
       containers:
       - name: archivebox
         args: ["server", "--quick-init"] # 
-        image: archivebox/archivebox:latest
+        image: archivebox/archivebox:latest@sha256:fdf2936192aa1e909b0c3f286f60174efa24078555be4b6b90a07f2cef1d4909
         ports:
         - containerPort: 8000
           protocol: TCP

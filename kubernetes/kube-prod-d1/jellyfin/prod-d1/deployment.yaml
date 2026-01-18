@@ -29,7 +29,7 @@ spec:
             fieldRef:
               apiVersion: v1
               fieldPath: metadata.namespace
-        image: docker.io/jellyfin/jellyfin
+        image: docker.io/jellyfin/jellyfin@sha256:6d819e9ab067efcf712993b23455cc100ee5585919bb297ea5a109ac00cb626e
         imagePullPolicy: IfNotPresent
         name: jellyfin
         ports:

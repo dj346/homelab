@@ -20,7 +20,7 @@ spec:
       hostPID: true                           # optional, but ensures PID‐based collectors work
       containers:
       - name: node-exporter
-        image: prom/node-exporter:v1.9.1
+        image: prom/node-exporter:v1.10.2@sha256:3ac34ce007accad95afed72149e0d2b927b7e42fd1c866149b945b84737c62c3
         args:
           - --log.level=debug
           - --path.procfs=/host/proc

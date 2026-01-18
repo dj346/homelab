@@ -22,7 +22,7 @@ spec:
           - 127.0.0.1
       initContainers:
       - name: restore-from-backup
-        image: alpine
+        image: alpine@sha256:865b95f46d98cf867a156fe4a135ad3fe50d2056aa3f25ed31662dff6da4eb62
         command: ["sh", "-c"]
         args:
           - |
@@ -51,7 +51,7 @@ spec:
       # https://github.com/qdm12/gluetun
       # https://github.com/qdm12/gluetun-wiki/pull/7
       - name: gluetun # init sidecar for VPN connection
-        image: "ghcr.io/qdm12/gluetun:latest" # <- you probably want this to be a set version
+        image: "ghcr.io/qdm12/gluetun:latest@sha256:7b1dafa3d25cfd891deae52c7973c499f619f7d8eac52fad84f9aa1e5e6e01ca" # <- you probably want this to be a set version
         restartPolicy: Always # makes this init into a sidecar container k8s 1.29
         imagePullPolicy: Always
         env:
@@ -103,7 +103,7 @@ spec:
             - name: gluetun-config
               mountPath: /gluetun
       - name: wait-for-gluetun
-        image: busybox
+        image: busybox@sha256:2383baad1860bbe9d8a7a843775048fd07d8afe292b94bd876df64a69aae7cb1
         command:
         - sh
         - -c
@@ -116,7 +116,7 @@ spec:
           echo "VPN is up!"
       containers:
         - name:  qbittorrent
-          image:  lscr.io/linuxserver/qbittorrent:latest
+          image:  lscr.io/linuxserver/qbittorrent:latest@sha256:f430d70c70d1547fded30fbc3181c4750cef354212a5138ab754eba9ba8bd9e1
           env:
           - name: PUID
             value: "1000"

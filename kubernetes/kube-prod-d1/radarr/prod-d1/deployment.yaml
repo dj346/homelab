@@ -18,7 +18,7 @@ spec:
     spec:
       initContainers:
         - name: restore-from-backup
-          image: alpine
+          image: alpine@sha256:865b95f46d98cf867a156fe4a135ad3fe50d2056aa3f25ed31662dff6da4eb62
           command: ["sh", "-c"]
           args:
             - |
@@ -39,7 +39,7 @@ spec:
               mountPath: /backup
       containers:
         - name: radarr
-          image: lscr.io/linuxserver/radarr:latest
+          image: lscr.io/linuxserver/radarr:latest@sha256:270f25698624b57b86ca119cc95399d7ff15be8297095b4e1223fd5b549b732c
           env:
           - name: PUID
             value: "1000"

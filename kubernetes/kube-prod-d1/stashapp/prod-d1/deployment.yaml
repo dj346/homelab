@@ -19,7 +19,7 @@ spec:
     spec:
       initContainers:
         - name: restore-from-backup
-          image: alpine
+          image: alpine@sha256:865b95f46d98cf867a156fe4a135ad3fe50d2056aa3f25ed31662dff6da4eb62
           command: ["sh", "-c"]
           args:
             - |
@@ -40,7 +40,7 @@ spec:
               mountPath: /backup
       containers:
         - name: stashapp
-          image: stashapp/stash:latest
+          image: stashapp/stash:latest@sha256:4cac18873ea052f03510602d9e1a9b29e6241a393a111479010292b7a1e28a5e
           env:
           - name: TZ
             value: "America/Los_Angeles"

@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: tubearchivist
-          image: bbilly1/tubearchivist:v0.5.2
+          image: bbilly1/tubearchivist:v0.5.8@sha256:83ccd1e372a654654e8cb3c0278256b6889653a4cf239c052bb532401c79daeb
           ports:
             - containerPort: 8000
           env:

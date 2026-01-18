@@ -17,7 +17,7 @@ spec:
         fsGroup: 101                   # Files created by volumes will have group 'bind'
       initContainers:
       - name: cp-ddns-zones
-        image: ubuntu:latest
+        image: ubuntu:latest@sha256:7a398144c5a2fa7dbd9362e460779dc6659bd9b19df50f724250c62ca7812eb3
         command: ["/bin/sh", "-c"]
         args:
           - |
@@ -52,7 +52,7 @@ spec:
             mountPath: /var/lib/bind/ddns-zones
             subPath: ddns-zones
       - name: init-bind9-cache-perms
-        image: ubuntu
+        image: ubuntu@sha256:7a398144c5a2fa7dbd9362e460779dc6659bd9b19df50f724250c62ca7812eb3
         command: ["chown", "-R", "101:101", "/var/cache/bind"]
         securityContext:
           runAsUser: 0                 # run init container as root to adjust perms
@@ -63,7 +63,7 @@ spec:
           subPath: cache
       containers:
       - name: bind9
-        image: ubuntu/bind9:9.18-22.04_beta
+        image: ubuntu/bind9:9.18-22.04_beta@sha256:770db6e381fa54a991b31e32496334fa9e69c322473eb95abca8a05a3d4b7739
         env:
         - name: TZ
           value: "PT"

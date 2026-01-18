@@ -25,7 +25,7 @@ spec:
       # https://github.com/qdm12/gluetun
       # https://github.com/qdm12/gluetun-wiki/pull/7
       - name: gluetun # init sidecar for VPN connection
-        image: "ghcr.io/qdm12/gluetun:latest" # <- you probably want this to be a set version
+        image: "ghcr.io/qdm12/gluetun:latest@sha256:7b1dafa3d25cfd891deae52c7973c499f619f7d8eac52fad84f9aa1e5e6e01ca" # <- you probably want this to be a set version
         restartPolicy: Always # makes this init into a sidecar container k8s 1.29
         imagePullPolicy: Always
         env:
@@ -77,7 +77,7 @@ spec:
             - name: gluetun-config
               mountPath: /gluetun
       - name: wait-for-gluetun
-        image: busybox
+        image: busybox@sha256:2383baad1860bbe9d8a7a843775048fd07d8afe292b94bd876df64a69aae7cb1
         command:
         - sh
         - -c
@@ -89,7 +89,7 @@ spec:
           done
           echo "VPN is up!"
       - name: init-config
-        image: busybox
+        image: busybox@sha256:2383baad1860bbe9d8a7a843775048fd07d8afe292b94bd876df64a69aae7cb1
         command:
           - sh
           - -c
@@ -103,7 +103,7 @@ spec:
             mountPath: /config
       containers:
         - name: sabnzbd
-          image: lscr.io/linuxserver/sabnzbd:latest
+          image: lscr.io/linuxserver/sabnzbd:latest@sha256:a46e75d861e6b26d7ee263b22743d6fdaaa4a5ccd42168b6ea563a2f047d9438
           env:
           - name: PUID
             value: "1000"

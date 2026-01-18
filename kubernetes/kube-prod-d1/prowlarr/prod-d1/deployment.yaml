@@ -18,7 +18,7 @@ spec:
     spec:
       initContainers:
         - name: restore-from-backup
-          image: alpine
+          image: alpine@sha256:865b95f46d98cf867a156fe4a135ad3fe50d2056aa3f25ed31662dff6da4eb62
           command: ["sh", "-c"]
           args:
             - |
@@ -39,7 +39,7 @@ spec:
             #   mountPath: /backup
       containers:
         - name: prowlarr
-          image: lscr.io/linuxserver/prowlarr:latest
+          image: lscr.io/linuxserver/prowlarr:latest@sha256:d3e9307b320b6772749a2cf8fc2712e9e824c4930b034680ad4d08a9e2f25884
           env:
           - name: PUID
             value: "1000"

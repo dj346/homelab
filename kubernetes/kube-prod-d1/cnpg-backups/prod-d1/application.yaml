@@ -567,12 +567,12 @@ spec:
 
             # Admin authentication
             secret:
-              # Name of an existing secret containing admin credentials. If set, adminUser and adminPassword below are ignored.
-              existingSecret: ""
-              # Key in the existing secret for the admin username. Required if existingSecret is set.
-              userKey: ""
-              # Key in the existing secret for the admin password. Required if existingSecret is set.
-              pwKey: ""
+              # # Name of an existing secret containing admin credentials. If set, adminUser and adminPassword below are ignored.
+              # existingSecret: ""
+              # # Key in the existing secret for the admin username. Required if existingSecret is set.
+              # userKey: ""
+              # # Key in the existing secret for the admin password. Required if existingSecret is set.
+              # pwKey: ""
               adminUser: "admin"
               adminPassword: ""  # If empty, authentication is disabled.
 

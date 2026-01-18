@@ -89,4 +89,4 @@ spec:
   issuerRef:
     name: vault-seaweedfs-kube-prod-d1-issuer
     kind: ClusterIssuer
-  secretName: seaweedfs-filer-cert # This is required to be named this.
+  secretName: seaweedfs-admin-cert # This is required to be named this.

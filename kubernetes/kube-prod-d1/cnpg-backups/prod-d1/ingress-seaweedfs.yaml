@@ -11,7 +11,7 @@ metadata:
   annotations:
     cert-manager.io/cluster-issuer: cloudflare-clusterissuer
     traefik.ingress.kubernetes.io/router.entrypoints: websecure
-    description: "Ingress for Anisonarr application, routing traffic to the Anisonarr web service."
+    description: "Ingress for Cloudnative Postgres Backups application, routing traffic to the SeaweedFS Admin web service."
 spec:
   rules:
     - host: cnpg-backups-admin.kube-prod-d1.mclacken.net
@@ -23,7 +23,7 @@ spec:
               service:
                 name: seaweedfs-admin
                 port:
-                  name: swfs-master
+                  name: http
   tls:
     - hosts:
         - cnpg-backups-admin.kube-prod-d1.mclacken.net

@@ -1656,7 +1656,7 @@ memcached:
     # -- Memcached Docker image repository
     repository: memcached
     # -- Memcached Docker image tag
-    tag: 1.6.40-alpine
+    tag: 1.6.40-alpine@sha256:c77536380fd3c7740933767bb5279bd30e31c8d496081e5113a37d9b9eec43cb
     # -- Memcached Docker image pull policy
     pullPolicy: IfNotPresent
   host: memcached
@@ -1728,7 +1728,7 @@ memcachedExporter:
     # -- Memcached Exporter Docker image repository
     repository: prom/memcached-exporter
     # -- Memcached Exporter Docker image tag
-    tag: v0.15.5
+    tag: v0.15.5@sha256:92a6ad5a3d3e2dffc75efd4e18d1470fa5703dd79b6bace53fe11312b634578e
     # -- Memcached Exporter Docker image pull policy
     pullPolicy: IfNotPresent
     # -- Memcached Exporter resource requests and limits
@@ -1924,7 +1924,7 @@ gateway:
     # -- The gateway image repository
     repository: nginxinc/nginx-unprivileged
     # -- The gateway image tag
-    tag: 1.29-alpine
+    tag: 1.29-alpine@sha256:7445ca31ca290543d404a36051a0dfe5575913381d5646e62b9ac4c3f8afef8f
     # -- The gateway image pull policy
     pullPolicy: IfNotPresent
   # -- The name of the PriorityClass for gateway pods
@@ -2207,7 +2207,7 @@ enterprise:
     # -- Grafana Enterprise Traces container image repository. Note: for Grafana Tempo use the value 'image.repository'
     repository: grafana/enterprise-traces
     # -- Grafana Enterprise Traces container image tag. Note: for Grafana Tempo use the value 'image.tag'
-    tag: v2.8.5
+    tag: v2.8.5@sha256:f8a6a41d27c58fc44a361c7cf3254d7202a48788df0e27d824cd107d93eb3fcf
     # Note: pullPolicy and optional pullSecrets are set in toplevel 'image' section, not here
 
 # In order to use Grafana Enterprise Traces features, you will need to provide the contents of your Grafana Enterprise Traces
@@ -2307,7 +2307,7 @@ provisioner:
 
 kubectlImage:
   repository: bitnami/kubectl
-  tag: latest
+  tag: latest@sha256:b349e60a6ae2969af84a778c0b976b050a0cc77f4fb6a4ad44307cd0a06e9d8f
   pullPolicy: IfNotPresent
 
 # Settings for the admin_api service providing authentication and authorization service.

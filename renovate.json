@@ -7,5 +7,19 @@
   },
   "argocd": {
     "managerFilePatterns": ["/\\.ya?ml$/"]
-  }
+  },
+
+  "customManagers": [
+    {
+      "customType": "regex",
+      "description": "CloudNativePG Cluster spec.imageName",
+      "managerFilePatterns": ["/\\.ya?ml$/"],
+      "matchStrings": [
+        "imageName:\\s*(?<depName>[^:\\s#]+):(?<currentValue>[^@\\s#]+)(?:@(?<currentDigest>sha256:[A-Fa-f0-9]{64}))?"
+      ],
+      "datasourceTemplate": "docker",
+      "versioningTemplate": "docker",
+      "autoReplaceStringTemplate": "imageName: {{{depName}}}:{{{newValue}}}{{#if newDigest}}@{{{newDigest}}}{{/if}}"
+    }
+  ]
 }

@@ -1,60 +1,11 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-
   "extends": ["config:recommended", "docker:pinDigests"],
 
   "kubernetes": {
-    "managerFilePatterns": ["^homelab/kubernetes/.*\\.ya?ml$"],
-    "fileMatch": ["^homelab/kubernetes/.*\\.ya?ml$"]
+    "managerFilePatterns": ["/\\.ya?ml$/"]
   },
-
   "argocd": {
-    "managerFilePatterns": ["^homelab/kubernetes/.*\\.ya?ml$"],
-    "fileMatch": ["^homelab/kubernetes/.*\\.ya?ml$"]
-  },
-
-  "helm-values": {
-    "managerFilePatterns": ["^homelab/kubernetes/.*values\\.ya?ml$"],
-    "fileMatch": ["^homelab/kubernetes/.*values\\.ya?ml$"]
-  },
-
-  "docker-compose": {
-    "managerFilePatterns": ["^homelab/docker/.*docker-compose\\.ya?ml$"],
-    "fileMatch": ["^homelab/docker/.*docker-compose\\.ya?ml$"]
-  },
-
-  "dockerfile": {
-    "managerFilePatterns": [
-      "^homelab/kubernetes/.*\\/Dockerfile$",
-      "^homelab/kubernetes/.*\\/Containerfile$",
-      "^homelab/.*\\/Dockerfile$",
-      "^homelab/.*\\/Containerfile$"
-    ],
-    "fileMatch": [
-      "^homelab/kubernetes/.*\\/Dockerfile$",
-      "^homelab/kubernetes/.*\\/Containerfile$",
-      "^homelab/.*\\/Dockerfile$",
-      "^homelab/.*\\/Containerfile$"
-    ]
-  },
-
-  "packageRules": [
-    {
-      "matchDatasources": ["docker"],
-      "pinDigests": true
-    }
-  ],
-
-  "customManagers": [
-    {
-      "customType": "regex",
-      "description": "Catch non-standard YAML image fields (e.g., spec.imageName: repo:tag[@digest])",
-      "fileMatch": ["^homelab/kubernetes/.*\\.ya?ml$"],
-      "matchStrings": [
-        "(?m)^\\s*(?:imageName|image)\\s*:\\s*(?<depName>(?!null\\b)(?:[a-z0-9]+(?:[._-][a-z0-9]+)*)(?:\\/[a-z0-9]+(?:[._-][a-z0-9]+)*)+)(?::(?<currentValue>[^@\\s]+))?(?:@(?<currentDigest>sha256:[a-f0-9]{64}))?\\s*$"
-      ],
-      "datasourceTemplate": "docker",
-      "versioningTemplate": "docker"
-    }
-  ]
+    "managerFilePatterns": ["/\\.ya?ml$/"]
+  }
 }

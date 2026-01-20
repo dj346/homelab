@@ -43,7 +43,7 @@ spec:
             walStorageSize: 2Gi
             
             enableDefaultCertificate: true
-            BackupSchedule: "0 0 * * *"
+            backupSchedule: "0 0 * * *"
           
           ingresses:
             - serviceName: anisonarr-web-service

@@ -16,7 +16,7 @@ spec:
   revisionHistoryLimit: 5
   destination:
     server: https://kubernetes.default.svc
-    namespace: anisonarr
+    namespace: anisonarr-prod-d1
   sources:
     - repoURL: 'https://github.com/dj346/homelab.git'
       targetRevision: HEAD

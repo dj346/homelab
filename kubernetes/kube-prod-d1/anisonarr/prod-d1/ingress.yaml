@@ -2,7 +2,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: anisonarr-ingress
-  namespace: anisonarr
+  namespace: anisonarr-prod-d1
   labels:
     app.kubernetes.io/name: anisonarr
     app.kubernetes.io/component: networking

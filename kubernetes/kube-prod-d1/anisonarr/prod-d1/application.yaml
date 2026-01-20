@@ -18,29 +18,26 @@ spec:
     server: https://kubernetes.default.svc
     namespace: anisonarr
   sources:
-    - repoURL: 'https://github.com/dj346/homelab.git' # repoURL: 'ssh://git@gitea-ssh.gitea.svc.cluster.local:2222/dj346/homelab.git'
+    - repoURL: 'https://github.com/dj346/homelab.git'
       targetRevision: HEAD
       path: kubernetes/kube-prod-d1/anisonarr/prod-d1
+
     - repoURL: https://github.com/dj346/OneForAll.git
       targetRevision: main
-      helm: 
+      path: .                # <-- REQUIRED
+      helm:
         releaseName: oneforall
         valuesObject:
           global:
             appName: myApp
             environment: prod-d1
-
           postgres:
             instances: 2
-
             databaseName: ""
             ownerName: ""
-
             postInitSQL: []
-
             storageSize: 450Mi
             walStorageSize: 1Gi
-            
             BackupSchedule: "0 0 * * *"
 
   syncPolicy:

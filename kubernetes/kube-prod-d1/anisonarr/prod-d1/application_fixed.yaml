@@ -20,7 +20,8 @@ spec:
     - repoURL: 'https://github.com/dj346/homelab.git'
       targetRevision: HEAD
       path: kubernetes/kube-prod-d1/anisonarr/prod-d1
-
+      directory:
+        exclude: 'application_fixed.yaml'
     - repoURL: 'https://github.com/dj346/OneForAll.git'
       targetRevision: main
       path: .
@@ -42,7 +43,6 @@ spec:
             walStorageSize: 2Gi
             
             BackupSchedule: "0 0 * * *"
-
   syncPolicy:
     syncOptions:
       - Validate=true

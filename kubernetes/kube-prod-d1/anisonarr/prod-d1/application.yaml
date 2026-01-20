@@ -31,7 +31,7 @@ spec:
             appName: anisonarr
             environment: prod-d1
 
-          postgres:
+          postgresql:
             instances: 2
             
             databaseName: "sonarr-main"
@@ -42,6 +42,7 @@ spec:
             storageSize: 450Mi
             walStorageSize: 2Gi
             
+            enableDefaultCertificate: true
             BackupSchedule: "0 0 * * *"
           
           ingresses:

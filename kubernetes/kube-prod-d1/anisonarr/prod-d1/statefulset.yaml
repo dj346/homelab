@@ -76,17 +76,17 @@ spec:
             - name: Sonarr__Postgres__User
               valueFrom:
                 secretKeyRef:
-                  name: anisonarr-postgres-credentials-secret
+                  name: anisonarr-postgresql-credentials-secret
                   key: username
             - name: Sonarr__Postgres__Password
               valueFrom:
                 secretKeyRef:
-                  name: anisonarr-postgres-credentials-secret
+                  name: anisonarr-postgresql-credentials-secret
                   key: password
             - name: Sonarr__Postgres__Port
               value: "5432"
             - name: Sonarr__Postgres__Host
-              value: "anisonarr-postgres-cluster-rw"
+              value: "anisonarr-postgresql-cluster-rw"
             # - name: Sonarr__Postgres__MainDb
             #   value: "MainDbName"
             # - name: Sonarr__Postgres__LogDb

@@ -1,0 +1,24 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: all-applications-certificate
+  namespace: all-applications-prod-d1
+spec:
+  secretName: all-applications-certificate-secret
+  secretTemplate:
+    annotations:
+      reflector.v1.k8s.emberstack.com/reflection-allowed: "true"
+      reflector.v1.k8s.emberstack.com/reflection-allowed-namespaces: "^(?!(?:default|kube-node-lease|kube-public)$).*"
+      reflector.v1.k8s.emberstack.com/reflection-auto-enabled: "true"
+      reflector.v1.k8s.emberstack.com/reflection-auto-namespaces: ""
+  issuerRef:
+    name: cloudflare-clusterissuer
+    kind: ClusterIssuer
+  dnsNames:
+    - "mclacken.net"
+    - "kube-prod-d1.mclacken.net"
+    - "pve-prod-d1.mclacken.net"
+    
+    - "*.mclacken.net"
+    - "*.kube-prod-d1.mclacken.net"
+    - "*.pve-prod-d1.mclacken.net"

@@ -24,6 +24,7 @@ spec:
     - repoURL: https://github.com/dj346/OneForAll.git
       targetRevision: main
       helm: 
+        releaseName: oneforall
         valuesObject:
           global:
             appName: myApp

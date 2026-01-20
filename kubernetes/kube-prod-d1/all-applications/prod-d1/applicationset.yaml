@@ -29,3 +29,4 @@ spec:
         syncOptions:
           - Validate=true
           - PrunePropagationPolicy=foreground
+          - CreateNamespace=true

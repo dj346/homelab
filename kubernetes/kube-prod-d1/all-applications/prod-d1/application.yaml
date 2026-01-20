@@ -8,13 +8,16 @@ spec:
   destination:
     server: https://kubernetes.default.svc
     namespace: argocd
-  source:
-    repoURL: https://github.com/dj346/homelab.git
-    targetRevision: HEAD
-    path: kubernetes/kube-prod-d1
-    directory:
-      recurse: true
-      include: '*/*/application.yaml'
+  sources:
+    - repoURL: https://github.com/dj346/homelab.git
+      targetRevision: HEAD
+      path: kubernetes/kube-prod-d1
+      directory:
+        recurse: true
+        include: '*/*/application.yaml'
+    - repoURL: https://github.com/dj346/homelab.git
+      targetRevision: HEAD
+      path: kubernetes/kube-prod-d1/all-applications/prod-d1
   syncPolicy:
     automated:
       prune: true

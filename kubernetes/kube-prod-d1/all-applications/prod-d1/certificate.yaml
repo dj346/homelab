@@ -15,10 +15,6 @@ spec:
     name: cloudflare-clusterissuer
     kind: ClusterIssuer
   dnsNames:
-    - "mclacken.net"
-    - "kube-prod-d1.mclacken.net"
-    - "pve-prod-d1.mclacken.net"
-    
     - "*.mclacken.net"
     - "*.kube-prod-d1.mclacken.net"
     - "*.pve-prod-d1.mclacken.net"

@@ -43,6 +43,11 @@ spec:
             walStorageSize: 2Gi
             
             BackupSchedule: "0 0 * * *"
+          
+          ingresses:
+            - serviceName: anisonarr-web-service
+              portName: http
+
   syncPolicy:
     syncOptions:
       - Validate=true

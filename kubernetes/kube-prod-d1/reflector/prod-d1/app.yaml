@@ -1,0 +1,108 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: argocd
+  namespace: argocd
+spec:
+  project: default
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd
+  sources:
+    - repoURL: https://emberstack.github.io/helm-charts
+      chart: reflector
+      targetRevision: 9.1.45
+      # helm:
+      #   valuesObject:
+      #     configuration:
+      #       logging:
+      #         minimumLevel: Information
+          
+      #     serviceAccount:
+      #       annotations: {}
+
+      #   podSecurityContext:
+      #     fsGroup: 2000
+
+      #   securityContext:
+      #     capabilities:
+      #       drop:
+      #         - ALL
+      #     readOnlyRootFilesystem: true
+      #     runAsNonRoot: true
+      #     runAsUser: 1000
+
+      #   livenessProbe:
+      #     httpGet:
+      #       path: /health/live
+      #       port: http
+      #     timeoutSeconds: 10
+      #     initialDelaySeconds: 5
+      #     periodSeconds: 10
+      #     failureThreshold: 5
+      #   readinessProbe:
+      #     httpGet:
+      #       path: /health/ready
+      #       port: http
+      #     timeoutSeconds: 10
+      #     initialDelaySeconds: 5
+      #     periodSeconds: 10
+      #     failureThreshold: 5
+      #   startupProbe:
+      #     httpGet:
+      #       path: /health/ready
+      #       port: http
+      #     timeoutSeconds: 10
+      #     initialDelaySeconds: 5
+      #     periodSeconds: 10
+      #     failureThreshold: 5
+
+
+      #   resources:
+      #     {}
+      #     # We usually recommend not to specify default resources and to leave this as a conscious
+      #     # choice for the user. This also increases chances charts run on environments with little
+      #     # resources, such as Minikube. If you do want to specify resources, uncomment the following
+      #     # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+      #     # limits:
+      #     #   cpu: 100m
+      #     #   memory: 128Mi
+      #     # requests:
+      #     #   cpu: 100m
+      #     #   memory: 128Mi
+
+      #   autoscaling:
+      #     enabled: false
+      #     minReplicas: 1
+      #     maxReplicas: 100
+      #     targetCPUUtilizationPercentage: 80
+      #     # targetMemoryUtilizationPercentage: 80
+
+      #   nodeSelector: {}
+
+      #   tolerations: []
+
+      #   affinity: {}
+
+      #   topologySpreadConstraints: []
+
+      #   priorityClassName: ""
+
+      #   volumes: []
+
+      #   volumeMounts: []
+
+    - repoURL: 'https://github.com/dj346/homelab.git' # repoURL: 'ssh://git@gitea-ssh.gitea.svc.cluster.local:2222/dj346/homelab.git
+      targetRevision: HEAD
+      path: kubernetes/kube-prod-d1/argocd/prod-d1
+  syncPolicy:
+    automated: 
+      prune: true 
+      selfHeal: true 
+      allowEmpty: false
+    retry:
+      limit: 0 # the number of retries to attempt
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 3m

@@ -24,20 +24,24 @@ spec:
 
     - repoURL: 'https://github.com/dj346/OneForAll.git'
       targetRevision: main
-      path: Chart.yaml                       # <-- REQUIRED (chart is at repo root)
+      path: .                       # <-- REQUIRED (chart is at repo root)
       helm:
         valuesObject:
           global:
-            appName: myApp
+            appName: anisonarr
             environment: prod-d1
 
           postgres:
             instances: 2
-            databaseName: ""
-            ownerName: ""
-            postInitSQL: []
+            
+            databaseName: "sonarr-main"
+            ownerName: "anisonarr"
+            postInitSQL:
+              - CREATE DATABASE "sonarr-log" OWNER anisonarr
+            
             storageSize: 450Mi
             walStorageSize: 1Gi
+            
             BackupSchedule: "0 0 * * *"
 
   syncPolicy:

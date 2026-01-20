@@ -40,7 +40,7 @@ spec:
               - CREATE DATABASE "sonarr-log" OWNER anisonarr
             
             storageSize: 450Mi
-            walStorageSize: 1Gi
+            walStorageSize: 2Gi
             
             BackupSchedule: "0 0 * * *"
 

@@ -22,15 +22,15 @@ spec:
       targetRevision: HEAD
       path: kubernetes/kube-prod-d1/anisonarr/prod-d1
 
-    - repoURL: https://github.com/dj346/OneForAll.git
+    - repoURL: 'https://github.com/dj346/OneForAll.git'
       targetRevision: main
-      path: .                # <-- REQUIRED
+      path: Chart.yaml                       # <-- REQUIRED (chart is at repo root)
       helm:
-        releaseName: oneforall
         valuesObject:
           global:
             appName: myApp
             environment: prod-d1
+
           postgres:
             instances: 2
             databaseName: ""

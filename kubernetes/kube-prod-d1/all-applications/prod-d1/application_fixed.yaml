@@ -14,7 +14,7 @@ spec:
     path: kubernetes/kube-prod-d1
     directory:
       recurse: true
-      include: '*/prod-d1/application_fixed.yaml'
+      include: '*/*/application_fixed.yaml'
   syncPolicy:
     automated:
       prune: true

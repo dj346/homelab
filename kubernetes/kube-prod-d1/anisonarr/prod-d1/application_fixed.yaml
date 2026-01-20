@@ -10,7 +10,6 @@ metadata:
     app.kubernetes.io/managed-by: argocd
   annotations:
     argocd.argoproj.io/sync-wave: "1"
-    # argocd.argoproj.io/tracking-id: anisonarr-application:argoproj.io/Application:argocd/anisonarr-application
 spec:
   project: default
   revisionHistoryLimit: 5

@@ -21,7 +21,7 @@ spec:
       targetRevision: HEAD
       path: kubernetes/kube-prod-d1/anisonarr/prod-d1
       directory:
-        exclude: 'application_fixed.yaml'
+        exclude: 'application.yaml'
     - repoURL: 'https://github.com/dj346/OneForAll.git'
       targetRevision: main
       path: .

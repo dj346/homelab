@@ -11,17 +11,37 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "1"
     argocd.argoproj.io/tracking-id: anisonarr-application:argoproj.io/Application:argocd/anisonarr-application
-    description: "ArgoCD managed deployment for Animation Sonarr application in production"
 spec:
   project: default
   revisionHistoryLimit: 5
   destination:
     server: https://kubernetes.default.svc
     namespace: anisonarr
-  source:
-    repoURL: 'https://github.com/dj346/homelab.git' # repoURL: 'ssh://git@gitea-ssh.gitea.svc.cluster.local:2222/dj346/homelab.git'
-    targetRevision: HEAD
-    path: kubernetes/kube-prod-d1/anisonarr/prod-d1
+  sources:
+    - repoURL: 'https://github.com/dj346/homelab.git' # repoURL: 'ssh://git@gitea-ssh.gitea.svc.cluster.local:2222/dj346/homelab.git'
+      targetRevision: HEAD
+      path: kubernetes/kube-prod-d1/anisonarr/prod-d1
+    - repoURL: https://github.com/dj346/OneForAll.git
+      targetRevision: main
+      helm: 
+        valuesObject:
+          global:
+            appName: myApp
+            environment: prod-d1
+
+          postgres:
+            instances: 2
+
+            databaseName: ""
+            ownerName: ""
+
+            postInitSQL: []
+
+            storageSize: 450Mi
+            walStorageSize: 1Gi
+            
+            BackupSchedule: "0 0 * * *"
+
   syncPolicy:
     syncOptions:
       - Validate=true

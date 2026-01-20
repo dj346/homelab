@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: argocd
+  name: reflector-application
   namespace: argocd
 spec:
   project: default
@@ -94,7 +94,7 @@ spec:
 
     - repoURL: 'https://github.com/dj346/homelab.git' # repoURL: 'ssh://git@gitea-ssh.gitea.svc.cluster.local:2222/dj346/homelab.git
       targetRevision: HEAD
-      path: kubernetes/kube-prod-d1/argocd/prod-d1
+      path: kubernetes/kube-prod-d1/reflector/prod-d1
   syncPolicy:
     automated: 
       prune: true 

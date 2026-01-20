@@ -36,8 +36,8 @@ spec:
             
             databaseName: "sonarr-main"
             ownerName: "anisonarr"
-            postInitSQL:
-              - CREATE DATABASE "sonarr-log" OWNER anisonarr
+            # postInitSQL:
+            #   - CREATE DATABASE "sonarr-log" OWNER anisonarr
             
             storageSize: 450Mi
             walStorageSize: 2Gi

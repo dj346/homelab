@@ -17,11 +17,11 @@ spec:
         replicaCount: 1
         commonAnnotations: {}
         podAnnotations: {}
-        podLabels:
-          app.kubernetes.io/name: cnpg-cloudnative-pg
-          # app.kubernetes.io/instance: cnpg-cloudnative-pg-prod-d1
-          app.kubernetes.io/component: operator
-          app.kubernetes.io/managed-by: argocd
+        # podLabels:
+        #   app.kubernetes.io/name: cnpg-cloudnative-pg
+        #   # app.kubernetes.io/instance: cnpg-cloudnative-pg-prod-d1
+        #   app.kubernetes.io/component: operator
+        #   app.kubernetes.io/managed-by: argocd
         priorityClassName: ""
         resources: {}
   syncPolicy:

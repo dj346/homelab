@@ -15,7 +15,6 @@ spec:
     directory:
       recurse: true
       include: '*/prod-d1/application_fixed.yaml'
-      exclude: '*'
   syncPolicy:
     automated:
       prune: true

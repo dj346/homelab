@@ -1,0 +1,31 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: prod-d1-apps
+  namespace: argocd
+spec:
+  generators:
+    - git:
+        repoURL: https://github.com/dj346/homelab.git
+        revision: HEAD
+        files:
+          - path: kubernetes/kube-prod-d1/anisonarr/prod-d1/application.yaml
+  template:
+    metadata:
+      name: '{{path.basename}}'
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/dj346/homelab.git
+        targetRevision: HEAD
+        path: '{{path.dirname}}'
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: all-applications-prod-d1
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - Validate=true
+          - PrunePropagationPolicy=foreground

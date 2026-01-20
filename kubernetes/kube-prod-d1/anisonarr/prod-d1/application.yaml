@@ -24,7 +24,7 @@ spec:
 
     - repoURL: 'https://github.com/dj346/OneForAll.git'
       targetRevision: main
-      path: .                       # <-- REQUIRED (chart is at repo root)
+      path: .
       helm:
         valuesObject:
           global:
@@ -36,8 +36,8 @@ spec:
             
             databaseName: "sonarr-main"
             ownerName: "anisonarr"
-            # postInitSQL:
-            #   - CREATE DATABASE "sonarr-log" OWNER anisonarr
+            postInitSQL:
+              - CREATE DATABASE "sonarr-log" OWNER anisonarr
             
             storageSize: 450Mi
             walStorageSize: 2Gi
@@ -48,6 +48,7 @@ spec:
     syncOptions:
       - Validate=true
       - PrunePropagationPolicy=foreground
+      - CreateNamespace=true
     automated:
       prune: true
       selfHeal: true

@@ -70,6 +70,6 @@ spec:
             dns:
               - matchPattern: "*"
 
-    # Kube API server (if you truly need it from DB pods)
+    # Kube API server
     - toEntities:
         - kube-apiserver

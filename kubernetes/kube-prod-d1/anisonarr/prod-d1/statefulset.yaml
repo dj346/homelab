@@ -23,6 +23,9 @@ spec:
     metadata:
       labels:
         app.kubernetes.io/name: anisonarr
+        app.kubernetes.io/instance: anisonarr-prod-d1
+        app.kubernetes.io/component: program
+        app.kubernetes.io/managed-by: argocd
     spec:
       priorityClassName: low-priority
       securityContext:

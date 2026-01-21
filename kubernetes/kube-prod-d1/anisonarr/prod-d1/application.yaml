@@ -45,6 +45,8 @@ spec:
             enableDefaultCertificate: true
             backupSchedule: "0 0 * * *"
           
+          defaultSecretEnabled: true
+          
           ingresses:
             - serviceName: anisonarr-service
               portName: http

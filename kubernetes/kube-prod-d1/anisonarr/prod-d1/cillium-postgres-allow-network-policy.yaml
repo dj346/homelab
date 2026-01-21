@@ -1,0 +1,89 @@
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: anisonarr-cillium-postgres-allow-network-policy
+  namespace: anisonarr-prod-d1
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/name: anisonarr
+      app.kubernetes.io/component: database
+
+  ingress:
+    # App -> Postgres
+    - fromEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: anisonarr-prod-d1
+            app.kubernetes.io/name: anisonarr
+            app.kubernetes.io/component: program
+      toPorts:
+        - ports:
+            - port: "5432"
+              protocol: TCP
+
+    # CNPG operator/helpers -> Postgres
+    - fromEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: cnpg-system
+      toPorts:
+        - ports:
+            - port: "5432"
+              protocol: TCP
+            - port: "8000"
+              protocol: TCP
+
+    # Postgres -> Postgres (ingress)
+    - fromEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: anisonarr-prod-d1
+            app.kubernetes.io/name: anisonarr
+            app.kubernetes.io/component: database
+      toPorts:
+        - ports:
+            - port: "5432"
+              protocol: TCP
+            - port: "8000"
+              protocol: TCP
+
+    # Kubelet/node -> Postgres for probes
+    - fromEntities:
+        - host
+      toPorts:
+        - ports:
+            - port: "5432"
+              protocol: TCP
+            - port: "8000"
+              protocol: TCP
+
+  egress:
+    # Postgres -> Postgres (replication/join)
+    - toEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: anisonarr-prod-d1
+            app.kubernetes.io/name: anisonarr
+            app.kubernetes.io/component: database
+      toPorts:
+        - ports:
+            - port: "5432"
+              protocol: TCP
+            - port: "8000"
+              protocol: TCP
+
+    # Postgres -> DNS (UDP+TCP)
+    - toEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: kube-system
+            k8s:k8s-app: kube-dns
+      toPorts:
+        - ports:
+            - port: "53"
+              protocol: UDP
+            - port: "53"
+              protocol: TCP
+          rules:
+            dns:
+              - matchPattern: "*"
+
+    # Postgres -> K8s API
+    - toEntities:
+        - kube-apiserver

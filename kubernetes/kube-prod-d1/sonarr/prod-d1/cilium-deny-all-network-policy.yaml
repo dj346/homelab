@@ -1,0 +1,9 @@
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: sonarr-cilium-deny-all-network-policy
+  namespace: sonarr-prod-d1
+spec:
+  endpointSelector: {}
+  ingress: []
+  egress: []

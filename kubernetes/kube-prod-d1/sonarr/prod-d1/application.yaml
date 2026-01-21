@@ -1,12 +1,12 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: anisonarr-application
+  name: sonarr-application
   namespace: argocd
   labels:
-    app.kubernetes.io/name: anisonarr
+    app.kubernetes.io/name: sonarr
     app.kubernetes.io/component: application
-    app.kubernetes.io/instance: anisonarr-prod-d1
+    app.kubernetes.io/instance: sonarr-prod-d1
     app.kubernetes.io/managed-by: argocd
   annotations:
     argocd.argoproj.io/sync-wave: "1"
@@ -15,11 +15,11 @@ spec:
   revisionHistoryLimit: 5
   destination:
     server: https://kubernetes.default.svc
-    namespace: anisonarr-prod-d1
+    namespace: sonarr-prod-d1
   sources:
     - repoURL: 'https://github.com/dj346/homelab.git'
       targetRevision: HEAD
-      path: kubernetes/kube-prod-d1/anisonarr/prod-d1
+      path: kubernetes/kube-prod-d1/sonarr/prod-d1
       directory:
         exclude: 'application.yaml'
     - repoURL: 'https://github.com/dj346/OneForAll.git'
@@ -28,16 +28,16 @@ spec:
       helm:
         valuesObject:
           global:
-            appName: anisonarr
+            appName: sonarr
             environment: prod-d1
           
           postgresql:
             instances: 2
             
             databaseName: "sonarr-main"
-            ownerName: "anisonarr"
+            ownerName: "sonarr"
             postInitSQL:
-              - CREATE DATABASE "sonarr-log" OWNER anisonarr
+              - CREATE DATABASE "sonarr-log" OWNER sonarr
             
             storageSize: 450Mi
             walStorageSize: 2Gi
@@ -46,7 +46,7 @@ spec:
             backupSchedule: "0 0 * * *"
           
           ingresses:
-            - serviceName: anisonarr-service
+            - serviceName: sonarr-service
               portName: http
 
           services:

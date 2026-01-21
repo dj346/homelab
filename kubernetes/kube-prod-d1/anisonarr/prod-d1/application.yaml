@@ -46,7 +46,11 @@ spec:
             backupSchedule: "0 0 * * *"
           
           ingresses:
-            - serviceName: anisonarr-web-service
+            - serviceName: anisonarr-service
+              portName: http
+
+          services:
+            - port: 80
               portName: http
 
   syncPolicy:

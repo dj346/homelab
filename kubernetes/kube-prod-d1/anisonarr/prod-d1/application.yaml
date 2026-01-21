@@ -30,6 +30,7 @@ spec:
           global:
             appName: anisonarr
             environment: prod-d1
+            defaultSecretEnabled: true
           
           postgresql:
             instances: 2
@@ -46,7 +47,7 @@ spec:
             backupSchedule: "0 0 * * *"
           
           defaultSecretEnabled: true
-          
+
           ingresses:
             - serviceName: anisonarr-service
               portName: http

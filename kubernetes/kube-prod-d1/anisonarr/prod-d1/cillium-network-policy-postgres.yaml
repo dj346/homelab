@@ -1,0 +1,57 @@
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: anisonarr-cillium-network-policy-postgres
+  namespace: anisonarr-prod-d1
+  labels:
+    app.kubernetes.io/name: anisonarr
+    app.kubernetes.io/component: networking
+    app.kubernetes.io/instance: anisonarr-prod-d1
+    app.kubernetes.io/managed-by: argocd
+  annotations:
+    description: "Cilium Network Policy to allow Anisonarr application to communicate with Postgres database"
+spec:
+  endpointSelector:
+    # Select Postgres database pods
+    matchLabels:
+      app.kubernetes.io/name: anisonarr
+      app.kubernetes.io/component: database
+  ingress:
+    # Allow Anisonarr application to Postgres
+    - fromEndpoints:
+        - matchLabels:
+            app.kubernetes.io/name: anisonarr
+            app.kubernetes.io/component: program
+            io.kubernetes.pod.namespace: anisonarr
+      toPorts:
+        - ports:
+          - port: "5432"
+            protocol: TCP
+
+    # Allow CloudNativePG operator to Postgres
+    - fromEndpoints:
+        - matchLabels:
+            io.kubernetes.pod.namespace: cnpg-system
+      toPorts:
+        - ports:
+          - port: "8000"
+            protocol: TCP
+          - port: "5432"
+            protocol: TCP
+  egress:
+    # Allow access to Kube API Server
+    - toEntities:
+        - kube-apiserver
+
+    # Allow access to DNS
+    - toEndpoints:
+        - matchLabels:
+            io.kubernetes.pod.namespace: kube-system
+            k8s-app: kube-dns
+      toPorts:
+        - ports:
+            - port: "53"
+              protocol: UDP
+          rules:
+            dns:
+              - matchPattern: "*"

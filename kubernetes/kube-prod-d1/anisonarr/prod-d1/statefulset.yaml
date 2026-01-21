@@ -38,27 +38,6 @@ spec:
                     values:
                       - anisonarr
               topologyKey: kubernetes.io/hostname
-      initContainers:
-        - name: restore-from-backup
-          image: alpine@sha256:865b95f46d98cf867a156fe4a135ad3fe50d2056aa3f25ed31662dff6da4eb62
-          command: ["sh", "-c"]
-          args:
-            - |
-              if [ "$RESTORE_BACKUP" = "1" ]; then
-                echo "Restoring backup from original PVC..."
-                apk add --no-cache rsync
-                rsync -avh --delete /backup/ /data/
-              else
-                echo "Skipping backup restore"
-              fi
-          env:
-            - name: RESTORE_BACKUP
-              value: "0" # Set this to "0" to skip restore
-          volumeMounts:
-            - name: anisonarr-config
-              mountPath: /data
-            # - name: anisonarr-backup-storage
-            #   mountPath: /backup
       containers:
         - name: anisonarr
           image: lscr.io/linuxserver/sonarr:4.0.16@sha256:02b4d538d351d6e35882a021c08e8600fe95d28860fb1dd724b597166e7221ca
@@ -136,10 +115,6 @@ spec:
           nfs:
             server: 10.15.21.5
             path: /mnt/user/video/
-        # - name: anisonarr-backup-storage ## Uncomment this and set claimname to PVC
-        #   persistentVolumeClaim:
-        #     claimName: pvc-bc57f2c8-cc57-4828-bd37-e4e84fd7cfbf
-        #     readOnly: false
         
   volumeClaimTemplates:
     - metadata:

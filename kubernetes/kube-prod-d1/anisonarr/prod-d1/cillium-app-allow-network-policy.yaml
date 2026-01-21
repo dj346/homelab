@@ -31,7 +31,7 @@ spec:
             - port: "5432"
               protocol: TCP
 
-    # DNS (UDP+TCP)
+    # App -> DNS (UDP+TCP)
     - toEndpoints:
         - matchLabels:
             k8s:io.kubernetes.pod.namespace: kube-system

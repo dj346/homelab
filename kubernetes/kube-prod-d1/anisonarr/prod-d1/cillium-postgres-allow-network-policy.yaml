@@ -32,7 +32,7 @@ spec:
             - port: "8000"
               protocol: TCP
 
-    # Postgres <-> Postgres (ingress)
+    # Postgres -> Postgres (ingress)
     - fromEndpoints:
         - matchLabels:
             k8s:io.kubernetes.pod.namespace: anisonarr-prod-d1
@@ -41,6 +41,14 @@ spec:
       toPorts:
         - ports:
             - port: "5432"
+              protocol: TCP
+
+    # Kubelet/node -> Postgres for probes
+    - fromEntities:
+        - host
+      toPorts:
+        - ports:
+            - port: "8000"
               protocol: TCP
 
   egress:
@@ -55,7 +63,7 @@ spec:
             - port: "5432"
               protocol: TCP
 
-    # DNS (UDP+TCP)
+    # Postgres -> DNS (UDP+TCP)
     - toEndpoints:
         - matchLabels:
             k8s:io.kubernetes.pod.namespace: kube-system
@@ -70,6 +78,6 @@ spec:
             dns:
               - matchPattern: "*"
 
-    # K8s API
+    # Postgres -> K8s API
     - toEntities:
         - kube-apiserver

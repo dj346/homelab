@@ -1,7 +1,7 @@
 apiVersion: cilium.io/v2
 kind: CiliumNetworkPolicy
 metadata:
-  name: anisonarr-cilium-network-policy-postgres
+  name: anisonarr-cillium-postgres-allow-network-policy
   namespace: anisonarr-prod-d1
 spec:
   endpointSelector:
@@ -21,7 +21,7 @@ spec:
             - port: "5432"
               protocol: TCP
 
-    # CNPG operator / helpers -> Postgres
+    # CNPG operator/helpers -> Postgres
     - fromEndpoints:
         - matchLabels:
             k8s:io.kubernetes.pod.namespace: cnpg-system
@@ -32,7 +32,7 @@ spec:
             - port: "8000"
               protocol: TCP
 
-    # Postgres <- Postgres (ingress)
+    # Postgres <-> Postgres (ingress)
     - fromEndpoints:
         - matchLabels:
             k8s:io.kubernetes.pod.namespace: anisonarr-prod-d1
@@ -44,7 +44,7 @@ spec:
               protocol: TCP
 
   egress:
-    # Postgres -> Postgres (REQUIRED for replication/join)
+    # Postgres -> Postgres (replication/join)
     - toEndpoints:
         - matchLabels:
             k8s:io.kubernetes.pod.namespace: anisonarr-prod-d1
@@ -55,7 +55,7 @@ spec:
             - port: "5432"
               protocol: TCP
 
-    # DNS (include TCP as well; some clusters fall back to TCP)
+    # DNS (UDP+TCP)
     - toEndpoints:
         - matchLabels:
             k8s:io.kubernetes.pod.namespace: kube-system
@@ -70,6 +70,6 @@ spec:
             dns:
               - matchPattern: "*"
 
-    # Kube API server
+    # K8s API
     - toEntities:
         - kube-apiserver

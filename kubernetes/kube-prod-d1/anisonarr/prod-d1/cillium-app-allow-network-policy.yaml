@@ -1,0 +1,63 @@
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: anisonarr-cillium-app-allow-network-policy
+  namespace: anisonarr-prod-d1
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/name: anisonarr
+      app.kubernetes.io/component: program
+
+  ingress:
+    # Traefik -> App
+    - fromEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: traefik
+      toPorts:
+        - ports:
+            - port: "8989"
+              protocol: TCP
+
+    # # (Optional but usually necessary) Kubelet/node -> App for probes
+    # - fromEntities:
+    #     - host
+    #   toPorts:
+    #     - ports:
+    #         - port: "8989"
+    #           protocol: TCP
+
+  egress:
+    # App -> Postgres
+    - toEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: anisonarr-prod-d1
+            app.kubernetes.io/name: anisonarr
+            app.kubernetes.io/component: database
+      toPorts:
+        - ports:
+            - port: "5432"
+              protocol: TCP
+
+    # DNS (UDP+TCP)
+    - toEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: kube-system
+            k8s:k8s-app: kube-dns
+      toPorts:
+        - ports:
+            - port: "53"
+              protocol: UDP
+            - port: "53"
+              protocol: TCP
+          rules:
+            dns:
+              - matchPattern: "*"
+
+    # App -> Internet
+    - toEntities:
+        - world
+
+    # # (Optional) App -> Kubernetes API (many apps need this for discovery/auth)
+    # - toEntities:
+    #     - kube-apiserver

@@ -30,6 +30,7 @@ spec:
           global:
             appName: sonarr
             environment: prod-d1
+            defaultSecretEnabled: true
           
           postgresql:
             instances: 2

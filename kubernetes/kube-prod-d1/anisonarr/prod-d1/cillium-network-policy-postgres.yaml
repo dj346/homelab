@@ -38,6 +38,18 @@ spec:
             protocol: TCP
           - port: "5432"
             protocol: TCP
+
+    # Allow Postgres to talk to other postgres pods in same cluster.
+    - fromEndpoints:
+        - matchLabels:
+            app.kubernetes.io/name: anisonarr
+            app.kubernetes.io/component: database
+            io.kubernetes.pod.namespace: anisonarr
+      toPorts:
+        - ports:
+          - port: "5432"
+            protocol: TCP
+            
   egress:
     # Allow access to Kube API Server
     - toEntities:

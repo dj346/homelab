@@ -12,7 +12,7 @@ metadata:
     description: "StatefulSet for Animation Sonarr application managed by ArgoCD"
     reloader.stakater.com/auto: "true"
 spec:
-  serviceName: anisonarr-web-service
+  serviceName: anisonarr-service
   replicas: 1
   selector:
     matchLabels:

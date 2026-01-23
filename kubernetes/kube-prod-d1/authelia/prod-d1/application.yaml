@@ -1,0 +1,50 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: authelia-application
+  namespace: argocd
+  labels:
+    app.kubernetes.io/name: authelia
+    app.kubernetes.io/component: application
+    app.kubernetes.io/instance: authelia-prod-d1
+    app.kubernetes.io/managed-by: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+spec:
+  project: default
+  revisionHistoryLimit: 5
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: authelia-prod-d1
+  sources:
+    - repoURL: 'https://github.com/dj346/homelab.git'
+      targetRevision: HEAD
+      path: kubernetes/kube-prod-d1/authelia/prod-d1
+      directory:
+        exclude: 'application.yaml'
+    - repoURL: 'https://github.com/dj346/OneForAll.git'
+      targetRevision: main
+      path: .
+      # helm:
+      #   valuesObject:
+    - repoURL: https://charts.authelia.com
+      chart: authelia
+      targetRevision: 0.10.49
+      # helm:
+      #   valuesObject:
+  syncPolicy:
+    syncOptions:
+      - Validate=true
+      - PrunePropagationPolicy=foreground
+      - CreateNamespace=true
+    
+    automated:
+      prune: true
+      selfHeal: true
+    
+    retry:
+      limit: 5
+      backoff:
+        duration: 10s
+        factor: 2
+        maxDuration: 5m

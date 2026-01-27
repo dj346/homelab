@@ -51,15 +51,14 @@ spec:
           ingresses:
             - serviceName: anisonarr-service
               portName: http
+          
+          statefulsets:
+            - priorityClassName: low-priority
 
-          services:
             - ports: 
                 - port: 80
                   portName: http
                   protocol: TCP
-          
-          statefulsets:
-            - priorityClassName: low-priority
 
               volumes:
                 - name: data

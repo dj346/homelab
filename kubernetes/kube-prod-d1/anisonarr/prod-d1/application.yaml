@@ -106,19 +106,16 @@ spec:
                     containerPort: 8989
 
                 startupProbeHttpGet:
-                  httpGet:
-                    path: /
-                    port: http
+                  path: /
+                  port: http
                 
                 readinessProbeHttpGet:
-                  httpGet:
-                    path: /
-                    port: http
+                  path: /
+                  port: http
 
                 livenessProbeHttpGet:
-                  httpGet:
-                    path: /
-                    port: http
+                  path: /
+                  port: http
 
                 volumeMounts:
                   - name: anisonarr-config

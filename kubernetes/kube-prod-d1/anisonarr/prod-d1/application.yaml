@@ -22,7 +22,7 @@ spec:
       path: kubernetes/kube-prod-d1/anisonarr/prod-d1
       directory:
         exclude: 'application.yaml'
-    - repoURL: 'https://github.com/dj346/OneForAll.git'
+    - repoURL: 'https://github.com/dj346/homelab-helper.git'
       targetRevision: main
       path: .
       helm:
@@ -49,7 +49,7 @@ spec:
           defaultSecretEnabled: true
 
           ingresses:
-            - serviceName: anisonarr-service
+            - serviceName: anisonarr-headless-service
               portName: http
           
           statefulsets:

@@ -55,7 +55,7 @@ spec:
           statefulsets:
             - priorityClassName: low-priority
 
-            - ports: 
+              ports: 
                 - port: 80
                   portName: http
                   protocol: TCP

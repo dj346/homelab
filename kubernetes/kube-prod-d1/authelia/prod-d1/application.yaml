@@ -25,8 +25,34 @@ spec:
     - repoURL: 'https://github.com/dj346/OneForAll.git'
       targetRevision: main
       path: .
-      # helm:
-      #   valuesObject:
+      helm:
+        valuesObject:
+          global:
+            appName: authelia
+            environment: prod-d1
+            defaultSecretEnabled: true
+          
+          postgresql:
+            instances: 2
+            
+            databaseName: "autheliadb"
+            ownerName: "authelia"
+            
+            storageSize: 450Mi
+            walStorageSize: 2Gi
+            
+            enableDefaultCertificate: true
+            backupSchedule: "0 0 * * *"
+          
+          defaultSecretEnabled: true
+
+          ingresses:
+            - serviceName: anisonarr-service
+              portName: http
+
+          services:
+            - port: 80
+              portName: http
     - repoURL: https://charts.authelia.com
       chart: authelia
       targetRevision: 0.10.49

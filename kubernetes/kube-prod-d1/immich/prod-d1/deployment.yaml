@@ -47,7 +47,7 @@ spec:
               timeout 60 sh -c 'until pg_isready -U "${POSTGRES_USER}" -h "${POSTGRES_HOSTNAME}" -p 5432; do sleep 2; done'
       containers:
         - name: immich-server
-          image: "ghcr.io/immich-app/immich-server:release@sha256:e6a6298e67ae077808fdb7d8d5565955f60b0708191576143fc02d30ab1389d1"
+          image: "ghcr.io/immich-app/immich-server:release@sha256:8ac5a6d471fbb6fcfec6bc34854dd5a947c1795547f0d9345d9bf1803d1209e3"
           imagePullPolicy: Always
           #securityContext:
           #  runAsUser: 0

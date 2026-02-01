@@ -56,8 +56,30 @@ spec:
     - repoURL: https://charts.authelia.com
       chart: authelia
       targetRevision: 0.10.49
-      # helm:
-      #   valuesObject:
+      helm:
+        valuesObject:
+          configMap:
+            storage: 
+              postgres:
+                enabled: false
+                deploy: false
+                address: 'tcp://postgres.databases.svc.cluster.local:5432'
+                database: 'authelia'
+                username: 'authelia'
+
+                password:
+                  disabled: false
+                  secret_name: ~
+                  value: ''
+                  path: 'storage.postgres.password.txt'
+
+                tls:
+                  enabled: false
+                  server_name: ''
+                  skip_verify: false
+                  minimum_version: 'TLS1.2'
+                  maximum_version: 'TLS1.3'
+
   syncPolicy:
     syncOptions:
       - Validate=true

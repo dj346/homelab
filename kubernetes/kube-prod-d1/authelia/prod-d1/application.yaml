@@ -63,12 +63,12 @@ spec:
               postgres:
                 enabled: false
                 deploy: false
-                address: 'tcp://autherlia-postgresql-cluster-rw:5432'
+                address: 'tcp://authelia-postgresql-cluster-rw:5432'
                 database: 'autheliadb'
                 username: 'authelia'
 
                 password:
-                  disabled: false
+                  disabled: true
                   secret_name: authelia-postgresql-credentials-secret
                   value: 'password'
                   path: 'storage.postgres.password.txt'

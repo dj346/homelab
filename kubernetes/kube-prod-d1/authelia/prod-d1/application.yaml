@@ -58,6 +58,13 @@ spec:
       targetRevision: 0.10.49
       helm:
         valuesObject:
+          secret:
+            additionalSecrets:
+              authelia-postgresql-credentials-secret:
+                items:
+                  - key: "password"
+                    path: "authelia-postgresql-credentials-secret"
+
           configMap:
             storage: 
               postgres:
@@ -70,8 +77,7 @@ spec:
                 password:
                   disabled: true
                   secret_name: authelia-postgresql-credentials-secret
-                  value: 'password'
-                  path: 'storage.postgres.password.txt'
+                  path: 'authelia-postgresql-credentials-secret'
 
                 tls:
                   enabled: true

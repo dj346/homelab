@@ -60,7 +60,7 @@ spec:
           configMap:
             storage: 
               postgres:
-                enabled: false
+                enabled: true
                 deploy: false
                 address: 'tcp://authelia-postgresql-cluster-rw:5432'
                 database: 'autheliadb'

@@ -48,15 +48,17 @@ spec:
       targetRevision: 0.10.49
       helm:
         valuesObject:
-          pod:
-            extraVolumeMounts:
-              - name: postgres-ca-volume
-                mountPath: /config/certs
-                readOnly: true
-            extraVolumes:    
-              - name: postgres-ca-volume
-                secret:
-                  secretName: authelia-postgresql-client-certificate-secret
+          certificates:
+            existingSecret: authelia-postgresql-client-certificate-secret
+          # pod:
+          #   extraVolumeMounts:
+          #     - name: postgres-ca-volume
+          #       mountPath: /config/certs
+          #       readOnly: true
+          #   extraVolumes:    
+          #     - name: postgres-ca-volume
+          #       secret:
+          #         secretName: authelia-postgresql-client-certificate-secret
           secret:
             additionalSecrets:
               autherlia-redis-password-secret:
@@ -78,7 +80,7 @@ spec:
 
           # Authelia configuration belongs under configMap (NOT secret, and NOT root).
           configMap:
-            certificates_directory: /config/certs
+            # certificates_directory: /config/certs
             session:
               name: "authelia_session"
               same_site: "lax"

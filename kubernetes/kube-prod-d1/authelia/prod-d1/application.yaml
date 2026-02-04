@@ -125,7 +125,12 @@ spec:
                 base_dn: DC=mclacken,DC=net
                 pooling:
                   enable: false
+                
                 user: uid=authelia-admin-service,ou=people,dc=mclacken,dc=net
+                password:
+                  secret_name: "authlia-lldap-admin-service-password-secret"
+                  path: "authlia-lldap-admin-service-password-secret"
+
                 additional_users_dn: OU=people
                 additional_groups_dn: OU=groups
                 users_filter: (&(|({username_attribute}={input})({mail_attribute}={input}))(objectClass=person)(memberOf=cn=authelia-user,ou=groups,dc=mclacken,dc=net))

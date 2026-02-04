@@ -50,6 +50,10 @@ spec:
         valuesObject:
           secret:
             additionalSecrets:
+              autherlia-redis-password-secret:
+                items:
+                  - key: password
+                    path: autherlia-redis-password-secret
               authelia-postgresql-credentials-secret:
                 items:
                   - key: password

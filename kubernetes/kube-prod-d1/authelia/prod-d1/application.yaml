@@ -111,6 +111,10 @@ spec:
                 timeout: 5 seconds
                 sender: authelia@mclacken.net
                 username: dylan@mclacken.net
+
+                password:
+                  secret_name: "authelia-smtp-password-secret"
+                  path: "authelia-smtp-password-secret"
                 # NOTE: keep secrets out of configMap; see note below.
 
             authentication_backend:

@@ -107,7 +107,7 @@ spec:
             notifier:
               smtp:
                 enabled: true
-                address: submissions://smtp.fastmail.com:587
+                address: smtp://smtp.fastmail.com:587
                 timeout: 5 seconds
                 sender: authelia@mclacken.net
                 username: dylan@mclacken.net

@@ -128,10 +128,7 @@ spec:
                 user: uid=authelia-admin-service,ou=people,dc=mclacken,dc=net
                 additional_users_dn: OU=people
                 additional_groups_dn: OU=groups
-                users_filter: >-
-                  (&(|({username_attribute}={input})({mail_attribute}={input}))
-                  (objectClass=person)
-                  (memberOf=cn=authelia-user,ou=groups,dc=mclacken,dc=net))
+                users_filter: (&(|({username_attribute}={input})({mail_attribute}={input}))(objectClass=person)(memberOf=cn=authelia-user,ou=groups,dc=mclacken,dc=net))
                 groups_filter: (&(member={dn})(objectClass=groupOfNames))
                 attributes:
                   username: uid

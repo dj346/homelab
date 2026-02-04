@@ -65,6 +65,29 @@ spec:
 
           # Authelia configuration belongs under configMap (NOT secret, and NOT root).
           configMap:
+            session:
+              name: "authelia_session"
+              same_site: "lax"
+              expiration: "1 hour"
+              inactivity: "5 minutes"
+              remember_me: "1 month"
+              # encryption_key:
+              #   disabled: false
+              #   secret_name: "authelia-secret"
+              #   path: "SESSION_ENCRYPTION_KEY"
+              cookies:
+                - domain: "mclacken.net"
+                  subdomain: "auth"
+                  name: "mclacken_authelia_session"
+              redis:
+                enabled: true
+                database_index: 4
+                host: "redis-server.redis-server.svc.cluster.local"
+                port: 6379
+                password:
+                  secret_name: "autherlia-redis-password-secret"
+                  path: "autherlia-redis-password-secret"
+            
             notifier:
               smtp:
                 enabled: true

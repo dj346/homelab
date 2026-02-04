@@ -56,8 +56,56 @@ spec:
                 items:
                   - key: "password"
                     path: "authelia-postgresql-credentials-secret"
+              authlia-lldap-admin-service-password-secret:
+                items:
+                  - key: "password"
+                    path: "authlia-lldap-admin-service-password-secret"
+              authelia-smtp-password-secret:
+                items:
+                  - key: "password"
+                    path: "authelia-smtp-password-secret"
+            
+            notifier:
+              smtp:
+                enabled: true
+                #address: "submissions://smtp.gmail.com:465"
+                address: "submissions://smtp.fastmail.com:587"
+                timeout: "5 seconds"
+                sender: "authelia@mclacken.net"
+                username: "dylan@mclacken.net"
+                password:
+                  secret_name: "authelia-smtp-password-secret"
+                  path: "authelia-smtp-password-secret"
 
-          configMap:
+            authentication_backend:
+              password_reset:
+                disable: false
+              refresh_interval: "5 minutes"
+              ldap:
+                enabled: true
+                implementation: "lldap"
+                address: "ldap://lldap-service.lldap.svc.cluster.local:3890"
+                timeout: "5 seconds"
+                base_dn: "DC=mclacken,DC=net"
+                pooling:
+                  enable: false
+
+                user: "uid=authelia-admin-service,ou=people,dc=mclacken,dc=net"
+                password:
+                  secret_name: "authlia-lldap-admin-service-password-secret"
+                  path: "authlia-lldap-admin-service-password-secret"
+
+                additional_users_dn: "OU=people"
+                additional_groups_dn: "OU=groups"
+
+                users_filter: "(&(|({username_attribute}={input})({mail_attribute}={input}))(objectClass=person)(memberOf=cn=authelia-user,ou=groups,dc=mclacken,dc=net))"
+                groups_filter: "(&(member={dn})(objectClass=groupOfNames))"
+
+                attributes:
+                  username: "uid"
+                  display_name: "displayName"
+                  mail: "mail"
+
             storage: 
               postgres:
                 enabled: true

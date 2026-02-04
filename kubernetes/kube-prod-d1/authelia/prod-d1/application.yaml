@@ -61,10 +61,10 @@ spec:
           #         secretName: authelia-postgresql-client-certificate-secret
           secret:
             additionalSecrets:
-              autherlia-redis-password-secret:
+              authelia-redis-password-secret:
                 items:
                   - key: password
-                    path: autherlia-redis-password-secret
+                    path: authelia-redis-password-secret
               authelia-postgresql-credentials-secret:
                 items:
                   - key: password
@@ -101,8 +101,8 @@ spec:
                 host: "redis-server.redis-server.svc.cluster.local"
                 port: 6379
                 password:
-                  secret_name: "autherlia-redis-password-secret"
-                  path: "autherlia-redis-password-secret"
+                  secret_name: "authelia-redis-password-secret"
+                  path: "authelia-redis-password-secret"
             
             notifier:
               smtp:
@@ -146,6 +146,9 @@ spec:
                 address: tcp://authelia-postgresql-cluster-rw:5432
                 database: autheliadb
                 username: authelia
+                password:
+                  secret_name: "authelia-postgresql-credentials-secret"
+                  path: "authelia-postgresql-credentials-secret"
                 tls:
                   enabled: true
                   server_name: ""

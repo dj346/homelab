@@ -16,13 +16,15 @@ spec:
   destination:
     server: https://kubernetes.default.svc
     namespace: authelia-prod-d1
+
   sources:
-    - repoURL: 'https://github.com/dj346/homelab.git'
+    - repoURL: https://github.com/dj346/homelab.git
       targetRevision: HEAD
       path: kubernetes/kube-prod-d1/authelia/prod-d1
       directory:
-        exclude: 'application.yaml'
-    - repoURL: 'https://github.com/dj346/OneForAll.git'
+        exclude: application.yaml
+
+    - repoURL: https://github.com/dj346/OneForAll.git
       targetRevision: main
       path: .
       helm:
@@ -31,20 +33,16 @@ spec:
             appName: authelia
             environment: prod-d1
             defaultSecretEnabled: true
-          
+
           postgresql:
             instances: 2
-            
-            databaseName: "autheliadb"
-            ownerName: "authelia"
-            
+            databaseName: autheliadb
+            ownerName: authelia
             storageSize: 450Mi
             walStorageSize: 2Gi
-            
             enableDefaultCertificate: true
             backupSchedule: "0 0 * * *"
-          
-          defaultSecretEnabled: true
+
     - repoURL: https://charts.authelia.com
       chart: authelia
       targetRevision: 0.10.49
@@ -54,88 +52,77 @@ spec:
             additionalSecrets:
               authelia-postgresql-credentials-secret:
                 items:
-                  - key: "password"
-                    path: "authelia-postgresql-credentials-secret"
+                  - key: password
+                    path: authelia-postgresql-credentials-secret
               authlia-lldap-admin-service-password-secret:
                 items:
-                  - key: "password"
-                    path: "authlia-lldap-admin-service-password-secret"
+                  - key: password
+                    path: authlia-lldap-admin-service-password-secret
               authelia-smtp-password-secret:
                 items:
-                  - key: "password"
-                    path: "authelia-smtp-password-secret"
-          
-          notifier:
-            smtp:
-              enabled: true
-              #address: "submissions://smtp.gmail.com:465"
-              address: "submissions://smtp.fastmail.com:587"
-              timeout: "5 seconds"
-              sender: "authelia@mclacken.net"
-              username: "dylan@mclacken.net"
-              password:
-                secret_name: "authelia-smtp-password-secret"
-                path: "authelia-smtp-password-secret"
+                  - key: password
+                    path: authelia-smtp-password-secret
 
-          authentication_backend:
-            password_reset:
-              disable: false
-            refresh_interval: "5 minutes"
-            ldap:
-              enabled: true
-              implementation: "lldap"
-              address: "ldap://lldap-service.lldap.svc.cluster.local:3890"
-              timeout: "5 seconds"
-              base_dn: "DC=mclacken,DC=net"
-              pooling:
-                enable: false
+          # Authelia configuration belongs under configMap (NOT secret, and NOT root).
+          configMap:
+            notifier:
+              smtp:
+                enabled: true
+                address: submissions://smtp.fastmail.com:587
+                timeout: 5 seconds
+                sender: authelia@mclacken.net
+                username: dylan@mclacken.net
+                # NOTE: keep secrets out of configMap; see note below.
 
-              user: "uid=authelia-admin-service,ou=people,dc=mclacken,dc=net"
-              password:
-                secret_name: "authlia-lldap-admin-service-password-secret"
-                path: "authlia-lldap-admin-service-password-secret"
+            authentication_backend:
+              password_reset:
+                disable: false
+              refresh_interval: 5 minutes
+              ldap:
+                enabled: true
+                implementation: lldap
+                address: ldap://lldap-service.lldap.svc.cluster.local:3890
+                timeout: 5 seconds
+                base_dn: DC=mclacken,DC=net
+                pooling:
+                  enable: false
+                user: uid=authelia-admin-service,ou=people,dc=mclacken,dc=net
+                additional_users_dn: OU=people
+                additional_groups_dn: OU=groups
+                users_filter: >-
+                  (&(|({username_attribute}={input})({mail_attribute}={input}))
+                  (objectClass=person)
+                  (memberOf=cn=authelia-user,ou=groups,dc=mclacken,dc=net))
+                groups_filter: (&(member={dn})(objectClass=groupOfNames))
+                attributes:
+                  username: uid
+                  display_name: displayName
+                  mail: mail
+                # NOTE: keep secrets out of configMap; see note below.
 
-              additional_users_dn: "OU=people"
-              additional_groups_dn: "OU=groups"
-
-              users_filter: "(&(|({username_attribute}={input})({mail_attribute}={input}))(objectClass=person)(memberOf=cn=authelia-user,ou=groups,dc=mclacken,dc=net))"
-              groups_filter: "(&(member={dn})(objectClass=groupOfNames))"
-
-              attributes:
-                username: "uid"
-                display_name: "displayName"
-                mail: "mail"
-
-          storage: 
+            storage:
               postgres:
                 enabled: true
                 deploy: false
-                address: 'tcp://authelia-postgresql-cluster-rw:5432'
-                database: 'autheliadb'
-                username: 'authelia'
-
-                password:
-                  disabled: true
-                  secret_name: authelia-postgresql-credentials-secret
-                  path: 'authelia-postgresql-credentials-secret'
-
+                address: tcp://authelia-postgresql-cluster-rw:5432
+                database: autheliadb
+                username: authelia
                 tls:
                   enabled: true
-                  server_name: ''
+                  server_name: ""
                   skip_verify: false
-                  minimum_version: 'TLS1.2'
-                  maximum_version: 'TLS1.3'
+                  minimum_version: TLS1.2
+                  maximum_version: TLS1.3
+                # NOTE: keep secrets out of configMap; see note below.
 
   syncPolicy:
     syncOptions:
       - Validate=true
       - PrunePropagationPolicy=foreground
       - CreateNamespace=true
-    
     automated:
       prune: true
       selfHeal: true
-    
     retry:
       limit: 5
       backoff:

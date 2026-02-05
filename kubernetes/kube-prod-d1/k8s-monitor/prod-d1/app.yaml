@@ -14,7 +14,7 @@ spec:
   sources:
     - repoURL: https://grafana.github.io/helm-charts
       chart: k8s-monitoring
-      targetRevision: 3.7.4
+      targetRevision: 3.7.5
       helm:
         valueFiles:
         - $values/kubernetes/kube-prod-d1/k8s-monitor/prod-d1/values.yaml

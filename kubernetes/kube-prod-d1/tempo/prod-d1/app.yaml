@@ -14,7 +14,7 @@ spec:
   sources:
     - repoURL: https://grafana.github.io/helm-charts
       chart: tempo-distributed
-      targetRevision: 1.61.0
+      targetRevision: 1.61.3
       helm:
         valueFiles:
         - $values/kubernetes/kube-prod-d1/tempo/prod-d1/values.yaml

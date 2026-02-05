@@ -15,5 +15,6 @@ spec:
       services:
         - name: proxmox-service
           port: https
+          serversTransport: proxmox-transport
   tls:
     secretName: all-applications-certificate-secret

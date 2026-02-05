@@ -13,7 +13,7 @@ spec:
       middlewares:
         - name: redirect-debug-to-root
       services:
-        - name: authelia
+        - name: authelia-application
           port: 80
   tls:
     secretName: all-applications-certificate-secret

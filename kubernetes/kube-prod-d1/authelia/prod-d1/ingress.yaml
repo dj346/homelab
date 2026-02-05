@@ -1,0 +1,31 @@
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: authelia-ingressroute
+  namespace: authelia-prod-d1
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`authelia.kube-prod-d1.mclacken.net`)
+      kind: Rule
+      middlewares:
+        - name: redirect-debug-to-root
+      services:
+        - name: authelia
+          port: 80
+  tls:
+    secretName: all-applications-certificate-secret
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: redirect-debug-to-root
+  namespace: authelia-prod-d1
+spec:
+  redirectRegex:
+    regex: "^https?://([^/]+)/debug(.*)$"
+    replacement: "https://${1}/"
+    permanent: false

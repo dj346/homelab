@@ -1,0 +1,53 @@
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: authelia-forwardauth
+  namespace: authelia-prod-d1
+spec:
+  forwardAuth:
+    address: http://authelia.authelia-prod-d1.svc.cluster.local/api/authz/forward-auth
+    trustForwardHeader: true
+    authResponseHeaders:
+      - Remote-User
+      - Remote-Groups
+      - Remote-Email
+      - Remote-Name
+    authRequestHeaders:
+      - X-Forwarded-Method
+      - X-Forwarded-Proto
+      - X-Forwarded-Host
+      - X-Forwarded-Uri
+      - X-Forwarded-For
+      - X-Real-Ip
+      - Content-Type
+      - Cookie
+      - Authorization
+      - Accept
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: authelia-forwardauth-basic
+  namespace: authelia-prod-d1
+spec:
+  forwardAuth:
+    address: http://authelia.authelia-prod-d1.svc.cluster.local/api/authz/forward-auth/basic
+    trustForwardHeader: true
+    authResponseHeaders:
+      - Remote-User
+      - Remote-Groups
+      - Remote-Email
+      - Remote-Name
+    authRequestHeaders:
+      - X-Forwarded-Method
+      - X-Forwarded-Proto
+      - X-Forwarded-Host
+      - X-Forwarded-Uri
+      - X-Forwarded-For
+      - X-Real-Ip
+      - Content-Type
+      - Cookie
+      - Authorization
+      - Accept
+---

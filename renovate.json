@@ -2,6 +2,21 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["config:recommended", "docker:pinDigests"],
 
+  "platformAutomerge": true,
+  "automerge": true,
+  "automergeType": "pr",
+
+  "packageRules": [
+    {
+      "matchUpdateTypes": ["patch", "minor", "pin", "digest"],
+      "automerge": true
+    },
+    {
+      "matchUpdateTypes": ["major"],
+      "automerge": false
+    }
+  ],
+
   "kubernetes": {
     "managerFilePatterns": ["/\\.ya?ml$/"]
   },

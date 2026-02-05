@@ -6,7 +6,7 @@ metadata:
   namespace: authelia-prod-d1
 spec:
   forwardAuth:
-    address: http://authelia.authelia-prod-d1.svc.cluster.local/api/authz/forward-auth
+    address: http://authelia-application.authelia-prod-d1.svc.cluster.local/api/authz/forward-auth
     trustForwardHeader: true
     authResponseHeaders:
       - Remote-User
@@ -32,7 +32,7 @@ metadata:
   namespace: authelia-prod-d1
 spec:
   forwardAuth:
-    address: http://authelia.authelia-prod-d1.svc.cluster.local/api/authz/forward-auth/basic
+    address: http://authelia-application.authelia-prod-d1.svc.cluster.local/api/authz/forward-auth/basic
     trustForwardHeader: true
     authResponseHeaders:
       - Remote-User

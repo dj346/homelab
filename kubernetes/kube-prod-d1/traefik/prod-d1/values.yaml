@@ -76,6 +76,7 @@ service:
 providers:
   kubernetesCRD:
     allowExternalNameServices: true
+    allowCrossNamespace: true  # 2
   kubernetesIngress:
     allowExternalNameServices: true
 

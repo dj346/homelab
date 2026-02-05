@@ -1,24 +1,19 @@
-apiVersion: networking.k8s.io/v1
-kind: Ingress
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
 metadata:
-  name: proxmox-ingress
+  name: proxmox-ingressroute
   namespace: proxmox-prod-d1
-  annotations:
-    cert-manager.io/cluster-issuer: cloudflare-clusterissuer
-    traefik.ingress.kubernetes.io/router.entrypoints: websecure
 spec:
-  rules:
-    - host: proxmox.pve-prod-d1.mclacken.net
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: proxmox-service
-                port:
-                  name: https
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`proxmox.pve-prod-d1.mclacken.net`) && PathPrefix(`/`)
+      kind: Rule
+      middlewares:
+        - name: authelia-forwardauth
+          namespace: authelia-prod-d1
+      services:
+        - name: proxmox-service
+          port: https
   tls:
-    - hosts:
-        - proxmox.pve-prod-d1.mclacken.net
-      secretName: proxmox-certificate-secret
+    secretName: all-applications-certificate-secret

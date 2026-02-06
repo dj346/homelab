@@ -4,7 +4,7 @@
 
   "platformAutomerge": true,
   "automerge": true,
-  "automergeType": "branch",
+  "automergeType": "pr",
 
   "packageRules": [
     {

@@ -48,9 +48,9 @@ spec:
           
           defaultSecretEnabled: true
 
-          ingresses:
-            - serviceName: anisonarr-service
-              portName: https
+          # ingresses:
+          #   - serviceName: anisonarr-service
+          #     portName: https
           
           statefulsets:
             - priorityClassName: low-priority

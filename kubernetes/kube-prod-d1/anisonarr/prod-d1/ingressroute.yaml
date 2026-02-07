@@ -1,0 +1,17 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: anisonarr-ingressroute
+  namespace: anisonarr-prod-d1
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`anisonarr.kube-prod-d1.mclacken.net`)
+      kind: Rule
+      services:
+        - name: anisonarr-service
+          port: https
+          serversTransport: anisonarr-backend-transport
+  tls:
+    secretName: all-applications-certificate-secret

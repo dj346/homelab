@@ -1,0 +1,10 @@
+apiVersion: traefik.io/v1alpha1
+kind: ServersTransport
+metadata:
+  name: anisonarr-backend-transport
+  namespace: anisonarr-prod-d1
+spec:
+  rootCA:
+    - anisonarr-server-certificate-secret
+  serverName: anisonarr-service.anisonarr-prod-d1.svc.cluster.local
+  insecureSkipVerify: false

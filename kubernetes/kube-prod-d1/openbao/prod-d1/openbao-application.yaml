@@ -195,6 +195,8 @@ spec:
     - repoURL: 'https://github.com/dj346/homelab.git' # repoURL: 'ssh://git@gitea-ssh.gitea.svc.cluster.local:2222/dj346/homelab.git'
       targetRevision: HEAD
       path: kubernetes/kube-prod-d1/openbao/prod-d1
+      directory:
+        exclude: 'openbao-application.yaml'
   syncPolicy:
     syncOptions:
       - Validate=true

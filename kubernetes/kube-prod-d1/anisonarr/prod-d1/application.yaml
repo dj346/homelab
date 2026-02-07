@@ -104,7 +104,7 @@ spec:
                   - name: SONARR__SERVER__SSLPORT
                     value: "443"
                   - name: SONARR__SERVER__SSLCERTPATH
-                    value: "/config/ssl/tls.crt"
+                    value: "/config/ssl/keystore.p12"
                   - name: SONARR__SERVER__SSLCERTPASSWORD
                     valueFrom:
                       secretKeyRef:

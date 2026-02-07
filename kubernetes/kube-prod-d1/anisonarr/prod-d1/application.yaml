@@ -55,6 +55,7 @@ spec:
           statefulsets:
             - priorityClassName: low-priority
 
+              # What ports the pod itself will expose. 
               ports: 
                 - port: 443
                   portName: https
@@ -122,21 +123,21 @@ spec:
                         name: anisonarr-postgresql-credentials-secret
                         key: password
           
+                # relates to the headless statefulset service. 
                 ports:
-                  - name: http
-                    containerPort: 8989
+                  - name: https
+                    containerPort: 443
 
                 startupProbeHttpGet:
                   path: /
-                  port: http
+                  port: https
                 
                 readinessProbeHttpGet:
                   path: /
-                  port: http
-
+                  port: https
                 livenessProbeHttpGet:
                   path: /
-                  port: http
+                  port: https
 
                 volumeMounts:
                   - name: anisonarr-config

@@ -4,7 +4,7 @@ metadata:
   name: anisonarr-backend-transport
   namespace: anisonarr-prod-d1
 spec:
-  rootCAsSecrets:
-    - openbao-server-ca
+  rootCAs:
+    - secret: openbao-server-ca
   serverName: anisonarr-service.anisonarr-prod-d1.svc.cluster.local
   insecureSkipVerify: false

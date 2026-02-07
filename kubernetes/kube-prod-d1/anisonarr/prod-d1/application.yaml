@@ -128,16 +128,16 @@ spec:
                   - name: https
                     containerPort: 443
 
-                startupProbeHttpGet:
-                  path: /
-                  port: http
+                # startupProbeHttpGet:
+                #   path: /
+                #   port: https
                 
-                readinessProbeHttpGet:
-                  path: /
-                  port: http
-                livenessProbeHttpGet:
-                  path: /
-                  port: http
+                # readinessProbeHttpGet:
+                #   path: /
+                #   port: https
+                # livenessProbeHttpGet:
+                #   path: /
+                #   port: https
 
                 volumeMounts:
                   - name: anisonarr-config

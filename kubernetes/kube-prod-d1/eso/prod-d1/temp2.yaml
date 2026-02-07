@@ -1,0 +1,36 @@
+apiVersion: generators.external-secrets.io/v1alpha1
+kind: VaultDynamicSecret
+metadata:
+  name: ica2-ca-pem
+  namespace: eso
+spec:
+  provider:
+    server: "https://openbao-application-internal.openbao:8200"
+    caProvider:
+      type: Secret
+      namespace: eso
+      name: openbao-server-ca
+      key: ca.crt
+    tls:
+      certSecretRef:
+        name: eso-vault-certificate-secret
+        namespace: eso
+        key: tls.crt
+      keySecretRef:
+        name: eso-vault-certificate-secret
+        namespace: eso
+        key: tls.key
+    auth:
+      kubernetes:
+        mountPath: "kubernetes/kube-prod-d1"
+        role: "eso-kube-prod-d1"
+        serviceAccountRef:
+          name: "eso-issuer-service-account"
+          namespace: "eso"
+          audiences:
+            - "eso-vault-auth"
+
+  method: "GET"
+  # NOTE: this is the Vault *API path* (no /v1 prefix here)
+  path: "pki/kube-prod-d1/apps-prod-d1/ICA2/ca/pem"
+  resultType: "Raw"

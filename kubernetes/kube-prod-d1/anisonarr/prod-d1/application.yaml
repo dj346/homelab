@@ -49,7 +49,7 @@ spec:
           defaultSecretEnabled: true
 
           ingresses:
-            - serviceName: anisonarr-headless-service
+            - serviceName: anisonarr-service
               portName: https
           
           statefulsets:

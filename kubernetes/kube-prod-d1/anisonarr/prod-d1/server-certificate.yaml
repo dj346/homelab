@@ -19,6 +19,11 @@ spec:
     - 'anisonarr-headless-service.anisonarr-prod-d1'
     - 'anisonarr-headless-service.anisonarr-prod-d1.svc'
     - 'anisonarr-headless-service.anisonarr-prod-d1.svc.cluster.local'
+
+    - 'anisonarr-service'
+    - 'anisonarr-service.anisonarr-prod-d1'
+    - 'anisonarr-service.anisonarr-prod-d1.svc'
+    - 'anisonarr-service.anisonarr-prod-d1.svc.cluster.local'
   keystores:
     pkcs12:
       create: true

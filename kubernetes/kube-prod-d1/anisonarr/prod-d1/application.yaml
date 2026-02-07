@@ -104,7 +104,7 @@ spec:
                   - name: SONARR__SERVER__SSLPORT
                     value: "443"
                   - name: SONARR__SERVER__SSLCERTPATH
-                    value: "/config/ssl/keystore.p12"
+                    value: "/ssl/keystore.p12"
                   - name: SONARR__SERVER__SSLCERTPASSWORD
                     valueFrom:
                       secretKeyRef:
@@ -144,7 +144,7 @@ spec:
                   - name: data
                     mountPath: /data
                   - name: anisonarr-server-certificate-secret-volume
-                    mountPath: /config/ssl
+                    mountPath: /ssl
                     readOnly: true
 
   syncPolicy:

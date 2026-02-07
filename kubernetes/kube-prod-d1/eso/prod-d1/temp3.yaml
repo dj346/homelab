@@ -2,7 +2,7 @@ apiVersion: external-secrets.io/v1
 kind: ExternalSecret
 metadata:
   name: ica2-ca
-  namespace: apps
+  namespace: eso
 spec:
   refreshInterval: 1h
   target:

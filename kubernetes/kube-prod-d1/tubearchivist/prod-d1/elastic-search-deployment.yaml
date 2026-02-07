@@ -25,7 +25,7 @@ spec:
             runAsGroup: 0
       containers:
         - name: archivist-es
-          image: bbilly1/tubearchivist-es@sha256:58007d1cf7a3b9f3ae4a8e0d2798b05d9c7dd768877b1fe908fd4142da4c68b6
+          image: bbilly1/tubearchivist-es@sha256:9da63fb1973ec3d57daf6916be948eddd0d8a404cc8e447c938480c85fe2c554
           ports:
             - containerPort: 9200
           env:

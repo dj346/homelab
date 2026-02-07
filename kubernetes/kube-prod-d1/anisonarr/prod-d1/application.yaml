@@ -105,7 +105,11 @@ spec:
                     value: "443"
                   - name: SONARR__SERVER__SSLCERTPATH
                     value: "/config/ssl/tls.crt"
-
+                  - name: SONARR__SERVER__SSLCERTPASSWORD
+                    valueFrom:
+                      secretKeyRef:
+                        name: anisonarr-pkcs12-password
+                        key: password
 
                   - name: SONARR__POSTGRES__USER
                     valueFrom:

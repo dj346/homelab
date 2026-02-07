@@ -19,3 +19,9 @@ spec:
     - 'anisonarr-headless-service.anisonarr-prod-d1'
     - 'anisonarr-headless-service.anisonarr-prod-d1.svc'
     - 'anisonarr-headless-service.anisonarr-prod-d1.svc.cluster.local'
+  keystores:
+    pkcs12:
+      create: true
+      passwordSecretRef:
+        name: anisonarr-pkcs12-password
+        key: password

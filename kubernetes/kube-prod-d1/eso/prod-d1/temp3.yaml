@@ -10,12 +10,10 @@ spec:
     template:
       type: Opaque
       data:
-        # One of these will be correct depending on ESO version/behavior.
-        # Start with `.raw`; if the Secret ends up empty, switch to `.value`.
-        ca.crt: "{{ .raw }}"
+        ca.crt: "{{ .certificate }}"
   dataFrom:
     - sourceRef:
         generatorRef:
           apiVersion: generators.external-secrets.io/v1alpha1
           kind: VaultDynamicSecret
-          name: ica2-ca-pem
+          name: ica2-ca-json

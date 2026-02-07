@@ -1,7 +1,7 @@
 apiVersion: generators.external-secrets.io/v1alpha1
 kind: VaultDynamicSecret
 metadata:
-  name: ica2-ca-pem
+  name: ica2-ca-json
   namespace: eso
 spec:
   provider:
@@ -31,6 +31,6 @@ spec:
             - "eso-vault-auth"
 
   method: "GET"
-  # NOTE: this is the Vault *API path* (no /v1 prefix here)
-  path: "pki/kube-prod-d1/apps-prod-d1/ICA2/ca/pem"
-  resultType: "Raw"
+  # NOTE: no /v1 prefix here
+  path: "pki/kube-prod-d1/apps-prod-d1/ICA2/cert/ca"
+  resultType: "Data"

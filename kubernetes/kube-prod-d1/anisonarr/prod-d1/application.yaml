@@ -130,14 +130,14 @@ spec:
 
                 startupProbeHttpGet:
                   path: /
-                  port: https
+                  port: http
                 
                 readinessProbeHttpGet:
                   path: /
-                  port: https
+                  port: http
                 livenessProbeHttpGet:
                   path: /
-                  port: https
+                  port: http
 
                 volumeMounts:
                   - name: anisonarr-config

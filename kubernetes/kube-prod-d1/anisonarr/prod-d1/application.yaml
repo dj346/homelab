@@ -50,14 +50,14 @@ spec:
 
           ingresses:
             - serviceName: anisonarr-headless-service
-              portName: http
+              portName: https
           
           statefulsets:
             - priorityClassName: low-priority
 
               ports: 
-                - port: 80
-                  portName: http
+                - port: 443
+                  portName: https
                   protocol: TCP
 
               volumes:
@@ -65,6 +65,9 @@ spec:
                   nfs:
                     server: 10.15.21.5
                     path: /mnt/user/video/
+                - name: anisonarr-server-certificate-secret-volume
+                  secret:
+                    secretName: anisonarr-server-certificate-secret
               
               volumeClaimTemplates:
                 - metadata:
@@ -88,14 +91,28 @@ spec:
                     value: "America/Los_Angeles"
                   - name: Sonarr__Postgres__Port
                     value: "5432"
-                  - name: Sonarr__Postgres__Host
+                  - name: SONARR__POSTGRES__HOST
                     value: "anisonarr-postgresql-cluster-rw"
-                  - name: Sonarr__Postgres__User
+                  - name: SONARR__AUTH__METHOD
+                    value: "External"
+
+                  - name: SONARR__AUTH__APIKEY
+                    value: "test"
+
+                  - name: SONARR__SERVER__ENABLESSL
+                    value: "true"
+                  - name: SONARR__SERVER__SSLPORT
+                    value: "443"
+                  - name: SONARR__SERVER__SSLCERTPATH
+                    value: "/config/ssl/tls.crt"
+
+
+                  - name: SONARR__POSTGRES__USER
                     valueFrom:
                       secretKeyRef:
                         name: anisonarr-postgresql-credentials-secret
                         key: username
-                  - name: Sonarr__Postgres__Password
+                  - name: SONARR__POSTGRES__PASSWORD
                     valueFrom:
                       secretKeyRef:
                         name: anisonarr-postgresql-credentials-secret
@@ -122,6 +139,9 @@ spec:
                     mountPath: /config
                   - name: data
                     mountPath: /data
+                  - name: anisonarr-server-certificate-secret-volume
+                    mountPath: /config/ssl
+                    readOnly: true
 
   syncPolicy:
     syncOptions:

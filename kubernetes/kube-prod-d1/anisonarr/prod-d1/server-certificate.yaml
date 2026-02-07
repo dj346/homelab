@@ -1,0 +1,21 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: anisonarr-server-certificate
+  namespace: anisonarr-prod-d1
+spec:
+  commonName: anisonarr-server-certificate
+  secretName: anisonarr-server-certificate-secret
+  issuerRef:
+    name: vault-issuer
+    kind: ClusterIssuer
+  dnsNames:
+    - 'anisonarr-statefulset-0.anisonarr-headless-service'
+    - 'anisonarr-statefulset-0.anisonarr-headless-service.anisonarr-prod-d1'
+    - 'anisonarr-statefulset-0.anisonarr-headless-service.anisonarr-prod-d1.svc'
+    - 'anisonarr-statefulset-0.anisonarr-headless-service.anisonarr-prod-d1.svc.cluster.local'
+
+    - 'anisonarr-headless-service'
+    - 'anisonarr-headless-service.anisonarr-prod-d1'
+    - 'anisonarr-headless-service.anisonarr-prod-d1.svc'
+    - 'anisonarr-headless-service.anisonarr-prod-d1.svc.cluster.local'

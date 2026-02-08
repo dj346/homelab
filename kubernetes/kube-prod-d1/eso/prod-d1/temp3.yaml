@@ -1,12 +1,12 @@
 apiVersion: external-secrets.io/v1
 kind: ExternalSecret
 metadata:
-  name: ica2-ca
-  namespace: eso
+  name: anisonarr-bao-apps-ca-external-secret
+  namespace: anisonarr-prod-d1
 spec:
   refreshInterval: 1h
   target:
-    name: ica2-ca
+    name: anisonarr-bao-apps-ca-secret
     template:
       type: Opaque
       data:

@@ -7,15 +7,15 @@ spec:
   vault:
     server: https://openbao-application-internal.openbao:8200
     path: pki/kube-prod-d1/apps-prod-d1/ICA2/sign/apps-role-kube-prod-d1 
-    caBundleSecretRef:
-      name: openbao-server-ca
-      key: ca.crt
-    clientCertSecretRef:
-      name: openbao-client-certificate-secret
-      key: tls.crt
-    clientKeySecretRef:
-      name: openbao-client-certificate-secret
-      key: tls.key
+    # caBundleSecretRef:
+    #   name: openbao-server-ca
+    #   key: ca.crt
+    # clientCertSecretRef:
+    #   name: openbao-client-certificate-secret
+    #   key: tls.crt
+    # clientKeySecretRef:
+    #   name: openbao-client-certificate-secret
+    #   key: tls.key
     auth:
       kubernetes:
         mountPath: /v1/auth/kubernetes/kube-prod-d1

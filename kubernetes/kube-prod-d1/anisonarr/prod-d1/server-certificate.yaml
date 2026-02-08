@@ -29,5 +29,5 @@ spec:
     pkcs12:
       create: true
       passwordSecretRef:
-        name: anisonarr-pkcs12-password
+        name: anisonarr-pkcs12-key-secret
         key: password

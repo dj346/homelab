@@ -9,6 +9,12 @@ spec:
     name: eso-openbao-apps-ca-secret
     template:
       type: Opaque
+      metadata:
+        annotations:
+          reflector.v1.k8s.emberstack.com/reflection-allowed: "true"
+          reflector.v1.k8s.emberstack.com/reflection-allowed-namespaces: "^(?!(?:default|kube-node-lease|kube-public)$).*"
+          reflector.v1.k8s.emberstack.com/reflection-auto-enabled: "true"
+          reflector.v1.k8s.emberstack.com/reflection-auto-namespaces: "anisonarr-prod-d1"
       data:
         ca.crt: "{{ .certificate }}"
   dataFrom:

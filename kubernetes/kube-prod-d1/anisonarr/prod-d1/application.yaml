@@ -112,7 +112,7 @@ spec:
                   - name: SONARR__SERVER__SSLCERTPASSWORD
                     valueFrom:
                       secretKeyRef:
-                        name: anisonarr-pkcs12-password
+                        name: anisonarr-pkcs12-key-secret
                         key: password
 
                   - name: SONARR__POSTGRES__USER

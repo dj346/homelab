@@ -1,0 +1,14 @@
+apiVersion: generators.external-secrets.io/v1alpha1
+kind: ClusterGenerator
+metadata:
+  name: anisonarr-eso-pkcs12-key-cluster-generator
+  namespace: anisonarr-prod-d1
+spec:
+  kind: Password
+  generator:
+    passwordSpec:
+      length: 24
+      digits: 8
+      symbols: 0
+      noUpper: false
+      allowRepeat: true

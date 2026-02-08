@@ -8,7 +8,7 @@ spec:
     server: https://openbao-application-internal.openbao:8200
     path: pki/kube-prod-d1/cnpg-prod-d1/ICA2/sign/cnpg-role-kube-prod-d1 
     caBundleSecretRef:
-      name: openbao-server-ca
+      name: eso-openbao-apps-ca-secret
       key: ca.crt
     # clientCertSecretRef:
     #   name: openbao-client-certificate-secret

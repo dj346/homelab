@@ -98,7 +98,10 @@ spec:
                     value: "External"
 
                   - name: SONARR__AUTH__APIKEY
-                    value: "testtesttesttesttest1" # needs to be atleast 20 characters long to be accepted by sonarr.
+                    valueFrom:
+                      secretKeyRef:
+                        name: anisonarr-apikey-secret
+                        key: apiKey
 
                   - name: SONARR__SERVER__ENABLESSL
                     value: "true"

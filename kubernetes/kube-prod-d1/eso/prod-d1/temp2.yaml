@@ -16,11 +16,11 @@ spec:
           key: ca.crt
         tls:
           certSecretRef:
-            name: eso-vault-certificate-secret
+            name: eso-vault-client-certificate-secret
             namespace: eso
             key: tls.crt
           keySecretRef:
-            name: eso-vault-certificate-secret
+            name: eso-vault-client-certificate-secret
             namespace: eso
             key: tls.key
         auth:

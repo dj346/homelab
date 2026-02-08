@@ -1,10 +1,10 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: eso-vault-certificate
+  name: eso-vault-client-certificate
   namespace: eso
 spec:
-  secretName: eso-vault-certificate-secret
+  secretName: eso-vault-client-certificate-secret
   commonName: eso-vault-client-certificate
   issuerRef:
     name: vault-issuer

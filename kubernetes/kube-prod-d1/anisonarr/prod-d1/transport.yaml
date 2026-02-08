@@ -5,6 +5,6 @@ metadata:
   namespace: anisonarr-prod-d1
 spec:
   rootCAs:
-    - secret: anisonarr-bao-apps-ca-secret
+    - secret: eso-openbao-apps-ca-secret
   serverName: anisonarr-service.anisonarr-prod-d1.svc.cluster.local
   insecureSkipVerify: false

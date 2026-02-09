@@ -5,7 +5,7 @@ metadata:
   namespace: lldap
 spec:
   description: "LLDAP Cloudnative PG Cluster"
-  #imageName: ghcr.io/cloudnative-pg/postgresql:18.1@sha256:2762d1dd965e3c84004f08d5a97526cd8b5395026bc3a1d804d84ffcfa83caa5
+  #imageName: ghcr.io/cloudnative-pg/postgresql:18.1@sha256:cc78f0c280978dd93fa6f49ce6cef60015cf4b56fd0e6a47c8ca49020b875f74
   # imagePullSecret is only required if the images are located in a private registry
   # imagePullSecrets:
   #   - name: private_registry_access

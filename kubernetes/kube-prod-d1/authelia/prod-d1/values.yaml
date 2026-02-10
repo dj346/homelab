@@ -1,43 +1,47 @@
+labels:
+  app.kubernetes.io/name: authelia
+  app.kubernetes.io/instance: authelia-prod-d1
+  app.kubernetes.io/managed-by: argocd
+
 annotations: {}
-labels: {}
 
 rbac:
   enabled: false
   annotations: {}
-  labels: {}
-  serviceAccountName: 'authelia'
+  labels.app.kubernetes.io/component: rbac
+  serviceAccountName: 'authelia-service-account'
 
 service:
   type: 'ClusterIP'
   annotations: {}
-  labels: {}
+  labels.app.kubernetes.io/component: networking
   port: 80
   nodePort: 30091
   clusterIP: ~
   externalTrafficPolicy: ~
 
 pod:
-  kind: 'DaemonSet'
+  kind: 'Deployment'
+  replicas: 3
 
-  disableRestartOnChanges: false
-  annotations: {}
-  labels: {}
+  labels.app.kubernetes.io/component: program
+  annotations.reloader.stakater.com/auto: "true"
 
   command: []
   args: []
 
   initContainers: []
   
-  replicas: 1
+  disableRestartOnChanges: false
   revisionHistoryLimit: 5
-  priorityClassName: ''
+  priorityClassName: 'critical-priority'
 
-  autoscaling:
-    enabled: false
-    annotations: {}
+  # autoscaling:
+  #   enabled: false
+  #   annotations: {}
 
-    labels: {}
-    behavior: {}
+  #   labels: {}
+  #   behavior: {}
 
   strategy:
     type: 'RollingUpdate'
@@ -46,20 +50,66 @@ pod:
       maxSurge: '25%'
       maxUnavailable: '25%'
   
-    # container.securityContext: 
-    # pod.securityContext:
+  securityContext:
+    pod:
+      runAsNonRoot: true
+      runAsUser: 1000
+      runAsGroup: 1000
+
+      fsGroup: 1000
+      fsGroupChangePolicy: "OnRootMismatch"
+
+      seccompProfile.type: RuntimeDefault
+
+    container:
+      runAsNonRoot: true
+      runAsUser: 1000
+      runAsGroup: 1000
+
+      allowPrivilegeEscalation: false
+      readOnlyRootFilesystem: true
+
+      capabilities.drop:
+        - ALL
+
+      seccompProfile.type: RuntimeDefault
+
   # tolerations: []
 
-  # selectors:
-  #   nodeName: ''
-  #   nodeSelector: {}
-  #   affinity:
-  #     nodeAffinity: {}
-  #     podAffinity: {}
-  #     podAntiAffinity: {}
+    selectors:
+      affinity:
+        podAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 80
+              podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    cnpg.io/cluster: authelia-postgresql-cluster
+                topologyKey: kubernetes.io/hostname
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                      app.kubernetes.io/name: authelia
+                      app.kubernetes.io/component: program
+                      app.kubernetes.io/instance: authelia-prod-d1
+                      app.kubernetes.io/managed-by: argocd
+                topologyKey: kubernetes.io/hostname
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: "node-role.kubernetes.io/control-plane"
+                    operator: DoesNotExist
 
-  env: []
+  env:
+    - name: "TZ"
+      value: "America/Los_Angeles"
+  
   resources:
+  
   probes:
     method.httpGet:
       path: '/api/health'
@@ -87,89 +137,62 @@ pod:
       successThreshold: 1
       failureThreshold: 6
 
-  extraVolumeMounts: []
-  extraVolumes: []
+  extraVolumes:
+    - name: authelia-server-certificate-secret-volume
+      secret:
+        secretName: authelia-server-certificate-secret
+  
+  extraVolumeMounts:
+    - name: authelia-server-certificate-secret-volume
+      mountPath: /secrets/server-tls
+      readOnly: true
+      
   extraContainers: []
 
 podDisruptionBudget:
-  enabled: false
-  annotations: {}
-  labels: {}
-  minAvailable: 0
-  maxUnavailable: 0
-
-networkPolicy:
-  enabled: false
-  annotations: {}
-  labels: {}
-  policyTypes:
-    - 'Ingress'
+  enabled: true
   
-  ingress: []
-  egress: []
+  minAvailable: 0
+  maxUnavailable: 1
+  
+  annotations: {}
+  labels.app.kubernetes.io/component: program
 
 configMap:
   disabled: false
+  default_2fa_method: '' # totp, webauthn, mobile_push
+  theme: 'dark'
+  
   annotations: {}
-  labels: {}
-  key: 'configuration.yaml'
+  labels:
+    app.kubernetes.io/component: program
+  
   existingConfigMap: ''
   extraConfigs: []
-
-  filters:
-    disabled: false
+  key: 'configuration.yaml'
 
   server:
     port: 9091
 
-    path: ''
-    asset_path: ''
-
-    headers:
-      csp_template: ''
-    
-    buffers:
-      read: 4096
-      write: 4096
-    
-    timeouts:
-      read: '6 seconds'
-      write: '6 seconds'
-      idle: '30 seconds'
+    tls:
+      certificate: /secrets/server-tls/tls.crt
+      key: /secrets/server-tls/tls.key
 
     endpoints:
-      # -- Enable the developer pprof handlers.
-      enable_pprof: false
-      # -- Enable the developer expvars handlers.
-      enable_expvars: false
-
-      # automatic_authz_implementations:
-      # - 'AuthRequest'
-      # - 'ExtAuthz'
-      # - 'ForwardAuth'
-
-      # authz:
-      #   auth-request:
-      #     implementation: 'AuthRequest'
-      #     authn_strategies:
-      #     - name: 'HeaderAuthRequestProxyAuthorization'
-      #       schemes:
-      #       - 'Basic'
-      #     - name: 'CookieSession'
-      #   ext-authz:
-      #     implementation: 'ExtAuthz'
-      #     authn_strategies:
-      #     - name: 'HeaderProxyAuthorization'
-      #       schemes:
-      #       - 'Basic'
-      #     - name: 'CookieSession'
-      #   forward-auth:
-      #     implementation: 'ForwardAuth'
-      #     authn_strategies:
-      #     - name: 'HeaderProxyAuthorization'
-      #       schemes:
-      #       - 'Basic'
-      #     - name: 'CookieSession'
+      authz:
+        forward-auth:
+          implementation: "ForwardAuth"
+          authn_strategies:
+            - name: "HeaderAuthorization"
+              schemes:
+                - "Bearer"
+                - "Basic"
+              scheme_basic_cache_lifespan: 10m
+            - name: "CookieSession"
+        forward-auth/basic:
+          implementation: "ForwardAuth"
+          authn_strategies:
+            - name: "CookieSession"
 
   log:
     level: 'info'
@@ -180,28 +203,18 @@ configMap:
     metrics:
       enabled: false
       port: 9959
-      buffers:
-        read: 4096
-        write: 4096
-      timeouts:
-        read: '6 seconds'
-        write: '6 seconds'
-        idle: '30 seconds'
+
       serviceMonitor:
         enabled: false
         annotations: {}
-        labels: {}
+        labels: 
+          app.kubernetes.io/component: monitoring
 
-  default_2fa_method: ''
-  theme: 'light'
   definitions:
-    network: {}
-    # network:
-      # network_name:
-        # - '192.168.1.0/24'
-        # - '192.168.2.20'
-        # - '2001:db8::/32'
-        # - '2001:db8:1234:5678::1'
+    network:
+      INTERNAL:
+        - 10.15.21.0/24    # example
+      
 
     user_attributes: {}
     # user_attributes:
@@ -216,674 +229,134 @@ configMap:
         # expression: '"admin" in groups ? 10 : 5'
 
   identity_validation:
-    # The Reset Password Identity Validation implementation ensures that users cannot perform a reset password flow
-    # without first ensuring the user is adequately identified. The settings below therefore can affect the level of
-    # security Authelia provides to your users so they should be carefully considered.
     reset_password:
-      # -- The lifespan of the JSON Web Token after it’s initially generated after which it’s considered invalid.
       jwt_lifespan: '5 minutes'
 
-      # -- The JSON Web Token Algorithm used to sign the JWT. Must be HS256, HS384, or HS512.
-      jwt_algorithm: 'HS256'
-
-      ## The secret used with the HMAC algorithm to sign the JWT minted by Authelia.
       secret:
-        # -- Disables this secret and leaves configuring it entirely up to you.
-        disabled: false
+        secret_name: authelia-reset-jwt-hmac-key-secret
+        path: authelia-reset-jwt-hmac-key-secret
 
-        # -- The secret name. The ~ name is special as it is the secret we generate either automatically or via the
-        # secret_value option below.
-        secret_name: ~
-
-        # -- The value of a generated secret when using the ~ secret_name.
-        value: ''
-
-        # -- The path to the secret. If it has a '/' prefix it's assumed to be an absolute path within the pod. Otherwise
-        # it uses the format '{mountPath}/{secret_name}/{path}' where '{mountPath}' refers to the 'secret.mountPath'
-        # value, '{secret_name}' is the secret_name above, and '{path}' is this value.
-        path: 'identity_validation.reset_password.jwt.hmac.key'
-
-    ## The Elevated Session Identity Validation implementation ensures that users cannot perform actions which may
-    ## adjust the security characteristics of their account without first ensuring the user is adequately identified.
-    ## The settings below therefore can affect the level of security Authelia provides to your users so they should be
-    ## carefully considered.
     elevated_session:
-      # -- The lifespan of the randomly generated One Time Code after which it’s considered invalid.
-      code_lifespan: '5 minutes'
-
-      # -- The lifespan of the elevation after initially validating the One-Time Code before it expires.
-      elevation_lifespan: '10 minutes'
-
-      # -- The number of characters the random One-Time Code has. Maximum value is currently 20, but we recommend keeping
-      # it between 8 and 12. It’s strongly discouraged to reduce it below 8.
-      characters: 8
-
-      # -- Requires second factor authentication for all protected actions in addition to the elevated session provided
-      # the user has configured a second factor authentication method.
-      require_second_factor: false
-
-      # -- Skips the elevated session requirement if the user has performed second factor authentication. Can be combined
-      # with the require_second_factor option to always (and only) require second factor authentication.
+      require_second_factor: true
       skip_second_factor: false
 
   totp:
     disable: false
-
-    # -- The issuer name displayed in the Authenticator application of your choice.
-    # Defaults to 'Authelia'.
-    issuer: 'Authelia'
-
-    # -- The skew controls number of one-time passwords either side of the current one that are valid.
-    # Warning: before changing skew read the docs link below.
-    # See: https://www.authelia.com/configuration/second-factor/time-based-one-time-password/#input-validation to read the documentation.
+    issuer: 'mclacken.net'
+    
     skew: 1
-
-    # -- The size of the generated shared secrets. Default is 32 and is sufficient in most use cases, minimum is 20.
     secret_size: 32
-
-    # -- The TOTP algorithm to use.
-    # It is CRITICAL you read the documentation before changing this option:
-    # https://www.authelia.com/configuration/second-factor/time-based-one-time-password/#algorithm
-    algorithm: 'SHA1'
-
-    # -- The number of digits a user has to input. Must either be 6 or 8.
-    # Changing this option only affects newly generated TOTP configurations.
-    # It is CRITICAL you read the documentation before changing this option:
-    # https://www.authelia.com/configuration/second-factor/time-based-one-time-password/#digits
-    digits: 6
-
-    # -- The period in seconds a one-time password is valid for.
-    # Changing this option only affects newly generated TOTP configurations.
     period: 30
 
-    # -- Similar to algorithm with the same restrictions except this option allows users to pick from this list. This list
-    # will always contain the value configured in the algorithm option.
     allowed_algorithms:
-      - 'SHA1'
-
-    # -- Similar to digits with the same restrictions except this option allows users to pick from this list. This list
-    # will always contain the value configured in the digits option.
+    - sha1
+    - sha256
+    - sha512
+    
     allowed_digits:
       - 6
+      - 8
 
-    # -- Similar to period with the same restrictions except this option allows users to pick from this list. This list
-    # will always contain the value configured in the period option.
     allowed_periods:
       - 30
 
   webauthn:
-    # -- Disable Webauthn.
     disable: false
 
-    # -- Enabled Passkey Logins.
-    enable_passkey_login: false
-
-    # -- Adjust the interaction timeout for Webauthn dialogues.
-    timeout: '60 seconds'
-
-    # -- The display name the browser should show the user for when using Webauthn to login/register.
-    display_name: 'Authelia'
-
-    # -- Conveyance preference controls if we collect the attestation statement including the AAGUID from the device.
-    # Options are none, indirect, direct.
-    attestation_conveyance_preference: 'indirect'
-
-    filtering:
-      # -- A list of Authenticator Attestation GUID’s that are the only ones allowed to be registered. Useful if you have
-      # a company policy that requires certain authenticators. Mutually exclusive with prohibited_aaguids.
-      permitted_aaguids: []
-
-      # -- A list of Authenticator Attestation GUID’s that users will not be able to register. Useful if company policy
-      # prevents certain authenticators. Mutually exclusive with permitted_aaguids.
-      prohibited_aaguids: []
-
-      # -- Setting this value to true will ensure Authenticators which can export credentials will not be able to
-      # register. This will likely prevent synchronized credentials from being registered.
-      prohibit_backup_eligibility: false
-
-    selection_criteria:
-      # -- Sets the attachment preference for newly created credentials.
-      attachment: ''
-
-      # -- Sets the discoverability preference. May affect the creation of Passkeys.
-      discoverability: 'preferred'
-
-      # -- Sets the user verification preference.
-      user_verification: 'preferred'
+    enable_passkey_login: true
+    display_name: 'mclacken.net'
+    attestation_conveyance_preference: 'direct'
 
     metadata:
-      # -- Enables metadata service validation of authenticators and credentials. This requires the download of the
-      # metadata service blob which will utilize about 5MB of data in your configured storage backend.
-      enabled: false
-
-      # -- Allows adjusting the WebAuthn Metadata Cache Policy.
-      cache_policy: 'strict'
-
-      # -- Enables validation of the attestation certificate against the Certificate Authority certificate in the
-      # validated MDS3 blob. It’s recommended this value is always the default value.
+      enabled: true
+      cache_policy: relaxed
       validate_trust_anchor: true
-
-      # -- Enables validation that an entry exists for the authenticator in the MDS3 blob. It’s recommended that this
-      # option is the default value, however this may exclude some authenticators which DO NOT have FIDO compliance
-      # certification or have otherwise not registered with the MDS3. The recommendation is based on the fact that the
-      # authenticity of a particular authenticator cannot be validated without this.
       validate_entry: true
-
-      # -- Allows authenticators which have provided an empty Authenticator Attestation GUID. This may be required for
-      # certain authenticators which DO NOT have FIDO compliance certification.
-      validate_entry_permit_zero_aaguid: false
-
-      # -- Enables validation of the attestation entry statuses. There is generally never a reason to disable this as the
-      # authenticators excluded by default are likely compromised.
       validate_status: true
-
-      # -- A list of exclusively required statuses for an authenticator to pass validation.
-      validate_status_permitted: []
-
-      # -- A list of authenticator statuses which for an authenticator that are prohibited from being registered.
-      validate_status_prohibited: []
+      validate_entry_permit_zero_aaguid: true
 
   ntp:
-    # -- NTP server address.
     address: 'udp://time.cloudflare.com:123'
-
-    # -- NTP version.
     version: 4
-
-    # -- Maximum allowed time offset between the host and the NTP server.
     max_desync: '3 seconds'
 
-    # -- Disables the NTP check on startup entirely. This means Authelia will not contact a remote service at all if you
-    # set this to true, and can operate in a truly offline mode.
-    disable_startup_check: false
-
-    # -- The default of false will prevent startup only if we can contact the NTP server and the time is out of sync with
-    # the NTP server more than the configured max_desync. If you set this to true, an error will be logged but startup
-    # will continue regardless of results.
-    disable_failure: false
-
   duo_api:
-    # -- Enables Duo.
-    enabled: false
+    enabled: true
 
-    # -- The Duo API hostname. This is provided in the Duo dashboard.
-    hostname: ''
+    hostname: 'api-2e6db46d.duosecurity.com'
+    integration_key: 'DIEDSZEQ5YSV52KRX738'
 
-    # -- The non-secret Duo integration key. Similar to a client identifier. This is provided in the Duo dashboard.
-    integration_key: ''
-
-    # -- Enables Duo device self-enrollment from within the Authelia portal.
-    enable_self_enrollment: false
+    enable_self_enrollment: true
 
     secret:
-      # -- Disables this secret and leaves configuring it entirely up to you.
-      disabled: false
-
-      # -- The secret name. The ~ name is special as it is the secret we generate either automatically or via the
-      # secret_value option below.
-      secret_name: ~
-
-      # -- The value of a generated secret when using the ~ secret_name.
-      value: ''
-
-      # -- The path to the secret. If it has a '/' prefix it's assumed to be an absolute path within the pod. Otherwise
-      # it uses the format '{mountPath}/{secret_name}/{path}' where '{mountPath}' refers to the 'secret.mountPath'
-      # value, '{secret_name}' is the secret_name above, and '{path}' is this value.
-      path: 'duo.key'
+      secret_name: authelia-duo-api-token-secret
+      path: authelia-duo-api-token-secret
 
   authentication_backend:
     password_reset:
-      # -- Disable both the HTML element and the API for reset password functionality.
       disable: false
-
-      # -- External reset password url that redirects the user to an external reset portal. This disables the internal
-      # reset functionality.
       custom_url: ''
 
-    password_change:
-      # -- Disable both the HTML element and the API for change password functionality.
-      disable: false
+    password_change.disable: false
 
     # -- The amount of time to wait before we refresh data from the authentication backend. Uses duration notation.
     refresh_interval: '5 minutes'
 
     ldap:
-      # -- Enable LDAP Backend.
-      enabled: false
-
-      # -- The LDAP implementation, this affects elements like the attribute utilised for resetting a password.
-      implementation: 'activedirectory'
-
-      # -- The address for the ldap server. Format: <scheme>://<address>[:<port>].
-      # Scheme can be ldap or ldaps in the format (port optional).
-      address: ''
-
-      # -- Connection Timeout.
-      timeout: '5 seconds'
-
-      # -- Use StartTLS with the LDAP connection.
-      start_tls: false
-
-      tls:
-        # -- The server subject name to check the servers certificate against during the validation process.
-        # This option is not required if the certificate has a SAN which matches the host portion of the url option.
-        server_name: ''
-
-        # -- Skip verifying the server certificate entirely.
-        skip_verify: false
-
-        # -- Minimum TLS version for the connection.
-        minimum_version: 'TLS1.2'
-
-        # -- Maximum TLS version for the connection.
-        maximum_version: 'TLS1.3'
-
+      enabled: true
+      implementation: lldap
+      address: ldap://lldap-service.lldap.svc.cluster.local:3890
+      timeout: 5 seconds
+      base_dn: DC=mclacken,DC=net
       pooling:
-        # -- Enables the connection pooling functionality.
         enable: false
-
-        # -- The number of open connections to be available in the pool at any given time.
-        count: 5
-
-        # -- The number of attempts to obtain a free connecting that are made within the timeout period. This
-        # effectively splits the timeout into chunks.
-        retries: 2
-
-        # -- The amount of time that we wait for a connection to become free in the pool before giving up and failing
-        # with an error.
-        timeout: '10 seconds'
-
-      # -- The base dn for every LDAP query.
-      base_dn: ''
-
-      # -- An additional dn to define the scope to all users.
-      additional_users_dn: ''
-
-      # -- The users filter used in search queries to find the user profile based on input filled in login form.
-      users_filter: ''
-
-      # -- An additional dn to define the scope of groups.
-      additional_groups_dn: ''
-
-      # -- The groups filter used in search queries to find the groups of the user.
-      groups_filter: ''
-
-      # -- Follow referrals returned by the server.
-      # This is especially useful for environments where read-only servers exist. Only implemented for write operations.
-      permit_referrals: false
-
-      # -- Permits use of an unauthenticated bind. WARNING: This option is strongly discouraged. Please consider
-      # disabling unauthenticated binding to your LDAP server and utilizing a service account.
-      permit_unauthenticated_bind: false
-
-      # -- This option is strongly discouraged. If enabled it will ignore errors looking up the RootDSE for supported
-      # controls/extensions.
-      permit_feature_detection_failure: false
-
-      # -- The username of the admin user.
-      user: ''
-
+      
+      user: uid=authelia-bind-account,ou=people,dc=mclacken,dc=net
       password:
-        # -- Disables this secret and leaves configuring it entirely up to you.
-        disabled: false
+        secret_name: "authelia-lldap-bind-account-password-secret"
+        path: "authelia-lldap-bind-account-password-secret"
 
-        # -- The secret name. The ~ name is special as it is the secret we generate either automatically or via the
-        # secret_value option below.
-        secret_name: ~
-
-        # -- The value of a generated secret when using the ~ secret_name.
-        value: ''
-
-        # -- The path to the secret. If it has a '/' prefix it's assumed to be an absolute path within the pod. Otherwise
-        # it uses the format '{mountPath}/{secret_name}/{path}' where '{mountPath}' refers to the 'secret.mountPath'
-        # value, '{secret_name}' is the secret_name above, and '{path}' is this value.
-        path: 'authentication.ldap.password.txt'
-
+      additional_users_dn: OU=people
+      additional_groups_dn: OU=groups
+      users_filter: (&(|({username_attribute}={input})({mail_attribute}={input}))(objectClass=person)(memberOf=cn=authelia-user,ou=groups,dc=mclacken,dc=net))
+      groups_filter: (&(member={dn})(objectClass=groupOfNames))
       attributes:
-        # -- The attribute holding the distinguished name of the user.
-        distinguished_name: ''
+        username: uid
+        display_name: displayName
+        mail: mail
+      # NOTE: keep secrets out of configMap; see note below.
 
-        # -- The attribute holding the username of the user. This attribute is used to populate the username in the session
-        # information.
-        username: ''
-
-        # -- The attribute holding the display name of the user. This will be used to greet an authenticated user.
-        display_name: ''
-
-        # -- The attribute holding the family name of the user.
-        family_name: ''
-
-        # -- The attribute holding the given name of the user.
-        given_name: ''
-
-        # -- The attribute holding the middle name of the user.
-        middle_name: ''
-
-        # -- The attribute holding the nickname of the user.
-        nickname: ''
-
-        # -- The attribute holding the gender of the user.
-        gender: ''
-
-        # -- The attribute holding the birthdate of the user.
-        birthdate: ''
-
-        # -- The attribute holding the website of the user.
-        website: ''
-
-        # -- The attribute holding the profile of the user.
-        profile: ''
-
-        # -- The attribute holding the picture URL of the user.
-        picture: ''
-
-        # -- The attribute holding the zoneinfo of the user.
-        zoneinfo: ''
-
-        # -- The attribute holding the locale of the user.
-        locale: ''
-
-        # -- The attribute holding the phone number of the user.
-        phone_number: ''
-
-        # -- The attribute holding the phone extension of the user.
-        phone_extension: ''
-
-        # -- The attribute holding the street address of the user.
-        street_address: ''
-
-        # -- The attribute holding the locality of the user.
-        locality: ''
-
-        # -- The attribute holding the region of the user.
-        region: ''
-
-        # -- The attribute holding the postal code of the user.
-        postal_code: ''
-
-        # -- The attribute holding the country of the user.
-        country: ''
-
-        # -- The attribute holding the mail address of the user. If multiple email addresses are defined for a user, only the
-        # first one returned by the LDAP server is used.
-        mail: ''
-
-        # -- The attribute which represents the objects this user is a member of.
-        member_of: ''
-
-        # -- The attribute holding the name of the group.
-        group_name: ''
-
-        # -- The extra attributes for users.
-        extra: {}
-          # extra:
-          # extra_example:
-          # name: ''
-          # multi_valued: false
-        # value_type: 'string'
-
-    file:
-      # -- Enable File Backend (Authentication).
-      enabled: false
-
-      # -- The path to the file with the user details list.
-      path: '/config/users_database.yml'
-
-      # -- Enables reloading the database by watching it for changes.
-      watch: false
-
-      search:
-        # -- Allows users to login using their email address. If enabled two users must not have the same emails and
-        # their usernames must not be an email.
-        email: false
-
-        # -- Enabling this search option allows users to login with their username regardless of case. If enabled users
-        # must only have lowercase usernames.
-        case_insensitive: false
-
-      # -- The extra attributes to load from the directory server. These extra attributes can be used in other areas of
-      # Authelia such as OpenID Connect 1.0. It’s also recommended to check out the Attributes Reference Guide for more
-      # information.
-      extra_attributes: {}
-
-      password:
-        # -- Controls the hashing algorithm used for hashing new passwords.
-        algorithm: 'argon2'
-
-        argon2:
-          # -- Controls the variant when hashing passwords using Argon2. Recommended argon2id. Permitted values
-          # argon2id, argon2i, argon2d.
-          variant: 'argon2id'
-
-          # -- Controls the number of iterations when hashing passwords using Argon2.
-          iterations: 3
-
-          # -- Controls the amount of memory in kibibytes when hashing passwords using Argon2.
-          memory: 65536
-
-          # -- Controls the parallelism factor when hashing passwords using Argon2.
-          parallelism: 4
-
-          # -- Controls the output key length when hashing passwords using Argon2.
-          key_length: 32
-
-          # -- Controls the output salt length when hashing passwords using Argon2
-          salt_length: 16
-
-        scrypt:
-          # -- Controls the variant when hashing passwords using Scrypt. Permitted values scrypt, yescrypt.
-          variant: 'scrypt'
-
-          # -- Controls the number of iterations when hashing passwords using Scrypt.
-          iterations: 16
-
-          # -- Controls the block size when hashing passwords using Scrypt.
-          block_size: 8
-
-          # -- Controls the parallelism factor when hashing passwords using Scrypt.
-          parallelism: 1
-
-          # -- Controls the output key length when hashing passwords using Scrypt.
-          key_length: 32
-
-          # -- Controls the output salt length when hashing passwords using Scrypt.
-          salt_length: 16
-
-        pbkdf2:
-          # -- Controls the variant when hashing passwords using PBKDF2. Recommended sha512. Permitted values sha1,
-          # sha224, sha256, sha384, sha512.
-          variant: 'sha512'
-
-          # -- Controls the number of iterations when hashing passwords using PBKDF2.
-          iterations: 310000
-
-          # -- Controls the output salt length when hashing passwords using PBKDF2.
-          salt_length: 16
-
-        sha2crypt:
-          # -- Controls the variant when hashing passwords using SHA2 Crypt. Recommended sha512. Permitted values
-          # sha256, sha512.
-          variant: 'sha512'
-
-          # -- Controls the number of iterations when hashing passwords using SHA2 Crypt.
-          iterations: 50000
-
-          # -- Controls the output salt length when hashing passwords using SHA2 Crypt.
-          salt_length: 16
-
-        bcrypt:
-          # -- Controls the variant when hashing passwords using Bcrypt. Recommended standard. Permitted values
-          # standard, sha256.
-          variant: 'standard'
-
-          # -- Controls the hashing cost when hashing passwords using Bcrypt.
-          cost: 12
-
-  password_policy:
-    standard:
-      # -- Enables standard password policy.
-      enabled: false
-
-      # -- Require a minimum length for passwords.
-      min_length: 8
-
-      # -- Require a maximum length for passwords.
-      max_length: 0
-
-      # -- Require uppercase characters.
-      require_uppercase: false
-
-      # -- Require lowercase characters.
-      require_lowercase: false
-
-      # -- Require numeric characters.
-      require_number: false
-
-      # -- Require special characters.
-      require_special: false
-
-    ## zxcvbn is a well known and used password strength algorithm. It does not have tunable settings.
-    zxcvbn:
-      # -- Enables zxcvbn password policy.
-      enabled: false
-
-      # -- Configures the minimum score allowed.
-      min_score: 0
+  password_policy.zxcvbn:
+    enabled: true
+    min_score: 4
 
   access_control:
-    ## Configure the ACL as a Secret instead of part of the ConfigMap.
-    secret:
-      # -- Enables the ACL section being generated as a secret.
-      enabled: false
-
-      # -- The key in the secret which contains the file to mount.
-      key: 'configuration.acl.yaml'
-
-      # -- An existingSecret name, if configured this will force the secret to be mounted using the key above.
-      existingSecret: ''
-
-    # -- Default policy can either be 'bypass', 'one_factor', 'two_factor' or 'deny'. It is the policy applied to any
-    # resource if there is no policy to be applied to the user.
     default_policy: 'deny'
 
-    # -- Access Control Rule list.
-    rules: []
-    # rules:
-    # - domain_regex: '^.*\.example.com$'
-    #   policy: 'bypass'
-    # - domain: 'public.example.com'
-    #   policy: 'bypass'
-    # - domain: '*.example.com'
-    #   policy: 'bypass'
-    #   methods:
-    #   - 'OPTIONS'
-    # - domain: 'secure.example.com'
-    #   policy: 'one_factor'
-    #   networks:
-    #   - 'private'
-    #   - 'vpn'
-    #   - '192.168.1.0/24'
-    #   - '10.0.0.1'
-    # - domain:
-    #   - 'secure.example.com'
-    #   - 'private.example.com'
-    #   policy: 'two_factor'
-    # - domain: 'singlefactor.example.com'
-    #   policy: 'one_factor'
-    # - domain: 'mx2.mail.example.com'
-    #   subject: 'group:admins'
-    #   policy: 'deny'
-    # - domain: '*.example.com'
-    #   subject:
-    #   - 'group:admins'
-    #   - 'group:moderators'
-    #   policy: 'two_factor'
-    # - domain: 'dev.example.com'
-    #   resources:
-    #   - '^/groups/dev/.*$'
-    #   subject: 'group:dev'
-    #   policy: 'two_factor'
-    # - domain: 'dev.example.com'
-    #   resources:
-    #   - '^/users/john/.*$'
-    #   subject:
-    #   - ['group:dev', 'user:john']
-    #   - 'group:admins'
-    #   policy: 'two_factor'
-    # - domain: '{user}.example.com'
-    #   policy: 'bypass'
-
+    rules:
+      - domain:
+          - anisonarr.kube-prod-d1.mclacken.net
+        policy:
+          - one_factor
+        subjects:
+          - group:anisonarr-admin
+    
   session:
-    # -- The name of the session cookie. (default: authelia_session).
     name: 'authelia_session'
 
-    # -- Sets the Cookie SameSite value. Possible options are none, lax, or strict.
-    # Please read https://www.authelia.com/configuration/session/introduction/#same_site
     same_site: 'lax'
-
-    # -- The time before the cookie expires and session is reset.
     expiration: '1 hour'
-
-    # -- The inactivity time before the session is reset.
     inactivity: '5 minutes'
-
-    # -- The remember me duration.
     remember_me: '1 month'
 
     encryption_key:
-      # -- Disables this secret and leaves configuring it entirely up to you.
-      disabled: false
+      secret_name: authelia-cookie-session-encryption-key-secret
+      path: authelia-cookie-session-encryption-key-secret
 
-      # -- The secret name. The ~ name is special as it is the secret we generate either automatically or via the
-      # secret_value option below.
-      secret_name: ~
-
-      # -- The value of a generated secret when using the ~ secret_name.
-      value: ''
-
-      # -- The path to the secret. If it has a '/' prefix it's assumed to be an absolute path within the pod. Otherwise
-      # it uses the format '{mountPath}/{secret_name}/{path}' where '{mountPath}' refers to the 'secret.mountPath'
-      # value, '{secret_name}' is the secret_name above, and '{path}' is this value.
-      path: 'session.encryption.key'
-
-    # -- Session Cookies list.
-    cookies: []
-    # cookies:
-      # -
-        ## The subdomain to prefix the domain with. For example using `domain` value `example.com` and `subdomain`
-        ## `auth` should yield the URL `https://auth.example.com`. This option does not affect the cookie domain.
-        # subdomain: 'auth'
-
-        ## The domain for cookie and to build the Authelia URL.
-        # domain: ''
-
-        ## The path to suffix the domain with. For example using `domain` value `example.com` and `subdomain` value
-        ## `auth` and `path` value `auth` should yield the URL `https://auth.example.com/auth`.
-        ## This option does not affect the cookie domain.
-        # path: ''
-
-        ## Default Redirection URL for this domain when there is no forwarding application.
-        # default_redirection_url: ''
-
-        ## Cookie Name override for this individual cookie. Otherwise, uses the default value above where
-        ## more descriptive information about this value exists.
-        # name: ''
-
-        ## Cookie Same Site value override for this individual cookie. Otherwise, uses the default value above where
-        ## more descriptive information about this value exists.
-        # same_site: ''
-
-        ## Cookie Expiration value override for this individual cookie. Otherwise, uses the default value above where
-        ## more descriptive information about this value exists.
-        # expiration: ''
-
-        ## Cookie Inactivity value override for this individual cookie. Otherwise, uses the default value above where
-        ## more descriptive information about this value exists.
-        # inactivity: ''
-
-        ## Cookie Remember Me value override for this individual cookie. Otherwise, uses the default value above where
-        ## more descriptive information about this value exists.
-        # inactivity: ''
+    cookies:
+      - domain: "mclacken.net"
+        subdomain: "authelia.kube-prod-d1"
+        name: "mclacken_authelia_session"
 
     redis:
       # -- Enable the use of redis.
@@ -1532,38 +1005,37 @@ configMap:
           # pushed_authorization_request_endpoint_auth_signing_alg: 'RS256'
 
 secret:
-  # -- Disable the Secret manifest functionality.
-  disabled: false
+  additionalSecrets:
+    authelia-reset-jwt-hmac-key-secret:
+      items:
+        - key: key
+          path: authelia-reset-jwt-hmac-key-secret
+    authelia-duo-api-token-secret:
+      items:
+        - key: token
+          path: authelia-duo-api-token-secret
+    authelia-lldap-bind-account-password-secret:
+      items:
+        - key: password
+          path: authelia-lldap-bind-account-password-secret
+    authelia-cookie-session-encryption-key-secret:
+      items:
+        - key: key
+          path: authelia-cookie-session-encryption-key-secret
 
-  # -- Name of an existing Secret manifest to mount instead of generating one.
-  existingSecret: ''
+    authelia-redis-password-secret:
+      items:
+        - key: password
+          path: authelia-redis-password-secret
+    authelia-postgresql-credentials-secret:
+      items:
+        - key: password
+          path: authelia-postgresql-credentials-secret
+    authelia-smtp-password-secret:
+      items:
+        - key: password
+          path: authelia-smtp-password-secret
 
-  # -- Extra annotations for the Secret manifest.
-  annotations: {}
-
-  # -- Extra labels for the Secret manifest.
-  labels: {}
-
-  # -- Pod path to mount the values of the Secret manifest.
-  mountPath: '/secrets'
-
-  ## additionalSecrets contains a list of additional secrets to mount.
-  ## They will all be mounted in the format of '/{mountPath}/{key}' where the '{mountPath}' is the value above and
-  ## '{key}' is the key from the dictionary below (in our example we named it 'example'). If the items are specified
-  ## then those options will be rendered in the volumes spec. See 'example-without-items' for an example that doesn't
-  ## specify this.
-  ##
-
-  # -- Additional secrets to mount to the Pod.
-  additionalSecrets: {}
-  # additionalSecrets:
-  #   example:
-  #     ## Defines the path within the container, i.e. /secrets/<path>
-  #     path: ''
-  #     items:
-  #       - key: 'key-example'
-  #         path: 'path-example'
-  #   example-without-items: {}
 
 certificates:
   # -- Name of an existing Secret manifest to mount which contains trusted certificates.

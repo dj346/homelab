@@ -1,0 +1,14 @@
+apiVersion: generators.external-secrets.io/v1alpha1
+kind: Generator
+metadata:
+  name: authelia-eso-cookie-session-encryption-key-generator
+  namespace: authelia-prod-d1
+spec:
+  kind: Password
+  generator:
+    passwordSpec:
+      length: 64
+      digits: 0
+      symbols: 0
+      noUpper: false
+      allowRepeat: true

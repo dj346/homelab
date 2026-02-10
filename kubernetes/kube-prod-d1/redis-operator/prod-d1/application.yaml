@@ -1,0 +1,53 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: redis-operator-application
+  namespace: argocd
+  labels:
+    app.kubernetes.io/name: redis-operator
+    app.kubernetes.io/component: orchestration
+    app.kubernetes.io/instance: redis-operator-prod-d1
+    app.kubernetes.io/managed-by: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+spec:
+  project: default
+  revisionHistoryLimit: 5
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: redis-operator-prod-d1
+
+  sources:
+    - repoURL: https://github.com/dj346/homelab.git
+      targetRevision: HEAD
+      path: kubernetes/kube-prod-d1/redis-operator/prod-d1
+      directory:
+        exclude: application.yaml
+    - repoURL: https://ot-container-kit.github.io/helm-charts
+      chart: redis-operator
+      targetRevision: 0.23.0
+      # helm:
+      #   valuesObject:
+  syncPolicy:
+    syncOptions:
+      - Validate=true
+      - PrunePropagationPolicy=foreground
+      - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true
+    retry:
+      limit: 5
+      backoff:
+        duration: 10s
+        factor: 2
+        maxDuration: 5m
+
+helm install <redis-operator> ot-helm/redis-operator 
+--version=0.15.5 
+--appVersion=0.15.1 
+--set certificate.secretName=<YourCertSecretName> 
+--set certmanager.enabled=true 
+--set redisOperator.webhook=true 
+--namespace <redis-operator> 
+--create-namespace

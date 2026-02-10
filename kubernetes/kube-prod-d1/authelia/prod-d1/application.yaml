@@ -50,24 +50,7 @@ spec:
         valuesObject:
           certificates:
             existingSecret: authelia-postgresql-client-certificate-secret
-          secret:
-            additionalSecrets:
-              authelia-redis-password-secret:
-                items:
-                  - key: password
-                    path: authelia-redis-password-secret
-              authelia-postgresql-credentials-secret:
-                items:
-                  - key: password
-                    path: authelia-postgresql-credentials-secret
-              authlia-lldap-admin-service-password-secret:
-                items:
-                  - key: password
-                    path: authlia-lldap-admin-service-password-secret
-              authelia-smtp-password-secret:
-                items:
-                  - key: password
-                    path: authelia-smtp-password-secret
+
 
           # Authelia configuration belongs under configMap (NOT secret, and NOT root).
           configMap:
@@ -120,6 +103,7 @@ spec:
                 pooling:
                   enable: false
                 
+                # https://chatgpt.com/c/6989c073-8d78-832c-b74c-e460953afef2
                 user: uid=authelia-admin-service,ou=people,dc=mclacken,dc=net
                 password:
                   secret_name: "authlia-lldap-admin-service-password-secret"

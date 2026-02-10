@@ -2,7 +2,7 @@ apiVersion: redis.redis.opstreelabs.in/v1beta2
 kind: RedisSentinel
 metadata:
   name: redis-sentinel
-  namespace: ot-operators
+  namespace: authelia-prod-d1
 spec:
   clusterSize: 3
 

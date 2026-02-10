@@ -28,6 +28,9 @@ spec:
       targetRevision: 0.23.0
       helm:
         valuesObject:
+          redisOperator:
+            webhook: true
+
           certmanager:
             enabled: true
 

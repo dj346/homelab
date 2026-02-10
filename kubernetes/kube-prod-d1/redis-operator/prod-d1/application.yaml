@@ -40,6 +40,7 @@ spec:
             name: vault-redis-kube-prod-d1-issuer
   syncPolicy:
     syncOptions:
+      - ServerSideApply=true
       - Validate=true
       - PrunePropagationPolicy=foreground
       - CreateNamespace=true

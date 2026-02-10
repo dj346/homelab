@@ -1,0 +1,26 @@
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: vault-redis-kube-prod-d1-issuer
+  namespace: cert-manager
+spec:
+  vault:
+    server: https://openbao-application-internal.openbao:8200
+    path: pki/kube-prod-d1/redis-prod-d1/ICA2/sign/redis-role-kube-prod-d1 
+    caBundleSecretRef:
+      name: eso-openbao-apps-ca-secret
+      key: ca.crt
+    clientCertSecretRef:
+      name: openbao-client-certificate-secret
+      key: tls.crt
+    clientKeySecretRef:
+      name: openbao-client-certificate-secret
+      key: tls.key
+    auth:
+      kubernetes:
+        mountPath: /v1/auth/kubernetes/kube-prod-d1
+        role: pki-role-apps-kube-prod-d1
+        serviceAccountRef:
+          name: certmanager-vault-pki-apps-service-account 
+          audiences:
+          - certmanager-vault-auth 

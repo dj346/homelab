@@ -7,7 +7,7 @@ spec:
   clusterSize: 3
 
   kubernetesConfig:
-    image: quay.io/opstree/redis:latest
+    image: quay.io/opstree/redis:latest@sha256:539924b2c1446dcdea2f043af2c50bed7516623254e4984a6d926df42eb359b2
     imagePullPolicy: IfNotPresent
 
   storage:

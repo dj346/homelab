@@ -365,7 +365,8 @@ bao write pki/kube-prod-d1/redis-prod-d1/ICA2/roles/redis-role-kube-prod-d1 \
     ou="McLacken net" \
     country="US" \
     province="California" \
-    locality="San Francisco"
+    locality="San Francisco" \
+    require_cn="false"
 
 bao auth enable -path=kubernetes/kube-prod-d1 kubernetes
 

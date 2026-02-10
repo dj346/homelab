@@ -28,11 +28,11 @@ spec:
       targetRevision: 0.23.0
       helm:
         valuesObject:
-          redisOperator:
-            webhook: true
+          redisOperator.webhook: true
 
-          certmanager:
-            enabled: true
+          certmanager.enabled: true
+
+          featureGates.GenerateConfigInInitContainer: true
 
           issuer:
             create: false

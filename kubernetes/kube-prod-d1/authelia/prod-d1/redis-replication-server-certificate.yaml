@@ -1,0 +1,13 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: authelia-redis-replication-server-certificate
+  namespace: authelia-prod-d1
+spec:
+  commonName: authelia-redis-replication-server-certificate
+  secretName: authelia-redis-replication-server-certificate-secret
+  issuerRef:
+    name: redis-operator-issuer
+    kind: ClusterIssuer
+  dnsNames:
+    - 'redis.mclacken.net'

@@ -10,7 +10,8 @@ spec:
   # Pod placement / scheduling
   # nodeSelector: {}
 
-  priorityClassName: system-cluster-critical
+  priorityClassName: critical-priority
+  
   affinity:
     podAffinity:
       preferredDuringSchedulingIgnoredDuringExecution:

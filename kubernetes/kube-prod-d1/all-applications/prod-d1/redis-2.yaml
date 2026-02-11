@@ -9,10 +9,20 @@ spec:
   redisSentinelConfig:
     redisReplicationName: redis-replication
 
+  podSecurityContext:
+    runAsUser: 1000
+    runAsGroup: 1000
+    fsGroup: 1000
+    fsGroupChangePolicy: "OnRootMismatch"
+
+  securityContext:
+    runAsNonRoot: true
+    allowPrivilegeEscalation: false
+
   kubernetesConfig:
     image: quay.io/opstree/redis-sentinel:latest@sha256:5d55bcd922130df2a7739d4ea9a05c4ca75e301e31554952ea8d60329da110f4
     imagePullPolicy: IfNotPresent
-    
+
 # # # apiVersion: redis.redis.opstreelabs.in/v1beta2
 # # # kind: RedisSentinel
 # # # metadata:

@@ -160,13 +160,17 @@ spec:
           # # #     # -- If value > 0, it will override the default value in the operator
           # # #     kubeClientQPS: 0.0
 
-          service.namespace: redis-operator-prod-d1
+          service:
+            namespace: redis-operator-prod-d1
 
-          redisOperator.webhook: true
+          redisOperator:
+            webhook: true
 
-          certmanager.enabled: true
+          certmanager:
+            enabled: true
 
-          featureGates.GenerateConfigInInitContainer: true
+          featureGates:
+            GenerateConfigInInitContainer: true
 
           issuer:
             create: false

@@ -357,7 +357,7 @@ configMap:
       - domain: "mclacken.net"
         subdomain: "authelia.kube-prod-d1"
         name: "mclacken_authelia_session"
-
+  
     redis:
       # -- Enable the use of redis.
       enabled: false

@@ -87,7 +87,7 @@ spec:
 
   # KubernetesConfig (shared config)
   kubernetesConfig:
-    image: quay.io/opstree/redis:v7.0.12
+    image: quay.io/opstree/redis:v7.0.12@sha256:22061f566331bbe3dc7c42cfe79fbf5e1ed318e5ee63648ec6ebd79f0ebe4fbe
     imagePullPolicy: IfNotPresent
     
     imagePullSecrets: {}

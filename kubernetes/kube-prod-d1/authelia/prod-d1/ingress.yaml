@@ -4,6 +4,11 @@ kind: IngressRoute
 metadata:
   name: authelia-ingressroute
   namespace: authelia-prod-d1
+  labels:
+    app.kubernetes.io/name: authelia
+    app.kubernetes.io/component: networking
+    app.kubernetes.io/instance: authelia-prod-d1
+    app.kubernetes.io/managed-by: argocd
 spec:
   entryPoints:
     - websecure

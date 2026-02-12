@@ -3,6 +3,11 @@ kind: Certificate
 metadata:
   name: authelia-redis-replication-server-certificate
   namespace: authelia-prod-d1
+  labels:
+    app.kubernetes.io/name: authelia
+    app.kubernetes.io/component: database-redis
+    app.kubernetes.io/instance: authelia-prod-d1
+    app.kubernetes.io/managed-by: argocd
 spec:
   commonName: authelia-redis-replication-server-certificate
   secretName: authelia-redis-replication-server-certificate-secret

@@ -3,6 +3,11 @@ kind: RedisReplication
 metadata:
   name: authelia-redis-replication
   namespace: authelia-prod-d1
+  labels:
+    app.kubernetes.io/name: authelia
+    app.kubernetes.io/component: database-redis
+    app.kubernetes.io/instance: authelia-prod-d1
+    app.kubernetes.io/managed-by: argocd
 spec:
   # Core
   clusterSize: 3
@@ -33,9 +38,8 @@ spec:
                 app.kubernetes.io/instance: authelia-prod-d1
                 app.kubernetes.io/component: database-redis
 
-
-  tolerations: {}
-  topologySpreadConstraints: {}
+  tolerations: []
+  topologySpreadConstraints: []
 
   # Security
   podSecurityContext:
@@ -90,7 +94,7 @@ spec:
     image: quay.io/opstree/redis:v7.0.12@sha256:22061f566331bbe3dc7c42cfe79fbf5e1ed318e5ee63648ec6ebd79f0ebe4fbe
     imagePullPolicy: IfNotPresent
     
-    imagePullSecrets: {}
+    imagePullSecrets: []
 
     updateStrategy:
       type: RollingUpdate
@@ -114,7 +118,7 @@ spec:
         type: ClusterIP
         additionalAnnotations: {}
 
-    ignoreAnnotations: {}
+    ignoreAnnotations: []
 
     minReadySeconds: 10
 

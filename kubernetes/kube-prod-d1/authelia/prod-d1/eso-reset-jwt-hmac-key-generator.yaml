@@ -3,6 +3,11 @@ kind: Generator
 metadata:
   name: authelia-eso-reset-jwt-hmac-key-generator
   namespace: authelia-prod-d1
+  labels:
+    app.kubernetes.io/name: authelia
+    app.kubernetes.io/component: program-secret
+    app.kubernetes.io/instance: authelia-prod-d1
+    app.kubernetes.io/managed-by: argocd
 spec:
   kind: Password
   generator:

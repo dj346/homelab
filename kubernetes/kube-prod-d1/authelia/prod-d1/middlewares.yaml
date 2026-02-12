@@ -4,6 +4,11 @@ kind: Middleware
 metadata:
   name: authelia-forwardauth
   namespace: authelia-prod-d1
+  labels:
+    app.kubernetes.io/name: authelia
+    app.kubernetes.io/component: networking
+    app.kubernetes.io/instance: authelia-prod-d1
+    app.kubernetes.io/managed-by: argocd
 spec:
   forwardAuth:
     address: http://authelia-application.authelia-prod-d1.svc.cluster.local/api/authz/forward-auth
@@ -30,6 +35,11 @@ kind: Middleware
 metadata:
   name: authelia-forwardauth-basic
   namespace: authelia-prod-d1
+  labels:
+    app.kubernetes.io/name: authelia
+    app.kubernetes.io/component: networking
+    app.kubernetes.io/instance: authelia-prod-d1
+    app.kubernetes.io/managed-by: argocd
 spec:
   forwardAuth:
     address: http://authelia-application.authelia-prod-d1.svc.cluster.local/api/authz/forward-auth/basic

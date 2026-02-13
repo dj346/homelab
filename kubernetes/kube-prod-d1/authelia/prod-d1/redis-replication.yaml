@@ -101,9 +101,9 @@ spec:
     
     resources: {}
     
-    # redisSecret:
-    #   name: redis-auth
-    #   key: password
+    redisSecret:
+      name: authelia-redis-auth-secret
+      key: password
 
     persistentVolumeClaimRetentionPolicy:
       whenDeleted: Retain

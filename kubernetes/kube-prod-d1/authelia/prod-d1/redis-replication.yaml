@@ -67,7 +67,7 @@ spec:
 
   # Lifecycle
   terminationGracePeriodSeconds: 30
-  hostPort: 6379
+  hostPort: 0
 
   # Probes
   readinessProbe:
@@ -101,9 +101,9 @@ spec:
     
     resources: {}
     
-    redisSecret:
-      name: redis-auth
-      key: password
+    # redisSecret:
+    #   name: redis-auth
+    #   key: password
 
     persistentVolumeClaimRetentionPolicy:
       whenDeleted: Retain
@@ -124,6 +124,13 @@ spec:
 
   # Redis configuration
   redisConfig: {}
+    # maxMemoryPercentOfLimit: 80
+    # dynamicConfig:
+    #   - "timeout 300"
+    #   - "tcp-keepalive 60"
+    # additionalRedisConfig: |
+    #   # extra redis.conf lines
+    #   maxclients 20000
 
   # Storage
   storage:

@@ -14,7 +14,7 @@ spec:
   # Scheduling
   nodeSelector: {}
   priorityClassName: critical-priority
-  
+
   affinity:
     podAffinity:
       preferredDuringSchedulingIgnoredDuringExecution:
@@ -41,11 +41,27 @@ spec:
 
   # Security
   podSecurityContext:
+    runAsNonRoot: true
     runAsUser: 1000
+    runAsGroup: 1000
+
     fsGroup: 1000
+    fsGroupChangePolicy: "OnRootMismatch"
+
+    seccompProfile.type: RuntimeDefault
+
   securityContext:
     runAsNonRoot: true
+    runAsUser: 1000
+    runAsGroup: 1000
+
     allowPrivilegeEscalation: false
+    readOnlyRootFilesystem: true
+
+    capabilities.drop:
+      - ALL
+
+    seccompProfile.type: RuntimeDefault
 
   # Lifecycle / networking
   terminationGracePeriodSeconds: 30
@@ -53,42 +69,40 @@ spec:
 
   # Probes (example-shaped)
   readinessProbe:
-    tcpSocket:
-      port: 26379
+    exec:
+      command: ["sh", "-c", "redis-cli -p 26379 ping | grep -q PONG"]
     initialDelaySeconds: 5
     periodSeconds: 10
+    timeoutSeconds: 2
+    failureThreshold: 3
+
   livenessProbe:
-    tcpSocket:
-      port: 26379
+    exec:
+      command: ["sh", "-c", "redis-cli -p 26379 ping | grep -q PONG"]
     initialDelaySeconds: 15
     periodSeconds: 20
+    timeoutSeconds: 2
+    failureThreshold: 3
+
 
   # Env (example-shaped)
-  env:
-    - name: SENTINEL_DEBUG
-      value: "false"
+  env: []
 
   # KubernetesConfig
   kubernetesConfig:
     image: quay.io/opstree/redis-sentinel:v7.0.12@sha256:cb2b039352fc6d311fd4c6f2af5f9b0e022b2ac65ea90423f0d3cfabffc78b23
     imagePullPolicy: IfNotPresent
-    resources:
-      requests:
-        cpu: "50m"
-        memory: "64Mi"
-      limits:
-        cpu: "200m"
-        memory: "128Mi"
 
-    redisSecret:
-      name: redis-auth
-      key: password
-
-    imagePullSecrets:
-      - name: regcred
+    imagePullSecrets: []
 
     updateStrategy:
       type: RollingUpdate
+
+    resources: {}
+
+    # redisSecret:
+    #   name: redis-auth
+    #   key: password
 
     persistentVolumeClaimRetentionPolicy:
       whenDeleted: Retain
@@ -96,27 +110,37 @@ spec:
 
     service:
       serviceType: ClusterIP
-      annotations:
-        sentinel.service/anno: "true"
-      includeBusPort: false
+      annotations: {}
+
       headless:
         enabled: true
         type: ClusterIP
-        additionalAnnotations:
-          sentinel.headless/anno: "true"
-        includeBusPort: false
-      additional:
-        enabled: true
-        type: ClusterIP
-        additionalAnnotations:
-          sentinel.additional/anno: "true"
-        includeBusPort: false
+        additionalAnnotations: {}
 
-    ignoreAnnotations:
-      - "helm.sh/hook"
+    ignoreAnnotations: []
 
     minReadySeconds: 10
 
+  # Sentinel config (the object specific to this CRD)
+  redisSentinelConfig: 
+    redisPort: "6379"
+    quorum: "2"
+    masterGroupName: "authelia-master"
+    redisReplicationName: "authelia-redis-replication"
+    # STOPPED HERE WHEN I STOPPED _\--------------------------- REDIS REPLICATION WAS "DONE"
+    redisReplicationPassword:
+      secretKeyRef:
+        name: redis-auth
+        key: password
+    # additionalSentinelConfig: |
+    #   # extra sentinel.conf lines
+    #   sentinel deny-scripts-reconfig yes
+    # parallelSyncs: "1"
+    # failoverTimeout: "10000"
+    # downAfterMilliseconds: "5000"
+    # resolveHostnames: "no"
+    # announceHostnames: "no"
+  
   # Optional exporter
   redisExporter:
     enabled: true
@@ -137,24 +161,6 @@ spec:
       runAsNonRoot: true
       allowPrivilegeEscalation: false
 
-  # Sentinel config (the object specific to this CRD)
-  redisSentinelConfig:
-    additionalSentinelConfig: |
-      # extra sentinel.conf lines
-      sentinel deny-scripts-reconfig yes
-    quorum: "2"
-    parallelSyncs: "1"
-    failoverTimeout: "10000"
-    downAfterMilliseconds: "5000"
-    resolveHostnames: "no"
-    announceHostnames: "no"
-    redisPort: "6379"
-    masterGroupName: "myMaster"
-    redisReplicationName: "redis-replication-all-options"
-    redisReplicationPassword:
-      secretKeyRef:
-        name: redis-auth
-        key: password
 
   # TLS
   TLS:

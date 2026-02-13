@@ -162,17 +162,18 @@ spec:
     minAvailable: 1
     maxUnavailable: 0
 
-  # ACL
-  acl:
-    secret:
-      secretName: authelia-redis-acl-secret
-      optional: false
+  # ACL # Wasnt fully baked when I attempted to use ACL. For example Sentinel had no support for 
+  # ACL and you still needed to create a root "user" for the replication pods. 2/12/26
+  # acl: 
+  #   secret:
+  #     secretName: authelia-redis-acl-secret
+  #     optional: false
 
   # Init container
   # initContainer: {}
 
   # Sidecars
-  # sidecars: []
+  sidecars: []
 
   # # Service account
   # serviceAccountName: redis-sa

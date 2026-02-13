@@ -127,7 +127,6 @@ spec:
     quorum: "2"
     masterGroupName: "authelia-master"
     redisReplicationName: "authelia-redis-replication"
-    # STOPPED HERE WHEN I STOPPED _\--------------------------- REDIS REPLICATION WAS "DONE"
     redisReplicationPassword:
       secretKeyRef:
         name: redis-auth

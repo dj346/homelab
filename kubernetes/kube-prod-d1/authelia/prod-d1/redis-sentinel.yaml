@@ -90,7 +90,7 @@ spec:
 
   # KubernetesConfig
   kubernetesConfig:
-    image: quay.io/opstree/redis-sentinel:v7.0.12@sha256:cb2b039352fc6d311fd4c6f2af5f9b0e022b2ac65ea90423f0d3cfabffc78b23
+    image: quay.io/opstree/redis-sentinel:v8.4.0@sha256:5d55bcd922130df2a7739d4ea9a05c4ca75e301e31554952ea8d60329da110f4
     imagePullPolicy: IfNotPresent
 
     imagePullSecrets: []

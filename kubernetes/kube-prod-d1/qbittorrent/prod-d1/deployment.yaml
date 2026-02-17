@@ -51,7 +51,7 @@ spec:
       # https://github.com/qdm12/gluetun
       # https://github.com/qdm12/gluetun-wiki/pull/7
       - name: gluetun # init sidecar for VPN connection
-        image: "ghcr.io/qdm12/gluetun:latest@sha256:9a6b686e28702bc540919d0bf9e93d91936c278dfa4ca66cab6c8e5c568b9807" # <- you probably want this to be a set version
+        image: "ghcr.io/qdm12/gluetun:latest@sha256:03c4914d0634df6d5dcf96ee21b6ece0c88ffffdb1d7c1121537d8ad053965f2" # <- you probably want this to be a set version
         restartPolicy: Always # makes this init into a sidecar container k8s 1.29
         imagePullPolicy: Always
         env:

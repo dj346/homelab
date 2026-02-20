@@ -20,7 +20,7 @@ spec:
   sources:
     - repoURL: https://charts.external-secrets.io
       chart: external-secrets
-      targetRevision: 1.3.2
+      targetRevision: 2.0.1
       # helm:
       #   valuesObject:
     - repoURL: 'https://github.com/dj346/homelab.git' # repoURL: 'ssh://git@gitea-ssh.gitea.svc.cluster.local:2222/dj346/homelab.git'

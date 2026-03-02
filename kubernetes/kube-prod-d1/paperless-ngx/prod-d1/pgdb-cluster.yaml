@@ -8,7 +8,7 @@ metadata:
     app.kubernetes.io/component: pgdb
 spec:
   description: "paperless Cloudnative PG Cluster"
-  #imageName: ghcr.io/cloudnative-pg/postgresql:18.3@sha256:b3c3c9643000deec9663802143b04275201924cd82bdc2a932db78ed6110b0f8
+  #imageName: ghcr.io/cloudnative-pg/postgresql:18.3@sha256:ad00a5340d15a1e2b76443349248010151726cf561ff21b6fc12d315a50a02d7
   # imagePullSecret is only required if the images are located in a private registry
   # imagePullSecrets:
   #   - name: private_registry_access

@@ -359,108 +359,40 @@ configMap:
         name: "mclacken_authelia_session"
   
     redis:
-      # -- Enable the use of redis.
       enabled: false
-
-      # -- Deploy the redis bitnami chart.
-      deploy: false
-
-      # -- The redis host or unix socket path. If utilising an IPv6 literal address it must be enclosed by square
-      # brackets and quoted.
-      host: 'redis.databases.svc.cluster.local'
-
-      # -- The port redis is listening on.
+      host: 'redis-sentinel-sentinel.authelia-prod-d1.svc.cluster.local'
       port: 6379
-
-      # -- Optional username to be used with authentication.
+      
       username: ''
-
       password:
-        # -- Disables this secret and leaves configuring it entirely up to you.
-        disabled: false
-
-        # -- (string) The secret name. The ~ name is special as it is the secret we generate either automatically or via the
-        # secret_value option below.
         secret_name: ~
-
-        # -- The value of a generated secret when using the ~ secret_name.
-        value: ''
-
-        # -- The path to the secret. If it has a '/' prefix it's assumed to be an absolute path within the pod. Otherwise
-        # it uses the format '{mountPath}/{secret_name}/{path}' where '{mountPath}' refers to the 'secret.mountPath'
-        # value, '{secret_name}' is the secret_name above, and '{path}' is this value.
         path: 'session.redis.password.txt'
 
-      # -- This is the Redis DB Index https://redis.io/commands/select (sometimes referred to as database number, DB, etc).
       database_index: 0
-
-      # -- The maximum number of concurrent active connections to Redis.
       maximum_active_connections: 8
-
-      # -- The target number of idle connections to have open ready for work. Useful when opening connections is slow.
       minimum_idle_connections: 0
 
-      ## The Redis TLS configuration. If defined will require a TLS connection to the Redis instance(s).
       tls:
-        # -- Enables rendering this TLS config.
-        enabled: false
-
-        # -- The server subject name to check the servers certificate against during the validation process.
-        # This option is not required if the certificate has a SAN which matches the host option.
+        enabled: true
         server_name: ''
-
-        # -- Skip verifying the server certificate entirely.
         skip_verify: false
 
-        # -- Minimum TLS version for the connection.
-        minimum_version: 'TLS1.2'
-
-        # -- Maximum TLS version for the connection.
-        maximum_version: 'TLS1.3'
-
-      ## The Redis HA configuration options.
-      ## This provides specific options to Redis Sentinel, sentinel_name must be defined (Master Name).
       high_availability:
-        # -- Enable the use of redis sentinel.
         enabled: false
 
-        # -- Sentinel Name / Master Name
-        sentinel_name: 'mysentinel'
+        sentinel_name: 'authelia-master'
 
-        # -- The Redis Sentinel-specific username. If supplied, authentication will be done via Redis 6+ ACL-based
-        # authentication. If left blank, authentication to sentinels will be done via `requirepass`.
-        username: ''
+        # username: ''
 
         password:
-          # -- Disables this secret and leaves configuring it entirely up to you.
-          disabled: false
-
-          # -- The secret name. The ~ name is special as it is the secret we generate either automatically or via the
-          # secret_value option below.
           secret_name: ~
-
-          # -- The value of a generated secret when using the ~ secret_name.
-          value: ''
-
-          # -- The path to the secret. If it has a '/' prefix it's assumed to be an absolute path within the pod. Otherwise
-          # it uses the format '{mountPath}/{secret_name}/{path}' where '{mountPath}' refers to the 'secret.mountPath'
-          # value, '{secret_name}' is the secret_name above, and '{path}' is this value.
           path: 'session.redis.sentinel.password.txt'
 
-        # -- The additional nodes to pre-seed the redis provider with (for sentinel).
-        # If the host in the above section is defined, it will be combined with this list to connect to sentinel.
-        # For high availability to be used you must have either defined; the host above or at least one node below.
-        nodes: []
-        # nodes:
-        #   - host: 'sentinel-0.databases.svc.cluster.local'
-        #     port: 26379
-        #   - host: 'sentinel-1.databases.svc.cluster.local'
-        #     port: 26379
+        nodes:
+          - host: redis-sentinel-sentinel.authelia-prod-d1.svc.cluster.local
+            port: 26379
 
-        # -- Choose the host with the lowest latency.
         route_by_latency: false
-
-        # -- Choose the host randomly.
         route_randomly: false
 
   regulation:

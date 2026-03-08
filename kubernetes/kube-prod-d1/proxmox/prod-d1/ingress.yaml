@@ -9,9 +9,9 @@ spec:
   routes:
     - match: Host(`proxmox.pve-prod-d1.mclacken.net`) && PathPrefix(`/`)
       kind: Rule
-      middlewares:
-        - name: authelia-forwardauth
-          namespace: authelia-prod-d1
+      # middlewares:
+      #   - name: authelia-forwardauth
+      #     namespace: authelia-prod-d1
       services:
         - name: proxmox-service
           port: https

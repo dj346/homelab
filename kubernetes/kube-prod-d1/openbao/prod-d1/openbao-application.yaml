@@ -20,7 +20,7 @@ spec:
   sources:
     - repoURL: https://openbao.github.io/openbao-helm
       chart: openbao
-      targetRevision: 0.25.7
+      targetRevision: 0.26.0
       helm:
         valuesObject:
           # Vault Helm Chart Value Overrides

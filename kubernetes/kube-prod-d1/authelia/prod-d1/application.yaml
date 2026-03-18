@@ -45,7 +45,7 @@ spec:
 
     - repoURL: https://charts.authelia.com
       chart: authelia
-      targetRevision: 0.10.49
+      targetRevision: 0.10.50
       helm:
         valuesObject:
           certificates:

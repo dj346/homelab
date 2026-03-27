@@ -39,7 +39,7 @@ spec:
             - name: pterodactyl-backup-storage
               mountPath: /backup
       containers:
-        - image: ghcr.io/pterodactyl/panel:latest@sha256:13248f22fdd9e6aca2f7d84e0d203be5f04d6e4dc54257510871cf31a51f70c2
+        - image: ghcr.io/pterodactyl/panel:latest@sha256:dd2687b00a532117fe25a88a8acbb34a6fb23a9ca59a76a405735e3cb729efca
           imagePullPolicy: IfNotPresent
           name: pterodactyl-panel
           envFrom:

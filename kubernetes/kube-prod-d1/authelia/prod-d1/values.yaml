@@ -575,145 +575,487 @@ configMap:
           secret_name: "authelia-jwk-rs256-private-key-secret"
           path: "authelia-jwk-rs256-private-key-secret"
 
-      ## Cross-Origin Resource Sharing (CORS) settings.
       cors:
-        # -- List of endpoints in addition to the metadata endpoints to permit cross-origin requests on.
-        endpoints: []
-
-        # -- List of allowed origins.
-        # Any origin with https is permitted unless this option is configured or the
-        # allowed_origins_from_client_redirect_uris option is enabled.
-        allowed_origins: []
-
-        # -- Automatically adds the origin portion of all redirect URI's on all clients to the list of allowed_origins,
-        # provided they have the scheme http or https and do not have the hostname of localhost.
+        endpoints:
+          - authorization
+          - token
+          - revocation
+          - introspection
         allowed_origins_from_client_redirect_uris: false
 
-      # -- List of registered clients for this provider.
       clients: []
-      # clients:
-        # -
-          ## The ID is the OpenID Connect ClientID which is used to link an application to a configuration.
-          # client_id: 'myapp'
+        # - client_id: 
+        #   client_name: "Root Dashboard"
+        #   client_secret:
+        #     secret_name: ""
+        #     path: ""
+        #   authorization_policy: one_factor
+        #   public: false
+        #   scopes:
+        #     - "openid"
+        #     - "profile"
+        #     - "email"
+        #     - "groups"
+        #   redirect_uris:
+        #   requested_audience_mode: "implicit"
+        #   token_endpoint_auth_method: "client_secret_basic"
 
-          ## The description to show to users when they end up on the consent screen. Defaults to the ID above.
-          # client_name: 'My Application'
+        # - client_id: ''
+        #   client_name: 'Mealie'
+        #   client_secret:
+        #     secret_name: ""
+        #     path: ""
+        #   public: false
+        #   authorization_policy: 'two_factor'
+        #   require_pkce: true
+        #   pkce_challenge_method: 'S256'
+        #   redirect_uris: []
+        #   scopes:
+        #     - 'openid'
+        #     - 'email'
+        #     - 'profile'
+        #     - 'groups'
+        #   response_types:
+        #     - 'code'
+        #   grant_types:
+        #     - 'authorization_code'
+        #   access_token_signed_response_alg: 'none'
+        #   userinfo_signed_response_alg: 'none'
+        #   token_endpoint_auth_method: 'client_secret_basic'
 
-          ## The client secret is a shared secret between Authelia and the consumer of this client.
-          # client_secret:
-            # value: '$plaintext$apple123'
-            # path: '/secrets/oidc.client.myapp.value'
+        # # Uptime Kuma - Bearer token client
+        # - client_id: ""
+        #   client_name: "Uptime Kuma"
+        #   client_secret:
+        #     secret_name: ""
+        #     path: ""
+        #   authorization_policy: one_factor
+        #   public: false
+        #   scopes:
+        #     - "authelia.bearer.authz"
+        #   audience: []
 
-          ## Sector Identifiers are occasionally used to generate pairwise subject identifiers. In most cases this is not
-          ## necessary. Read the documentation for more information.
-          ## The subject identifier must be the host component of a URL, which is a domain name with an optional port.
-          # sector_identifier_uri: 'example.com'
+        #   requested_audience_mode: "implicit"
+        #   token_endpoint_auth_method: "client_secret_basic"
+        #   grant_types:
+        #     - "client_credentials"
 
-          ## Sets the client to public. This should typically not be set, please see the documentation for usage.
-          # public: false
+        # # FreshRSS
+        # - client_id: ""
+        #   client_name: "FreshRSS"
+        #   client_secret:
+        #     secret_name: ""
+        #     path: ""
+        #   authorization_policy: "two_factor"
+        #   claims_policy: "default"
+        #   redirect_uris: []       
+        #   public: false
+        #   scopes:
+        #     - "openid"
+        #     - "groups"
+        #     - "email"
+        #     - "profile"
+        #   token_endpoint_auth_method: "client_secret_basic"
+        #   userinfo_signed_response_alg: "none"
+        #   pre_configured_consent_duration: "30d"
 
-          ## Redirect URI's specifies a list of valid case-sensitive callbacks for this client.
-          # redirect_uris:
-          #   - 'https://oidc.example.com/oauth2/callback'
+        # # Grafana
+        # - client_id: ""
+        #   client_name: "Grafana"
+        #   client_secret:
+        #     secret_name: ""
+        #     path: ""
+        #   public: false
+        #   authorization_policy: "two_factor"
+        #   require_pkce: true
+        #   pkce_challenge_method: "S256"
+        #   token_endpoint_auth_method: "client_secret_basic"
+        #   redirect_uris: []
+        #   scopes:
+        #     - "openid"
+        #     - "profile"
+        #     - "groups"
+        #     - "email"
+        #   userinfo_signed_response_alg: "none"
+        #   pre_configured_consent_duration: "30d"
+        #   claims_policy: "grafana_roles"
 
-          ## Request URI's specifies a list of valid case-sensitive URIs this client can ask Authelia to obtain a
-          ## Request Object from.
-          # request_uris:
-          #   - 'https://oidc.example.com/oauth2/request-object/authelia.jwk'
+        # # Gitea
+        # - client_id: ""
+        #   client_name: "Gitea"
+        #   client_secret:
+        #     secret_name: ""
+        #     path: ""
+        #   public: false
+        #   authorization_policy: "gitea"
+        #   redirect_uris: []
+        #   scopes:
+        #     - "openid"
+        #     - "email"
+        #     - "profile"
+        #     - "groups"
+        #   userinfo_signed_response_alg: "none"
+        #   pre_configured_consent_duration: "30d"
 
-          ## Audience this client is allowed to request.
-          # audience: []
+        # # Nextcloud
+        # - client_id: ""
+        #   client_name: "Nextcloud"
+        #   client_secret:
+        #     secret_name: ""
+        #     path: ""
+        #   redirect_uris: []
+        #   authorization_policy: "nextcloud"
+        #   public: false
+        #   claims_policy: "default"
+        #   scopes:
+        #     - "openid"
+        #     - "groups"
+        #     - "email"
+        #     - "profile"
+        #   userinfo_signed_response_alg: "none"
+        #   require_pkce: true
+        #   pkce_challenge_method: "S256"
+        #   pre_configured_consent_duration: "30d"
 
-          ## Scopes this client is allowed to request.
-          # scopes:
-          #   - 'openid'
-          #   - 'profile'
-          #   - 'email'
-          #   - 'groups'
+        # # Jellyfin
+        # - client_id: ""
+        #   client_name: "Jellyfin"
+        #   client_secret:
+        #     secret_name: ""
+        #     path: ""
+        #   public: false
+        #   authorization_policy: "two_factor"
+        #   require_pkce: true
+        #   pkce_challenge_method: "S256"
+        #   redirect_uris: []
+        #   scopes:
+        #     - "openid"
+        #     - "profile"
+        #     - "groups"
+        #   userinfo_signed_response_alg: "none"
+        #   token_endpoint_auth_method: "client_secret_post"
+        #   pre_configured_consent_duration: "30d"
 
-          ## Grant Types configures which grants this client can obtain.
-          ## It's not recommended to configure this unless you know what you're doing.
-          # grant_types:
-          #   - 'refresh_token'
-          #   - 'authorization_code'
+        # # Audiobookshelf
+        # - client_id: ""
+        #   client_name: "Audiobookshelf"
+        #   client_secret:
+        #     secret_name: ""
+        #     path: ""
+        #   public: false
+        #   authorization_policy: "one_factor"
+        #   require_pkce: true
+        #   pkce_challenge_method: "S256"
+        #   redirect_uris: []
+        #   scopes:
+        #     - "openid"
+        #     - "profile"
+        #     - "email"
+        #     - "groups"
+        #   userinfo_signed_response_alg: "none"
+        #   pre_configured_consent_duration: "30d"
 
-          ## Response Types configures which responses this client can be sent.
-          ## It's not recommended to configure this unless you know what you're doing.
-          # response_types:
-          #   - 'code'
+        # # Synology
+        # - client_id: ""
+        #   client_name: "Synology"
+        #   client_secret:
+        #     secret_name: ""
+        #     path: ""
+        #   public: false
+        #   authorization_policy: "two_factor"
+        #   redirect_uris: []
+        #   scopes:
+        #     - "openid"
+        #     - "profile"
+        #     - "email"
+        #     - "groups"
+        #   userinfo_signed_response_alg: "none"
+        #   token_endpoint_auth_method: "client_secret_post"
+        #   pre_configured_consent_duration: "30d"
 
-          ## Response Modes configures which response modes this client supports.
-          ## It's not recommended to configure this unless you know what you're doing.
-          # response_modes:
-          #   - 'form_post'
-          #   - 'query'
-          #   - 'fragment'
+        # # Open WebUI
+        # - client_id: ""
+        #   client_name: "Open WebUI"
+        #   client_secret:
+        #     secret_name: ""
+        #     path: ""
+        #   public: false
+        #   authorization_policy: "two_factor"
+        #   claims_policy: "default"
+        #   redirect_uris: []
+        #   scopes:
+        #     - "openid"
+        #     - "email"
+        #     - "profile"
+        #     - "groups"
+        #   userinfo_signed_response_alg: "RS256"
+        #   pre_configured_consent_duration: "30d"
 
-          ## The policy to require for this client; one_factor or two_factor.
-          # authorization_policy: 'two_factor'
+        # # Vikunja
+        # - client_id: ""
+        #   client_name: "Vikunja"
+        #   client_secret:
+        #     secret_name: ""
+        #     path: ""
+        #   public: false
+        #   authorization_policy: "two_factor"
+        #   redirect_uris: []
+        #   scopes:
+        #     - "openid"
+        #     - "profile"
+        #     - "email"
+        #     - "groups"
+        #   userinfo_signed_response_alg: "none"
+        #   token_endpoint_auth_method: "client_secret_basic"
+        #   pre_configured_consent_duration: "30d"
 
-          # lifespan: ''
+        # # OpenGist
+        # - client_id: ""
+        #   client_name: "OpenGist"
+        #   client_secret:
+        #     secret_name: ""
+        #     path: ""
+        #   public: false
+        #   authorization_policy: "two_factor"
+        #   redirect_uris: []
+        #   scopes:
+        #     - "openid"
+        #     - "profile"
+        #     - "email"
+        #     - "groups"
+        #   userinfo_signed_response_alg: "none"
+        #   token_endpoint_auth_method: "client_secret_basic"
+        #   pre_configured_consent_duration: "30d"
 
-          # claims_policy: ''
+        # # MinIO-Rocky
+        # - client_id: ""
+        #   client_name: "MinIO-Rocky"
+        #   client_secret:
+        #     secret_name: ""
+        #     path: ""
+        #   public: false
+        #   authorization_policy: "minio-admin-2fa"
+        #   pre_configured_consent_duration: "30d"
+        #   redirect_uris: []
+        #   scopes:
+        #     - "openid"
+        #     - "profile"
+        #     - "email"
+        #     - "groups"
+        #   userinfo_signed_response_alg: "none"
 
-          # requested_audience_mode: ''
+        # # MinIO-Hot
+        # - client_id: ""
+        #   client_name: "MinIO-Hot"
+        #   client_secret:
+        #     secret_name: ""
+        #     path: ""
+        #   public: false
+        #   authorization_policy: "minio-admin-2fa"
+        #   pre_configured_consent_duration: "30d"
+        #   redirect_uris: []
+        #   scopes:
+        #     - "openid"
+        #     - "profile"
+        #     - "email"
+        #     - "groups"
+        #   userinfo_signed_response_alg: "none"
 
-          ## The consent mode controls how consent is obtained.
-          # consent_mode: 'auto'
+        # # MinIO-Cold
+        # - client_id: ""
+        #   client_name: "MinIO-Cold"
+        #   client_secret:
+        #     secret_name: ""
+        #     path: ""
+        #   public: false
+        #   authorization_policy: "minio-admin-2fa"
+        #   pre_configured_consent_duration: "30d"
+        #   redirect_uris: []
+        #   scopes:
+        #     - "openid"
+        #     - "profile"
+        #     - "email"
+        #     - "groups"
+        #   userinfo_signed_response_alg: "none"
 
-          ## This value controls the duration a consent on this client remains remembered when the consent mode is
-          ## configured as 'auto' or 'pre-configured'.
-          # pre_configured_consent_duration: '30 days'
+        # # Argo CD
+        # - client_id: ""
+        #   client_name: "Argo CD"
+        #   client_secret:
+        #     secret_name: ""
+        #     path: ""
+        #   public: false
+        #   authorization_policy: "two_factor"
+        #   redirect_uris: []
+        #   scopes:
+        #     - "openid"
+        #     - "groups"
+        #     - "email"
+        #     - "profile"
+        #   userinfo_signed_response_alg: "none"
+        #   token_endpoint_auth_method: "client_secret_basic"
+        #   pre_configured_consent_duration: "30d"
 
-          # require_pushed_authorization_requests: false
-          # require_pkce: false
-          # pkce_challenge_method: 'S256'
+        #   # Kubernetes Cluster Access
+        # - client_id: ""
+        #   client_name: "Kubernetes Cluster Access"
+        #   client_secret:
+        #     secret_name: ""
+        #     path: ""
+        #   public: false
+        #   #claims_policy: "k8s_access_claims_policy"
+        #   claims_policy: "default"
+        #   authorization_policy: "two_factor"
+        #   redirect_uris: []
+        #   scopes:
+        #     - "openid"
+        #     - "groups"
+        #     - "email"
+        #     - "profile"
+        #   userinfo_signed_response_alg: "none"
+        #   token_endpoint_auth_method: "client_secret_basic"
+        #   pre_configured_consent_duration: "30d"
 
-          # authorization_signed_response_key_id: ''
-          # authorization_signed_response_alg: 'RS256'
-          # authorization_encrypted_response_key_id: ''
-          # authorization_encrypted_response_alg: 'none'
-          # authorization_encrypted_response_enc: 'A128CBC-HS256'
+        # - client_id: ""
+        #   client_name: "Implicit Flow Kubernetes Cluster Access"
+        #   client_secret:
+        #     secret_name: ""
+        #     path: ""
+        #   public: false
+        #   authorization_policy: "two_factor"
+        #   redirect_uris: []
+        #   scopes:
+        #     - "openid"
+        #     - "groups"
+        #     - "email"
+        #     - "profile"
+        #   grant_types:
+        #     - implicit
+        #   response_types:
+        #     - id_token
+        #   userinfo_signed_response_alg: "none"
+        #   token_endpoint_auth_method: "client_secret_basic"
+        #   pre_configured_consent_duration: "30d"
 
-          # id_token_signed_response_key_id: ''
-          # id_token_signed_response_alg: 'RS256'
-          # id_token_encrypted_response_key_id: ''
-          # id_token_encrypted_response_alg: 'none'
-          # id_token_encrypted_response_enc: 'A128CBC-HS256'
+        # - client_id: ""
+        #   client_name: "Harbor"
+        #   client_secret:
+        #     secret_name: ""
+        #     path: ""
+        #   public: false
+        #   authorization_policy: "harbor_policy"
+        #   require_pkce: false
+        #   pkce_challenge_method: ""
+        #   redirect_uris: []
+        #   scopes:
+        #     - "openid"
+        #     - "offline_access"
+        #     - "profile"
+        #     - "groups"
+        #     - "email"
+        #   response_types:
+        #     - "code"
+        #   grant_types:
+        #     - "authorization_code"
+        #     - "refresh_token"
+        #   access_token_signed_response_alg: "none"
+        #   userinfo_signed_response_alg: "none"
+        #   token_endpoint_auth_method: "client_secret_basic"
+        #   pre_configured_consent_duration: "30d"
 
-          # access_token_signed_response_key_id: ''
-          # access_token_signed_response_alg: 'none'
-          # access_token_encrypted_response_key_id: ''
-          # access_token_encrypted_response_alg: 'none'
-          # access_token_encrypted_response_enc: 'A128CBC-HS256'
+        # - client_id: ""
+        #   client_name: "Windmill"
+        #   client_secret:
+        #     secret_name: ""
+        #     path: ""
+        #   public: false
+        #   authorization_policy: "two_factor"
+        #   require_pkce: false
+        #   pkce_challenge_method: ""
+        #   redirect_uris: []
+        #   scopes:
+        #     - "openid"
+        #     - "profile"
+        #     - "email"
+        #     - "groups"
+        #   response_types:
+        #     - "code"
+        #   grant_types:
+        #     - "authorization_code"
+        #   access_token_signed_response_alg: "none"
+        #   userinfo_signed_response_alg: "none"
+        #   token_endpoint_auth_method: "client_secret_basic"
 
-          # userinfo_signed_response_key_id: ''
-          # userinfo_signed_response_alg: 'none'
-          # userinfo_encrypted_response_key_id: ''
-          # userinfo_encrypted_response_alg: 'none'
-          # userinfo_encrypted_response_enc: 'A128CBC-HS256'
+        # - client_id: ""
+        #   client_name: "Jenkins"
+        #   client_secret:
+        #     secret_name: ""
+        #     path: ""
+        #   public: false
+        #   authorization_policy: "jenkins"
+        #   require_pkce: true
+        #   pkce_challenge_method: "S256"
+        #   claims_policy: "default"
+        #   redirect_uris: []
+        #   scopes:
+        #     - "openid"
+        #     - "profile"
+        #     - "email"
+        #     - "groups"
+        #   response_types:
+        #     - "code"
+        #   grant_types:
+        #     - "authorization_code"
+        #   access_token_signed_response_alg: "none"
+        #   userinfo_signed_response_alg: "none"
+        #   token_endpoint_auth_method: "client_secret_basic"
 
-          # introspection_signed_response_key_id: ''
-          # introspection_signed_response_alg: 'none'
-          # introspection_encrypted_response_key_id: ''
-          # introspection_encrypted_response_alg: 'none'
-          # introspection_encrypted_response_enc: 'A128CBC-HS256'
+        # - client_id: ""
+        #   client_name: "Endpoint Insights"
+        #   client_secret:
+        #     secret_name: ""
+        #     path: ""
+        #   public: false
+        #   authorization_policy: "one_factor"
+        #   #require_pkce: true
+        #   #pkce_challenge_method: 'S256'
+        #   claims_policy: "ei_claims_policy"
+        #   redirect_uris: []
+        #   scopes:
+        #     - "openid"
+        #     - "profile"
+        #     - "email"
+        #     - "groups"
+        #   response_types:
+        #     - "code"
+        #   grant_types:
+        #     - "authorization_code"
+        #   access_token_signed_response_alg: "RS256"
+        #   userinfo_signed_response_alg: "none"
+        #   token_endpoint_auth_method: "client_secret_basic"
 
-          # request_object_signing_alg: 'RS256'
-          # request_object_encryption_alg: ''
-          # request_object_encryption_enc: ''
-
-          # token_endpoint_auth_method: 'client_secret_basic'
-          # token_endpoint_auth_signing_alg: 'RS256'
-
-          # revocation_endpoint_auth_method: 'client_secret_basic'
-          # revocation_endpoint_auth_signing_alg: 'RS256'
-
-          # introspection_endpoint_auth_method: 'client_secret_basic'
-          # introspection_endpoint_auth_signing_alg: 'RS256'
-
-          # pushed_authorization_request_endpoint_auth_method: 'client_secret_basic'
-          # pushed_authorization_request_endpoint_auth_signing_alg: 'RS256'
+        # - client_id: ""
+        #   client_name: "Endpoint Insights Client Credentials"
+        #   client_secret:
+        #     secret_name: ""
+        #     path: ""
+        #   public: false
+        #   authorization_policy: "one_factor"
+        #   #require_pkce: true
+        #   #pkce_challenge_method: 'S256'
+        #   claims_policy: "ei_claims_policy"
+        #   redirect_uris: []
+        #   scopes:
+        #     - "profile"
+        #     - "email"
+        #     - "groups"
+        #   grant_types:
+        #     - "client_credentials"
+        #   requested_audience_mode: 'implicit'
+        #   audience: []
+        #   access_token_signed_response_alg: "RS256"
+        #   userinfo_signed_response_alg: "none"
+        #   token_endpoint_auth_method: "client_secret_post"
 
 secret:
   additionalSecrets:
@@ -749,8 +1091,7 @@ secret:
       items:
         - key: key
           path: authelia-oidc-hmac-key-secret
-
-
+  
 certificates:
   # -- Name of an existing Secret manifest to mount which contains trusted certificates.
   existingSecret: ''
@@ -789,193 +1130,3 @@ certificates:
   #     Mx86OyXShkDOOyyGeMlhLxS67ttVb9+E7gUJTb0o2HLO02JQZR7rkpeDMdmztcpH
   #     WD9f
   #     -----END CERTIFICATE-----
-
-persistence:
-  # -- Enable the PersistentVolumeClaim features for Authelia.
-  enabled: false
-
-  # -- Extra annotations for the PersistentVolumeClaim related manifests.
-  annotations: {}
-
-  # -- Extra annotations for the PersistentVolumeClaim related manifests.
-  labels: {}
-
-  # -- Mounts the PersistentVolumeClaim in read-only mode.
-  readOnly: false
-
-  # -- Mounts specifically a subpath of the PersistentVolumeClaim.
-  subPath: ''
-
-  # -- Uses an expression to mount a subpath of the PersistentVolumeClaim.
-  subPathExpr: ''
-
-  # -- Sets the mount propagation value for the PersistentVolumeClaim.
-  mountPropagation: ''
-
-  # -- Mounts an existing PersistentVolumeClaim.
-  existingClaim: ''
-  # existingClaim: 'my-claim-name'
-
-  # -- Uses the specified storageClass for the PersistentVolumeClaim.
-  storageClass: ''
-
-  # -- Persistent Volume Name. Useful if Persistent Volumes have been provisioned in advance and you want to use a
-  # specific one.
-  volumeName: ''
-
-  # -- PersistentVolumeClaim access modes.
-  accessModes:
-    - 'ReadWriteOnce'
-
-  # -- PersistentVolumeClaim volume size.
-  size: '100Mi'
-
-  selector: {}
-
-  extraPersistentVolumeClaims:
-    example:
-      # -- Enable this extra PersistentVolumeClaim.
-      enabled: false
-
-      # -- Extra annotations for this PersistentVolumeClaim manifest.
-      annotations: {}
-
-      # -- Extra annotations for this PersistentVolumeClaim manifest.
-      labels: {}
-
-      # -- Mounts the PersistentVolumeClaim in read-only mode.
-      readOnly: false
-
-      # -- Mounts specifically a subpath of the PersistentVolumeClaim.
-      subPath: ''
-
-      # -- Uses an expression to mount a subpath of the PersistentVolumeClaim.
-      subPathExpr: ''
-
-      # -- Sets the mount propagation value for the PersistentVolumeClaim.
-      mountPropagation: ''
-
-      # -- Mounts an existing PersistentVolumeClaim.
-      existingClaim: ''
-      # existingClaim: 'my-claim-name'
-
-      # -- Uses the specified storageClass for the PersistentVolumeClaim.
-      storageClass: ''
-
-      # -- Persistent Volume Name. Useful if Persistent Volumes have been provisioned in advance and you want to use a
-      # specific one.
-      volumeName: ''
-
-      # -- PersistentVolumeClaim access modes.
-      accessModes:
-        - 'ReadWriteOnce'
-
-      # -- PersistentVolumeClaim volume size.
-      size: '100Mi'
-
-      selector: {}
-
-# -- Configure mariadb database subchart under this key.
-# This will be deployed when storage.mysql.deploy is set to true
-# Currently settings need to be manually copied from here to the storage.mysql section
-# For more options and to see the @default please see [mariadb chart documentation](https://github.com/bitnami/charts/tree/main/bitnami/mariadb)
-# @default -- `{}`
-mariadb:
-  architecture: 'standalone'
-
-  auth:
-    database: 'authelia'
-
-    username: 'authelia'
-
-    password: 'authelia'
-
-    rootPassword: 'authelia'
-
-  primary:
-    resources: {}
-
-    persistence:
-      enabled: false
-
-      size: '1Gi'
-
-      storageClass: ''
-
-# -- Configure postgresql database subchart under this key.
-# This will be deployed when storage.postgres.deploy is set to true
-# Currently settings need to be manually copied from here to the storage.postgres section
-# For more options and to see the @default please see [postgresql chart documentation](https://github.com/bitnami/charts/tree/main/bitnami/postgresql)
-# @default -- `{}`
-postgresql:
-  auth:
-    postgresPassword: 'authelia'
-
-    username: 'authelia'
-
-    password: 'authelia'
-
-    database: 'authelia'
-
-  primary:
-    persistence:
-      enabled: false
-
-      storageClass: ''
-
-      size: '1Gi'
-
-    resources: {}
-
-# -- Configure redis database subchart under this key.
-# This will be deployed when session.redis.deploy is set to true
-# Currently settings need to be manually copied from here to the session.redis section
-# For more options and to see the @default please see [redis chart documentation](https://github.com/bitnami/charts/tree/main/bitnami/redis)
-# @default -- `{}`
-redis:
-  architecture: 'standalone'
-
-  auth:
-    enabled: false
-
-    sentinel: true
-
-    password: 'redis'
-
-    existingSecret: ''
-
-    existingSecretPasswordKey: ''
-
-    usePasswordFiles: false
-
-  master:
-    resources: {}
-
-    priorityClassName: ''
-
-    persistence:
-      enabled: false
-
-      storageClass: ''
-
-      accessModes:
-        - 'ReadWriteOnce'
-
-      size: '1Gi'
-
-  replica:
-    replicaCount: 3
-
-    resources: {}
-
-    priorityClassName: ''
-
-    persistence:
-      enabled: false
-
-      storageClass: ''
-
-      accessModes:
-        - 'ReadWriteOnce'
-
-      size: '1Gi'

@@ -164,10 +164,10 @@ spec:
 
   # ACL # Wasnt fully baked when I attempted to use ACL. For example Sentinel had no support for 
   # ACL and you still needed to create a root "user" for the replication pods. 2/12/26
-  # acl: 
-  #   secret:
-  #     secretName: authelia-redis-acl-secret
-  #     optional: false
+  acl: 
+    secret:
+      secretName: authelia-redis-acl-secret
+      optional: false
 
   # Init container
   # initContainer: {}

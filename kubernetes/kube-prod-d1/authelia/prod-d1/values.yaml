@@ -396,293 +396,65 @@ configMap:
         route_randomly: false
 
   regulation:
-    # -- The regulation modes to use. The active modes determines what is banned in the event of a regulation ban being
-    # triggered as well as what logs to inspect to determine if a ban is needed. Default is just user, but ip is also
-    # available.
-    modes:
-      - 'user'
-
-    # -- The number of failed login attempts before user is banned. Set it to 0 to disable regulation.
     max_retries: 3
-
-    # -- The time range during which the user can attempt login before being banned. The user is banned if the
-    # authentication failed 'max_retries' times in a 'find_time' window. Find Time accepts duration notation.
-    # See: https://www.authelia.com/configuration/prologue/common/#duration-notation-format
     find_time: '2 minutes'
-
-    # -- The length of time before a banned user can login again. Ban Time accepts duration notation.
-    # See: https://www.authelia.com/configuration/prologue/common/#duration-notation-format
     ban_time: '5 minutes'
 
   storage:
     encryption_key:
-      # -- Disables this secret and leaves configuring it entirely up to you.
-      disabled: false
-
-      # -- The secret name. The ~ name is special as it is the secret we generate either automatically or via the
-      # secret_value option below.
-      secret_name: ~
-
-      # -- The value of a generated secret when using the ~ secret_name.
-      value: ''
-
-      # -- The path to the secret. If it has a '/' prefix it's assumed to be an absolute path within the pod. Otherwise
-      # it uses the format '{mountPath}/{secret_name}/{path}' where '{mountPath}' refers to the 'secret.mountPath'
-      # value, '{secret_name}' is the secret_name above, and '{path}' is this value.
-      path: 'storage.encryption.key'
-
-    local:
-      # -- Enable the Local Provider (Storage / SQL)
-      enabled: false
-
-      # -- Path to the SQLite3 database.
-      path: '/config/db.sqlite3'
-
-    mysql:
-      # -- Enable the MySQL Provider (Storage / SQL).
-      enabled: false
-
-      # -- Deploy the MySQL Chart.
-      deploy: false
-
-      # -- Configures the address for the MySQL/MariaDB Server. The address itself is a connector and the scheme must
-      # either be the unix scheme or one of the tcp schemes.
-      address: 'tcp://mysql.databases.svc.cluster.local:3306'
-
-      # -- The SQL connection timeout.
-      timeout: '5 seconds'
-
-      # -- The database name on the database server that the assigned user has access to for the purpose of Authelia.
-      database: 'authelia'
-
-      # -- The username paired with the password used to connect to the database.
-      username: 'authelia'
-
-      password:
-        # -- Disables this secret and leaves configuring it entirely up to you.
-        disabled: false
-
-        # -- The secret name. The ~ name is special as it is the secret we generate either automatically or via the
-        # secret_value option below.
-        secret_name: ~
-
-        # -- The value of a generated secret when using the ~ secret_name.
-        value: ''
-
-        # -- The path to the secret. If it has a '/' prefix it's assumed to be an absolute path within the pod. Otherwise
-        # it uses the format '{mountPath}/{secret_name}/{path}' where '{mountPath}' refers to the 'secret.mountPath'
-        # value, '{secret_name}' is the secret_name above, and '{path}' is this value.
-        path: 'storage.mysql.password.txt'
-
-      tls:
-        # -- Enables rendering this TLS config.
-        enabled: false
-
-        # -- The server subject name to check the servers certificate against during the validation process.
-        # This option is not required if the certificate has a SAN which matches the host option.
-        server_name: ''
-
-        # -- Skip verifying the server certificate entirely.
-        skip_verify: false
-
-        # -- Minimum TLS version for the connection.
-        minimum_version: 'TLS1.2'
-
-        # -- Maximum TLS version for the connection.
-        maximum_version: 'TLS1.3'
-
+      secret_name: authelia-storage-encryption-key-secret
+      path: 'authelia-storage-encryption-key-secret'
+    
     postgres:
-      # -- Enable the PostgreSQL Provider (Storage / SQL).
-      enabled: false
+      enabled: true
 
-      # -- Deploy the PostgreSQL Chart.
-      deploy: false
-
-      # -- Configures the address for the PostgreSQL Server. The address itself is a connector and the scheme must
-      # either be the unix scheme or one of the tcp schemes.
-      address: 'tcp://postgres.databases.svc.cluster.local:5432'
-
-      # -- This specifies a list of additional fallback PostgreSQL instances to use should issues occur with the primary
-      # instance which is configured with the address and tls options.
+      address: tcp://authelia-postgresql-cluster-rw:5432
       servers: []
-      # servers:
-        # - address: 'tcp://postgres2:5432'
-        #   tls:
-        #     server_name: 'postgres2.local'
-        # - address: 'tcp://postgres3:5432'
-        #   tls:
-        #     server_name: 'postgres3.local'
 
-      # -- The SQL connection timeout.
-      timeout: '5 seconds'
-
-      # -- The database name on the database server that the assigned user has access to for the purpose of Authelia.
-      database: 'authelia'
-
-      # -- The database schema name to use on the database server that the assigned user has access to for the purpose
-      # of Authelia. By default this is the public schema.
-      schema: 'public'
-
-      # -- The username paired with the password used to connect to the database.
+      database: 'autheliadb'
       username: 'authelia'
 
       password:
-        # -- Disables this secret and leaves configuring it entirely up to you.
-        disabled: false
-
-        # -- The secret name. The ~ name is special as it is the secret we generate either automatically or via the
-        # secret_value option below.
-        secret_name: ~
-
-        # -- The value of a generated secret when using the ~ secret_name.
-        value: ''
-
-        # -- The path to the secret. If it has a '/' prefix it's assumed to be an absolute path within the pod. Otherwise
-        # it uses the format '{mountPath}/{secret_name}/{path}' where '{mountPath}' refers to the 'secret.mountPath'
-        # value, '{secret_name}' is the secret_name above, and '{path}' is this value.
-        path: 'storage.postgres.password.txt'
+        secret_name: "authelia-postgresql-credentials-secret"
+        path: "authelia-postgresql-credentials-secret"
 
       tls:
-        # -- Enables rendering this TLS config.
-        enabled: false
-
-        # -- The server subject name to check the servers certificate against during the validation process.
-        # This option is not required if the certificate has a SAN which matches the host option.
+        enabled: true
         server_name: ''
-
-        # -- Skip verifying the server certificate entirely.
-        skip_verify: false
-
-        # -- Minimum TLS version for the connection.
-        minimum_version: 'TLS1.2'
-
-        # -- Maximum TLS version for the connection.
-        maximum_version: 'TLS1.3'
 
   notifier:
-    # -- You can disable the notifier startup check by setting this to true.
-    disable_startup_check: false
-
-    filesystem:
-      # -- Enables the File System Provider (Notifier).
-      enabled: false
-
-      # -- The file to add email text to. If it doesn’t exist it will be created.
-      filename: '/config/notification.txt'
-
     smtp:
-      # -- Enables the SMTP Provider (Notifier).
-      enabled: false
+      enabled: true
 
-      # -- Configures the address for the SMTP Server. The address itself is a connector and the scheme must be smtp,
-      # submission, or submissions. The only difference between these schemes are the default ports and submissions
-      # requires a TLS transport per SMTP Ports Security Measures, whereas submission and smtp use a standard TCP
-      # transport and typically enforce StartTLS.
-      address: 'submission://smtp.mail.svc.cluster.local:587'
-
-      # -- The SMTP connection timeout.
+      address: smtp://smtp.fastmail.com:587
       timeout: '5 seconds'
 
-      # -- The sender is used to construct both the SMTP command MAIL FROM and to add the FROM header. This address must
-      # be in RFC5322 format.
-      sender: 'Authelia <admin@example.com>'
-
-      # -- HELO/EHLO Identifier. Some SMTP Servers may reject the default of localhost.
-      identifier: 'localhost'
-
-      # -- Subject configuration of the emails sent.
-      # {title} is replaced by the text from the notifier
-      subject: '[Authelia] {title}'
-
-      # -- This address is used during the startup check to verify the email configuration is correct.
-      # It's not important what it is except if your email server only allows local delivery.
-      startup_check_address: 'test@authelia.com'
-
-      # -- Disables sending HTML formatted emails.
-      disable_html_emails: false
-
-      # -- By default we require some form of TLS. This disables this check though is not advised.
-      disable_require_tls: false
-
-      # -- Some SMTP servers ignore SMTP specifications and claim to support STARTTLS when they in fact do not. For
-      # security reasons Authelia refuses to send messages to these servers. This option disables this measure and is
-      # enabled AT YOUR OWN RISK.
-      disable_starttls: false
-
-      # -- The username sent for authentication with the SMTP server. Paired with the password.
-      username: ''
+      sender: authelia@mclacken.net
+      username: 'dylan@mclacken.net'
 
       password:
-        # -- Disables this secret and leaves configuring it entirely up to you.
-        disabled: false
-
-        # -- The secret name. The ~ name is special as it is the secret we generate either automatically or via the
-        # secret_value option below.
-        secret_name: ~
-
-        # -- The value of a generated secret when using the ~ secret_name.
-        value: ''
-
-        # -- The path to the secret. If it has a '/' prefix it's assumed to be an absolute path within the pod. Otherwise
-        # it uses the format '{mountPath}/{secret_name}/{path}' where '{mountPath}' refers to the 'secret.mountPath'
-        # value, '{secret_name}' is the secret_name above, and '{path}' is this value.
-        path: 'notifier.smtp.password.txt'
+        secret_name: "authelia-smtp-password-secret"
+        path: "authelia-smtp-password-secret"
 
       tls:
-        # -- The server subject name to check the servers certificate against during the validation process.
-        # This option is not required if the certificate has a SAN which matches the host option.
         server_name: ''
-
-        # -- Skip verifying the server certificate entirely.
         skip_verify: false
-
-        # -- Minimum TLS version for the connection.
-        minimum_version: 'TLS1.2'
-
-        # -- Maximum TLS version for the connection.
-        maximum_version: 'TLS1.3'
 
   identity_providers:
     oidc:
-      # -- Enables this in the config map. Currently in beta stage.
-      # See https://www.authelia.com/r/openid-connect/
-      enabled: false
+      enabled: true
 
       hmac_secret:
-        # -- Disables this secret and leaves configuring it entirely up to you.
-        disabled: false
-
-        # -- The secret name. The ~ name is special as it is the secret we generate either automatically or via the
-        # secret_value option below.
-        secret_name: ~
-
-        # -- The value of a generated secret when using the ~ secret_name.
-        value: ''
-
-        # -- The path to the secret. If it has a '/' prefix it's assumed to be an absolute path within the pod. Otherwise
-        # it uses the format '{mountPath}/{secret_name}/{path}' where '{mountPath}' refers to the 'secret.mountPath'
-        # value, '{secret_name}' is the secret_name above, and '{path}' is this value.
-        path: 'identity_providers.oidc.hmac.key'
+        secret_name: authelia-oidc-hmac-key-secret
+        path: 'authelia-oidc-hmac-key-secret'
 
       lifespans:
-        # -- Default lifespan for Access Tokens.
         access_token: '1 hour'
-
-        # -- Default lifespan for Refresh Tokens.
         refresh_token: '1 hour and 30 minutes'
-
-        # -- Default lifespan for ID Tokens.
         id_token: '1 hour'
-
-        # -- Default lifespan for Authorize Codes.
         authorize_code: '1 minute'
-
-        # -- Default lifespan for Device Codes.
         device_code: '10 minutes'
 
-        # -- The custom lifespan configuration allows customizing the lifespans per-client. The custom lifespans must be
-        # utilized with the client lifespan option which applies those settings to that client. Custom lifespans can be
-        # configured in a very granular way, either solely by the token type, or by the token type for each grant type.
         custom: {}
         # custom:
         #   lifespan_name:
@@ -717,84 +489,91 @@ configMap:
         #         refresh_token: '1 hour and 30 minutes'
         #         id_token: '1 hour'
 
-      # -- The claims policies are policies which allow customizing the behavior of claims and the available claims for
-      # a particular client.
       claims_policies: {}
       # claims_policies:
-        # policy_name:
-          # id_token: []
-          # access_token: []
-          # id_token_audience_mode: 'specification'
-          # custom_claims:
-            # claim_name:
-              # attribute: 'attribute_name'
-
-      # -- A list of scope definitions available in addition to the standard ones.
-      scopes: {}
-      # scopes:
-        # scope_name:
-          # claims: []
-
-      # -- Adjusts the PKCE enforcement. Options are always, public_clients_only, never.
-      # For security reasons it's recommended this option is public_clients_only or always, however always is not
-      # compatible with all clients.
+      #   default:
+      #     id_token:
+      #       [
+      #         "groups",
+      #         "email",
+      #         "email_verified",
+      #         "alt_emails",
+      #         "preferred_username",
+      #         "name",
+      #       ]
+      #   k8s_access_claims_policy:
+      #     id_token: ["preferred_username"]
+      #   ei_claims_policy:
+      #     id_token:
+      #       [
+      #         "groups",
+      #         "email",
+      #         "email_verified",
+      #         "alt_emails",
+      #         "preferred_username",
+      #         "name",
+      #       ]
+      #     access_token:
+      #       [
+      #         "groups",
+      #         "email",
+      #         "email_verified",
+      #         "alt_emails",
+      #         "preferred_username",
+      #         "name",
+      #       ]
+      #   grafana_roles:
+      #     id_token: ["groups"]
+      #     access_token: ["groups"]
+      #     custom_claims:
+      #       grafana_roles:
+      #         attribute: "groups"
+  
       enforce_pkce: 'public_clients_only'
-
-      # -- Enables the plain PKCE challenge which is not recommended for security reasons but may be necessary for some clients.
       enable_pkce_plain_challenge: false
 
-      # -- Enables introspecting JWT Profile Access Tokens using stateless checks. This is strongly discouraged.
-      enable_jwt_access_token_stateless_introspection: false
-
-      # -- The JSON Web Algorithm used for signing the discovery metadata.
-      discovery_signed_response_alg: ''
-
-      # -- The JSON Web Key ID used for signing the discovery metadata.
-      discovery_signed_response_key_id: ''
-
-      # -- Enables requiring all Authorization Requests to be initiated using a Pushed Authorization Request.
-      require_pushed_authorization_requests: false
-
-      # -- Adjusts the parameter entropy requirements for nonce/state etc. SECURITY NOTICE: It's not recommended changing
-      # this option, and highly discouraged to have it less than 8.
       minimum_parameter_entropy: 8
-
-      # -- Enables additional debug messages. SECURITY NOTICE: It's not recommended to use this in production as it
-      # may leak configuration information to clients.
-      enable_client_debug_messages: false
-
-      pushed_authorizations:
-        # -- Requires Pushed Authorization Requests for all Authorization Flows.
-        enforce: false
-
-        # -- Adjusts the lifespan for a Pushed Authorization session / context.
-        context_lifespan: '5 minutes'
 
       # -- Authorization Policies configuration.
       authorization_policies: {}
+          # minio-admin-2fa:
+          #   default_policy: "one_factor"
+          #   rules:
+          #     - policy: "two_factor"
+          #       subject: "group:minio-admin"
+          # gitea:
+          #   default_policy: "one_factor"
+          #   rules:
+          #     - policy: "two_factor"
+          #       subject: "group:gitea-admin"
+          # nextcloud:
+          #   default_policy: "one_factor"
+          #   rules:
+          #     - policy: "two_factor"
+          #       subject: "group:nextcloud-admin"
+          # harbor_policy:
+          #   default_policy: "deny"
+          #   rules:
+          #     - policy: "two_factor"
+          #       subject: "group:harbor:admin"
+          #     - policy: "one_factor"
+          #       subject: "group:harbor:user"
+          # jenkins:
+          #   default_policy: "deny"
+          #   rules:
+          #     - policy: "two_factor"
+          #       subject: "group:jenkins:admin"
+          #     - policy: "one_factor"
+          #       subject: "group:jenkins:developer"
+          #     - policy: "one_factor"
+          #       subject: "group:jenkins:user"
 
-      # authorization_policies:
-      #   policy_name:
-      #     default_policy: 'deny'
-      #     rules:
-      #       - policy: 'two_factor'
-      #         subject: 'user:abc'
-
-      # -- The JWK's issuer option configures multiple JSON Web Keys. It's required that at least one of the JWK's
-      # configured has the RS256 algorithm. For RSA keys (RS or PS) the minimum is a 2048 bit key.
-      jwks: []
-
-      # jwks:
-      #   - key_id: ''
-      #     algorithm: 'RS256'
-      #     use: 'sig'
-      #     key:
-      #       value: |
-      #         abc
-      #         123
-      #       path: '/secrets/oidc.jwk.RS256.pem'
-      #     certificate_chain:
-      #       path: '/secrets.oidc.jwk.RS256.crt'
+      jwks:
+      - algorithm: "RS256"
+        use: "sig"
+        key:
+          secret_name: "authelia-jwk-rs256-private-key-secret"
+          path: "authelia-jwk-rs256-private-key-secret"
 
       ## Cross-Origin Resource Sharing (CORS) settings.
       cors:
@@ -954,11 +733,10 @@ secret:
       items:
         - key: key
           path: authelia-cookie-session-encryption-key-secret
-
-    authelia-redis-password-secret:
+    authelia-storage-encryption-key-secret:
       items:
-        - key: password
-          path: authelia-redis-password-secret
+        - key: key
+          path: authelia-storage-encryption-key-secret
     authelia-postgresql-credentials-secret:
       items:
         - key: password
@@ -967,6 +745,10 @@ secret:
       items:
         - key: password
           path: authelia-smtp-password-secret
+    authelia-oidc-hmac-key-secret:
+      items:
+        - key: key
+          path: authelia-oidc-hmac-key-secret
 
 
 certificates:

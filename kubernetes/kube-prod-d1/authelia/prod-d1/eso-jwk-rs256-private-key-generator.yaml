@@ -1,0 +1,19 @@
+apiVersion: generators.external-secrets.io/v1alpha1
+kind: Generator
+metadata:
+  name: authelia-eso-jwk-rs256-private-key-generator
+  namespace: authelia-prod-d1
+  labels:
+    app.kubernetes.io/name: authelia
+    app.kubernetes.io/component: program-secret
+    app.kubernetes.io/instance: authelia-prod-d1
+    app.kubernetes.io/managed-by: argocd
+spec:
+  kind: Password
+  generator:
+    passwordSpec:
+      length: 64
+      digits: 0
+      symbols: 0
+      noUpper: false
+      allowRepeat: true

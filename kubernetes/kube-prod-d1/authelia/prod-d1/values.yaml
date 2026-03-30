@@ -1091,7 +1091,11 @@ secret:
       items:
         - key: key
           path: authelia-oidc-hmac-key-secret
-  
+    authelia-jwk-rs256-private-key-secret:
+      items:
+        - key: key
+          path: authelia-jwk-rs256-private-key-secret
+            
 certificates:
   # -- Name of an existing Secret manifest to mount which contains trusted certificates.
   existingSecret: ''

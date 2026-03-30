@@ -1,0 +1,13 @@
+global:
+  appName: authelia
+  environment: prod-d1
+  defaultSecretEnabled: true
+
+postgresql:
+  instances: 2
+  databaseName: autheliadb
+  ownerName: authelia
+  storageSize: 450Mi
+  walStorageSize: 2Gi
+  enableDefaultCertificate: true
+  backupSchedule: "0 0 * * *"

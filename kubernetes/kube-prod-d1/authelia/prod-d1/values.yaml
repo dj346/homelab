@@ -1,6 +1,5 @@
 labels:
-  app.kubernetes.io/name: authelia
-  app.kubernetes.io/instance: authelia-prod-d1
+  app.kubernetes.io/name: authelia-prod-d1
 
 annotations: {}
 

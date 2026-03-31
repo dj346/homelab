@@ -9,10 +9,10 @@ metadata:
     app.kubernetes.io/instance: authelia-prod-d1
     app.kubernetes.io/managed-by: argocd
 spec:
-  commonName: authelia-redis-sentinel-server-certificate
+  # commonName: authelia-redis-sentinel-server-certificate
   secretName: authelia-redis-sentinel-server-certificate-secret
   issuerRef:
-    name: redis-operator-issuer
+    name: vault-redis-kube-prod-d1-issuer
     kind: ClusterIssuer
   dnsNames:
     - 'redis.mclacken.net'

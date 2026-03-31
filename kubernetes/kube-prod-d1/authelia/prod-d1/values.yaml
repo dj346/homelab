@@ -83,33 +83,33 @@ pod:
 
   # tolerations: []
 
-    selectors:
-      affinity:
-        podAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-            - weight: 80
-              podAffinityTerm:
-                labelSelector:
-                  matchLabels:
-                    cnpg.io/cluster: authelia-postgresql-cluster
-                topologyKey: kubernetes.io/hostname
-        podAntiAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-            - weight: 100
-              podAffinityTerm:
-                labelSelector:
-                  matchLabels:
-                      app.kubernetes.io/name: authelia
-                      app.kubernetes.io/component: program
-                      app.kubernetes.io/instance: authelia-prod-d1
-                      app.kubernetes.io/managed-by: argocd
-                topologyKey: kubernetes.io/hostname
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-              - matchExpressions:
-                  - key: "node-role.kubernetes.io/control-plane"
-                    operator: DoesNotExist
+  selectors:
+    affinity:
+      podAffinity:
+        preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 80
+            podAffinityTerm:
+              labelSelector:
+                matchLabels:
+                  cnpg.io/cluster: authelia-postgresql-cluster
+              topologyKey: kubernetes.io/hostname
+      podAntiAffinity:
+        preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchLabels:
+                    app.kubernetes.io/name: authelia
+                    app.kubernetes.io/component: program
+                    app.kubernetes.io/instance: authelia-prod-d1
+                    app.kubernetes.io/managed-by: argocd
+              topologyKey: kubernetes.io/hostname
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: "node-role.kubernetes.io/control-plane"
+                  operator: DoesNotExist
 
   env:
     - name: "TZ"
@@ -183,9 +183,9 @@ configMap:
   server:
     port: 9091
 
-    tls:
-      certificate: /secrets/server-tls/tls.crt
-      key: /secrets/server-tls/tls.key
+    # tls:
+    #   certificate: /secrets/server-tls/tls.crt
+    #   key: /secrets/server-tls/tls.key
 
     endpoints:
       authz:

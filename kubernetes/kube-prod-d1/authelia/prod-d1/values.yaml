@@ -8,13 +8,15 @@ annotations: {}
 rbac:
   enabled: false
   annotations: {}
-  labels.app.kubernetes.io/component: rbac
+  labels:
+    app.kubernetes.io/component: rbac
   serviceAccountName: 'authelia-service-account'
 
 service:
   type: 'ClusterIP'
   annotations: {}
-  labels.app.kubernetes.io/component: networking
+  labels:
+    app.kubernetes.io/component: networking
   port: 80
   nodePort: 30091
   clusterIP: ~
@@ -24,8 +26,10 @@ pod:
   kind: 'Deployment'
   replicas: 3
 
-  labels.app.kubernetes.io/component: program
-  annotations.reloader.stakater.com/auto: "true"
+  labels:
+    app.kubernetes.io/component: program
+  annotations:
+    reloader.stakater.com/auto: "true"
 
   command: []
   args: []
@@ -156,7 +160,8 @@ podDisruptionBudget:
   maxUnavailable: 1
   
   annotations: {}
-  labels.app.kubernetes.io/component: program
+  labels:
+    app.kubernetes.io/component: program
 
 configMap:
   disabled: false

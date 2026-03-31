@@ -141,15 +141,15 @@ pod:
       successThreshold: 1
       failureThreshold: 6
 
-  extraVolumes:
-    - name: authelia-server-certificate-secret-volume
-      secret:
-        secretName: authelia-server-certificate-secret
+  # extraVolumes:
+  #   - name: authelia-server-certificate-secret-volume
+  #     secret:
+  #       secretName: authelia-server-certificate-secret
   
-  extraVolumeMounts:
-    - name: authelia-server-certificate-secret-volume
-      mountPath: /secrets/server-tls
-      readOnly: true
+  # extraVolumeMounts:
+  #   - name: authelia-server-certificate-secret-volume
+  #     mountPath: /secrets/server-tls
+  #     readOnly: true
       
   extraContainers: []
 

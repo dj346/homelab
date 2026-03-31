@@ -101,7 +101,6 @@ pod:
                     app.kubernetes.io/name: authelia
                     app.kubernetes.io/component: program
                     app.kubernetes.io/instance: authelia-prod-d1
-                    app.kubernetes.io/managed-by: argocd
               topologyKey: kubernetes.io/hostname
       nodeAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:

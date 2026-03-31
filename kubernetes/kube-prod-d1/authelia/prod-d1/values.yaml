@@ -63,7 +63,8 @@ pod:
       fsGroup: 1000
       fsGroupChangePolicy: "OnRootMismatch"
 
-      seccompProfile.type: RuntimeDefault
+      seccompProfile:
+        type: RuntimeDefault
 
     container:
       runAsNonRoot: true
@@ -73,10 +74,12 @@ pod:
       allowPrivilegeEscalation: false
       readOnlyRootFilesystem: true
 
-      capabilities.drop:
-        - ALL
+      capabilities:
+        drop:
+          - ALL
 
-      seccompProfile.type: RuntimeDefault
+      seccompProfile:
+        type: RuntimeDefault
 
   # tolerations: []
 
@@ -115,10 +118,11 @@ pod:
   resources:
   
   probes:
-    method.httpGet:
-      path: '/api/health'
-      port: 'http'
-      scheme: 'HTTP'
+    method:
+      httpGet:
+        path: '/api/health'
+        port: 'http'
+        scheme: 'HTTP'
 
     liveness:
       initialDelaySeconds: 0
@@ -302,7 +306,8 @@ configMap:
       disable: false
       custom_url: ''
 
-    password_change.disable: false
+    password_change:
+      disable: false
 
     # -- The amount of time to wait before we refresh data from the authentication backend. Uses duration notation.
     refresh_interval: '5 minutes'
@@ -332,9 +337,10 @@ configMap:
         mail: mail
       # NOTE: keep secrets out of configMap; see note below.
 
-  password_policy.zxcvbn:
-    enabled: true
-    min_score: 4
+  password_policy:
+    zxcvbn:
+      enabled: true
+      min_score: 4
 
   access_control:
     default_policy: 'deny'

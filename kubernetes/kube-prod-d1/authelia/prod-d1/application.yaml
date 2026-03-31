@@ -35,9 +35,9 @@ spec:
     - repoURL: https://charts.authelia.com
       chart: authelia
       targetRevision: 0.10.50
-      helm:
-        valueFiles:
-        - $values/kubernetes/kube-prod-d1/authelia/prod-d1/values.yaml
+      # helm:
+      #   valueFiles:
+      #   - $values/kubernetes/kube-prod-d1/authelia/prod-d1/values.yaml
 
   syncPolicy:
     syncOptions:

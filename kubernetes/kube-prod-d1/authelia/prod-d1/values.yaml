@@ -1,7 +1,6 @@
 labels:
   app.kubernetes.io/name: authelia
   app.kubernetes.io/instance: authelia-prod-d1
-  app.kubernetes.io/managed-by: argocd
 
 annotations: {}
 

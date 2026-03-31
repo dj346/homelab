@@ -1,0 +1,9 @@
+Users:
+authelia-ro:6eHbP1E0YgFkKn:lldap_strict_readonly
+
+Groups:
+authelia-user
+
+User-Attributes:
+
+Group-Attributes:

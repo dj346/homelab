@@ -311,10 +311,11 @@ configMap:
       pooling:
         enable: false
       
-      user: uid=authelia-bind-account,ou=people,dc=mclacken,dc=net
+      user: uid=authelia-ro,ou=people,dc=mclacken,dc=net
       password:
-        secret_name: "authelia-lldap-bind-account-password-secret"
-        path: "authelia-lldap-bind-account-password-secret"
+        value: "6eHbP1E0YgFkKn"
+        # secret_name: "authelia-lldap-bind-account-password-secret"
+        # path: "authelia-lldap-bind-account-password-secret"
 
       additional_users_dn: OU=people
       additional_groups_dn: OU=groups
@@ -1067,10 +1068,10 @@ secret:
       items:
         - key: token
           path: authelia-duo-api-token-secret
-    authelia-lldap-bind-account-password-secret:
-      items:
-        - key: password
-          path: authelia-lldap-bind-account-password-secret
+    # authelia-lldap-bind-account-password-secret:
+    #   items:
+    #     - key: password
+    #       path: authelia-lldap-bind-account-password-secret
     authelia-cookie-session-encryption-key-secret:
       items:
         - key: key

@@ -23,7 +23,7 @@ spec:
       path: kubernetes/kube-prod-d1/authelia/prod-d1
       ref: values
       directory:
-        exclude: '{application.yaml,*values.yaml}'
+        exclude: 'application.yaml'
 
     - repoURL: https://github.com/dj346/homelab-helper.git
       targetRevision: main

@@ -581,7 +581,7 @@ configMap:
         use: "sig"
         key:
           secret_name: "authelia-jwk-rs256-private-key-secret"
-          path: "authelia-jwk-rs256-private-key-secret"
+          path: "/secrets/authelia-jwk-rs256-private-key-secret/key.pem"
 
       cors:
         endpoints:
@@ -1102,7 +1102,7 @@ secret:
     authelia-jwk-rs256-private-key-secret:
       items:
         - key: key
-          path: authelia-jwk-rs256-private-key-secret
+          path: key.pem
             
 certificates:
   # -- Name of an existing Secret manifest to mount which contains trusted certificates.

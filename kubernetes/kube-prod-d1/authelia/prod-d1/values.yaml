@@ -344,8 +344,7 @@ configMap:
     rules:
       - domain:
           - anisonarr.kube-prod-d1.mclacken.net
-        policy:
-          - one_factor
+        policy: one_factor
         subjects:
           - group:anisonarr-admin
     
@@ -450,7 +449,7 @@ configMap:
 
   identity_providers:
     oidc:
-      enabled: true
+      enabled: false
 
       hmac_secret:
         secret_name: authelia-oidc-hmac-key-secret

@@ -40,7 +40,7 @@ spec:
               mountPath: /backup
       containers:
         - name: stashapp
-          image: stashapp/stash:latest@sha256:4cac18873ea052f03510602d9e1a9b29e6241a393a111479010292b7a1e28a5e
+          image: stashapp/stash:latest@sha256:422b4d2a580e9f52c361264c3003f46a6ae9b7de76e6d08df091f104e90d8fa4
           env:
           - name: TZ
             value: "America/Los_Angeles"

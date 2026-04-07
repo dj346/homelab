@@ -16,7 +16,7 @@ spec:
           reflector.v1.k8s.emberstack.com/reflection-auto-enabled: "true"
           reflector.v1.k8s.emberstack.com/reflection-auto-namespaces: "anisonarr-prod-d1|cert-manager"
       data:
-        ca.crt: "{{ .certificate }}"
+        ca.crt: "{{ .ca_chain }}"
   dataFrom:
     - sourceRef:
         generatorRef:

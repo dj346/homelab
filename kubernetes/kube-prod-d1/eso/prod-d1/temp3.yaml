@@ -22,4 +22,4 @@ spec:
         generatorRef:
           apiVersion: generators.external-secrets.io/v1alpha1
           kind: VaultDynamicSecret
-          name: ica2-ca-json
+          name: eso-ca-chain-apps-prod-d1-ica2-vault-dynamic-secret

@@ -365,42 +365,42 @@ configMap:
         subdomain: "authelia.kube-prod-d1"
         name: "mclacken_authelia_session"
   
-    redis:
-      enabled: false
-      host: 'redis-sentinel-sentinel.authelia-prod-d1.svc.cluster.local'
-      port: 6379
+    # redis:
+    #   enabled: false
+    #   host: 'redis-sentinel-sentinel.authelia-prod-d1.svc.cluster.local'
+    #   port: 6379
       
-      username: ''
-      password:
-        secret_name: ~
-        path: 'session.redis.password.txt'
+    #   username: ''
+    #   password:
+    #     secret_name: ~
+    #     path: 'session.redis.password.txt'
 
-      database_index: 0
-      maximum_active_connections: 8
-      minimum_idle_connections: 0
+    #   database_index: 0
+    #   maximum_active_connections: 8
+    #   minimum_idle_connections: 0
 
-      tls:
-        enabled: true
-        server_name: ''
-        skip_verify: false
+    #   tls:
+    #     enabled: true
+    #     server_name: ''
+    #     skip_verify: false
 
-      high_availability:
-        enabled: false
+    #   high_availability:
+    #     enabled: false
 
-        sentinel_name: 'authelia-master'
+    #     sentinel_name: 'authelia-master'
 
-        # username: ''
+    #     # username: ''
 
-        password:
-          secret_name: ~
-          path: 'session.redis.sentinel.password.txt'
+    #     password:
+    #       secret_name: ~
+    #       path: 'session.redis.sentinel.password.txt'
 
-        nodes:
-          - host: redis-sentinel-sentinel.authelia-prod-d1.svc.cluster.local
-            port: 26379
+    #     nodes:
+    #       - host: redis-sentinel-sentinel.authelia-prod-d1.svc.cluster.local
+    #         port: 26379
 
-        route_by_latency: false
-        route_randomly: false
+    #     route_by_latency: false
+    #     route_randomly: false
 
   regulation:
     max_retries: 3

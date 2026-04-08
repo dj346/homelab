@@ -1,199 +1,199 @@
-apiVersion: redis.redis.opstreelabs.in/v1beta2
-kind: RedisReplication
-metadata:
-  name: authelia-redis-replication
-  namespace: authelia-prod-d1
-  labels:
-    app.kubernetes.io/name: authelia
-    app.kubernetes.io/component: database-redis
-    app.kubernetes.io/instance: authelia-prod-d1
-    app.kubernetes.io/managed-by: argocd
-spec:
-  # Core
-  clusterSize: 3
+# apiVersion: redis.redis.opstreelabs.in/v1beta2
+# kind: RedisReplication
+# metadata:
+#   name: authelia-redis-replication
+#   namespace: authelia-prod-d1
+#   labels:
+#     app.kubernetes.io/name: authelia
+#     app.kubernetes.io/component: database-redis
+#     app.kubernetes.io/instance: authelia-prod-d1
+#     app.kubernetes.io/managed-by: argocd
+# spec:
+#   # Core
+#   clusterSize: 3
 
-  # Pod placement / scheduling
-  # nodeSelector: {}
+#   # Pod placement / scheduling
+#   # nodeSelector: {}
 
-  priorityClassName: critical-priority
+#   priorityClassName: critical-priority
   
-  affinity:
-    podAffinity:
-      preferredDuringSchedulingIgnoredDuringExecution:
-        - weight: 100
-          podAffinityTerm:
-            topologyKey: kubernetes.io/hostname
-            labelSelector:
-              matchLabels:
-                app.kubernetes.io/name: authelia
-                app.kubernetes.io/instance: authelia-prod-d1
-    podAntiAffinity:
-      preferredDuringSchedulingIgnoredDuringExecution:
-        - weight: 100
-          podAffinityTerm:
-            topologyKey: kubernetes.io/hostname
-            labelSelector:
-              matchLabels:
-                app.kubernetes.io/name: authelia
-                app.kubernetes.io/instance: authelia-prod-d1
-                app.kubernetes.io/component: database-redis
+#   affinity:
+#     podAffinity:
+#       preferredDuringSchedulingIgnoredDuringExecution:
+#         - weight: 100
+#           podAffinityTerm:
+#             topologyKey: kubernetes.io/hostname
+#             labelSelector:
+#               matchLabels:
+#                 app.kubernetes.io/name: authelia
+#                 app.kubernetes.io/instance: authelia-prod-d1
+#     podAntiAffinity:
+#       preferredDuringSchedulingIgnoredDuringExecution:
+#         - weight: 100
+#           podAffinityTerm:
+#             topologyKey: kubernetes.io/hostname
+#             labelSelector:
+#               matchLabels:
+#                 app.kubernetes.io/name: authelia
+#                 app.kubernetes.io/instance: authelia-prod-d1
+#                 app.kubernetes.io/component: database-redis
 
-  tolerations: []
-  topologySpreadConstraints: []
+#   tolerations: []
+#   topologySpreadConstraints: []
 
-  # Security
-  podSecurityContext:
-    runAsNonRoot: true
-    runAsUser: 1000
-    runAsGroup: 1000
+#   # Security
+#   podSecurityContext:
+#     runAsNonRoot: true
+#     runAsUser: 1000
+#     runAsGroup: 1000
 
-    fsGroup: 1000
-    fsGroupChangePolicy: "OnRootMismatch"
+#     fsGroup: 1000
+#     fsGroupChangePolicy: "OnRootMismatch"
 
-    seccompProfile.type: RuntimeDefault
+#     seccompProfile.type: RuntimeDefault
 
-  securityContext:
-    runAsNonRoot: true
-    runAsUser: 1000
-    runAsGroup: 1000
+#   securityContext:
+#     runAsNonRoot: true
+#     runAsUser: 1000
+#     runAsGroup: 1000
 
-    allowPrivilegeEscalation: false
-    readOnlyRootFilesystem: true
+#     allowPrivilegeEscalation: false
+#     readOnlyRootFilesystem: true
 
-    capabilities.drop:
-      - ALL
+#     capabilities.drop:
+#       - ALL
 
-    seccompProfile.type: RuntimeDefault
+#     seccompProfile.type: RuntimeDefault
 
-  # Lifecycle
-  terminationGracePeriodSeconds: 30
-  hostPort: 0
+#   # Lifecycle
+#   terminationGracePeriodSeconds: 30
+#   hostPort: 0
 
-  # Probes
-  readinessProbe:
-    exec:
-      command: ["sh", "-c", "redis-cli -p 6379 ping | grep -q PONG"]
-    initialDelaySeconds: 5
-    periodSeconds: 10
-    timeoutSeconds: 2
-    failureThreshold: 3
+#   # Probes
+#   readinessProbe:
+#     exec:
+#       command: ["sh", "-c", "redis-cli -p 6379 ping | grep -q PONG"]
+#     initialDelaySeconds: 5
+#     periodSeconds: 10
+#     timeoutSeconds: 2
+#     failureThreshold: 3
 
-  livenessProbe:
-    exec:
-      command: ["sh", "-c", "redis-cli -p 6379 ping | grep -q PONG"]
-    initialDelaySeconds: 15
-    periodSeconds: 20
-    timeoutSeconds: 2
-    failureThreshold: 3
+#   livenessProbe:
+#     exec:
+#       command: ["sh", "-c", "redis-cli -p 6379 ping | grep -q PONG"]
+#     initialDelaySeconds: 15
+#     periodSeconds: 20
+#     timeoutSeconds: 2
+#     failureThreshold: 3
 
-  # Global env (example-shaped)
-  env: []
+#   # Global env (example-shaped)
+#   env: []
 
-  # KubernetesConfig (shared config)
-  kubernetesConfig:
-    image: quay.io/opstree/redis:v7.4.8@sha256:f231d197ab9f2b36f6ceb4f7f28d5bb22c2b4726114418ceec33608f4ff36ba7
-    imagePullPolicy: IfNotPresent
+#   # KubernetesConfig (shared config)
+#   kubernetesConfig:
+#     image: quay.io/opstree/redis:v7.4.8@sha256:f231d197ab9f2b36f6ceb4f7f28d5bb22c2b4726114418ceec33608f4ff36ba7
+#     imagePullPolicy: IfNotPresent
     
-    imagePullSecrets: []
+#     imagePullSecrets: []
 
-    updateStrategy:
-      type: RollingUpdate
+#     updateStrategy:
+#       type: RollingUpdate
     
-    resources: {}
+#     resources: {}
     
-    redisSecret:
-      name: authelia-redis-auth-secret
-      key: password
+#     redisSecret:
+#       name: authelia-redis-auth-secret
+#       key: password
 
-    persistentVolumeClaimRetentionPolicy:
-      whenDeleted: Retain
-      whenScaled: Retain
+#     persistentVolumeClaimRetentionPolicy:
+#       whenDeleted: Retain
+#       whenScaled: Retain
 
-    service:
-      serviceType: ClusterIP
-      annotations: {}
+#     service:
+#       serviceType: ClusterIP
+#       annotations: {}
       
-      headless:
-        enabled: true
-        type: ClusterIP
-        additionalAnnotations: {}
+#       headless:
+#         enabled: true
+#         type: ClusterIP
+#         additionalAnnotations: {}
 
-    ignoreAnnotations: []
+#     ignoreAnnotations: []
 
-    minReadySeconds: 10
+#     minReadySeconds: 10
 
-  # Redis configuration
-  redisConfig: {}
-    # maxMemoryPercentOfLimit: 80
-    # dynamicConfig:
-    #   - "timeout 300"
-    #   - "tcp-keepalive 60"
-    # additionalRedisConfig: |
-    #   # extra redis.conf lines
-    #   maxclients 20000
+#   # Redis configuration
+#   redisConfig: {}
+#     # maxMemoryPercentOfLimit: 80
+#     # dynamicConfig:
+#     #   - "timeout 300"
+#     #   - "tcp-keepalive 60"
+#     # additionalRedisConfig: |
+#     #   # extra redis.conf lines
+#     #   maxclients 20000
 
-  # Storage
-  storage:
-    keepAfterDelete: true
-    volumeClaimTemplate:
-      metadata:
-        name: data
-      spec:
-        accessModes: ["ReadWriteOnce"]
-        storageClassName: longhorn-strict
-        resources:
-          requests:
-            storage: 1Gi
+#   # Storage
+#   storage:
+#     keepAfterDelete: true
+#     volumeClaimTemplate:
+#       metadata:
+#         name: data
+#       spec:
+#         accessModes: ["ReadWriteOnce"]
+#         storageClassName: longhorn-strict
+#         resources:
+#           requests:
+#             storage: 1Gi
     
-    volumeMount: {}
+#     volumeMount: {}
 
-  # TLS
-  TLS:
-    ca: ca.crt
-    cert: tls.crt
-    key: tls.key
-    secret:
-      secretName: authelia-redis-replication-server-certificate-secret
-      optional: false
+#   # TLS
+#   TLS:
+#     ca: ca.crt
+#     cert: tls.crt
+#     key: tls.key
+#     secret:
+#       secretName: authelia-redis-replication-server-certificate-secret
+#       optional: false
 
-  # PDB
-  pdb:
-    enabled: true
-    minAvailable: 1
-    maxUnavailable: 0
+#   # PDB
+#   pdb:
+#     enabled: true
+#     minAvailable: 1
+#     maxUnavailable: 0
 
-  # ACL # Wasnt fully baked when I attempted to use ACL. For example Sentinel had no support for 
-  # ACL and you still needed to create a root "user" for the replication pods. 2/12/26
-  acl: 
-    secret:
-      secretName: authelia-redis-acl-secret
-      optional: false
+#   # ACL # Wasnt fully baked when I attempted to use ACL. For example Sentinel had no support for 
+#   # ACL and you still needed to create a root "user" for the replication pods. 2/12/26
+#   acl: 
+#     secret:
+#       secretName: authelia-redis-acl-secret
+#       optional: false
 
-  # Init container
-  # initContainer: {}
+#   # Init container
+#   # initContainer: {}
 
-  # Sidecars
-  sidecars: []
+#   # Sidecars
+#   sidecars: []
 
-  # # Service account
-  # serviceAccountName: redis-sa
+#   # # Service account
+#   # serviceAccountName: redis-sa
 
-  # Redis Exporter (metrics)
-  # redisExporter:
-  #   enabled: true
-  #   port: 9121
-  #   image: quay.io/opstree/redis-exporter:v1.60.0
-  #   resources:
-  #     requests:
-  #       cpu: "50m"
-  #       memory: "64Mi"
-  #     limits:
-  #       cpu: "200m"
-  #       memory: "128Mi"
-  #   imagePullPolicy: IfNotPresent
-  #   env:
-  #     - name: EXPORTER_DEBUG
-  #       value: "false"
-  #   securityContext:
-  #     runAsNonRoot: true
-  #     allowPrivilegeEscalation: false
+#   # Redis Exporter (metrics)
+#   # redisExporter:
+#   #   enabled: true
+#   #   port: 9121
+#   #   image: quay.io/opstree/redis-exporter:v1.60.0
+#   #   resources:
+#   #     requests:
+#   #       cpu: "50m"
+#   #       memory: "64Mi"
+#   #     limits:
+#   #       cpu: "200m"
+#   #       memory: "128Mi"
+#   #   imagePullPolicy: IfNotPresent
+#   #   env:
+#   #     - name: EXPORTER_DEBUG
+#   #       value: "false"
+#   #   securityContext:
+#   #     runAsNonRoot: true
+#   #     allowPrivilegeEscalation: false

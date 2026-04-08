@@ -461,7 +461,7 @@ configMap:
 
   identity_providers:
     oidc:
-      enabled: false
+      enabled: true
 
       hmac_secret:
         secret_name: authelia-oidc-hmac-key-secret

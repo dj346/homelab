@@ -602,22 +602,30 @@ configMap:
           - introspection
         allowed_origins_from_client_redirect_uris: false
 
-      clients: []
-        # - client_id: 
-        #   client_name: "Root Dashboard"
-        #   client_secret:
-        #     secret_name: ""
-        #     path: ""
-        #   authorization_policy: one_factor
-        #   public: false
-        #   scopes:
-        #     - "openid"
-        #     - "profile"
-        #     - "email"
-        #     - "groups"
-        #   redirect_uris:
-        #   requested_audience_mode: "implicit"
-        #   token_endpoint_auth_method: "client_secret_basic"
+      clients:
+        - client_id: '3qv3e1QlO0jCq~Troz_jfkLuul15cvafKUzczj71AKPvh7aRVyEFIj94vYJ3Jcy7827LwybV'
+          client_name: 'Proxmox'
+          client_secret:
+            secret_name: authelia-oidc-proxmox-pve-prod-d1-client-secret
+            path: authelia-oidc-proxmox-pve-prod-d1-client-secret
+          public: false
+          authorization_policy: 'two_factor'
+          require_pkce: true
+          pkce_challenge_method: 'S256'
+          redirect_uris:
+            - 'https://proxmox.pve-prod-d1.mclacken.net'
+          scopes:
+            - 'openid'
+            - 'profile'
+            - 'email'
+            - 'groups'
+          response_types:
+            - 'code'
+          grant_types:
+            - 'authorization_code'
+          access_token_signed_response_alg: 'none'
+          userinfo_signed_response_alg: 'none'
+          token_endpoint_auth_method: 'client_secret_basic'
 
         # - client_id: ''
         #   client_name: 'Mealie'
@@ -1114,6 +1122,10 @@ secret:
       items:
         - key: key
           path: key.pem
+    authelia-oidc-proxmox-pve-prod-d1-client-secret:
+      items:
+        - key: key
+          path: authelia-oidc-proxmox-pve-prod-d1-client-secret
             
 certificates:
   existingSecret: 'eso-authelia-trusted-ca-chains-secret'

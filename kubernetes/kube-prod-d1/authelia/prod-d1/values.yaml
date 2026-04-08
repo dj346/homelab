@@ -366,7 +366,7 @@ configMap:
         name: "mclacken_authelia_session"
   
     redis:
-      enabled: true
+      enabled: false
     # redis:
     #   enabled: false
     #   host: 'redis-sentinel-sentinel.authelia-prod-d1.svc.cluster.local'

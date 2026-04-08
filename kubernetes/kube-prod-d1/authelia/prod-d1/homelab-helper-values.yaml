@@ -7,7 +7,7 @@ postgresql:
   instances: 2
   databaseName: autheliadb
   ownerName: authelia
-  storageSize: 450Mi
-  walStorageSize: 2Gi
+  storageSize: 5Gi # 450Mi
+  walStorageSize: 5Gi
   enableDefaultCertificate: true
   backupSchedule: "0 0 * * *"

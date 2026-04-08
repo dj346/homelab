@@ -626,6 +626,7 @@ configMap:
           access_token_signed_response_alg: 'none'
           userinfo_signed_response_alg: 'none'
           token_endpoint_auth_method: 'client_secret_basic'
+          pre_configured_consent_duration: '30 days'
 
         # - client_id: ''
         #   client_name: 'Mealie'

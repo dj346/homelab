@@ -1,9 +1,10 @@
 Users:
 authelia-ro:6eHbP1E0YgFkKn:lldap_strict_readonly
-dj346:PASSWORD_CENSORED:authelia-user
+dj346:PASSWORD_CENSORED:authelia-user,proxmox-admin
 
 Groups:
 authelia-user
+proxmox-admin
 
 User-Attributes:
 

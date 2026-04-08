@@ -347,6 +347,11 @@ configMap:
         policy: one_factor
         subjects:
           - group:anisonarr-admin
+      - domain:
+          - proxmox.pve-prod-d1.mclacken.net
+        policy: two_factor
+        subjects:
+          - group:proxmox-admin
     
   session:
     name: 'authelia_session'

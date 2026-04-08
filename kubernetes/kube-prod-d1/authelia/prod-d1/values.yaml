@@ -592,7 +592,7 @@ configMap:
         use: "sig"
         key:
           secret_name: "authelia-jwk-rs256-private-key-secret"
-          path: "/secrets/authelia-jwk-rs256-private-key-secret/key.pem"
+          path: "/secrets/authelia-jwk-rs256-private-key-secret/key"
 
       cors:
         endpoints:
@@ -607,7 +607,7 @@ configMap:
           client_name: 'Proxmox'
           client_secret:
             secret_name: authelia-oidc-proxmox-pve-prod-d1-client-secret
-            path: authelia-oidc-proxmox-pve-prod-d1-client-secret
+            path: /secrets/authelia-oidc-proxmox-pve-prod-d1-client-secret/key
           public: false
           authorization_policy: 'two_factor'
           require_pkce: true
@@ -1121,11 +1121,11 @@ secret:
     authelia-jwk-rs256-private-key-secret:
       items:
         - key: key
-          path: key.pem
+          path: key
     authelia-oidc-proxmox-pve-prod-d1-client-secret:
       items:
         - key: key
-          path: authelia-oidc-proxmox-pve-prod-d1-client-secret
+          path: key
             
 certificates:
   existingSecret: 'eso-authelia-trusted-ca-chains-secret'

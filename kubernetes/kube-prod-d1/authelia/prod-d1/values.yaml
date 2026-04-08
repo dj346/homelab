@@ -365,6 +365,8 @@ configMap:
         subdomain: "authelia.kube-prod-d1"
         name: "mclacken_authelia_session"
   
+    redis:
+      enabled: true
     # redis:
     #   enabled: false
     #   host: 'redis-sentinel-sentinel.authelia-prod-d1.svc.cluster.local'

@@ -366,7 +366,12 @@ configMap:
         name: "mclacken_authelia_session"
   
     redis:
-      enabled: false
+      enabled: true
+
+      host: 'redis-server.redis-server.svc.cluster.local'
+      port: 6379
+
+      database_index: 4
     # redis:
     #   enabled: false
     #   host: 'redis-sentinel-sentinel.authelia-prod-d1.svc.cluster.local'

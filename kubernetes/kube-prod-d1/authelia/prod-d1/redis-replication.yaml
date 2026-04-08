@@ -140,7 +140,7 @@
 #         name: data
 #       spec:
 #         accessModes: ["ReadWriteOnce"]
-#         storageClassName: longhorn-strict
+#         storageClassName: longhorn-strict-local
 #         resources:
 #           requests:
 #             storage: 1Gi

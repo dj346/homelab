@@ -1728,7 +1728,7 @@ memcachedExporter:
     # -- Memcached Exporter Docker image repository
     repository: prom/memcached-exporter
     # -- Memcached Exporter Docker image tag
-    tag: v0.15.5@sha256:92a6ad5a3d3e2dffc75efd4e18d1470fa5703dd79b6bace53fe11312b634578e
+    tag: v0.16.0@sha256:fa03aba2f2aa6f572bf56ba07dd2960c62433805427be0fddc8b21b8074c1728
     # -- Memcached Exporter Docker image pull policy
     pullPolicy: IfNotPresent
     # -- Memcached Exporter resource requests and limits

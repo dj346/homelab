@@ -64,7 +64,7 @@ spec:
                   key: database-url
             - name: LLDAP_VERBOSE
               value: "true"
-          image: lldap/lldap:latest@sha256:af6daf88e67b2c6885d2426f711cb241751b515cc36a995d36ba77f2ffd199fb
+          image: lldap/lldap:latest@sha256:3988a22b238bf72be0f7186cfd024bc8f0a66a1c09a929378a6741fa112872d0
           name: lldap
           ports:
             - containerPort: 3890

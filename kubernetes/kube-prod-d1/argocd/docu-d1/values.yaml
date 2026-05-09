@@ -1442,7 +1442,7 @@ redis:
     repository: ecr-public.aws.com/docker/library/redis
     # -- Redis tag
     ## Do not upgrade to >= 7.4.0, otherwise you are no longer using an open source version of Redis
-    tag: 8.6.3-alpine@sha256:b9646e7cdf8165d985b88bb3e61b3f2f7625db7f6c98af79def91997d04f26b9
+    tag: 8.6.3-alpine@sha256:d146f83b1e0f02fc27c26a50cee39338c736674c5959db84363e6ae3cd9e02d2
     # -- Redis image pull policy
     # @default -- `""` (defaults to global.image.imagePullPolicy)
     imagePullPolicy: ""
@@ -1738,7 +1738,7 @@ redis-ha:
     repository: ecr-public.aws.com/docker/library/redis
     # -- Redis tag
     ## Do not upgrade to >= 7.4.0, otherwise you are no longer using an open source version of Redis
-    tag: 8.6.3-alpine@sha256:b9646e7cdf8165d985b88bb3e61b3f2f7625db7f6c98af79def91997d04f26b9
+    tag: 8.6.3-alpine@sha256:d146f83b1e0f02fc27c26a50cee39338c736674c5959db84363e6ae3cd9e02d2
   ## Prometheus redis-exporter sidecar
   exporter:
     # -- Enable Prometheus redis-exporter sidecar

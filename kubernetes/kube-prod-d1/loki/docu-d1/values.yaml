@@ -601,7 +601,7 @@ enterprise:
     # -- Docker image repository
     repository: grafana/enterprise-logs
     # -- Docker image tag
-    tag: 3.6.6@sha256:ae14f8c6d8c43188c413a2aa054342706295abef0c44bb9c1b8bb6bd43d55029
+    tag: 3.6.8@sha256:3da4e983552c5238f28d29afd64c9811f6537f8e7629892d6e95babf5977b3e7
     # -- Overrides the image tag with an image digest
     digest: null
     # -- Docker image pull policy

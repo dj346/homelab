@@ -1924,7 +1924,7 @@ gateway:
     # -- The gateway image repository
     repository: nginxinc/nginx-unprivileged
     # -- The gateway image tag
-    tag: 1.30-alpine@sha256:2c5a98dcd9bfb568fd6a305e0637f0410beafdbf644443112ab47d6a713ba43e
+    tag: 1.30-alpine@sha256:b9f7ba14f1f7bd3d40d7753584048f92c3aef9ccf5fab14efe4451a8d4c04d63
     # -- The gateway image pull policy
     pullPolicy: IfNotPresent
   # -- The name of the PriorityClass for gateway pods

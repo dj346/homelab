@@ -59,7 +59,7 @@ global:
     # -- If defined, a repository applied to all Argo CD deployments
     repository: quay.io/argoproj/argocd
     # -- Overrides the global Argo CD image tag whose default is the chart appVersion
-    tag: "@sha256:6fd6b57e4d577bd19c7c7349a21b78d94f4e3eda9982896b36efa169542f38d5"
+    tag: "@sha256:405c71ba00beca0a16f4e72cb49c8d58597ff294d0591951da71ddee9c754b5c"
     # -- If defined, a imagePullPolicy applied to all Argo CD deployments
     imagePullPolicy: IfNotPresent
 

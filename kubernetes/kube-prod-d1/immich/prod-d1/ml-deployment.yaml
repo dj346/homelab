@@ -24,7 +24,7 @@ spec:
       enableServiceLinks: true
       containers:
         - name: immich-machine-learning
-          image: "ghcr.io/immich-app/immich-machine-learning:release@sha256:412f68e46e1966d0f87a8733a430369ee184b3a83e7b1e2db536dff291a34aa7"
+          image: "ghcr.io/immich-app/immich-machine-learning:release@sha256:d76fe88b69282c09a97eac4f82dafa82cfd77bce274bc742591cde974f87dacb"
           imagePullPolicy: Always
           ports:
             - containerPort: 3003

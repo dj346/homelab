@@ -20,7 +20,7 @@ spec:
   sources:
     - repoURL: https://seaweedfs.github.io/seaweedfs/helm
       chart: seaweedfs
-      targetRevision: 4.39.0
+      targetRevision: 4.40.0
       helm:
         valuesObject:
           # image:

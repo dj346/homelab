@@ -103,7 +103,7 @@ spec:
             mountPath: /config
       containers:
         - name: sabnzbd
-          image: lscr.io/linuxserver/sabnzbd:latest@sha256:302be8972d4627222a0701634f2f9025826d760d856414aa6e67c0a66833e5be
+          image: lscr.io/linuxserver/sabnzbd:latest@sha256:b0f9755d795913bd26ae3f3a12805668ab0681ab847a7624568559c573fc7cae
           env:
           - name: PUID
             value: "1000"

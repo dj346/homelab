@@ -1744,7 +1744,7 @@ redis-ha:
     # -- Enable Prometheus redis-exporter sidecar
     enabled: false
     # -- Repository to use for the redis-exporter
-    image: ghcr.io/oliver006/redis_exporter@sha256:2c8c55c63ce4d915389f03d337b8acef56aaaca9fab8728291287e612d4d6398
+    image: ghcr.io/oliver006/redis_exporter@sha256:fed773ffd2bb2eac706e0ed9cc2fff41651193ee4977e2a4f6919658ad2313f4
     # -- Tag to use for the redis-exporter
     tag: v1.69.0
   persistentVolume:

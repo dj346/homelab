@@ -1,0 +1,21 @@
+---
+name: composeflux
+
+include:
+  - ../../../templates/composeflux/compose.yml
+
+services:
+  composeflux:
+    environment:
+      GIT_REPO_URL: git@github.com:dj346/homelab.git
+      GIT_BRANCH: main
+      STACK_PATH: docker/servers/test-prod-d1
+
+      # Secrets Provider
+      # SECRETS_PROVIDER: bitwarden
+      # GIT_DEPLOY_KEY_SECRET_REF: ${GIT_DEPLOY_KEY_SECRET_REF}
+
+      # Bitwarden Secrets Manager
+      # BITWARDEN_ACCESS_TOKEN: ${BITWARDEN_ACCESS_TOKEN}
+      # BITWARDEN_ORGANIZATION_ID: ${BITWARDEN_ORGANIZATION_ID}
+      # BITWARDEN_PROJECT_ID: ${BITWARDEN_PROJECT_ID}

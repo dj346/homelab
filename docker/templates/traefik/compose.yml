@@ -1,0 +1,38 @@
+---
+services:
+  traefik:
+    image: traefik:v3
+    container_name: traefik
+    restart: unless-stopped
+
+    command:
+      # Dashboard
+      - --api.dashboard=true
+
+      # Docker Provider
+      - --providers.docker=true
+      - --providers.docker.exposedbydefault=false
+      - --providers.docker.network=proxy
+
+      # Entry Points
+      - --entrypoints.web.address=:80
+      - --entrypoints.websecure.address=:443
+
+    ports:
+      - "80:80"
+      - "443:443"
+
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+
+    networks:
+      - proxy
+
+    labels:
+      traefik.enable: "true"
+      traefik.http.routers.dashboard.entrypoints: web
+      traefik.http.routers.dashboard.service: api@internal
+
+networks:
+  proxy:
+    name: proxy

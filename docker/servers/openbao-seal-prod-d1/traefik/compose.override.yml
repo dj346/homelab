@@ -1,0 +1,5 @@
+---
+services:
+  traefik:
+    labels:
+      traefik.http.routers.dashboard.rule: "Host(`traefik.openbao-seal-prod-d1.mclacken.net`)"

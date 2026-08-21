@@ -1,7 +1,7 @@
 ---
 services:
   composeflux:
-    image: ghcr.io/veerendra2/composeflux:latest
+    image: ghcr.io/veerendra2/composeflux:latest@sha256:2941a97b863c46698ef735e39744b969b5152155c6a77a83133158068e4a4286
     container_name: composeflux
     hostname: composeflux
     restart: unless-stopped

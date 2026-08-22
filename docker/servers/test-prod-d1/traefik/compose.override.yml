@@ -1,5 +1,0 @@
----
-services:
-  traefik:
-    labels:
-      traefik.http.routers.dashboard.rule: "Host(`traefik.test-prod-d1.mclacken.net`)"

@@ -1,4 +1,3 @@
----
 services:
   composeflux:
     image: ghcr.io/veerendra2/composeflux:latest@sha256:2941a97b863c46698ef735e39744b969b5152155c6a77a83133158068e4a4286
@@ -6,56 +5,7 @@ services:
     hostname: composeflux
     restart: unless-stopped
 
-    environment:
-      # Reconciler Configuration
-      STACK_PATH: ${STACK_PATH}
-
-      # CONFIG_FILE: stack.yml
-      # GIT_INTERVAL: 5m
-      # HEALTH_RECONCILE_INTERVAL: 5m
-      # IMAGE_UPDATE_SCHEDULE: ""
-      # PRUNE_INTERVAL: 24h
-
-      # Git Source Configuration
-      GIT_REPO_URL: ${GIT_REPO_URL}
-      GIT_BRANCH: ${GIT_BRANCH:-main}
-      GIT_SSH_KEY_PATH: ${GIT_SSH_KEY_PATH:-/.ssh/composeflux_id_rsa}
-
-      # GIT_CLONE_PATH: /opt/compose-stack
-
-      # Secrets Provider
-      # SECRETS_PROVIDER: bitwarden
-      # GIT_DEPLOY_KEY_SECRET_REF: ${GIT_DEPLOY_KEY_SECRET_REF}
-
-      # Bitwarden Secrets Manager
-      # BITWARDEN_ACCESS_TOKEN: ${BITWARDEN_ACCESS_TOKEN}
-      # BITWARDEN_ORGANIZATION_ID: ${BITWARDEN_ORGANIZATION_ID}
-      # BITWARDEN_PROJECT_ID: ${BITWARDEN_PROJECT_ID}
-      # BITWARDEN_API_URL: https://vault.bitwarden.com/api
-      # BITWARDEN_IDENTITY_URL: https://vault.bitwarden.com/identity
-
-      # Infisical Secrets Manager
-      # SECRETS_PROVIDER: infisical
-      # INFISICAL_CLIENT_ID: ${INFISICAL_CLIENT_ID}
-      # INFISICAL_CLIENT_SECRET: ${INFISICAL_CLIENT_SECRET}
-      # INFISICAL_ENVIRONMENT: ${INFISICAL_ENVIRONMENT}
-      # INFISICAL_PROJECT_ID: ${INFISICAL_PROJECT_ID}
-      # INFISICAL_SECRET_PATH: /
-      # INFISICAL_SITE_URL: https://app.infisical.com
-
-      # Logging
-      LOG_ADD_SOURCE: ${LOG_ADD_SOURCE:-false}
-      LOG_LEVEL: ${LOG_LEVEL:-info}
-
-      # Go Memory Settings
-      GOMEMLIMIT: 35MiB
-      GOGC: 50
-
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ${HOME}/.ssh/composeflux_id_rsa:/.ssh/composeflux_id_rsa:ro
-      - compose-stack:/opt/compose-stack
-
-volumes:
-  compose-stack:
-    name: compose-stack
+      - ./stack:/opt/compose-stack

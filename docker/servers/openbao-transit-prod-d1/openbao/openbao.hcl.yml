@@ -9,7 +9,7 @@ configs:
       cluster_addr = "https://openbao.openbao-transit-prod-d1.mclacken.net:8201"
 
       storage "raft" {
-        path    = "/openbao/data"
+        path    = "/openbao/file"
         node_id = "openbao-transit-prod-d1"
       }
 

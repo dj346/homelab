@@ -10,8 +10,7 @@ services:
 
     command:
       - server
-      - -config=/openbao/config/openbao.hcl
-
+      
     ports:
       - "8200:8200"
 
@@ -21,7 +20,7 @@ services:
         mode: "0444"
 
     volumes:
-      - openbao-data:/openbao/data
+      - openbao-data:/openbao/file
 
       - /etc/openbao/bootstrap/bootstrap-ca.crt:/openbao/tls/bootstrap-ca.crt:ro
       - /etc/openbao/bootstrap/transit-server.crt:/openbao/tls/server.crt:ro

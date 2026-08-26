@@ -12,4 +12,3 @@ services:
       GIT_REPO_URL: git@github.com:dj346/homelab.git
       GIT_BRANCH: main
       STACK_PATH: docker/servers/openbao-transit-prod-d1
-      LOG_LEVEL: debug

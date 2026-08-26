@@ -5,9 +5,7 @@ services:
   openbao:
     image: ghcr.io/openbao/openbao:2.6.2
     container_name: openbao-prod-d1
-
     hostname: openbao-prod-d1
-
     restart: unless-stopped
 
     command:

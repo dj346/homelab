@@ -1,0 +1,4 @@
+services:
+  traefik:
+    labels:
+      traefik.http.routers.dashboard.rule: "Host(`traefik.openbao-rootca-prod-d1.mclacken.net`)"

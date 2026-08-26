@@ -15,7 +15,7 @@ services:
     volumes:
       - openbao-data:/openbao/data
 
-      - ./config/openbao.hcl:/openbao/config/openbao.hcl:ro
+      # - ./config/openbao.hcl:/openbao/config/openbao.hcl:ro
 
       - /etc/openbao/bootstrap/bootstrap-ca.crt:/openbao/tls/bootstrap-ca.crt:ro
       - /etc/openbao/bootstrap/transit-server.crt:/openbao/tls/server.crt:ro

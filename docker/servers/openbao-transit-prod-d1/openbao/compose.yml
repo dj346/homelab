@@ -1,3 +1,9 @@
+---
+name: openbao-transit-prod-d1
+
+include:
+  - openbao.hcl.yml
+
 services:
   openbao:
     image: ghcr.io/openbao/openbao:2.6.2
@@ -12,10 +18,13 @@ services:
     ports:
       - "8200:8200"
 
+    configs:
+      - source: openbao.hcl
+        target: /openbao/config/openbao.hcl
+        mode: "0444"
+
     volumes:
       - openbao-data:/openbao/data
-
-      # - ./config/openbao.hcl:/openbao/config/openbao.hcl:ro
 
       - /etc/openbao/bootstrap/bootstrap-ca.crt:/openbao/tls/bootstrap-ca.crt:ro
       - /etc/openbao/bootstrap/transit-server.crt:/openbao/tls/server.crt:ro

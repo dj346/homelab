@@ -17,10 +17,10 @@ services:
     ports:
       - "8200:8200"
 
-    configs:
-      - source: openbao.hcl
-        target: /openbao/config/openbao.hcl
-        mode: "0444"
+    # configs:
+    #   - source: openbao.hcl
+    #     target: /openbao/config/openbao.hcl
+    #     mode: "0444"
 
     volumes:
       - openbao-data:/openbao/data

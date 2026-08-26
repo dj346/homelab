@@ -20,7 +20,7 @@ configs:
         tls_cert_file = "/openbao/tls/server.crt"
         tls_key_file  = "/openbao/tls/server.key"
 
-        tls_client_ca_file = "/openbao/tls/bootstrap-ca.crt"
+        tls_client_ca_file = "/openbao/tls/ca.crt"
 
         tls_require_and_verify_client_cert = true
       }

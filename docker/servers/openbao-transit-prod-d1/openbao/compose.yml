@@ -23,7 +23,7 @@ services:
       - /etc/openbao/bootstrap/transit-server.crt:/openbao/tls/server.crt:ro
       - /etc/openbao/bootstrap/transit-server.key:/openbao/tls/server.key:ro
 
-name: openbao-prod-d1
+name: openbao
 
 volumes:
   openbao-data:

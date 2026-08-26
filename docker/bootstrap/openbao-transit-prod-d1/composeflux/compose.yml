@@ -11,4 +11,4 @@ services:
     environment:
       GIT_REPO_URL: git@github.com:dj346/homelab.git
       GIT_BRANCH: main
-      STACK_PATH: docker/servers/openbao-seal-prod-d1
+      STACK_PATH: docker/servers/openbao-transit-prod-d1

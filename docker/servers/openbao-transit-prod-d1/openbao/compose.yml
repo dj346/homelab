@@ -1,7 +1,7 @@
 name: openbao-transit-prod-d1
 
 include:
-  - openbao.hcl.yml
+  - ./openbao.hcl.yml
 
 services:
   openbao:

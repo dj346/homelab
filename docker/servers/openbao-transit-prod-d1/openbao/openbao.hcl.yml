@@ -1,6 +1,5 @@
 configs:
   openbao.hcl:
-    name: openbao-transit-prod-d1.hcl
     content: |
       ui = true
 

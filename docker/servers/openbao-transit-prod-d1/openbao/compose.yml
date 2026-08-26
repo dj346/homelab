@@ -1,4 +1,3 @@
-# name: openbao-prod-d1
 services:
   openbao:
     image: ghcr.io/openbao/openbao:2.6.2
@@ -23,6 +22,8 @@ services:
       - /etc/openbao/bootstrap/bootstrap-ca.crt:/openbao/tls/bootstrap-ca.crt:ro
       - /etc/openbao/bootstrap/transit-server.crt:/openbao/tls/server.crt:ro
       - /etc/openbao/bootstrap/transit-server.key:/openbao/tls/server.key:ro
+
+name: openbao-prod-d1
 
 volumes:
   openbao-data:

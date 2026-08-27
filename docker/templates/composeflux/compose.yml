@@ -6,7 +6,7 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ${HOME}/.ssh/composeflux_id_rsa:/.ssh/composeflux_id_rsa:ro
-      - /opt/compose-stack:/opt/compose-stack
+      - compose-stack:/opt/compose-stack
 
 volumes:
   compose-stack:

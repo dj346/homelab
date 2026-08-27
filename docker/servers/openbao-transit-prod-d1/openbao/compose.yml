@@ -3,7 +3,7 @@ include:
 
 services:
   openbao:
-    image: ghcr.io/openbao/openbao:2.6.2
+    image: ghcr.io/openbao/openbao:2.6.2@sha256:11fd73a2102cda9c55d5d881a8c3210303146a7ec1e8ac76f526e175c6d24641
     container_name: openbao-prod-d1
     hostname: openbao-prod-d1
     restart: unless-stopped

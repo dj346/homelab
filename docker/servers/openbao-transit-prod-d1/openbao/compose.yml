@@ -33,11 +33,28 @@ services:
         mode: "0444"
 
     volumes:
-      - openbao-data:/openbao/file
+    - openbao-data:/openbao/file
+    
+    - type: bind
+      source: /etc/openbao/tls/ca.crt
+      target: /openbao/tls/ca.crt
+      read_only: true
+      bind:
+        create_host_path: false
 
-      - /etc/openbao/tls/ca.crt:/openbao/tls/ca.crt:ro
-      - /etc/openbao/tls/server.crt:/openbao/tls/server.crt:ro
-      - /etc/openbao/tls/server.key:/openbao/tls/server.key:ro
+    - type: bind
+      source: /etc/openbao/tls/server.crt
+      target: /openbao/tls/server.crt
+      read_only: true
+      bind:
+        create_host_path: false
+
+    - type: bind
+      source: /etc/openbao/tls/server.key
+      target: /openbao/tls/server.key
+      read_only: true
+      bind:
+        create_host_path: false
 
 volumes:
   openbao-data:

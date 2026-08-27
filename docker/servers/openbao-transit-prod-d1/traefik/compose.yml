@@ -20,3 +20,7 @@ services:
 
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
+
+networks:
+  proxy:
+    name: proxy

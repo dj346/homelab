@@ -41,3 +41,8 @@ services:
 
 volumes:
   openbao-data:
+
+networks:
+  proxy:
+    name: proxy
+    external: true

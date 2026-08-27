@@ -11,8 +11,18 @@ services:
     command:
       - server
       
-    ports:
-      - "8200:8200"
+    # ports:
+    #   - "8200:8200"
+
+    labels:
+      - "traefik.enable=true"
+
+      - "traefik.tcp.routers.openbao-transit.rule=HostSNI(`openbao.openbao-transit-prod-d1.mclacken.net`)"
+      - "traefik.tcp.routers.openbao-transit.entrypoints=websecure"
+      - "traefik.tcp.routers.openbao-transit.tls=true"
+      - "traefik.tcp.routers.openbao-transit.tls.passthrough=true"
+
+      - "traefik.tcp.services.openbao-transit.loadbalancer.server.port=8200"
 
     configs:
       - source: openbao.hcl

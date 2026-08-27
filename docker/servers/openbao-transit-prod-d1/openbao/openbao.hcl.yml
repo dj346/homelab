@@ -5,8 +5,8 @@ configs:
 
       disable_mlock = true
 
-      api_addr = "https://openbao.openbao-transit-prod-d1.mclacken.net:8200"
-      cluster_addr = "https://openbao.openbao-transit-prod-d1.mclacken.net:8201"
+      api_addr = "https://openbao.openbao-transit-prod-d1.mclacken.net"
+      cluster_addr = "https://openbao-prod-d1:8201"
 
       storage "raft" {
         path    = "/openbao/file"

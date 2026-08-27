@@ -1,2 +1,22 @@
-include:
-  - ../../../templates/traefik/compose.yml
+services:
+  traefik:
+    image: traefik:v3.7.9
+    container_name: traefik-prod-d1
+    restart: unless-stopped
+
+    security_opt:
+      - no-new-privileges:true
+
+    ports:
+      - "80:80"
+      - "443:443"
+
+    networks:
+      - proxy
+
+    configs:
+      - source: traefik.yml
+        target: /etc/traefik/traefik.yml
+
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro

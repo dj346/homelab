@@ -2307,7 +2307,7 @@ provisioner:
 
 kubectlImage:
   repository: bitnami/kubectl
-  tag: latest@sha256:e0fcb25c485a8ad0665d0dd4b4a67cefb6baee32b0e3b19f54f1b468c49c1ed5
+  tag: latest@sha256:b29d8c1665b70817259ceecaea16ab27aab6368b48daf485d19436c809067492
   pullPolicy: IfNotPresent
 
 # Settings for the admin_api service providing authentication and authorization service.

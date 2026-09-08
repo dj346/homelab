@@ -4,7 +4,7 @@ metadata:
   name: seaweed-sample
   namespace: default
 spec:
-  image: chrislusf/seaweedfs:latest@sha256:fc9f76fa993ad69966ffeb2f65d0318fcae39c6f8e20cf68ef7b3a5cb97769e5
+  image: chrislusf/seaweedfs:latest@sha256:08d516132314207d10c8e37cbffc1f32b147d870169688734cc61c6231625b62
   volumeServerDiskCount: 1
   hostSuffix: seaweed.abcdefg.com
   master:

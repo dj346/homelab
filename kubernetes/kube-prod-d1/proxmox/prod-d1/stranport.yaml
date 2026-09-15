@@ -1,9 +1,0 @@
-apiVersion: traefik.io/v1alpha1
-kind: ServersTransport
-metadata:
-  name: proxmox-transport
-  namespace: proxmox-prod-d1
-spec:
-  rootCAsSecrets:
-    - proxmox-vault-certificate-secret
-  serverName: pve-prod-d1.local-d1.mclacken.net

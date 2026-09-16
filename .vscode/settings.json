@@ -1,0 +1,6 @@
+{
+    "yaml.disableSchemaDetection": [
+        "file:///home/arctic/Repos/Other/homelab/kubernetes/templates/postgres/cluster.yaml",
+        "file:///home/arctic/Repos/Other/homelab/docker/servers/openbao-transit-prod-d1/openbao/cluster.yaml"
+    ]
+}

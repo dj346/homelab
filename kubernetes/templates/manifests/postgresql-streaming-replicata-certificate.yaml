@@ -1,0 +1,18 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: {{ .Values.global.appName }}-postgresql-streaming-replicata-certificate
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app.kubernetes.io/name: {{ .Values.global.appName }}
+    app.kubernetes.io/component: database-certificate
+    app.kubernetes.io/instance: {{ .Values.global.appName }}-{{ .Values.global.environment }}
+    app.kubernetes.io/managed-by: argocd
+spec:
+  secretName: {{ .Values.global.appName }}-postgresql-streaming-replicata-certificate-secret
+  usages:
+    - client auth
+  issuerRef:
+    name: vault-cnpg-kube-prod-d1-issuer
+    kind: ClusterIssuer
+  commonName: {{ .Values.global.appName }}-postgresql-streaming-replicata-certificate

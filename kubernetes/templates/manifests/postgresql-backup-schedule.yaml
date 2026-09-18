@@ -1,0 +1,16 @@
+# apiVersion: postgresql.cnpg.io/v1
+# kind: ScheduledBackup
+# metadata:
+#   name: {{ .Values.global.appName }}-postgres-backup-schedule
+#   namespace: {{ .Release.Namespace }}
+#   labels:
+#     app.kubernetes.io/name: {{ .Values.global.appName }}
+#     app.kubernetes.io/component: database
+#     app.kubernetes.io/instance: {{ .Values.global.appName }}-{{ .Values.global.environment }}
+#     app.kubernetes.io/managed-by: argocd
+# spec:
+#   cluster:
+#     name: {{ .Values.global.appName }}-postgresql-cluster
+#   schedule: {{ .Values.postgresql.backupSchedule }}
+#   backupOwnerReference: self
+#   method: barmanObjectStore

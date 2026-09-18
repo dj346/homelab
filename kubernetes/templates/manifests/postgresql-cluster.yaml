@@ -1,0 +1,114 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+    name: {{ .Values.global.appName }}-postgresql-cluster
+    namespace: {{ .Release.Namespace }}
+    labels:
+        app.kubernetes.io/name: {{ .Values.global.appName }}
+        app.kubernetes.io/component: database
+        app.kubernetes.io/instance: {{ .Values.global.appName }}-{{ .Values.global.environment }}
+        app.kubernetes.io/managed-by: argocd
+spec:
+    imageName: {{ .Values.postgresql.imageName }}
+    imagePullPolicy: IfNotPresent
+
+    inheritedMetadata:
+        labels:
+            app.kubernetes.io/name: {{ .Values.global.appName }}
+            app.kubernetes.io/component: database
+            app.kubernetes.io/instance: {{ .Values.global.appName }}-{{ .Values.global.environment }}
+            app.kubernetes.io/managed-by: argocd
+
+    instances: 2
+    primaryUpdateStrategy: unsupervised
+
+    postgresql:
+        pg_ident:
+            - cnpg_streaming_replica {{ .Values.global.appName }}-postgresql-streaming-replicata-certificate streaming_replica
+        parameters:
+            shared_buffers: 512MB
+            effective_cache_size: 1GB
+            max_connections: "100"
+            pg_stat_statements.max: "10000"
+            pg_stat_statements.track: all
+            auto_explain.log_min_duration: "5s"
+        pg_hba:
+            - host all all 10.244.0.0/16 md5
+
+    bootstrap:
+        initdb:
+            database: {{ default (printf "%sdb" .Values.global.appName) (.Values.postgresql.databaseName | trim) }}
+            owner: {{ default (printf "%suser" .Values.global.appName) (.Values.postgresql.ownerName | trim) }}
+            secret:
+                name: {{ .Values.global.appName }}-postgresql-credentials-secret
+            {{- with .Values.postgresql.postInitSQL }}
+            postInitSQL:
+            {{ toYaml . | nindent 14 }}
+            {{- end }}
+
+
+        # For recovery scenarios, uncomment below:
+        # recovery:
+        #     backup:
+        #         name: backup-name
+
+    certificates:
+        serverTLSSecret: {{ .Values.global.appName }}-postgresql-server-certificate-secret
+        serverCASecret: {{ .Values.global.appName }}-postgresql-server-certificate-secret
+        clientCASecret: {{ .Values.global.appName }}-postgresql-client-certificate-secret
+        replicationTLSSecret: {{ .Values.global.appName }}-postgresql-streaming-replicata-certificate-secret
+
+    storage:
+        storageClass: longhorn-strict-local
+        size: {{ .Values.postgresql.storageSize }}
+
+    # walStorage:
+    #     storageClass: longhorn-strict-local
+    #     size: {{ .Values.postgresql.walStorageSize }}
+
+    # backup:
+    #     barmanObjectStore:
+    #         destinationPath: s3://anisonarr-backups/
+    #         endpointURL: https://your-s3-endpoint
+    #         s3Credentials:
+    #             accessKeyId:
+    #                 name: {{ .Values.global.appName }}-postgresql-s3-credentials-secret
+    #                 key: ACCESS_KEY_ID
+    #             secretAccessKey:
+    #                 name: {{ .Values.global.appName }}-postgresql-s3-credentials-secret
+    #                 key: ACCESS_SECRET_KEY
+    #         wal:
+    #             compression: gzip
+    #             encryption: AES256
+    #         data:
+    #             compression: gzip
+    #             encryption: AES256
+    #             immediateCheckpoint: true
+    #             jobs: 2
+    #     retentionPolicy: "14d"
+
+    # resources:
+    #     requests:
+    #         cpu: "250m"
+    #         memory: "512Mi"
+    #     limits:
+    #         cpu: "1"
+    #         memory: "1Gi"
+
+    affinity:
+        enablePodAntiAffinity: true
+        topologyKey: topology.kubernetes.io/zone
+
+    priorityClassName: medium-priority
+
+    # monitoring:
+    #     enablePodMonitor: true
+
+    topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: ScheduleAnyway
+          labelSelector:
+              matchLabels:
+                  app.kubernetes.io/name: {{ .Values.global.appName }}
+                  app.kubernetes.io/component: database

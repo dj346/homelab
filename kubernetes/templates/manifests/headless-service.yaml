@@ -1,0 +1,33 @@
+{{- if .Values.statefulsets}}
+{{- range $i, $sts := .Values.statefulsets}}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ $.Values.global.appName }}{{- if $sts.nameSuffix }}-{{ $sts.nameSuffix }}{{- end }}-headless-service
+  namespace: {{ $.Release.Namespace }}
+  labels:
+    app.kubernetes.io/name: {{ $.Values.global.appName }}
+    app.kubernetes.io/component: networking
+    app.kubernetes.io/instance: {{ $.Values.global.appName }}-{{ $.Values.global.environment }}
+    app.kubernetes.io/managed-by: argocd
+spec:
+  clusterIP: None
+  publishNotReadyAddresses: true
+  selector:
+    app.kubernetes.io/name: {{ $.Values.global.appName }}
+    app.kubernetes.io/instance: {{ $.Values.global.appName }}-{{ $.Values.global.environment }}
+    app.kubernetes.io/component: program
+    app.kubernetes.io/managed-by: argocd
+    app.kubernetes.io/statefulset: "{{ $.Values.global.appName }}{{- if $sts.nameSuffix }}-{{ $sts.nameSuffix }}{{- end }}"
+  {{- if $sts.ports }}
+  ports:
+  {{- range $j, $ports := $sts.ports }}
+    - name: {{ $ports.portName }}
+      port:  {{ $ports.port }}
+      targetPort: {{ $ports.portName }}
+      protocol: {{ $ports.protocol | default "TCP" }}
+  {{- end }}
+  {{- end }}
+{{- end}}
+{{- end}}

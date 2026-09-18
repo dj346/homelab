@@ -1,0 +1,38 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: prod-d1-application-stack
+  namespace: argocd-prod-d1
+  
+  labels:
+    app.kubernetes.io/name: argocd-prod-d1
+    app.kubernetes.io/component: application-stack
+    app.kubernetes.io/instance: argocd-prod-d1
+    app.kubernetes.io/stage: bootstrap
+
+  annotations:
+    argocd.argoproj.io/sync-wave: "-50"
+
+spec:
+  project: default
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd-prod-d1
+  
+  sources:
+    - repoURL: https://github.com/dj346/homelab.git
+      targetRevision: HEAD
+      path: kubernetes/apps
+      directory:
+        recurse: true
+        include: '*/bootstrap-prod-d1/application.yaml'
+  
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    
+    syncOptions:
+      - Validate=true
+      - PrunePropagationPolicy=foreground

@@ -1,0 +1,31 @@
+global:
+  appName: myApp
+  environment: prod-d1
+  defaultSecretEnabled: false
+
+postgresql:
+  enable: true
+
+  imageName: ghcr.io/cloudnative-pg/postgresql:18.1@sha256:3d57af59c8982e55b9b4792f44e7f769e65901b3d579e9d72de003bd27e6fdea
+
+  instances: 2
+
+  databaseName: ""
+  ownerName: ""
+
+  postInitSQL: []
+
+  storageSize: 450Mi
+  walStorageSize: 1Gi
+  
+  backupSchedule: "0 0 * * *"
+
+ingresses: []
+#   - nameSuffix: ""
+#     serviceName: ""
+#     portName: ""
+
+services: []
+# - nameSuffix: ""
+#   portName: ""
+#   port: 5302

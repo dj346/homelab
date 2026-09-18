@@ -1,0 +1,33 @@
+{{- if .Values.ingresses }}
+{{- range $i, $ing := .Values.ingresses }}
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ $.Values.global.appName }}{{- if $ing.nameSuffix }}-{{ $ing.nameSuffix }}{{- end }}-ingress
+  namespace: {{ $.Release.Namespace }}
+  labels:
+    app.kubernetes.io/name: {{ $.Values.global.appName }}
+    app.kubernetes.io/component: networking
+    app.kubernetes.io/instance: {{ $.Values.global.appName }}-{{ $.Values.global.environment }}
+    app.kubernetes.io/managed-by: argocd
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+spec:
+  rules:
+    - host: {{ $.Values.global.appName }}{{- if $ing.nameSuffix }}-{{ $ing.nameSuffix }}{{- end }}.kube-prod-d1.mclacken.net
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ $ing.serviceName }}
+                port:
+                  name: {{ $ing.portName }}
+  tls:
+    - hosts:
+        - {{ $.Values.global.appName }}{{- if $ing.nameSuffix }}-{{ $ing.nameSuffix }}{{- end }}.kube-prod-d1.mclacken.net
+      secretName: all-applications-certificate-secret
+{{- end }}
+{{- end }}

@@ -1,5 +1,0 @@
-type: kustomize
-name: vaultwarden
-environment: prod-d1
-namespace: vaultwarden-prod-d1
-stage: bootstrap

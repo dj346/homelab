@@ -6,7 +6,7 @@ global:
 postgresql:
   enable: true
 
-  imageName: ghcr.io/cloudnative-pg/postgresql:18.1@sha256:3d57af59c8982e55b9b4792f44e7f769e65901b3d579e9d72de003bd27e6fdea
+  imageName: ghcr.io/cloudnative-pg/postgresql:18.6@sha256:899d3ed526b659d77935dde0e6bf2d69dbbf17d3d8c6486ca8cfd04bd3c18533
 
   instances: 2
 

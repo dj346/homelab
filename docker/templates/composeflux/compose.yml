@@ -1,6 +1,6 @@
 services:
   composeflux:
-    image: ghcr.io/veerendra2/composeflux:latest@sha256:ea938535303a67ef8284bf7039df4c00f1fdee164b407d750eeac0d620c35f74
+    image: ghcr.io/veerendra2/composeflux:latest@sha256:dcc9e84ef2b2bd56fd8561c16f5a737966a2ccc991731727f362164cc2d89eb4
     restart: unless-stopped
 
     volumes:

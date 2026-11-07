@@ -1,0 +1,26 @@
+configs:
+  openbao.hcl:
+    content: |
+      ui = true
+
+      disable_mlock = true
+
+      api_addr = "https://openbao.openbao-rootca-prod-d1.mclacken.net"
+      cluster_addr = "https://openbao-prod-d1:8201"
+
+      storage "raft" {
+        path    = "/openbao/file"
+        node_id = "openbao-rootca-prod-d1"
+      }
+
+      listener "tcp" {
+        address         = "0.0.0.0:8200"
+        cluster_address = "0.0.0.0:8201"
+
+        tls_cert_file = "/etc/openbao/tls/server.crt"
+        tls_key_file  = "/etc/openbao/tls/server.key"
+
+        tls_client_ca_file = "/etc/openbao/tls/ca.crt"
+
+        tls_require_and_verify_client_cert = true
+      }

@@ -1,0 +1,63 @@
+include:
+  - openbao.hcl.yml
+
+services:
+  openbao:
+    image: ghcr.io/openbao/openbao:2.6.2@sha256:11fd73a2102cda9c55d5d881a8c3210303146a7ec1e8ac76f526e175c6d24641
+    container_name: openbao-prod-d1
+    hostname: openbao-prod-d1
+    restart: unless-stopped
+
+    command:
+      - server
+
+    # Permit the OpenBao process to read TLS keys
+    # provisioned with group ID 1000 and mode 0640.
+    group_add:
+      - "1000"
+
+    env_file:
+      - /etc/openbao/secrets/transit-seal.env
+
+    networks:
+      - proxy
+
+    labels:
+      - "traefik.enable=true"
+
+      - "traefik.tcp.routers.openbao-rootca.rule=HostSNI(`openbao.openbao-rootca-prod-d1.mclacken.net`)"
+      - "traefik.tcp.routers.openbao-rootca.entrypoints=websecure"
+      - "traefik.tcp.routers.openbao-rootca.tls=true"
+      - "traefik.tcp.routers.openbao-rootca.tls.passthrough=true"
+
+      - "traefik.tcp.services.openbao-rootca.loadbalancer.server.port=8200"
+
+    configs:
+      - source: openbao.hcl
+        target: /openbao/config/openbao.hcl
+        mode: "0444"
+
+    volumes:
+      - openbao-data:/openbao/file
+
+      - type: bind
+        source: /etc/openbao/tls
+        target: /etc/openbao/tls
+        read_only: true
+        bind:
+          create_host_path: false
+
+      - type: bind
+        source: /etc/openbao/seal/transit-seal.hcl
+        target: /openbao/config/transit-seal.hcl
+        read_only: true
+        bind:
+          create_host_path: false
+
+volumes:
+  openbao-data:
+
+networks:
+  proxy:
+    name: proxy
+    external: true
